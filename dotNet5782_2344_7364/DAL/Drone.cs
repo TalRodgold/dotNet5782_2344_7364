@@ -4,9 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace IDAL
 {
-    class Drone
-    {
+    namespace DO
+    { 
+        public struct Drone
+         {
+            public int Id{ get; set; };
+            public string Model{ get; set; };
+            public WeightCategories MaxWeight{ get; set; };
+            public DroneStatuses Status{ get; set; };
+            public double Battery{ get; set; };
+         }
     }
+   
 }
