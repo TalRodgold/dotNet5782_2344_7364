@@ -20,6 +20,13 @@ namespace IDAL
             {
                 return $"Drone #{Id}: model = {Model}, {Status}, {MaxWeight}, battery = {(int)Battery} \n";
             }
+            void DroneCreat() 
+            { 
+                Id = 0; Model = "No modle set"; 
+                MaxWeight = WeightCategories.Heavy; 
+                Status = DroneStatuses.Available; 
+                Battery = 100; 
+            }
         }
     }
    

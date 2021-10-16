@@ -10,11 +10,11 @@ namespace IDAL
     {
         public enum WeightCategories
         {
-            [Description("Light weight")]
+            //[Description("Light weight")]
             Light,
-            [Description("Medium weight")]
+            //[Description("Medium weight")]
             Medium,
-            [Description("Heavy weight")]
+           // [Description("Heavy weight")]
             Heavy
         }
 
@@ -22,11 +22,11 @@ namespace IDAL
 
          public enum DroneStatuses
         {
-            [Description("Free for delivery")]
+           // [Description("Free for delivery")]
             Available,
-            [Description("Doing dilivery")]
+           // [Description("Doing dilivery")]
             Delivery,
-            [Description("Being charged")]
+           // [Description("Being charged")]
             Maintenance
         }
     }
