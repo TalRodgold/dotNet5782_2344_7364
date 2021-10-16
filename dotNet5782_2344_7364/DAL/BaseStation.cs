@@ -10,10 +10,11 @@ namespace IDAL
     {
         public struct BaseStation
         {
-            public int Id { get; set; }
-            public string Name { get; set; }
-            public int ChargeSlots { get; set; }
-            public double Longitude { get; set; }
+            public int Id { get; set; } // Id number for each drone
+            public string Name { get; set; } // Drones name
+            public int ChargeSlots { get; set; } // Number of free charging atstions
+            public double Longitude { get; set; } // Longitude 
+            public double latitude { get; set; } // Latitude
         }
     }
    

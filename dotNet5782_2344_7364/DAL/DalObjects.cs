@@ -4,9 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DAL
+namespace DalObjects
 {
-    class DalObjects
+    public class DataSource
     {
+        internal class config
+        {
+
+        }
     }
 }
+

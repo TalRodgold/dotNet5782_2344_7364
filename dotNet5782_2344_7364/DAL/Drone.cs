@@ -10,12 +10,17 @@ namespace IDAL
     { 
         public struct Drone
          {
-            public int Id{ get; set; };
-            public string Model{ get; set; };
-            public WeightCategories MaxWeight{ get; set; };
-            public DroneStatuses Status{ get; set; };
-            public double Battery{ get; set; };
-         }
+            public int Id{ get; set; }
+            public string Model{ get; set; }
+            public WeightCategories MaxWeight{ get; set; }
+            public DroneStatuses Status{ get; set; }
+            public double Battery{ get; set; }
+
+            public override string ToString()
+            {
+                return $"Drone #{Id}: model = {Model}, {Status}, {MaxWeight}, battery = {(int)Battery} \n";
+            }
+        }
     }
    
 }
