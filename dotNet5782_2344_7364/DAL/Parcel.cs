@@ -8,7 +8,7 @@ namespace IDAL
 {
     namespace DO
     {
-        public struct Parcel 
+        public struct Parcel
         {
             public int Id { get; set; } // Id number for each parcel
             public int SenderId { get; set; } // Senders Id
@@ -21,7 +21,18 @@ namespace IDAL
             public DateTime PickedUp { get; set; }  // PickedUp
             public DateTime Deliverd { get; set; } // Deliverd
 
-           
+
+            void ParcelCreat(int id = 0, int senderId = 0, int targetId = 0, WeightCategories weight = WeightCategories.Heavy, Priorities priority = Priorities.Regular, int droneId = 0 )
+            {
+                Id = id;
+                SenderId = senderId;
+                TargetId = targetId;
+                Weight = weight;
+                Priority = priority;
+                DroneId = droneId;
+
+                Requsted = DateTime.Now; //????????????????????????????????????????
+            }
         }
     }
 
