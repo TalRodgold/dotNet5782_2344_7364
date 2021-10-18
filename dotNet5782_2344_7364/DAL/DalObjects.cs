@@ -36,7 +36,7 @@ namespace DalObjects
                     Name = Convert.ToString((RandomBases)rnd.Next(1, 11)),
                     ChargeSlots = rnd.Next(1,101),
                     Longitude= rnd.NextDouble(31.728959, 31.728959),
-                    latitude = rnd.NextDouble(35.221416, 35.206714)
+                    latitude = rnd.NextDouble(35.206714, 35.221416)
                 };
                 Config.BaseStation_arr_index++;
             }
@@ -45,29 +45,38 @@ namespace DalObjects
             {
                 Drone_arr[Config.Drone_arr_index] = new Drone // set random data for new drone
                 {
-                    Id = Config.Parcel_id,
+                    Id = Convert.ToInt32(DateTime.Now.Ticks),
                     Model = $"modle_number{i + 1}",
                     MaxWeight = (WeightCategories)rnd.Next(1, 4),
                     Battery = rnd.Next(0, 101),
-                    Status = (DroneStatuses)rnd.Next(1, 4)
+                    Status = (DroneStatuses)rnd.Next(1, 4),
                 };
                 Config.Drone_arr_index++; // edvance free index by 1
-                Config.Parcel_id++; // grow runing id number by 1
             }
 
             for (int i = 0; i < 10; i++) // set 10 custemers and 10 parcels
             {
                 Parcel_arr[Config.Parcel_arr_index] = new Parcel
                 {
-                    Id =,
-                    DroneId = ,
+                    Id = Config.Parcel_id,
                     SenderId = ,
-
+                    TargetId = ,
+                    Weight = (WeightCategories)rnd.Next(1,4),
+                    Priority = (Priorities)rnd.Next(1,4),
+                    Requsted = DateTime.Now,
+                    DroneId = ,
+                    Scheduled =,
+                    PickedUp = ,
+                    Deliverd = ,
                 };
-
+                Config.Parcel_id++; // grow runing id number by 1
                 Customer_arr[Config.Customer_arr_index] = new Customer
                 {
-
+                    Id = Convert.ToInt32(DateTime.Now.Ticks),
+                    Name = Convert.ToString((RandomNames)rnd.Next(1, 16)),
+                    Phone = "05" + Convert.ToString(rnd.Next(10000000, 99999999)),
+                    Longitude = rnd.NextDouble(31.728959, 31.728959),
+                    latitude = rnd.NextDouble(35.206714, 35.221416)
                 };
             }
            
