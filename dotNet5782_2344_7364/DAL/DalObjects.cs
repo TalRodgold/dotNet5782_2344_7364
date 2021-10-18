@@ -22,7 +22,17 @@ namespace DalObjects
             internal static int Parcel_arr_index = 0; // points to next free index in Parcel_arr
             internal static int Parcel_id = 12345; // runing number for parcel Id
         }
-
+        internal double sexagesimal(double decimal_degrees)
+        {
+            double minutes = (decimal_degrees - Math.Floor(decimal_degrees)) * 60.0;
+            double seconds = (minutes - Math.Floor(minutes)) * 60.0;
+            double tenths = (seconds - Math.Floor(seconds)) * 10.0;
+            // get rid of fractional part
+            minutes = Math.Floor(minutes);
+            seconds = Math.Floor(seconds);
+            tenths = Math.Floor(tenths);
+            return minutes + seconds + tenths;
+        }
         internal void Initialize()
         {
        
@@ -35,8 +45,8 @@ namespace DalObjects
                     Id = Convert.ToInt32(DateTime.Now.Ticks),
                     Name = Convert.ToString((RandomBases)rnd.Next(1, 11)),
                     ChargeSlots = rnd.Next(1,101),
-                    Longitude= rnd.NextDouble(31.728959, 31.728959),
-                    latitude = rnd.NextDouble(35.206714, 35.221416)
+                    Longtitude= sexagesimal(rnd.NextDouble() + 31.728959),
+                    Latitude = sexagesimal(rnd.NextDouble() + 35.206714)
                 };
                 Config.BaseStation_arr_index++;
             }
@@ -75,8 +85,8 @@ namespace DalObjects
                     Id = Convert.ToInt32(DateTime.Now.Ticks),
                     Name = Convert.ToString((RandomNames)rnd.Next(1, 16)),
                     Phone = "05" + Convert.ToString(rnd.Next(10000000, 99999999)),
-                    Longitude = rnd.NextDouble(31.728959, 31.728959),
-                    latitude = rnd.NextDouble(35.206714, 35.221416)
+                    Longtitude = sexagesimal(rnd.NextDouble() + 31.728959),
+                    Latitude = sexagesimal(rnd.NextDouble() + 35.206714)
                 };
                 Config.Parcel_id++; // grow runing id number by 1
                 Config.Parcel_arr_index++; // edvance free index by 1
