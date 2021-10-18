@@ -69,7 +69,7 @@ namespace DalObjects
                     PickedUp = ,
                     Deliverd = ,
                 };
-                Config.Parcel_id++; // grow runing id number by 1
+                
                 Customer_arr[Config.Customer_arr_index] = new Customer
                 {
                     Id = Convert.ToInt32(DateTime.Now.Ticks),
@@ -78,6 +78,9 @@ namespace DalObjects
                     Longitude = rnd.NextDouble(31.728959, 31.728959),
                     latitude = rnd.NextDouble(35.206714, 35.221416)
                 };
+                Config.Parcel_id++; // grow runing id number by 1
+                Config.Parcel_arr_index++; // edvance free index by 1
+                Config.Customer_arr_index++; // edvance free index by 1
             }
            
         }
