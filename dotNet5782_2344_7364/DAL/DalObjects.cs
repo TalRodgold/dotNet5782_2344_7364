@@ -14,36 +14,61 @@ namespace DalObjects
         internal static Customer[] Customer_arr = new Customer[100]; // array of customers
         internal static Parcel[] Parcel_arr = new Parcel[1000]; // array of parcel
 
-        internal class Config
+        internal class Config // hold index of next free index
         {
             internal static int Drone_arr_index = 0; // points to next free index in drone_arr
             internal static int BaseStation_arr_index = 0; // points to next free index in BaseStation_arr
             internal static int Customer_arr_index = 0; // points to next free index in Customer_arr
             internal static int Parcel_arr_index = 0; // points to next free index in Parcel_arr
-            internal static int Parcel_id = 0; // ???????????????????????????????????
+            internal static int Parcel_id = 12345; // runing number for parcel Id
         }
 
         internal void Initialize()
         {
-           
-            Random rnd = new Random(); // generate randome number
-            for (int i=0; i<2; i++) // set 
+         
+        Random rnd = new Random(); // generate randome number
+         
+            for (int i=0; i<2; i++) // set 2 base stations
             {
-               
-                Drone_arr[Config.Drone_arr_index] = new Drone { Id = rnd.Next(1, 100), Model = $"modle_number{i +1}", MaxWeight = WeightCategories.Heavy, Battery = rnd.Next(1, 100), Status = ;
+                BaseStation_arr[Config.BaseStation_arr_index] = new BaseStation
+                {
+                    Id = Convert.ToInt32(DateTime.Now.Ticks),
+                    Name = Convert.ToString((RandomBases)rnd.Next(1, 11)),
+                    ChargeSlots = rnd.Next(1,101),
+                    Longitude= rnd.NextDouble(31.728959, 31.728959),
+                    latitude = rnd.NextDouble(35.221416, 35.206714)
+                };
+                Config.BaseStation_arr_index++;
             }
-                
 
-            }
-
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 5; i++) // set 5 randome drones
             {
-
+                Drone_arr[Config.Drone_arr_index] = new Drone // set random data for new drone
+                {
+                    Id = Config.Parcel_id,
+                    Model = $"modle_number{i + 1}",
+                    MaxWeight = (WeightCategories)rnd.Next(1, 4),
+                    Battery = rnd.Next(0, 101),
+                    Status = (DroneStatuses)rnd.Next(1, 4)
+                };
+                Config.Drone_arr_index++; // edvance free index by 1
+                Config.Parcel_id++; // grow runing id number by 1
             }
 
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 10; i++) // set 10 custemers and 10 parcels
             {
+                Parcel_arr[Config.Parcel_arr_index] = new Parcel
+                {
+                    Id =,
+                    DroneId = ,
+                    SenderId = ,
 
+                };
+
+                Customer_arr[Config.Customer_arr_index] = new Customer
+                {
+
+                };
             }
            
         }
