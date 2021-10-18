@@ -59,15 +59,15 @@ namespace DalObjects
                 Parcel_arr[Config.Parcel_arr_index] = new Parcel
                 {
                     Id = Config.Parcel_id,
-                    SenderId = ,
-                    TargetId = ,
+                    SenderId = Convert.ToInt32(DateTime.Now.Ticks),
+                    TargetId = Convert.ToInt32(DateTime.Now.Ticks),
                     Weight = (WeightCategories)rnd.Next(1,4),
                     Priority = (Priorities)rnd.Next(1,4),
                     Requsted = DateTime.Now,
-                    DroneId = ,
-                    Scheduled =,
-                    PickedUp = ,
-                    Deliverd = ,
+                    DroneId = 0,
+                    Scheduled = DateTime.Now.AddMinutes(rnd.Next(1, 60)),
+                    PickedUp = DateTime.Now.AddMinutes(rnd.Next(1, 60)),
+                    Deliverd = DateTime.Now.AddMinutes(rnd.Next(1, 60)),
                 };
                 
                 Customer_arr[Config.Customer_arr_index] = new Customer

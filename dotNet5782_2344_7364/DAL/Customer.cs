@@ -16,15 +16,5 @@ namespace IDAL
             public double Longtitude { get; set; } // Longitude 
             public double Latitude { get; set; } // Latitude
         }
-
-        void CustomerCreat(int id=0,string name="no name set",string phone="no phone set",double longtitude=0,double latitude=0)
-        {
-            Id=id;
-            Name=name;
-            Phone=phone;
-            Longtitude=longtitude;
-            Latitude=latitude;
-        }
     }
-
 }
