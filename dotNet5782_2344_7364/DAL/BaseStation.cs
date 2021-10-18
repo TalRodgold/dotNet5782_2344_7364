@@ -14,7 +14,15 @@ namespace IDAL
             public string Name { get; set; } // Drones name
             public int ChargeSlots { get; set; } // Number of free charging atstions
             public double Longitude { get; set; } // Longitude 
-            public double latitude { get; set; } // Latitude
+            public double Latitude { get; set; } // Latitude
+        }
+        void BaseStationCreat(int id=0,string name="no name set",int chargeSlots=0,double Longitude=0,double latitude=0)
+        {
+            Id=id;
+            Name=name;
+            ChargeSlots=chargeSlots;
+            Longitude=Longitude;
+            Latitude=latitude;
         }
     }
    

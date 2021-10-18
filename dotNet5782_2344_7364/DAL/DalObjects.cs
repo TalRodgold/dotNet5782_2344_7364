@@ -25,7 +25,7 @@ namespace DalObjects
 
         internal void Initialize()
         {
-         
+       
         Random rnd = new Random(); // generate randome number
          
             for (int i=0; i<2; i++) // set 2 base stations
