@@ -94,19 +94,19 @@ namespace DalObjects
             return DataSource.Config.Parcel_arr_index;
         }
 
-        public static void Get_string_Drone(int index)
+        public static void Print_Drone(int index)
         {
             Console.WriteLine(DataSource.Drone_arr[index].ToString());
         }
-        public static void Get_string_BaseStation(int index)
+        public static void Print_BaseStation(int index)
         {
             Console.WriteLine(DataSource.BaseStation_arr[index].ToString());
         }
-        public static void Get_string_Customer(int index)
+        public static void Print_Customer(int index)
         {
             Console.WriteLine(DataSource.Customer_arr[index].ToString());
         }
-        public static void Get_string_Parcel(int index)
+        public static void Print_Parcel(int index)
         {
             Console.WriteLine(DataSource.Parcel_arr[index].ToString());
         }

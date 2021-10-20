@@ -79,7 +79,7 @@ namespace ConsoleUI
                     break;
                 case (2.1): //Update Percel to Drone
                     #region
-                    for(int i=0;i< DalObjects.DataSource.Config.Get_Drone_arr_index; i++)
+                    for(int i=0;i< DalObjects.Get_Drone_arr_index; i++)
                     {
                         if(Drone_arr[i]..)
 
@@ -125,7 +125,7 @@ namespace ConsoleUI
                     #region
                     int Customer_id;
                     int.TryParse(Console.ReadLine(), out Customer_id);
-                    DalObjects.Get_string_Castomer(Customer_id);
+                    DalObjects.Get_string_Customer(Customer_id);
                     #endregion
                     break;
                 case (3.4):
@@ -161,9 +161,9 @@ namespace ConsoleUI
                     break;
                 case (4.4):
                     #region
-                    for (int i = 0; i < DalObjects.Get_Parcel_arr_index; i++)
+                    for (int i = 0; i < DalObjects.DalObjects.Get_Parcel_arr_index(); i++)
                     {
-                        DalObjects.DataSource.Parcel_arr[i].ToString();
+                        DalObjects.DalObjects.
                     }
                     #endregion
                     break;
