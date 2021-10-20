@@ -29,18 +29,23 @@ namespace DalObjects
             internal static int Parcel_id = 12345; // runing number for parcel Id
             #endregion
         }
-        internal static double sexagesimal(double decimal_degrees) // convert double to sexagesimal
+        internal static string sexagesimal(double decimal_degrees, Char c) // convert double to sexagesimal
         {
-            #region// convert to sexadecimal
-            double minutes = (decimal_degrees - Math.Floor(decimal_degrees)) * 60.0;
-            double seconds = (minutes - Math.Floor(minutes)) * 60.0;
-            double tenths = (seconds - Math.Floor(seconds)) * 10.0;
-            // get rid of fractional part
-            minutes = Math.Floor(minutes);
-            seconds = Math.Floor(seconds);
-            tenths = Math.Floor(tenths);
-            return minutes + seconds + tenths;
-            #endregion
+
+            double latDegrees = decimal_degrees;
+            int latSeconds = (int)Math.Round(latDegrees * 60 * 60); 
+
+            double latDegreesWithFraction = decimal_degrees;
+            int degrees = (int)latDegreesWithFraction; 
+
+            double fractionalDegrees = latDegrees - degrees; 
+            double minutesWithFraction = 60 * fractionalDegrees; 
+            int minutes = (int)minutesWithFraction; 
+
+            double fractionalMinutes = minutesWithFraction - minutes; 
+            double secondsWithFraction = 60 * fractionalMinutes; 
+                                                                
+            return $"{degrees}° {minutes}' {(float)secondsWithFraction}\" {c}";     
         }
 
         internal  static void CreatBaseStation() // this function creats random base station
@@ -52,8 +57,8 @@ namespace DalObjects
                 (Byte)DateTime.Now.Ticks,
                 Convert.ToString((RandomBases)rnd.Next(1, 11)),
                 rnd.Next(0, 10),
-                 sexagesimal(rnd.NextDouble() + 31.728959),
-                 sexagesimal(rnd.NextDouble() + 35.206714)
+                 sexagesimal(rnd.NextDouble() + 31.728959, 'N'),
+                 sexagesimal(rnd.NextDouble() + 35.206714, 'E')
                 );
             #endregion
         }
@@ -75,11 +80,12 @@ namespace DalObjects
         {
             #region // call construct parcel
             Random rnd = new Random(); // generate randome number
+
             DalObjects.ConstructParcel // construct
                 (
                 Config.Parcel_id,
-                (int)rnd.Next(0,Config.Customer_arr_index),//i put that but i think we need to vheck the sender and the reciver no the same
-                (int)rnd.Next(0, Config.Customer_arr_index),//
+                Customer_arr[rnd.Next(0, Config.Customer_arr_index)].Id,
+                Customer_arr[rnd.Next(0, Config.Customer_arr_index)].Id,
                 (WeightCategories)rnd.Next(0, 3),
                 (Priorities)rnd.Next(0, 3),
                 DateTime.Now,
@@ -99,8 +105,8 @@ namespace DalObjects
                 (Byte)DateTime.Now.Ticks,
                 Convert.ToString((RandomNames)rnd.Next(0, 15)),
                 "05" + Convert.ToString(rnd.Next(10000000, 99999999)),
-                sexagesimal(rnd.NextDouble() + 31.728959),
-                sexagesimal(rnd.NextDouble() + 35.206714)
+                sexagesimal(rnd.NextDouble() + 31.728959, 'N'),
+                sexagesimal(rnd.NextDouble() + 35.206714, 'E')
                 );
             #endregion
         }

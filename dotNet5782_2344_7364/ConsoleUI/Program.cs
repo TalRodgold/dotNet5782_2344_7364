@@ -27,10 +27,8 @@ namespace ConsoleUI
                         string User_name = Console.ReadLine();
                         int User_chargeSlots;
                         int.TryParse(Console.ReadLine(), out User_chargeSlots);
-                        double User_longtitude;
-                        double.TryParse(Console.ReadLine(), out User_longtitude);
-                        double User_latitude;
-                        double.TryParse(Console.ReadLine(), out User_latitude);
+                        string User_longtitude = Console.ReadLine();
+                        string User_latitude = Console.ReadLine();
                         DalObjects.DalObjects.ConstructBaseStation(User_id, User_name, User_chargeSlots, User_longtitude, User_latitude);
                         break;
                         #endregion
@@ -56,10 +54,8 @@ namespace ConsoleUI
                         int.TryParse(Console.ReadLine(), out User_CustomerId);
                         string User_CustomerName = Console.ReadLine();
                         string User_PhoneNumber = Console.ReadLine();
-                        double User_CustomerLongtitude;
-                        double.TryParse(Console.ReadLine(), out User_CustomerLongtitude);
-                        double User_CustomerLatitude;
-                        double.TryParse(Console.ReadLine(), out User_CustomerLatitude);
+                        string User_CustomerLongtitude = Console.ReadLine();                        
+                        string User_CustomerLatitude = Console.ReadLine();                
                         DalObjects.DalObjects.ConstructCustomer(User_CustomerId, User_CustomerName, User_PhoneNumber, User_CustomerLatitude, User_CustomerLatitude);
                         break;
                         #endregion
@@ -200,7 +196,6 @@ namespace ConsoleUI
                     default:
                         break;
                 }
-                User_input = Console.ReadLine();
             }
         }
     }
