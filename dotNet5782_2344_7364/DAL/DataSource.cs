@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
 /// <summary>
-/// hello <c> DataSource </c>v
+/// this 
 /// </summary>
 namespace DalObjects
 {
@@ -20,15 +20,18 @@ namespace DalObjects
         #endregion
         internal class Config // hold index of next free index
         {
+            #region// index for arrays and parcel id
             internal static int Drone_arr_index = 0; // points to next free index in drone_arr
             internal static int BaseStation_arr_index = 0; // points to next free index in BaseStation_arr
             internal static int Customer_arr_index = 0; // points to next free index in Customer_arr
             internal static int Parcel_arr_index = 0; // points to next free index in Parcel_arr
             internal static int DroneCharge_arr_index = 0; // points to next free index in DroneCharge_arr
             internal static int Parcel_id = 12345; // runing number for parcel Id
+            #endregion
         }
         internal static double sexagesimal(double decimal_degrees) // convert double to sexagesimal
         {
+            #region// convert to sexadecimal
             double minutes = (decimal_degrees - Math.Floor(decimal_degrees)) * 60.0;
             double seconds = (minutes - Math.Floor(minutes)) * 60.0;
             double tenths = (seconds - Math.Floor(seconds)) * 10.0;
@@ -37,6 +40,7 @@ namespace DalObjects
             seconds = Math.Floor(seconds);
             tenths = Math.Floor(tenths);
             return minutes + seconds + tenths;
+            #endregion
         }
 
         internal  static void CreatBaseStation() // this function creats random base station
@@ -45,7 +49,7 @@ namespace DalObjects
             Random rnd = new Random(); // generate randome number
             DalObjects.ConstructBaseStation // construct
                 (
-                (int)DateTime.Now.Ticks,
+                (Byte)DateTime.Now.Ticks,
                 Convert.ToString((RandomBases)rnd.Next(1, 11)),
                 rnd.Next(0, 10),
                  sexagesimal(rnd.NextDouble() + 31.728959),
@@ -59,7 +63,7 @@ namespace DalObjects
             Random rnd = new Random(); // generate randome number
             DalObjects.ConstructDrone // construct
                 (
-                (-1*(int)DateTime.Now.Ticks),
+                (Byte)DateTime.Now.Ticks,
                 $"modle_number{Config.Drone_arr_index + 1}",
                 (WeightCategories)rnd.Next(0, 3),
                 (DroneStatuses)rnd.Next(0, 3),
@@ -74,8 +78,8 @@ namespace DalObjects
             DalObjects.ConstructParcel // construct
                 (
                 Config.Parcel_id,
-                (int)rnd.Next(0,Config.Customer_arr_index),//i put that but i think we need to vheck the sender and the reciver no the same
-                (int)rnd.Next(0, Config.Customer_arr_index),//
+                DataSource.Customer_arr[rnd.Next(0,9)].Id,
+                DataSource.Customer_arr[rnd.Next(0, 9)].Id,
                 (WeightCategories)rnd.Next(0, 3),
                 (Priorities)rnd.Next(0, 3),
                 DateTime.Now,
@@ -92,7 +96,7 @@ namespace DalObjects
             Random rnd = new Random(); // generate randome number
             DalObjects.ConstructCustomer // construct
                 (
-                (-1 * (int)DateTime.Now.Ticks),
+                (Byte)DateTime.Now.Ticks,
                 Convert.ToString((RandomNames)rnd.Next(0, 15)),
                 "05" + Convert.ToString(rnd.Next(10000000, 99999999)),
                 sexagesimal(rnd.NextDouble() + 31.728959),
@@ -102,6 +106,7 @@ namespace DalObjects
         }
         internal static void Initialize() // this function sets 2 randome base stations,  5 randome drones,  10 custemers and 10 parcels
         {
+            #region// call 4 creat functions
             for (int i = 0; i < 2; i++) // set 2 base stations
             {
                 CreatBaseStation();
@@ -112,13 +117,17 @@ namespace DalObjects
                 CreatDrone();
             }
 
-            for (int i = 0; i < 10; i++) // set 10 custemers and 10 parcels
+            for (int i = 0; i < 10; i++) // set 10 custemers 
             {
                 CreatCustomer();
+            }
+
+            for (int i = 0; i < 10; i++) // set 10 parcels
+            {
                 CreatParcel();
             }
+            #endregion
         }
     }
 }
-//     (-1 * (int)DateTime.Now.Ticks),
-               // (-1 * (int)DateTime.Now.Ticks)
+
