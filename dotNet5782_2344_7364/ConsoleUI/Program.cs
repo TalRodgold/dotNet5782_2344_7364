@@ -79,16 +79,15 @@ namespace ConsoleUI
                     break;
                 case (2.1): //Update Percel to Drone
                     #region
-                    for(int i=0;i< DalObjects.Get_Drone_arr_index; i++)
-                    {
-                        if(Drone_arr[i]..)
-
-                    }
+                    Console.WriteLine("Enter a Parcel indexer to associate");
+                    int Parcel_index;
+                    int.TryParse(Console.ReadLine(), out Parcel_index);
+                    DalObjects.DalObjects.Associate_Drone_to_Parcel(Parcel_index);
                     #endregion
                     break;
                 case (2.2):
                     #region
-                   
+                    
                     #endregion
                     break;
                 case (2.3):
@@ -111,51 +110,51 @@ namespace ConsoleUI
                     #region
                     int Base_id;
                     int.TryParse(Console.ReadLine(), out Base_id);
-                    DalObjects.Get_string_BaseStation(Base_id);
+                    DalObjects.DalObjects.Print_BaseStation(Base_id);
                     #endregion
                     break;
                 case (3.2):
                     #region
                     int Drone_id;
-                    int.TryParse(Console.ReadLine()out Drone_id);
-                    DalObjects.Get_string_Drone(Drone_id);
+                    int.TryParse(Console.ReadLine(),out Drone_id);
+                    DalObjects.DalObjects.Print_Drone(Drone_id);
                     #endregion
                     break;
                 case (3.3):
                     #region
                     int Customer_id;
                     int.TryParse(Console.ReadLine(), out Customer_id);
-                    DalObjects.Get_string_Customer(Customer_id);
+                    DalObjects.DalObjects.Print_Customer(Customer_id);
                     #endregion
                     break;
                 case (3.4):
                     #region
                     int Parcel_id;
                     int.TryParse(Console.ReadLine(), out Parcel_id);
-                    DalObjects.Get_string_Parcel(Parcel_id);
+                    DalObjects.DalObjects.Print_Parcel(Parcel_id);
                     #endregion
                     break;
                 case (4.1):
                     #region
-                    for(int i=0;i < DalObjects.DataSource.Config.BaseStation_arr_index; i++)
+                    for(int i=0;i < DalObjects.DalObjects.Get_BaseStation_arr_index(); i++)
                     {
-                        DalObjects.DataSource.BaseStation_arr[i].ToString();
+                        DalObjects.DalObjects.Print_BaseStation(i);
                     }
                     #endregion
                     break;
                 case (4.2):
                     #region
-                    for (int i = 0; i < DalObjects.Get_Drone_arr_index; i++)
+                    for (int i = 0; i < DalObjects.DalObjects.Get_Drone_arr_index(); i++)
                     {
-                        DalObjects.DataSource.Drone_arr[i].ToString();
+                        DalObjects.DalObjects.Print_Drone(i);
                     }
                     #endregion
                     break;
                 case (4.3):
                     #region
-                    for (int i = 0; i < DalObjects.get_Customer_arr_index; i++)
+                    for (int i = 0; i < DalObjects.DalObjects.Get_Customer_arr_index(); i++)
                     {
-                        DalObjects.DataSource.Customer_arr[i].ToString();
+                        DalObjects.DalObjects.Print_Customer(i);
                     }
                     #endregion
                     break;
@@ -163,7 +162,7 @@ namespace ConsoleUI
                     #region
                     for (int i = 0; i < DalObjects.DalObjects.Get_Parcel_arr_index(); i++)
                     {
-                        DalObjects.DalObjects.
+                        DalObjects.DalObjects.Print_Parcel(i);
                     }
                     #endregion
                     break;
