@@ -4,7 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
-
+/// <summary>
+/// hello
+/// </summary>
 namespace DalObjects
 {
     public class DataSource
@@ -22,7 +24,7 @@ namespace DalObjects
             internal static int Parcel_arr_index = 0; // points to next free index in Parcel_arr
             internal static int Parcel_id = 12345; // runing number for parcel Id
         }
-        internal static double sexagesimal(double decimal_degrees)
+        internal static double sexagesimal(double decimal_degrees) // convert double to sexagesimal
         {
             double minutes = (decimal_degrees - Math.Floor(decimal_degrees)) * 60.0;
             double seconds = (minutes - Math.Floor(minutes)) * 60.0;
@@ -32,70 +34,75 @@ namespace DalObjects
             seconds = Math.Floor(seconds);
             tenths = Math.Floor(tenths);
             return minutes + seconds + tenths;
+
+
+        
+            
+
         }
 
-        internal  static void CreatBaseStation()
+        internal  static void CreatBaseStation() // this function creats random base station
         {
+            #region // call construct base station
             Random rnd = new Random(); // generate randome number
-            BaseStation_arr[Config.BaseStation_arr_index] = new BaseStation
-            {
-                Id = Convert.ToInt32(DateTime.Now.Ticks),
-                Name = Convert.ToString((RandomBases)rnd.Next(1, 11)),
-                ChargeSlots = rnd.Next(1, 101),
-                Longtitude = sexagesimal(rnd.NextDouble() + 31.728959),
-                Latitude = sexagesimal(rnd.NextDouble() + 35.206714)
-            };
-            Config.BaseStation_arr_index++;
+            DalObjects.ConstructBaseStation // construct
+                (
+                Convert.ToInt32(DateTime.Now.Ticks),
+                Convert.ToString((RandomBases)rnd.Next(1, 11)),
+                rnd.Next(1, 101),
+                 sexagesimal(rnd.NextDouble() + 31.728959),
+                 sexagesimal(rnd.NextDouble() + 35.206714)
+                );
+            #endregion
         }
-
-        internal static void CreatDrone()
+        internal static void CreatDrone() // this function creats random drone
         {
+            #region // call construct drone
             Random rnd = new Random(); // generate randome number
-            Drone_arr[Config.Drone_arr_index] = new Drone // set random data for new drone
-            {
-                Id = Convert.ToInt32(DateTime.Now.Ticks),
-                Model = $"modle_number{Config.Drone_arr_index + 1}",
-                MaxWeight = (WeightCategories)rnd.Next(1, 4),
-                Battery = rnd.Next(0, 101),
-                Status = (DroneStatuses)rnd.Next(1, 4),
-            };
-            Config.Drone_arr_index++; // edvance free index by 1
+            DalObjects.ConstructDrone // construct
+                (
+                Convert.ToInt32(DateTime.Now.Ticks),
+                $"modle_number{Config.Drone_arr_index + 1}",
+                (WeightCategories)rnd.Next(1, 4),
+                (DroneStatuses)rnd.Next(1, 4),
+                 rnd.Next(0, 101)
+                );
+            #endregion
         }
-
-        internal static void CreatParcel()
+        internal static void CreatParcel() // this function creats random parcel
         {
+            #region // call construct parcel
             Random rnd = new Random(); // generate randome number
-            Parcel_arr[Config.Parcel_arr_index] = new Parcel
-            {
-                Id = Config.Parcel_id,
-                SenderId = Convert.ToInt32(DateTime.Now.Ticks),
-                TargetId = Convert.ToInt32(DateTime.Now.Ticks),
-                Weight = (WeightCategories)rnd.Next(1, 4),
-                Priority = (Priorities)rnd.Next(1, 4),
-                Requsted = DateTime.Now,
-                DroneId = 0,
-                Scheduled = DateTime.Now.AddMinutes(rnd.Next(1, 60)),
-                PickedUp = DateTime.Now.AddMinutes(rnd.Next(1, 60)),
-                Deliverd = DateTime.Now.AddMinutes(rnd.Next(1, 60)),
-            };
-            Config.Parcel_id++; // grow runing id number by 1
-            Config.Parcel_arr_index++; // edvance free index by 1
+            DalObjects.ConstructParcel // construct
+                (
+                Config.Parcel_id,
+                Convert.ToInt32(DateTime.Now.Ticks),
+                Convert.ToInt32(DateTime.Now.Ticks),
+                (WeightCategories)rnd.Next(1, 4),
+                (Priorities)rnd.Next(1, 4),
+                DateTime.Now,
+                0,
+                DateTime.Now.AddMinutes(rnd.Next(1, 60)),
+                DateTime.Now.AddMinutes(rnd.Next(1, 60)),
+                DateTime.Now.AddMinutes(rnd.Next(1, 60))
+                );
+            #endregion
         }
-
-        internal static void CreatCustomer()
+        internal static void CreatCustomer()  // this function creats random customer
         {
+            #region // call construct customer
             Random rnd = new Random(); // generate randome number
-            Customer_arr[Config.Customer_arr_index] = new Customer
-            {
-                Id = Convert.ToInt32(DateTime.Now.Ticks),
-                Name = Convert.ToString((RandomNames)rnd.Next(1, 16)),
-                Phone = "05" + Convert.ToString(rnd.Next(10000000, 99999999)),
-                Longtitude = sexagesimal(rnd.NextDouble() + 31.728959),
-                Latitude = sexagesimal(rnd.NextDouble() + 35.206714)
-            };
-            Config.Customer_arr_index++; // edvance free index by 1
+            DalObjects.ConstructCustomer // construct
+                (
+                Convert.ToInt32(DateTime.Now.Ticks),
+                Convert.ToString((RandomNames)rnd.Next(1, 16)),
+                "05" + Convert.ToString(rnd.Next(10000000, 99999999)),
+                sexagesimal(rnd.NextDouble() + 31.728959),
+                sexagesimal(rnd.NextDouble() + 35.206714)
+                );
+            #endregion
         }
-        internal static void Initialize()
+        internal static void Initialize() // this function sets 2 randome base stations,  5 randome drones,  10 custemers and 10 parcels
         {
             for (int i = 0; i < 2; i++) // set 2 base stations
             {
@@ -112,7 +119,6 @@ namespace DalObjects
                 CreatParcel();
                 CreatCustomer();
             }
-
         }
     }
 }
