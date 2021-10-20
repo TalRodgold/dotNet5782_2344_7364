@@ -15,7 +15,7 @@ namespace IDAL
             public int ChargeSlots { get; set; } // Number of free charging atstions
             public double Longtitude { get; set; } // Longitude 
             public double Latitude { get; set; } // Latitude
-            public override string ToString()
+            public override string ToString() // return string with all the data
             {
                 return $"Base station #{Id}: \n Name = {Name} \n Charge slots = {ChargeSlots} \n Longtitude = {Longtitude} \n Latitude = {Latitude} \n ";
             }

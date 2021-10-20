@@ -77,9 +77,9 @@ namespace DalObjects
                 (Priorities)rnd.Next(1, 4),
                 DateTime.Now,
                 0,
-                DateTime.Now.AddMinutes(rnd.Next(1, 60)),
-                DateTime.Now.AddMinutes(rnd.Next(1, 60)),
-                DateTime.Now.AddMinutes(rnd.Next(1, 60))
+                DateTime.Now.AddHours(rnd.Next(1, 23)),
+                DateTime.MinValue,
+                DateTime.MinValue
                 );
             #endregion
         }

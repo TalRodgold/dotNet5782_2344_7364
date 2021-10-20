@@ -105,12 +105,16 @@ namespace DalObjects
         {
             Console.WriteLine(DataSource.Parcel_arr[index].ToString());
         }
-        //public static DroneStatuses Get_DroneStatuse(int index)
-        //{
-        //    return DataSource.Drone_arr[index].Status;
-        //}
-        public static void Associate_Drone_to_Parcel(int index)
+        public static void Associate_Drone_to_Parcel(int id)
         {
+            int index; 
+            for (index = 0; index < DataSource.Config.Parcel_arr_index; index++)
+            {
+                if (DataSource.Parcel_arr[index].Id == id)
+                {
+                    break;
+                }
+            }
             WeightCategories Requested_weight = DataSource.Parcel_arr[index].Weight;
             for (int i = 0; i < DataSource.Config.Drone_arr_index; i++)
             {
@@ -118,6 +122,46 @@ namespace DalObjects
                 {
                     DataSource.Drone_arr[i].Status = DroneStatuses.Delivery;
                     DataSource.Parcel_arr[index].DroneId = DataSource.Drone_arr[i].Id;
+                }
+            }
+        }
+        public static void Print_not_associate()
+        {
+            for (int i = 0; i < DataSource.Config.Parcel_arr_index; i++)
+            {
+                if (DataSource.Parcel_arr[i].DroneId == 0)
+                {
+                    Print_Parcel(i);
+                }
+            }
+        }
+        public static void Print_free_BaseStation()
+        {
+            for (int i = 0; i < DataSource.Config.BaseStation_arr_index; i++)
+            {
+                if (DataSource.BaseStation_arr[i].ChargeSlots != 0)
+                {
+                    Print_BaseStation(i);
+                }
+            }
+        }
+        public static void Update_Parcle_pickup(int id)
+        {
+            for (int i = 0; i < DataSource.Config.Parcel_arr_index; i++)
+            {
+                if (DataSource.Parcel_arr[i].Id == id)
+                {
+                    DataSource.Parcel_arr[i].PickedUp = DateTime.Now;
+                }
+            }
+        }
+        public static void Update_Parcle_delivery(int id)
+        {
+            for (int i = 0; i < DataSource.Config.Parcel_arr_index; i++)
+            {
+                if (DataSource.Parcel_arr[i].Id == id)
+                {
+                    DataSource.Parcel_arr[i].Deliverd = DateTime.Now;
                 }
             }
         }
