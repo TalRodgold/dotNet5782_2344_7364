@@ -73,27 +73,22 @@ namespace DalObjects
             DataSource.Customer_arr[DataSource.Config.Customer_arr_index] = new_customer;
             DataSource.Config.Customer_arr_index++;
         }
-
         public static int Get_Drone_arr_index()
         {
             return DataSource.Config.Drone_arr_index;
         }
-
         public static int Get_BaseStation_arr_index()
         {
             return DataSource.Config.BaseStation_arr_index;
         }
-
         public static int Get_Customer_arr_index()
         {
             return DataSource.Config.Customer_arr_index;
         }
-
         public static int Get_Parcel_arr_index()
         {
             return DataSource.Config.Parcel_arr_index;
         }
-
         public static void Print_Drone(int index)
         {
             Console.WriteLine(DataSource.Drone_arr[index].ToString());
@@ -109,6 +104,22 @@ namespace DalObjects
         public static void Print_Parcel(int index)
         {
             Console.WriteLine(DataSource.Parcel_arr[index].ToString());
+        }
+        //public static DroneStatuses Get_DroneStatuse(int index)
+        //{
+        //    return DataSource.Drone_arr[index].Status;
+        //}
+        public static void Associate_Drone_to_Parcel(int index)
+        {
+            WeightCategories Requested_weight = DataSource.Parcel_arr[index].Weight;
+            for (int i = 0; i < DataSource.Config.Drone_arr_index; i++)
+            {
+                if (DataSource.Drone_arr[i].Status == DroneStatuses.Available && DataSource.Drone_arr[i].MaxWeight >= Requested_weight)
+                {
+                    DataSource.Drone_arr[i].Status = DroneStatuses.Delivery;
+                    DataSource.Parcel_arr[index].DroneId = DataSource.Drone_arr[i].Id;
+                }
+            }
         }
     }
 }
