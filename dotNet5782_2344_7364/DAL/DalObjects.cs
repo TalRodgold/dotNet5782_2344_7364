@@ -57,7 +57,7 @@ namespace DalObjects
                 Deliverd = deliverd
             };
             DataSource.Parcel_arr[DataSource.Config.Parcel_arr_index] = new_parcel;
-            DataSource.Config.Parcel_arr_index++;
+            (DataSource.Config.Parcel_arr_index)++;
         }
 
         public static void ConstructCustomer(int id, string name, string phone, double longtitude, double latitude) // construct a new customer
@@ -132,6 +132,7 @@ namespace DalObjects
                 {
                     DataSource.Drone_arr[i].Status = DroneStatuses.Delivery;
                     DataSource.Parcel_arr[index].DroneId = DataSource.Drone_arr[i].Id;
+                    break;
                 }
             }
         }

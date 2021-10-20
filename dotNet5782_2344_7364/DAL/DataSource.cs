@@ -25,7 +25,7 @@ namespace DalObjects
             internal static int Customer_arr_index = 0; // points to next free index in Customer_arr
             internal static int Parcel_arr_index = 0; // points to next free index in Parcel_arr
             internal static int DroneCharge_arr_index = 0; // points to next free index in DroneCharge_arr
-            internal static int Parcel_id = 12345; // runing number for parcel Id
+            internal static int Parcel_id = 0;//12345; // runing number for parcel Id
         }
         internal static double sexagesimal(double decimal_degrees) // convert double to sexagesimal
         {
@@ -73,7 +73,7 @@ namespace DalObjects
             Random rnd = new Random(); // generate randome number
             DalObjects.ConstructParcel // construct
                 (
-                Config.Parcel_id,
+                Config.Parcel_arr_index,//parcel_id
                 (int)rnd.Next(0,Config.Customer_arr_index),//i put that but i think we need to vheck the sender and the reciver no the same
                 (int)rnd.Next(0, Config.Customer_arr_index),//
                 (WeightCategories)rnd.Next(0, 3),
