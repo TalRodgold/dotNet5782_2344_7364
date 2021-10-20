@@ -57,7 +57,8 @@ namespace DalObjects
                 Deliverd = deliverd
             };
             DataSource.Parcel_arr[DataSource.Config.Parcel_arr_index] = new_parcel;
-            (DataSource.Config.Parcel_arr_index)++;
+            DataSource.Config.Parcel_arr_index++;
+            DataSource.Config.Parcel_id++;
         }
 
         public static void ConstructCustomer(int id, string name, string phone, double longtitude, double latitude) // construct a new customer
@@ -117,7 +118,7 @@ namespace DalObjects
         }
         public static void Associate_Drone_to_Parcel(int id)
         {
-            int index; 
+            int index;
             for (index = 0; index < DataSource.Config.Parcel_arr_index; index++)
             {
                 if (DataSource.Parcel_arr[index].Id == id)
@@ -207,7 +208,7 @@ namespace DalObjects
                 if (DataSource.DroneCharge_arr[i].DroneId == droneId && DataSource.DroneCharge_arr[i].StationId == stationId)
                 {
 
-                    if ((DataSource.Config.DroneCharge_arr_index -1) == i)
+                    if ((DataSource.Config.DroneCharge_arr_index - 1) == i)
                     {
                         // do delete here!!!!
                     }
@@ -229,6 +230,38 @@ namespace DalObjects
                     break;
                 }
             }
+        }
+        public static void Print_menu()
+        {
+            Console.WriteLine("TO SELECT OPTION ENTER SECTION NUMBER\n\n1) ADDING OPTIONS:\n\t1.1) Add base station\n\t1.2) Add drone\n\t1.3) Add customer\n\t1.4) Add parcel\n\n2) UPDATE OPTIONS:\n\t2.1) Assign parcel to customer\n\t2.2) Collect parcel by drone\n\t2.3) Deliver parcel to customer\n\t2.4) Send drone to charge at base station\n\t2.5) Release drone from charging\n\n3) DISPLAY DATA:\n\t3.1) Display base station\n\t3.2) Display drone\n\t3.3) Display customer\n\t3.4) Display parcel\n\n4) DISPLAY LISTS\n\t4.1) Display list of base stations\n\t4.2) Display list of drones\n\t4.3) Display list of customers\n\t4.4) Display list of parcels\n\t4.5) Display list of parcels that are not assigned to drone\n\t4.6) Display list of base stations with free charging stations\n\n5) EXIT\n");
+        }
+        public static void Print_intro()
+        {
+            Console.WriteLine
+                ( 
+                 "                 _                                             \n   " +
+                  "             | |                                              \n   " +
+                 "__      _____| | ___ ___  _ __ ___   ___                     \n   " +
+                 "\\ \\ /\\ /  / _\\ |/ __/ _ \\| '_ ` _ \\ / _ \\              \n   " +
+                  " \\ V  V  / __/ | (_| (_) | | | | | | __ /                     \n   " +
+                  "  \\_ /\\_/\\___|_|\\___\\___/|_| |_| |_|\\___|     \n \n \n  " +
+
+
+
+
+                 "                 __/\\__             \n   " +
+                 "               `==/\\==`             \n  " +
+                 "      ____________/__\\____________    \n " +
+                 "      /____________________________\\    \n " +
+                 "        __||__||__/.--.\\__||__||__       \n  " +
+                 "      /__|___|___( >< )___|___|__\\       \n " +
+                 "                 _/`--`\\_                  \n " +
+                 "                (/------\\)                  \n "
+                             );
+
+
+
+
         }
     }
 }
