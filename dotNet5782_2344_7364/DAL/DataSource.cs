@@ -45,7 +45,7 @@ namespace DalObjects
             Random rnd = new Random(); // generate randome number
             DalObjects.ConstructBaseStation // construct
                 (
-                Convert.ToInt32(DateTime.Now.Ticks),
+                (int)DateTime.Now.Ticks,
                 Convert.ToString((RandomBases)rnd.Next(1, 11)),
                 rnd.Next(0, 10),
                  sexagesimal(rnd.NextDouble() + 31.728959),
@@ -59,10 +59,10 @@ namespace DalObjects
             Random rnd = new Random(); // generate randome number
             DalObjects.ConstructDrone // construct
                 (
-                Convert.ToInt32(DateTime.Now.Ticks),
+                (-1*(int)DateTime.Now.Ticks),
                 $"modle_number{Config.Drone_arr_index + 1}",
-                (WeightCategories)rnd.Next(1, 4),
-                (DroneStatuses)rnd.Next(1, 4),
+                (WeightCategories)rnd.Next(0, 3),
+                (DroneStatuses)rnd.Next(0, 3),
                  rnd.Next(0, 101)
                 );
             #endregion
@@ -74,10 +74,10 @@ namespace DalObjects
             DalObjects.ConstructParcel // construct
                 (
                 Config.Parcel_id,
-                Convert.ToInt32(DateTime.Now.Ticks),
-                Convert.ToInt32(DateTime.Now.Ticks),
-                (WeightCategories)rnd.Next(1, 4),
-                (Priorities)rnd.Next(1, 4),
+                (-1 * (int)DateTime.Now.Ticks),
+                (-1 * (int)DateTime.Now.Ticks),
+                (WeightCategories)rnd.Next(0, 3),
+                (Priorities)rnd.Next(0, 3),
                 DateTime.Now,
                 0,
                 DateTime.Now.AddHours(rnd.Next(1, 23)),
@@ -92,8 +92,8 @@ namespace DalObjects
             Random rnd = new Random(); // generate randome number
             DalObjects.ConstructCustomer // construct
                 (
-                Convert.ToInt32(DateTime.Now.Ticks),
-                Convert.ToString((RandomNames)rnd.Next(1, 16)),
+                (-1 * (int)DateTime.Now.Ticks),
+                Convert.ToString((RandomNames)rnd.Next(0, 15)),
                 "05" + Convert.ToString(rnd.Next(10000000, 99999999)),
                 sexagesimal(rnd.NextDouble() + 31.728959),
                 sexagesimal(rnd.NextDouble() + 35.206714)
