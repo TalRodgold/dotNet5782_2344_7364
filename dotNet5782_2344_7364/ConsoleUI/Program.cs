@@ -12,7 +12,7 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             DalObjects.DalObjects.Start_program(); // start program with random values
-            DalObjects.DalObjects.Print_intro(); // print ascii art
+            DalObjects.DalObjects.Print_intro(); // print ascii art.
             DalObjects.DalObjects.Print_menu(); // print menu
             while (true) // untill user enters 5 continue running
             {
