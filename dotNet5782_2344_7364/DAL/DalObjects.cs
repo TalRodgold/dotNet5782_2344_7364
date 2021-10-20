@@ -203,17 +203,47 @@ namespace DalObjects
         public static void Start_program() { DataSource.Initialize(); }
         public static void Release_DroneCharge(int droneId, int stationId)
         {
+            bool flag=false;
             for (int i = 0; i < DataSource.Config.DroneCharge_arr_index; i++)
             {
                 if (DataSource.DroneCharge_arr[i].DroneId == droneId && DataSource.DroneCharge_arr[i].StationId == stationId)
                 {
-
+                    DroneCharge[] New_DroneCharge_arr = new DroneCharge[10]; // array of drone charges
                     if ((DataSource.Config.DroneCharge_arr_index - 1) == i)
                     {
-                        // do delete here!!!!
+                        for(int j=0;j< (DataSource.Config.DroneCharge_arr_index-1);j++)
+                        {
+                            New_DroneCharge_arr[j] = DataSource.DroneCharge_arr[j];
+                        }
+                        for (int j = 0; j < (DataSource.Config.DroneCharge_arr_index); j++)
+                        {
+                            DataSource.DroneCharge_arr[j] = New_DroneCharge_arr[j];
+                        }
+                    }
+                    else
+                    {
+                        for (int j = 0; j < (DataSource.Config.DroneCharge_arr_index-1); j++)
+                        {
+                            if(j==i)
+                            {
+                                flag = true;
+                            }
+                            if(flag=false)
+                            {
+                                New_DroneCharge_arr[j] = DataSource.DroneCharge_arr[j];
+                            }
+                            else
+                            {
+                                New_DroneCharge_arr[j] = DataSource.DroneCharge_arr[j+1];
+                            }
+                        }
+                        for (int j = 0; j < (DataSource.Config.DroneCharge_arr_index); j++)
+                        {
+                            DataSource.DroneCharge_arr[j] = New_DroneCharge_arr[j];
+                        }
                     }
                 }
-            }
+            }       
             for (int i = 0; i < DataSource.Config.Drone_arr_index; i++)
             {
                 if (DataSource.Drone_arr[i].Id == droneId)
