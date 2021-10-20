@@ -26,5 +26,17 @@ namespace DalObjects
             DataSource.BaseStation_arr[DataSource.Config.BaseStation_arr_index] = new_base_station;
             DataSource.Config.BaseStation_arr_index++;
         }
+
+        public static void ConstructDrone(int id, string model, WeightCategories maxWeight, DroneStatuses status, double battery)
+        {
+            Drone new_drone = new Drone
+            {
+                Id = id,
+                Model = model,
+                MaxWeight = maxWeight,
+                Status = status,
+                Battery = battery,
+            }
+        }
     }
 }
