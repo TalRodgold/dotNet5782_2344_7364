@@ -34,11 +34,6 @@ namespace DalObjects
             seconds = Math.Floor(seconds);
             tenths = Math.Floor(tenths);
             return minutes + seconds + tenths;
-
-
-        
-            
-
         }
 
         internal  static void CreatBaseStation() // this function creats random base station
@@ -49,7 +44,7 @@ namespace DalObjects
                 (
                 Convert.ToInt32(DateTime.Now.Ticks),
                 Convert.ToString((RandomBases)rnd.Next(1, 11)),
-                rnd.Next(1, 101),
+                rnd.Next(0, 10),
                  sexagesimal(rnd.NextDouble() + 31.728959),
                  sexagesimal(rnd.NextDouble() + 35.206714)
                 );
@@ -122,5 +117,4 @@ namespace DalObjects
         }
     }
 }
-
 

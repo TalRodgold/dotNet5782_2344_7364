@@ -15,6 +15,10 @@ namespace IDAL
             public string Phone { get; set; } // customers phone number
             public double Longtitude { get; set; } // Longitude 
             public double Latitude { get; set; } // Latitude
+            public override string ToString()
+            {
+                return $"Customer #{Id}: \n Name = {Name} \n Phone = {Phone} \n Longtitude = {Longtitude} \n Latitude = {Latitude} \n";
+            }
         }
     }
 }

@@ -10,11 +10,15 @@ namespace IDAL
     {
         public struct BaseStation
         {
-            public int Id { get; set; } // Id number for each drone
-            public string Name { get; set; } // Drones name
+            public int Id { get; set; } // Id number for each base station
+            public string Name { get; set; } // base station name
             public int ChargeSlots { get; set; } // Number of free charging atstions
             public double Longtitude { get; set; } // Longitude 
             public double Latitude { get; set; } // Latitude
+            public override string ToString()
+            {
+                return $"Base station #{Id}: \n Name = {Name} \n Charge slots = {ChargeSlots} \n Longtitude = {Longtitude} \n Latitude = {Latitude} \n ";
+            }
         }
       
     }
