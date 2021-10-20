@@ -160,7 +160,7 @@ namespace ConsoleUI
                     for (int i = 0; i < DalObjects.DalObjects.Get_Drone_arr_index(); i++)
                     {
                         DalObjects.DalObjects.Print_Drone(i);
-                    }
+                    }                       
                     #endregion
                     break;
                 case (4.3):
@@ -189,11 +189,10 @@ namespace ConsoleUI
                     DalObjects.DalObjects.Print_free_BaseStation();
                     #endregion
                     break;
-                case (5):
+                case (5):                                    
                     #region
                     return;
                     #endregion
-                    break;
                 default:
                     break;
             }
