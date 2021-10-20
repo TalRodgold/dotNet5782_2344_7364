@@ -13,7 +13,7 @@ namespace DalObjects
         {
             DataSource.Initialize();
         }
-        public static void ConstructBaseStation(int id, string name, int chargeSlots, double longtitude, double latitude) // construct a new base station
+        public static void ConstructBaseStation(int id, string name, int chargeSlots, string longtitude, string latitude) // construct a new base station
         {
             BaseStation new_base_station = new BaseStation
             {
@@ -61,7 +61,7 @@ namespace DalObjects
             DataSource.Config.Parcel_id++;
         }
 
-        public static void ConstructCustomer(int id, string name, string phone, double longtitude, double latitude) // construct a new customer
+        public static void ConstructCustomer(int id, string name, string phone, string longtitude, string latitude) // construct a new customer
         {
             Customer new_customer = new Customer
             {
