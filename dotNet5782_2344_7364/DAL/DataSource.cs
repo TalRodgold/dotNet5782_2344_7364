@@ -74,8 +74,8 @@ namespace DalObjects
             DalObjects.ConstructParcel // construct
                 (
                 Config.Parcel_id,
-                (-1 * (int)DateTime.Now.Ticks),
-                (-1 * (int)DateTime.Now.Ticks),
+                (int)rnd.Next(0,Config.Customer_arr_index),//i put that but i think we need to vheck the sender and the reciver no the same
+                (int)rnd.Next(0, Config.Customer_arr_index),//
                 (WeightCategories)rnd.Next(0, 3),
                 (Priorities)rnd.Next(0, 3),
                 DateTime.Now,
@@ -114,10 +114,11 @@ namespace DalObjects
 
             for (int i = 0; i < 10; i++) // set 10 custemers and 10 parcels
             {
-                CreatParcel();
                 CreatCustomer();
+                CreatParcel();
             }
         }
     }
 }
-
+//     (-1 * (int)DateTime.Now.Ticks),
+               // (-1 * (int)DateTime.Now.Ticks)
