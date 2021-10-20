@@ -79,59 +79,72 @@ namespace ConsoleUI
                     break;
                 case (2.1): //Update Percel to Drone
                     #region
-                    Console.WriteLine("Enter a Parcel indexer to associate");
-                    int Parcel_index;
-                    int.TryParse(Console.ReadLine(), out Parcel_index);
-                    DalObjects.DalObjects.Associate_Drone_to_Parcel(Parcel_index);
+                    Console.WriteLine("Enter a Parcel id to associate");
+                    int Parcel_id;
+                    int.TryParse(Console.ReadLine(), out Parcel_id);
+                    DalObjects.DalObjects.Associate_Drone_to_Parcel(Parcel_id);
                     #endregion
                     break;
-                case (2.2):
+                case (2.2)://Update_Parcle_pickup
                     #region
-                    
+                    int Parcel_id1;
+                    int.TryParse(Console.ReadLine(), out Parcel_id1);
+                    DalObjects.DalObjects.Update_Parcle_pickup(Parcel_id1);
                     #endregion
                     break;
-                case (2.3):
+                case (2.3)://Update_Parcle_delivery
                     #region
+                    int Parcel_id2;
+                    int.TryParse(Console.ReadLine(), out Parcel_id2);
+                    DalObjects.DalObjects.Update_Parcle_delivery(Parcel_id2);
                     #endregion
                     break;
-                case (2.4):
+                case (2.4)://Print_free_BaseStation
                     #region
-                    //print free base station
-                    int Base_Id;
-                    int.TryParse(Console.ReadLine(), out Base_Id);
-                    //function
-                    #endregion
-                    break;
-                case (2.5):
-                    #region
-                    #endregion
-                    break;
-                case (3.1):
-                    #region
+                    DalObjects.DalObjects.Print_free_BaseStation();
+                    int Drone_id;
+                    int.TryParse(Console.ReadLine(), out Drone_id);
                     int Base_id;
                     int.TryParse(Console.ReadLine(), out Base_id);
-                    DalObjects.DalObjects.Print_BaseStation(Base_id);
+                    DalObjects.DalObjects.Update_DroneCharge(Drone_id, Base_id);
                     #endregion
                     break;
-                case (3.2):
+                case (2.5)://release_DroneCharge
                     #region
-                    int Drone_id;
-                    int.TryParse(Console.ReadLine(),out Drone_id);
-                    DalObjects.DalObjects.Print_Drone(Drone_id);
+                    DalObjects.DalObjects.Print_free_BaseStation();
+                    int Drone_id1;
+                    int.TryParse(Console.ReadLine(), out Drone_id1);
+                    int Base_id1;
+                    int.TryParse(Console.ReadLine(), out Base_id1);
+                    DalObjects.DalObjects.Release_DroneCharge(Drone_id1, Base_id1);
                     #endregion
                     break;
-                case (3.3):
+                case (3.1)://Print_BaseStation
+                    #region
+                    int Base_id2;
+                    int.TryParse(Console.ReadLine(), out Base_id2);
+                    DalObjects.DalObjects.Print_BaseStation(Base_id2);
+                    #endregion
+                    break;
+                case (3.2)://Print_Drone
+                    #region
+                    int Drone_id2;
+                    int.TryParse(Console.ReadLine(),out Drone_id2);
+                    DalObjects.DalObjects.Print_Drone(Drone_id2);
+                    #endregion
+                    break;
+                case (3.3)://Print_Customer
                     #region
                     int Customer_id;
                     int.TryParse(Console.ReadLine(), out Customer_id);
                     DalObjects.DalObjects.Print_Customer(Customer_id);
                     #endregion
                     break;
-                case (3.4):
+                case (3.4)://Print_Parcel
                     #region
-                    int Parcel_id;
-                    int.TryParse(Console.ReadLine(), out Parcel_id);
-                    DalObjects.DalObjects.Print_Parcel(Parcel_id);
+                    int Parcel_id3;
+                    int.TryParse(Console.ReadLine(), out Parcel_id3);
+                    DalObjects.DalObjects.Print_Parcel(Parcel_id3);
                     #endregion
                     break;
                 case (4.1):
@@ -168,14 +181,17 @@ namespace ConsoleUI
                     break;
                 case (4.5):
                     #region
+                    DalObjects.DalObjects.Print_not_associate();
                     #endregion
                     break;
                 case (4.6):
                     #region
+                    DalObjects.DalObjects.Print_free_BaseStation();
                     #endregion
                     break;
                 case (5):
                     #region
+                    return;
                     #endregion
                     break;
                 default:
