@@ -9,7 +9,7 @@ namespace DalObjects
 {
     public class DalObjects
     {
-        public DalObjects() // constructor
+        public DalObjects() // constructor.
         {
             DataSource.Initialize();
         }
