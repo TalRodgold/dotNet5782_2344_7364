@@ -80,11 +80,12 @@ namespace DalObjects
         {
             #region // call construct parcel
             Random rnd = new Random(); // generate randome number
+
             DalObjects.ConstructParcel // construct
                 (
                 Config.Parcel_id,
-                (int)rnd.Next(0,Config.Customer_arr_index),//i put that but i think we need to vheck the sender and the reciver no the same
-                (int)rnd.Next(0, Config.Customer_arr_index),//
+                Customer_arr[rnd.Next(0, Config.Customer_arr_index)].Id,
+                Customer_arr[rnd.Next(0, Config.Customer_arr_index)].Id,
                 (WeightCategories)rnd.Next(0, 3),
                 (Priorities)rnd.Next(0, 3),
                 DateTime.Now,
@@ -104,8 +105,8 @@ namespace DalObjects
                 (Byte)DateTime.Now.Ticks,
                 Convert.ToString((RandomNames)rnd.Next(0, 15)),
                 "05" + Convert.ToString(rnd.Next(10000000, 99999999)),
-                sexagesimal(rnd.NextDouble() + 31.728959),
-                sexagesimal(rnd.NextDouble() + 35.206714)
+                sexagesimal(rnd.NextDouble() + 31.728959, 'N'),
+                sexagesimal(rnd.NextDouble() + 35.206714, 'E')
                 );
             #endregion
         }

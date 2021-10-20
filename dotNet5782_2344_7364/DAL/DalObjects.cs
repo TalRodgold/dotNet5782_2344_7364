@@ -228,7 +228,7 @@ namespace DalObjects
                             {
                                 flag = true;
                             }
-                            if(flag=false)
+                            if(flag == false)
                             {
                                 New_DroneCharge_arr[j] = DataSource.DroneCharge_arr[j];
                             }
