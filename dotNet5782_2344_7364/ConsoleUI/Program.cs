@@ -200,6 +200,7 @@ namespace ConsoleUI
                     default:
                         break;
                 }
+                User_input = Console.ReadLine();
             }
         }
     }

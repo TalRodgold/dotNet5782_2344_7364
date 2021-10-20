@@ -83,8 +83,8 @@ namespace DalObjects
             DalObjects.ConstructParcel // construct
                 (
                 Config.Parcel_id,
-                DataSource.Customer_arr[rnd.Next(0,9)].Id,
-                DataSource.Customer_arr[rnd.Next(0, 9)].Id,
+                (int)rnd.Next(0,Config.Customer_arr_index),//i put that but i think we need to vheck the sender and the reciver no the same
+                (int)rnd.Next(0, Config.Customer_arr_index),//
                 (WeightCategories)rnd.Next(0, 3),
                 (Priorities)rnd.Next(0, 3),
                 DateTime.Now,
