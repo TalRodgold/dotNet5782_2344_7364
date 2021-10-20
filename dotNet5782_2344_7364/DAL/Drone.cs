@@ -10,25 +10,16 @@ namespace IDAL
     { 
         public struct Drone
          {
-            public int Id{ get; set; }
-            public string Model{ get; set; }
-            public WeightCategories MaxWeight{ get; set; }
-            public DroneStatuses Status{ get; set; }
+            public int Id{ get; set; } // drone id
+            public string Model{ get; set; } // drone model
+            public WeightCategories MaxWeight{ get; set; } // maximum weight drone can carry
+            public DroneStatuses Status{ get; set; } // drones status
             public double Battery{ get; set; }
 
             public override string ToString()
             {
-                return $"Drone #{Id}: model = {Model}, {Status}, {MaxWeight}, battery = {(int)Battery} \n";
-            }
-            void DroneCreat(int id = 0, string model = "No modle set", WeightCategories maxWeight = WeightCategories.Heavy, DroneStatuses status = DroneStatuses.Available, int battery = 100) 
-            { 
-                Id = id;
-                Model = model;
-                MaxWeight = maxWeight; 
-                Status = status; 
-                Battery = battery; 
+                return $"Drone #{Id}: \n Model = {Model} \n Status = {Status} \n Max weight = {MaxWeight} \n battery = {(int)Battery} \n";
             }
         }
-    }
-   
+    } 
 }

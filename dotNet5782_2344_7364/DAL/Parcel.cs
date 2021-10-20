@@ -20,9 +20,10 @@ namespace IDAL
             public DateTime Scheduled { get; set; } // Scheduled
             public DateTime PickedUp { get; set; }  // PickedUp
             public DateTime Deliverd { get; set; } // Deliverd
-
-
-           
+            public override string ToString()
+            {
+                return $"Parcel #{Id}: \n Sender Id = {SenderId} \n Target Id = {TargetId} \n Weight = {Weight} \n  Priority = {Priority} \n  Requsted = {Requsted} \n Drone Id = {DroneId} \n Scheduled = {Scheduled} \n Picked up = {PickedUp} \n Deliverd = {Deliverd} \n";
+            }
         }
     }
 
