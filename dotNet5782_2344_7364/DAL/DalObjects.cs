@@ -198,6 +198,7 @@ namespace DalObjects
                 }
             }
         }
+        public static void Start_program() { DataSource.Initialize(); }
         public static void Release_DroneCharge(int droneId, int stationId)
         {
             for (int i = 0; i < DataSource.Config.DroneCharge_arr_index; i++)
