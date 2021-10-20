@@ -12,7 +12,7 @@ namespace IDAL
         {
             public int Id { get; set; } // Id number for each base station
             public string Name { get; set; } // base station name
-            public int ChargeSlots { get; set; } // Number of free charging atstions
+            public int ChargeSlots { get; set; } // Number of free charging satstions
             public double Longtitude { get; set; } // Longitude 
             public double Latitude { get; set; } // Latitude
             public override string ToString() // return string with all the data

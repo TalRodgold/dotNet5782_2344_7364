@@ -73,6 +73,16 @@ namespace DalObjects
             DataSource.Customer_arr[DataSource.Config.Customer_arr_index] = new_customer;
             DataSource.Config.Customer_arr_index++;
         }
+        public static void ConstructDroneCharge(int droneId, int stationId)
+        {
+            DroneCharge new_droneCharge = new DroneCharge
+            {
+                DroneId = droneId,
+                StationId = stationId
+            };
+            DataSource.DroneCharge_arr[DataSource.Config.DroneCharge_arr_index] = new_droneCharge;
+            DataSource.Config.DroneCharge_arr_index++;
+        }
         public static int Get_Drone_arr_index()
         {
             return DataSource.Config.Drone_arr_index;
@@ -132,6 +142,7 @@ namespace DalObjects
                 if (DataSource.Parcel_arr[i].DroneId == 0)
                 {
                     Print_Parcel(i);
+                    break;
                 }
             }
         }
@@ -142,6 +153,7 @@ namespace DalObjects
                 if (DataSource.BaseStation_arr[i].ChargeSlots != 0)
                 {
                     Print_BaseStation(i);
+                    break;
                 }
             }
         }
@@ -152,6 +164,7 @@ namespace DalObjects
                 if (DataSource.Parcel_arr[i].Id == id)
                 {
                     DataSource.Parcel_arr[i].PickedUp = DateTime.Now;
+                    break;
                 }
             }
         }
@@ -162,6 +175,56 @@ namespace DalObjects
                 if (DataSource.Parcel_arr[i].Id == id)
                 {
                     DataSource.Parcel_arr[i].Deliverd = DateTime.Now;
+                }
+            }
+        }
+        public static void Update_DroneCharge(int droneId, int stationId)
+        {
+            ConstructDroneCharge(droneId, stationId);
+            for (int i = 0; i < DataSource.Config.Drone_arr_index; i++)
+            {
+                if (DataSource.Drone_arr[i].Id == droneId)
+                {
+                    DataSource.Drone_arr[i].Status = DroneStatuses.Maintenance;
+                    break;
+                }
+            }
+            for (int i = 0; i < DataSource.Config.BaseStation_arr_index; i++)
+            {
+                if (DataSource.BaseStation_arr[i].Id == stationId)
+                {
+                    DataSource.BaseStation_arr[i].ChargeSlots -= 1;
+                    break;
+                }
+            }
+        }
+        public static void Release_DroneCharge(int droneId, int stationId)
+        {
+            for (int i = 0; i < DataSource.Config.DroneCharge_arr_index; i++)
+            {
+                if (DataSource.DroneCharge_arr[i].DroneId == droneId && DataSource.DroneCharge_arr[i].StationId == stationId)
+                {
+
+                    if ((DataSource.Config.DroneCharge_arr_index -1) == i)
+                    {
+                        // do delete here!!!!
+                    }
+                }
+            }
+            for (int i = 0; i < DataSource.Config.Drone_arr_index; i++)
+            {
+                if (DataSource.Drone_arr[i].Id == droneId)
+                {
+                    DataSource.Drone_arr[i].Status = DroneStatuses.Available;
+                    break;
+                }
+            }
+            for (int i = 0; i < DataSource.Config.BaseStation_arr_index; i++)
+            {
+                if (DataSource.BaseStation_arr[i].Id == stationId)
+                {
+                    DataSource.BaseStation_arr[i].ChargeSlots += 1;
+                    break;
                 }
             }
         }

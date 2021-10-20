@@ -11,17 +11,20 @@ namespace DalObjects
 {
     public class DataSource
     {
+        #region // 5 arrays for storing data
         internal static Drone[] Drone_arr = new Drone[10]; // array of drones
         internal static BaseStation[] BaseStation_arr = new BaseStation[5]; // array of base stations
         internal static Customer[] Customer_arr = new Customer[100]; // array of customers
         internal static Parcel[] Parcel_arr = new Parcel[1000]; // array of parcel
-
+        internal static DroneCharge[] DroneCharge_arr = new DroneCharge[10]; // array of drone charges
+        #endregion
         internal class Config // hold index of next free index
         {
             internal static int Drone_arr_index = 0; // points to next free index in drone_arr
             internal static int BaseStation_arr_index = 0; // points to next free index in BaseStation_arr
             internal static int Customer_arr_index = 0; // points to next free index in Customer_arr
             internal static int Parcel_arr_index = 0; // points to next free index in Parcel_arr
+            internal static int DroneCharge_arr_index = 0; // points to next free index in DroneCharge_arr
             internal static int Parcel_id = 12345; // runing number for parcel Id
         }
         internal static double sexagesimal(double decimal_degrees) // convert double to sexagesimal
