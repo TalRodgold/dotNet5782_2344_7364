@@ -16,6 +16,7 @@ namespace ConsoleUI
             DalObjects.DalObjects.Print_menu(); // print menu
             while (true) // untill user enters 5 continue running
             {
+                Console.WriteLine("Please enter your choice:");
                 string User_input = Console.ReadLine(); // read user input
                 switch (User_input)
                 {
@@ -34,7 +35,7 @@ namespace ConsoleUI
                         #endregion
                     case ("1.2")://Drone addition
                         #region// Drone addition
-                        Console.WriteLine("Please enter following data: \n 1) Id \n 2) Model \n 3) WeightCategories(1/2/3) \n 4) DroneStatuses(1,2,3) \n 5) battery ");
+                        Console.WriteLine("Please enter following data: \n 1) Id \n 2) Model \n 3) WeightCategories(0 for Light, 1 for Medium, 2 for Heavy) \n 4) DroneStatuses(0 for Avilable, 1 for Delivery, 2 for Maintenance) \n 5) battery ");
                         int User_DroneId;
                         int.TryParse(Console.ReadLine(), out User_DroneId);
                         string User_model = Console.ReadLine();
@@ -61,7 +62,7 @@ namespace ConsoleUI
                         #endregion
                     case ("1.4")://Parcel addition
                         #region// Parcel addition
-                        Console.WriteLine("Please enter following data: \n 1) Id \n 2) sender id \n 3) target id \n 4) wight categories \n 5) priorities \n 6)requested time ");                       
+                        Console.WriteLine("Please enter following data: \n 1) Id \n 2) sender id \n 3) target id \n 4) WeightCategories(0 for Light, 1 for Medium, 2 for Heavy) \n 5) priorities( 0 for Regular, 1 for Express, 2 for Urgant ) \n 6)requested time ");                       
                         int User_ParcelId;
                         int.TryParse(Console.ReadLine(), out User_ParcelId);
                         int User_SenderId;

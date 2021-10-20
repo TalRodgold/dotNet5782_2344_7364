@@ -100,20 +100,52 @@ namespace DalObjects
         {
             return DataSource.Config.Parcel_arr_index;
         }
-        public static void Print_Drone(int index)
+        public static void Print_Drone(int id)
         {
+            int index;
+            for (index = 0; index < DataSource.Config.Drone_arr_index; index++)
+            {
+                if (DataSource.Drone_arr[index].Id == id)
+                {
+                    break;
+                }
+            }
             Console.WriteLine(DataSource.Drone_arr[index].ToString());
         }
-        public static void Print_BaseStation(int index)
+        public static void Print_BaseStation(int id)
         {
+            int index;
+            for (index = 0; index < DataSource.Config.BaseStation_arr_index; index++)
+            {
+                if (DataSource.BaseStation_arr[index].Id == id)
+                {
+                    break;
+                }
+            }
             Console.WriteLine(DataSource.BaseStation_arr[index].ToString());
         }
-        public static void Print_Customer(int index)
+        public static void Print_Customer(int id)
         {
+            int index;
+            for (index = 0; index < DataSource.Config.Customer_arr_index; index++)
+            {
+                if (DataSource.Customer_arr[index].Id == id)
+                {
+                    break;
+                }
+            }
             Console.WriteLine(DataSource.Customer_arr[index].ToString());
         }
-        public static void Print_Parcel(int index)
+        public static void Print_Parcel(int id)
         {
+            int index;
+            for (index = 0; index < DataSource.Config.Parcel_arr_index; index++)
+            {
+                if (DataSource.Parcel_arr[index].Id == id)
+                {
+                    break;
+                }
+            }
             Console.WriteLine(DataSource.Parcel_arr[index].ToString());
         }
         public static void Associate_Drone_to_Parcel(int id)
@@ -139,25 +171,37 @@ namespace DalObjects
         }
         public static void Print_not_associate()
         {
+            bool flag = true;
             for (int i = 0; i < DataSource.Config.Parcel_arr_index; i++)
             {
                 if (DataSource.Parcel_arr[i].DroneId == 0)
                 {
                     Print_Parcel(i);
-                    break;
+                    flag = false;
                 }
             }
+            if (flag)
+            {
+                Console.WriteLine(" All parcels have been associated to a drone ");
+            }
+            
         }
         public static void Print_free_BaseStation()
         {
+            bool flag = true;
             for (int i = 0; i < DataSource.Config.BaseStation_arr_index; i++)
             {
                 if (DataSource.BaseStation_arr[i].ChargeSlots != 0)
                 {
                     Print_BaseStation(i);
-                    break;
+                    flag = false;
                 }
             }
+            if (flag)
+            {
+                Console.WriteLine(" All base station charging slots are full ");
+            }
+
         }
         public static void Update_Parcle_pickup(int id)
         {
