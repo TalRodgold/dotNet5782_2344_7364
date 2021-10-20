@@ -18,7 +18,7 @@ namespace ConsoleUI
                 case (1)://BaseStation addition
                     Console.WriteLine("Please enter following data: \n 1) Id \n 2) Name \n 3) ChargeSlots \n 4) Longtitude \n 5) Latitude ");
                     #region
-                    int User_id 
+                    int User_id;
                     int.TryParse(Console.ReadLine(),out User_id);
                     string User_name = Console.ReadLine();
                     int User_chargeSlots;
