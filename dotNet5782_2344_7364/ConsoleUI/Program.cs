@@ -9,6 +9,10 @@ namespace ConsoleUI
 {
     class Program
     {
+        /// <summary>
+        /// main program
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
             DalObjects.DalObjects.Start_program(); // start program with random values
@@ -22,14 +26,16 @@ namespace ConsoleUI
                 {
                     case ("1.1")://BaseStation addition
                         #region// BaseStation addition
-                        Console.WriteLine("Please enter following data: \n 1) Id \n 2) Name \n 3) ChargeSlots \n 4) Longtitude \n 5) Latitude ");                      
+                        Console.WriteLine("Please enter following data: \n 1) Id \n 2) Name \n 3) ChargeSlots \n 4) Longtitude \n 5) Latitude ");                    
                         int User_id;
                         int.TryParse(Console.ReadLine(), out User_id);
                         string User_name = Console.ReadLine();
                         int User_chargeSlots;
                         int.TryParse(Console.ReadLine(), out User_chargeSlots);
-                        string User_longtitude = Console.ReadLine();
-                        string User_latitude = Console.ReadLine();
+                        double User_longtitude;
+                        double.TryParse(Console.ReadLine(), out User_longtitude);
+                        double User_latitude;
+                        double.TryParse(Console.ReadLine(), out User_latitude);
                         DalObjects.DalObjects.ConstructBaseStation(User_id, User_name, User_chargeSlots, User_longtitude, User_latitude);
                         break;
                         #endregion
@@ -55,8 +61,10 @@ namespace ConsoleUI
                         int.TryParse(Console.ReadLine(), out User_CustomerId);
                         string User_CustomerName = Console.ReadLine();
                         string User_PhoneNumber = Console.ReadLine();
-                        string User_CustomerLongtitude = Console.ReadLine();                        
-                        string User_CustomerLatitude = Console.ReadLine();                
+                        double User_CustomerLongtitude;
+                        double.TryParse(Console.ReadLine(), out User_CustomerLongtitude);
+                        double User_CustomerLatitude;
+                        double.TryParse(Console.ReadLine(), out User_CustomerLatitude);                                     
                         DalObjects.DalObjects.ConstructCustomer(User_CustomerId, User_CustomerName, User_PhoneNumber, User_CustomerLatitude, User_CustomerLatitude);
                         break;
                         #endregion
@@ -150,34 +158,22 @@ namespace ConsoleUI
                         #endregion
                     case ("4.1")://Display list of base stations
                         #region//Display list of base stations
-                        for (int i = 0; i < DalObjects.DalObjects.Get_BaseStation_arr_index(); i++)
-                        {
-                            DalObjects.DalObjects.Print_BaseStation(i);
-                        }
+                        DalObjects.DalObjects.Print_list_of_BaseStations();
                         break;
                         #endregion
                     case ("4.2")://Display list of drones
                         #region//Display list of drones
-                        for (int i = 0; i < DalObjects.DalObjects.Get_Drone_arr_index(); i++)
-                        {
-                            DalObjects.DalObjects.Print_Drone(i);
-                        }
+                        DalObjects.DalObjects.Print_list_of_Drones();
                         break;
                         #endregion
                     case ("4.3")://Display list of customers
                         #region//Display list of customers
-                        for (int i = 0; i < DalObjects.DalObjects.Get_Customer_arr_index(); i++)
-                        {
-                            DalObjects.DalObjects.Print_Customer(i);
-                        }
+                        DalObjects.DalObjects.Print_list_of_Customers();
                         break;
                         #endregion
                     case ("4.4")://Display list of parcels
                         #region//Display list of parcels
-                        for (int i = 0; i < DalObjects.DalObjects.Get_Parcel_arr_index(); i++)
-                        {
-                            DalObjects.DalObjects.Print_Parcel(i);
-                        }
+                        DalObjects.DalObjects.print_list_of_Parcels();
                         break;
                         #endregion
                     case ("4.5")://Display list of parcels who are not associated to a drone
@@ -195,6 +191,7 @@ namespace ConsoleUI
                         return;
                     #endregion
                     default:
+                        Console.WriteLine("INVALID INPUT");
                         break;
                 }
             }

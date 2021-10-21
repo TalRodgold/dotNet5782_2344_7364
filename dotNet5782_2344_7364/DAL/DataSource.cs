@@ -4,13 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
-/// <summary>
-/// this 
-/// </summary>
 namespace DalObjects
 {
+    /// <summary>
+    /// Holds data in arrays
+    /// </summary>
     public class DataSource
     {
+        /// <summary>
+        /// this class holds all the data of the program in arrays
+        /// this class also creats random data to start program
+        /// </summary>
+        
         #region // 5 arrays for storing data
         internal static Drone[] Drone_arr = new Drone[10]; // array of drones
         internal static BaseStation[] BaseStation_arr = new BaseStation[5]; // array of base stations
@@ -18,8 +23,12 @@ namespace DalObjects
         internal static Parcel[] Parcel_arr = new Parcel[1000]; // array of parcel
         internal static DroneCharge[] DroneCharge_arr = new DroneCharge[10]; // array of drone charges
         #endregion
-        internal class Config // hold index of next free index
+        internal class Config // hold index of next free index in array
         {
+            /// <summary>
+            /// hold index of next free index in array
+            /// </summary>
+            
             #region// index for arrays and parcel id
             internal static int Drone_arr_index = 0; // points to next free index in drone_arr
             internal static int BaseStation_arr_index = 0; // points to next free index in BaseStation_arr
@@ -31,21 +40,23 @@ namespace DalObjects
         }
         internal static string sexagesimal(double decimal_degrees, Char c) // convert double to sexagesimal
         {
-
+            #region//convert double to sexagesimal
+            // caluclate seconds
             double latDegrees = decimal_degrees;
-            int latSeconds = (int)Math.Round(latDegrees * 60 * 60); 
-
+            int latSeconds = (int)Math.Round(latDegrees * 60 * 60);  
+            // calculate degrees
             double latDegreesWithFraction = decimal_degrees;
-            int degrees = (int)latDegreesWithFraction; 
-
+            int degrees = (int)latDegreesWithFraction;  
+            // calculate minutes
             double fractionalDegrees = latDegrees - degrees; 
             double minutesWithFraction = 60 * fractionalDegrees; 
-            int minutes = (int)minutesWithFraction; 
-
+            int minutes = (int)minutesWithFraction;
+            // caluclate seconds with fraction
             double fractionalMinutes = minutesWithFraction - minutes; 
-            double secondsWithFraction = 60 * fractionalMinutes; 
-                                                                
-            return $"{degrees}° {minutes}' {(float)secondsWithFraction}\" {c}";     
+            double secondsWithFraction = 60 * fractionalMinutes;
+            
+            return $"{degrees}°{minutes}'{string.Format("{0:F3}", secondsWithFraction)}\"{c}"; // return string of cordinents
+            #endregion
         }
 
         internal  static void CreatBaseStation() // this function creats random base station
@@ -57,8 +68,8 @@ namespace DalObjects
                 (Byte)DateTime.Now.Ticks,
                 Convert.ToString((RandomBases)rnd.Next(1, 11)),
                 rnd.Next(0, 10),
-                 sexagesimal(rnd.NextDouble() + 31.728959, 'N'),
-                 sexagesimal(rnd.NextDouble() + 35.206714, 'E')
+                rnd.NextDouble() + 31.728959,
+                rnd.NextDouble() + 35.206714
                 );
             #endregion
         }
@@ -105,8 +116,8 @@ namespace DalObjects
                 (Byte)DateTime.Now.Ticks,
                 Convert.ToString((RandomNames)rnd.Next(0, 15)),
                 "05" + Convert.ToString(rnd.Next(10000000, 99999999)),
-                sexagesimal(rnd.NextDouble() + 31.728959, 'N'),
-                sexagesimal(rnd.NextDouble() + 35.206714, 'E')
+                rnd.NextDouble() + 31.728959,
+                rnd.NextDouble() + 35.206714
                 );
             #endregion
         }
