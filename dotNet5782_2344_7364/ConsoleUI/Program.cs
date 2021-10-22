@@ -16,11 +16,12 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             DalObjects.DalObjects.Start_program(); // start program with random values
-            DalObjects.DalObjects.Print_intro(); // print ascii art.
-            DalObjects.DalObjects.Print_menu(); // print menu
+            print_func(1); // print ascii art.
+            print_func(2); // print menu
+            print_func(3); // print choice request
             while (true) // untill user enters 5 continue running
             {
-                Console.WriteLine("Please enter your choice:");
+                print_func(3);
                 string User_input = Console.ReadLine(); // read user input
                 switch (User_input)
                 {
@@ -91,7 +92,10 @@ namespace ConsoleUI
                         Console.WriteLine("Enter a Parcel id to associate");
                         int Parcel_id;
                         int.TryParse(Console.ReadLine(), out Parcel_id);
-                        DalObjects.DalObjects.Associate_Drone_to_Parcel(Parcel_id);
+                        Console.WriteLine("Enter a drone id to associate");
+                        int drone_id;
+                        int.TryParse(Console.ReadLine(), out drone_id);
+                        DalObjects.DalObjects.Associate_Drone_to_Parcel(Parcel_id, drone_id);
                         break;
                         #endregion
                     case ("2.2")://Update Parcle pickup
@@ -195,6 +199,53 @@ namespace ConsoleUI
                         break;
                 }
             }
+        }
+        static void print_func(int i) // print
+        {
+            #region//if i = 1   print a welcome intro
+            if (i == 1) // print option welcome intro
+            {
+                
+                Console.WriteLine
+                    (
+                     "                 _                                             \n   " +
+                      "             | |                                              \n   " +
+                     "__      _____| | ___ ___  _ __ ___   ___                     \n   " +
+                     "\\ \\ /\\ /  / _\\ |/ __/ _ \\| '_ ` _ \\ / _ \\              \n   " +
+                      " \\ V  V  / __/ | (_| (_) | | | | | | __ /                     \n   " +
+                      "  \\_ /\\_/\\___|_|\\___\\___/|_| |_| |_|\\___|     \n \n \n  " +
+
+
+
+
+                     "                 __/\\__             \n   " +
+                     "               `==/\\==`             \n  " +
+                     "      ____________/__\\____________    \n " +
+                     "      /____________________________\\    \n " +
+                     "        __||__||__/.--.\\__||__||__       \n  " +
+                     "      /__|___|___( >< )___|___|__\\       \n " +
+                     "                 _/`--`\\_                  \n " +
+                     "                (/------\\)                  \n "
+                                 );
+
+
+
+               
+                return;
+            }
+            #endregion
+            #region//if i = 2  print menu
+            if (i == 2) // print a menu
+            {              
+                Console.WriteLine("TO SELECT OPTION ENTER SECTION NUMBER\n\n1) ADDING OPTIONS:\n\t1.1) Add base station\n\t1.2) Add drone\n\t1.3) Add customer\n\t1.4) Add parcel\n\n2) UPDATE OPTIONS:\n\t2.1) Assign parcel to customer\n\t2.2) Collect parcel by drone\n\t2.3) Deliver parcel to customer\n\t2.4) Send drone to charge at base station\n\t2.5) Release drone from charging\n\n3) DISPLAY DATA:\n\t3.1) Display base station\n\t3.2) Display drone\n\t3.3) Display customer\n\t3.4) Display parcel\n\n4) DISPLAY LISTS\n\t4.1) Display list of base stations\n\t4.2) Display list of drones\n\t4.3) Display list of customers\n\t4.4) Display list of parcels\n\t4.5) Display list of parcels that are not assigned to drone\n\t4.6) Display list of base stations with free charging stations\n\n5) EXIT\n");
+            }
+            #endregion
+            #region//if i = 3 print  choice request
+            if (i == 3)
+            {
+                Console.WriteLine("Please enter your choice:");  // print choice request
+            }
+            #endregion
         }
     }
 }
