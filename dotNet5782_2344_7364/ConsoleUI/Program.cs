@@ -18,10 +18,9 @@ namespace ConsoleUI
             DalObjects.DalObjects.Start_program(); // start program with random values
             print_func(1); // print ascii art.
             print_func(2); // print menu
-            print_func(3); // print choice request
             while (true) // untill user enters 5 continue running
             {
-                print_func(3);
+                print_func(3);// print choice request
                 string User_input = Console.ReadLine(); // read user input
                 switch (User_input)
                 {
@@ -95,7 +94,7 @@ namespace ConsoleUI
                         Console.WriteLine("Enter a drone id to associate");
                         int drone_id;
                         int.TryParse(Console.ReadLine(), out drone_id);
-                        DalObjects.DalObjects.Associate_Drone_to_Parcel(Parcel_id, drone_id);
+                        DalObjects.DalObjects.Associate_Drone_to_Parcel( drone_id, Parcel_id);
                         break;
                         #endregion
                     case ("2.2")://Update Parcle pickup
