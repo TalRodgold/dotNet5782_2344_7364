@@ -87,14 +87,16 @@ namespace DalObjects
         }
         public static void ConstructDroneCharge(int droneId, int stationId) // construct a new drone charge
         {
-            #region//construct a new drone charge
-            DroneCharge new_droneCharge = new DroneCharge
+            #region//construct a new drone charge           
+            for (int i = 0; i < DataSource.Config.DroneCharge_arr_size; i++)
             {
-                DroneId = droneId,
-                StationId = stationId
-            };
-            DataSource.DroneCharge_arr[DataSource.Config.DroneCharge_arr_index] = new_droneCharge; // add to array
-            DataSource.Config.DroneCharge_arr_index++; // edvance index to next free cell
+                if (DataSource.DroneCharge_arr[i].DroneId == -1 && DataSource.DroneCharge_arr[i].StationId == -1)
+                {
+                    DataSource.DroneCharge_arr[i].DroneId = droneId; // add to array id
+                    DataSource.DroneCharge_arr[i].StationId = stationId; // add to array id
+                    break;
+                }
+            }   
             #endregion
         }
         public static int Get_Drone_arr_index() // returns index of next free cell in drone arr
@@ -113,83 +115,86 @@ namespace DalObjects
         {
             return DataSource.Config.Parcel_arr_index;
         }
-        public static void Print_Drone(int id) // find drone in array and print it
+        public static int Find_Drone_by_id(int id) // find drone in array 
         {
-            #region//find drone in array and print it
-            int index;
-            for (index = 0; index < DataSource.Config.Drone_arr_index; index++) // search drone by id
+            #region//find drone in array
+            for (int index = 0; index < DataSource.Config.Drone_arr_index; index++) // search drone by id
             {
                 if (DataSource.Drone_arr[index].Id == id)
                 {
-                    break;
+                    return index; // return index
                 }
             }
-            Console.WriteLine(DataSource.Drone_arr[index].ToString()); // print
+            return -1; // if not found
+            #endregion
+        }
+        public static int Find_BaseStation_by_id(int id) // find BaseStation in array 
+        {
+            #region//find BaseStation in array
+            for (int index = 0; index < DataSource.Config.BaseStation_arr_index; index++) // search BaseStation by id
+            {
+                if (DataSource.BaseStation_arr[index].Id == id)
+                {
+                    return index; // return index
+                }
+            }
+            return -1; // if not found
+            #endregion
+        }
+        public static int Find_Customer_by_id(int id) // find Customer in array 
+        {
+            #region//find Customer in array
+            for (int index = 0; index < DataSource.Config.Customer_arr_index; index++) // searchCustomer by id
+            {
+                if (DataSource.Customer_arr[index].Id == id)
+                {
+                    return index; // return index
+                }
+            }
+            return -1; // if not found
+            #endregion
+        }
+        public static int Find_Parcel_by_id(int id) // find Parcel in array 
+        {
+            #region//find Parcelin array
+            for (int index = 0; index < DataSource.Config.Parcel_arr_index; index++) // Parcel by id
+            {
+                if (DataSource.Parcel_arr[index].Id == id)
+                {
+                    return index; // return index
+                }
+            }
+            return -1; // if not found
+            #endregion
+        }
+        public static void Print_Drone(int id) // find drone in array and print it
+        {
+            #region//find drone in array and print it        
+            Console.WriteLine(DataSource.Drone_arr[Find_Drone_by_id(id)].ToString()); // print
             #endregion
         }
         public static void Print_BaseStation(int id) // find base station in array and print it
         {
             #region//find base station in array and print it
-            int index;
-            for (index = 0; index < DataSource.Config.BaseStation_arr_index; index++) // search base station by id
-            {
-                if (DataSource.BaseStation_arr[index].Id == id)
-                {
-                    break;
-                }
-            }
-            Console.WriteLine(DataSource.BaseStation_arr[index].ToString()); // print
+            Console.WriteLine(DataSource.BaseStation_arr[Find_BaseStation_by_id(id)].ToString()); // print
             #endregion
         }
         public static void Print_Customer(int id) // find customer in array and print it
         {
-            #region//find customer in array and print it
-            int index;
-            for (index = 0; index < DataSource.Config.Customer_arr_index; index++) // search customer by id
-            {
-                if (DataSource.Customer_arr[index].Id == id)
-                {
-                    break;
-                }
-            }
-            Console.WriteLine(DataSource.Customer_arr[index].ToString()); // print
+            #region//find customer in array and print it         
+            Console.WriteLine(DataSource.Customer_arr[Find_Customer_by_id(id)].ToString()); // print
             #endregion
         }
         public static void Print_Parcel(int id)// find parcel in array and print it
         {
-            #region//find parcel in array and print it
-            int index;
-            for (index = 0; index < DataSource.Config.Parcel_arr_index; index++) // search parcel by id
-            {
-                if (DataSource.Parcel_arr[index].Id == id)
-                {
-                    break;
-                }
-            }
-            Console.WriteLine(DataSource.Parcel_arr[index].ToString()); // print
+            #region//find parcel in array and print it     
+            Console.WriteLine(DataSource.Parcel_arr[Find_Parcel_by_id(id)].ToString()); // print
             #endregion
         }
-        public static void Associate_Drone_to_Parcel(int id) // associate a drone to a parcel
+        public static void Associate_Drone_to_Parcel(int drone_id, int parcle_id) // associate a drone to a parcel
         {
             #region//associate a drone to a parcel
-            int index;
-            for (index = 0; index < DataSource.Config.Parcel_arr_index; index++) // find parcel by id
-            {
-                if (DataSource.Parcel_arr[index].Id == id)
-                {
-                    break;
-                }
-            }
-            WeightCategories Requested_weight = DataSource.Parcel_arr[index].Weight; // set requested weight by weight categories
-            for (int i = 0; i < DataSource.Config.Drone_arr_index; i++) // search for a drone
-            {
-                if (DataSource.Drone_arr[i].Status == DroneStatuses.Available && DataSource.Drone_arr[i].MaxWeight >= Requested_weight) // if is avalibale and maches weight
-                {
-                    DataSource.Drone_arr[i].Status = DroneStatuses.Delivery;
-                    DataSource.Parcel_arr[index].DroneId = DataSource.Drone_arr[i].Id;
-                    break;
-                }
-            }
+            DataSource.Parcel_arr[Find_Parcel_by_id(parcle_id)].DroneId = drone_id;
             #endregion
         }
         public static void Print_list_of_BaseStations() // print all the base stations in array
@@ -258,148 +263,40 @@ namespace DalObjects
         }
         public static void Update_Parcle_pickup(int id) // update parcel pickup
         {
-            #region//update parcel pickup
-            for (int i = 0; i < DataSource.Config.Parcel_arr_index; i++) // search
-            {
-                if (DataSource.Parcel_arr[i].Id == id) // if id match
-                {
-                    DataSource.Parcel_arr[i].PickedUp = DateTime.Now; // currnt time
-                    break;
-                }
-            }
+            #region//update parcel pickup           
+             DataSource.Parcel_arr[Find_Parcel_by_id(id)].PickedUp = DateTime.Now; // currnt time  
             #endregion
         }
         public static void Update_Parcle_delivery(int id) // update parcel delivery
         {
             #region//update parcel delivery
-            for (int i = 0; i < DataSource.Config.Parcel_arr_index; i++)// search
-            {
-                if (DataSource.Parcel_arr[i].Id == id) // if id match
-                {
-                    DataSource.Parcel_arr[i].Deliverd = DateTime.Now;  // currnt time
-                    break;
-                }
-            }
+            DataSource.Parcel_arr[Find_Parcel_by_id(id)].Deliverd = DateTime.Now;  // currnt time
             #endregion
         }
         public static void Update_DroneCharge(int droneId, int stationId) // update drones charging
         {
             #region//update drones charging
             ConstructDroneCharge(droneId, stationId); // call construct
-            for (int i = 0; i < DataSource.Config.Drone_arr_index; i++) // search
-            {
-                if (DataSource.Drone_arr[i].Id == droneId) // if id match
-                {
-                    DataSource.Drone_arr[i].Status = DroneStatuses.Maintenance;
-                    break;
-                }
-            }
-            for (int i = 0; i < DataSource.Config.BaseStation_arr_index; i++) // search
-            {
-                if (DataSource.BaseStation_arr[i].Id == stationId) // if id match
-                {
-                    DataSource.BaseStation_arr[i].ChargeSlots -= 1;
-                    break;
-                }
-            }
+            DataSource.Drone_arr[Find_Drone_by_id(droneId)].Status = DroneStatuses.Maintenance; // update drone status
+            DataSource.BaseStation_arr[Find_BaseStation_by_id(stationId)].ChargeSlots -= 1;   // change number of free charge slots
             #endregion
         }
-
         public static void Release_DroneCharge(int droneId, int stationId) // releas drone from charging
         {
             #region//releas drone from charging
-            bool flag =false; // flag
-            for (int i = 0; i < DataSource.Config.DroneCharge_arr_index; i++)
+            DataSource.Drone_arr[Find_Drone_by_id(droneId)].Status = DroneStatuses.Available; // make drone status: Available
+            DataSource.BaseStation_arr[Find_BaseStation_by_id(stationId)].ChargeSlots++;
+            for (int index = 0; index < DataSource.Config.DroneCharge_arr_size; index++) // search drone by id in drone charge
             {
-                if (DataSource.DroneCharge_arr[i].DroneId == droneId && DataSource.DroneCharge_arr[i].StationId == stationId)
+                if (DataSource.DroneCharge_arr[index].DroneId == droneId)
                 {
-                    DroneCharge[] New_DroneCharge_arr = new DroneCharge[10]; // array of drone charges
-                    if ((DataSource.Config.DroneCharge_arr_index - 1) == i)
-                    {
-                        for(int j=0;j< (DataSource.Config.DroneCharge_arr_index-1);j++)
-                        {
-                            New_DroneCharge_arr[j] = DataSource.DroneCharge_arr[j];
-                        }
-                        for (int j = 0; j < (DataSource.Config.DroneCharge_arr_index); j++)
-                        {
-                            DataSource.DroneCharge_arr[j] = New_DroneCharge_arr[j];
-                        }
-                    }
-                    else
-                    {
-                        for (int j = 0; j < (DataSource.Config.DroneCharge_arr_index-1); j++)
-                        {
-                            if(j==i)
-                            {
-                                flag = true;
-                            }
-                            if(flag == false)
-                            {
-                                New_DroneCharge_arr[j] = DataSource.DroneCharge_arr[j];
-                            }
-                            else
-                            {
-                                New_DroneCharge_arr[j] = DataSource.DroneCharge_arr[j+1];
-                            }
-                        }
-                        for (int j = 0; j < (DataSource.Config.DroneCharge_arr_index); j++)
-                        {
-                            DataSource.DroneCharge_arr[j] = New_DroneCharge_arr[j];
-                        }
-                    }
-                }
-            }       
-            for (int i = 0; i < DataSource.Config.Drone_arr_index; i++)
-            {
-                if (DataSource.Drone_arr[i].Id == droneId)
-                {
-                    DataSource.Drone_arr[i].Status = DroneStatuses.Available;
-                    break;
-                }
-            }
-            for (int i = 0; i < DataSource.Config.BaseStation_arr_index; i++)
-            {
-                if (DataSource.BaseStation_arr[i].Id == stationId)
-                {
-                    DataSource.BaseStation_arr[i].ChargeSlots += 1;
+                    DataSource.DroneCharge_arr[index].DroneId = -1; // set to availeble
+                    DataSource.DroneCharge_arr[index].StationId = -1; // set to availeble
                     break;
                 }
             }
             #endregion
         }
         public static void Start_program() { DataSource.Initialize(); } // call initialize to start program with random data
-        public static void Print_menu() // print option menu
-        {
-            Console.WriteLine("TO SELECT OPTION ENTER SECTION NUMBER\n\n1) ADDING OPTIONS:\n\t1.1) Add base station\n\t1.2) Add drone\n\t1.3) Add customer\n\t1.4) Add parcel\n\n2) UPDATE OPTIONS:\n\t2.1) Assign parcel to customer\n\t2.2) Collect parcel by drone\n\t2.3) Deliver parcel to customer\n\t2.4) Send drone to charge at base station\n\t2.5) Release drone from charging\n\n3) DISPLAY DATA:\n\t3.1) Display base station\n\t3.2) Display drone\n\t3.3) Display customer\n\t3.4) Display parcel\n\n4) DISPLAY LISTS\n\t4.1) Display list of base stations\n\t4.2) Display list of drones\n\t4.3) Display list of customers\n\t4.4) Display list of parcels\n\t4.5) Display list of parcels that are not assigned to drone\n\t4.6) Display list of base stations with free charging stations\n\n5) EXIT\n");
-        }
-        public static void Print_intro() // print a welcome intro
-        {
-            #region//print a welcome intro
-            Console.WriteLine
-                ( 
-                 "                 _                                             \n   " +
-                  "             | |                                              \n   " +
-                 "__      _____| | ___ ___  _ __ ___   ___                     \n   " +
-                 "\\ \\ /\\ /  / _\\ |/ __/ _ \\| '_ ` _ \\ / _ \\              \n   " +
-                  " \\ V  V  / __/ | (_| (_) | | | | | | __ /                     \n   " +
-                  "  \\_ /\\_/\\___|_|\\___\\___/|_| |_| |_|\\___|     \n \n \n  " +
-
-
-
-
-                 "                 __/\\__             \n   " +
-                 "               `==/\\==`             \n  " +
-                 "      ____________/__\\____________    \n " +
-                 "      /____________________________\\    \n " +
-                 "        __||__||__/.--.\\__||__||__       \n  " +
-                 "      /__|___|___( >< )___|___|__\\       \n " +
-                 "                 _/`--`\\_                  \n " +
-                 "                (/------\\)                  \n "
-                             );
-
-
-
-            #endregion
-        }
     }
 }

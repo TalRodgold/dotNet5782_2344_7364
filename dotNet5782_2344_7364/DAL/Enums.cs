@@ -7,6 +7,9 @@ namespace IDAL
 {
     namespace DO
     {
+        /// <summary>
+        /// contains enums
+        /// </summary>
         public enum WeightCategories // 3 types of weight categories
         { Light, Medium, Heavy }
         public enum Priorities  // 3 types of proirities
@@ -17,6 +20,5 @@ namespace IDAL
         { Gilo, Baaka, Pissgat_zev, Katamon, Malha, Givat_shaul, City_center, San_simon, Givat_mordehai, Arnona}
         public enum RandomNames // random list of names
         { Yossi, Moti, Avraham, Kobi, David, Haim, Hana, Shoshi, Malkishua, Yossef, Hagit, Yarden, Erez, Yoni, Gali }
-
     }
 }

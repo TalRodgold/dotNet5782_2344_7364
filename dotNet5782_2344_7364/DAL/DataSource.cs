@@ -34,7 +34,7 @@ namespace DalObjects
             internal static int BaseStation_arr_index = 0; // points to next free index in BaseStation_arr
             internal static int Customer_arr_index = 0; // points to next free index in Customer_arr
             internal static int Parcel_arr_index = 0; // points to next free index in Parcel_arr
-            internal static int DroneCharge_arr_index = 0; // points to next free index in DroneCharge_arr
+            internal static int DroneCharge_arr_size = DroneCharge_arr.Length; // points to next free index in DroneCharge_arr
             internal static int Parcel_id = 12345; // runing number for parcel Id
             #endregion
         }
@@ -121,6 +121,20 @@ namespace DalObjects
                 );
             #endregion
         }
+        internal static void CreatDroneCharge() // call construct drone charge
+        {
+            #region // call construct drone charge
+            DroneCharge new_droneCharge = new DroneCharge
+            {
+                DroneId = -1,
+                StationId = -1
+            };
+            for (int i = 0; i < Config.DroneCharge_arr_size; i++) // set all cells in array to be free (-1)
+            {             
+                DroneCharge_arr[i] = new_droneCharge;                
+            }
+            #endregion
+        }
         internal static void Initialize() // this function sets 2 randome base stations,  5 randome drones,  10 custemers and 10 parcels
         {
             #region// call 4 creat functions
@@ -138,10 +152,10 @@ namespace DalObjects
             {
                 CreatCustomer();
             }
-
-            for (int i = 0; i < 10; i++) // set 10 parcels
+            for (int i = 0; i < 10; i++) // set 10 parcels and 10 drone charges
             {
                 CreatParcel();
+                CreatDroneCharge();
             }
             #endregion
         }
