@@ -26,7 +26,7 @@ namespace ConsoleUI
                 {
                     case ("1.1")://BaseStation addition
                         #region// BaseStation addition
-                        Console.WriteLine("Please enter following data: \n 1) Id \n 2) Name \n 3) ChargeSlots \n 4) Longtitude \n 5) Latitude ");                    
+                        print_func(5); // print to user data he needs to type in                   
                         int User_id;
                         int.TryParse(Console.ReadLine(), out User_id);
                         string User_name = Console.ReadLine();
@@ -41,7 +41,7 @@ namespace ConsoleUI
                         #endregion
                     case ("1.2")://Drone addition
                         #region// Drone addition
-                        Console.WriteLine("Please enter following data: \n 1) Id \n 2) Model \n 3) WeightCategories(0 for Light, 1 for Medium, 2 for Heavy) \n 4) DroneStatuses(0 for Avilable, 1 for Delivery, 2 for Maintenance) \n 5) battery ");
+                        print_func(6); // print to user data he needs to type in  
                         int User_DroneId;
                         int.TryParse(Console.ReadLine(), out User_DroneId);
                         string User_model = Console.ReadLine();
@@ -56,7 +56,7 @@ namespace ConsoleUI
                     #endregion
                     case ("1.3")://Customer addition
                         #region// Customer addition
-                        Console.WriteLine("Please enter following data: \n 1) Id \n 2) Name \n 3) phone number \n 4) Longtitude \n 5) Latitude ");                       
+                        print_func(7); // print to user data he needs to type in 
                         int User_CustomerId;
                         int.TryParse(Console.ReadLine(), out User_CustomerId);
                         string User_CustomerName = Console.ReadLine();
@@ -70,7 +70,7 @@ namespace ConsoleUI
                         #endregion
                     case ("1.4")://Parcel addition
                         #region// Parcel addition
-                        Console.WriteLine("Please enter following data: \n 1) Id \n 2) sender id \n 3) target id \n 4) WeightCategories(0 for Light, 1 for Medium, 2 for Heavy) \n 5) priorities( 0 for Regular, 1 for Express, 2 for Urgant ) \n 6)requested time ");                       
+                        print_func(8); // print to user data he needs to type in 
                         int User_ParcelId;
                         int.TryParse(Console.ReadLine(), out User_ParcelId);
                         int User_SenderId;
@@ -194,7 +194,7 @@ namespace ConsoleUI
                         return;
                     #endregion
                     default:
-                        Console.WriteLine("INVALID INPUT");
+                        print_func(4);// if invalid input                    
                         break;
                 }
             }
@@ -237,12 +237,49 @@ namespace ConsoleUI
             if (i == 2) // print a menu
             {              
                 Console.WriteLine("TO SELECT OPTION ENTER SECTION NUMBER\n\n1) ADDING OPTIONS:\n\t1.1) Add base station\n\t1.2) Add drone\n\t1.3) Add customer\n\t1.4) Add parcel\n\n2) UPDATE OPTIONS:\n\t2.1) Assign parcel to customer\n\t2.2) Collect parcel by drone\n\t2.3) Deliver parcel to customer\n\t2.4) Send drone to charge at base station\n\t2.5) Release drone from charging\n\n3) DISPLAY DATA:\n\t3.1) Display base station\n\t3.2) Display drone\n\t3.3) Display customer\n\t3.4) Display parcel\n\n4) DISPLAY LISTS\n\t4.1) Display list of base stations\n\t4.2) Display list of drones\n\t4.3) Display list of customers\n\t4.4) Display list of parcels\n\t4.5) Display list of parcels that are not assigned to drone\n\t4.6) Display list of base stations with free charging stations\n\n5) EXIT\n");
+                return;
             }
             #endregion
             #region//if i = 3 print  choice request
             if (i == 3)
             {
                 Console.WriteLine("Please enter your choice:");  // print choice request
+                return;
+            }
+            #endregion
+            #region// if i = 4 print invalid input
+            if (i == 4) // invalid input
+            {
+                Console.WriteLine("INVALID INPUT");
+                return;
+            }
+            #endregion
+            #region// if i = 5 print user input for 1.1
+            if (i == 5) // print to user data he needs to type in  
+            {
+                Console.WriteLine("Please enter following data: \n 1) Id \n 2) Name \n 3) ChargeSlots \n 4) Longtitude \n 5) Latitude ");
+                return;
+            }
+            #endregion
+            #region// if i = 6 print user input for 1.2
+            if (i == 6)// print to user data he needs to type in  
+            {
+                Console.WriteLine("Please enter following data: \n 1) Id \n 2) Model \n 3) WeightCategories(0 for Light, 1 for Medium, 2 for Heavy) \n 4) DroneStatuses(0 for Avilable, 1 for Delivery, 2 for Maintenance) \n 5) battery ");
+                return;
+            }
+            #endregion
+            #region// if i = 7 print user input for 1.3
+            if (i == 7) // print to user data he needs to type in 
+            {
+                Console.WriteLine("Please enter following data: \n 1) Id \n 2) Name \n 3) phone number \n 4) Longtitude \n 5) Latitude ");
+                return;
+            }
+            #endregion
+            #region// if i = 8 print user input for 1.4
+            if (i == 8) // print to user data he needs to type in 
+            {
+                Console.WriteLine("Please enter following data: \n 1) Id \n 2) sender id \n 3) target id \n 4) WeightCategories(0 for Light, 1 for Medium, 2 for Heavy) \n 5) priorities( 0 for Regular, 1 for Express, 2 for Urgant ) \n 6)requested time ");
+                return;
             }
             #endregion
         }
