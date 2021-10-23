@@ -195,6 +195,7 @@ namespace DalObjects
         {
             #region//associate a drone to a parcel
             DataSource.Parcel_arr[Find_Parcel_by_id(parcle_id)].DroneId = drone_id;
+            DataSource.Drone_arr[Find_Drone_by_id(drone_id)].Status = DroneStatuses.Delivery;
             #endregion
         }
         public static void Print_list_of_BaseStations() // print all the base stations in array
@@ -271,6 +272,8 @@ namespace DalObjects
         {
             #region//update parcel delivery
             DataSource.Parcel_arr[Find_Parcel_by_id(id)].Deliverd = DateTime.Now;  // currnt time
+            DataSource.Drone_arr[Find_Drone_by_id(DataSource.Parcel_arr[Find_Parcel_by_id(id)].DroneId)].Status = DroneStatuses.Available; // change drone status to avilable
+
             #endregion
         }
         public static void Update_DroneCharge(int droneId, int stationId) // update drones charging

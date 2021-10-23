@@ -22,7 +22,7 @@ namespace IDAL
             public double Battery{ get; set; } // Battery left
             public override string ToString() // return string with all the data
             {
-                return $"Drone #{Id}: \n Model = {Model} \n Status = {Status} \n Max weight = {MaxWeight} \n battery = {(int)Battery} \n";
+                return $" Drone #{Id}: \n Model = {Model} \n Status = {Status} \n Max weight = {MaxWeight} \n battery = {(int)Battery} \n";
             }
         }
     } 

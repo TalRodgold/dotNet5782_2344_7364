@@ -22,7 +22,7 @@ namespace IDAL
             public string Latitude { get; set; } // Latitude
             public override string ToString() // return string with all the data
             {
-                return $"Customer #{Id}: \n Name = {Name} \n Phone = {Phone} \n Longtitude = {Longtitude} \n Latitude = {Latitude} \n";
+                return $" Customer #{Id}: \n Name = {Name} \n Phone = {Phone} \n Longtitude = {Longtitude} \n Latitude = {Latitude} \n";
             }
         }
     }
