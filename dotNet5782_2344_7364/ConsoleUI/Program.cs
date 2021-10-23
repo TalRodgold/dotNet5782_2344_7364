@@ -260,7 +260,7 @@ namespace ConsoleUI
         /// printing function
         /// </summary>
         /// <param name="i"></param>
-        static void PrintFunc(int i) // print
+        static void PrintFunc(int i) // print function
         {
             #region//if i = 1   print a welcome intro
             if (i == 1) // print option welcome intro
