@@ -15,9 +15,8 @@ namespace ConsoleUI
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-           // DalObjects.DalObjects name = new DalObjects.DalObjects();
-            
-            DalObjects.DalObjects.StartProgram(); // start program with random values
+            DalObjects.DalObjects name = new DalObjects.DalObjects();
+            //DalObjects.DalObjects.StartProgram(); // start program with random values
             PrintFunc(1); // print ascii art.
             PrintFunc(2); // print menu
             while (true) // untill user enters 5 continue running
@@ -38,7 +37,7 @@ namespace ConsoleUI
                         double.TryParse(Console.ReadLine(), out userLongtitude);
                         double userLatitude;
                         double.TryParse(Console.ReadLine(), out userLatitude);
-                        DalObjects.DalObjects.ConstructBaseStation(userId, userName, userChargeSlots, userLongtitude, userLatitude);
+                        name.ConstructBaseStation(userId, userName, userChargeSlots, userLongtitude, userLatitude);
                         break;
                         #endregion
                     case ("1.2")://Drone addition
@@ -53,7 +52,7 @@ namespace ConsoleUI
                         DroneStatuses.TryParse(Console.ReadLine(), out userDroneStatuses);
                         double battery;
                         double.TryParse(Console.ReadLine(), out battery);
-                        DalObjects.DalObjects.ConstructDrone(userDroneId, userModel, userWeightCategories, userDroneStatuses, battery);
+                        name.ConstructDrone(userDroneId, userModel, userWeightCategories, userDroneStatuses, battery);
                         break;
                     #endregion
                     case ("1.3")://Customer addition
@@ -66,8 +65,8 @@ namespace ConsoleUI
                         double userCustomerLongtitude;
                         double.TryParse(Console.ReadLine(), out userCustomerLongtitude);
                         double userCustomerLatitude;
-                        double.TryParse(Console.ReadLine(), out userCustomerLatitude);                                     
-                        DalObjects.DalObjects.ConstructCustomer(userCustomerId, userCustomerName, userPhoneNumber, userCustomerLatitude, userCustomerLatitude);
+                        double.TryParse(Console.ReadLine(), out userCustomerLatitude);
+                        name.ConstructCustomer(userCustomerId, userCustomerName, userPhoneNumber, userCustomerLatitude, userCustomerLatitude);
                         break;
                         #endregion
                     case ("1.4")://Parcel addition
@@ -85,7 +84,7 @@ namespace ConsoleUI
                         Priorities.TryParse(Console.ReadLine(), out userParcelPriorities);
                         DateTime userRequested;
                         DateTime.TryParse(Console.ReadLine(), out userRequested);
-                        DalObjects.DalObjects.ConstructParcel(userParcelId, userSenderId, userTargetId, userParcelWeightCategories, userParcelPriorities, userRequested, 0, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+                        name.ConstructParcel(userParcelId, userSenderId, userTargetId, userParcelWeightCategories, userParcelPriorities, userRequested, 0, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
                         break;
                       #endregion
                     case ("2.1"): //Update Percel to Drone
@@ -96,7 +95,7 @@ namespace ConsoleUI
                         PrintFunc(11);
                         int droneId;
                         int.TryParse(Console.ReadLine(), out droneId);
-                        DalObjects.DalObjects.AssociateDroneToParcel( droneId, parcelId);
+                        name.AssociateDroneToParcel( droneId, parcelId);
                         break;
                         #endregion
                     case ("2.2")://Update Parcle pickup
@@ -104,7 +103,7 @@ namespace ConsoleUI
                         PrintFunc(9);
                         int parcelId1;
                         int.TryParse(Console.ReadLine(), out parcelId1);
-                        DalObjects.DalObjects.UpdateParclePickup(parcelId1);
+                        name.UpdateParclePickup(parcelId1);
                         break;
                         #endregion
                     case ("2.3")://Update Parcle delivery
@@ -112,17 +111,17 @@ namespace ConsoleUI
                         PrintFunc(9);
                         int parcelId2;
                         int.TryParse(Console.ReadLine(), out parcelId2);
-                        DalObjects.DalObjects.UpdateParcleDelivery(parcelId2);
+                        name.UpdateParcleDelivery(parcelId2);
                         break;
                         #endregion
                     case ("2.4")://Print free BaseStation
                         #region//Print free BaseStation
                         bool flag3 = true; // flag
-                        for (int i = 0; i < DalObjects.DalObjects.GetBaseStationArrIndex(); i++) // for all base stations in array
+                        for (int i = 0; i < name.GetBaseStationArrIndex(); i++) // for all base stations in array
                         {
-                            if (DalObjects.DalObjects.CheckChargeSlotsInBaseStation(i)) // if free
+                            if (name.CheckChargeSlotsInBaseStation(i)) // if free
                             {
-                                Console.WriteLine(DalObjects.DalObjects.ReturnBaseStationDataByIndex(i)); // print
+                                Console.WriteLine(name.ReturnBaseStationDataByIndex(i)); // print
                                 flag3 = false;
                             }
                         }
@@ -136,7 +135,7 @@ namespace ConsoleUI
                         PrintFunc(10);
                         int baseId;
                         int.TryParse(Console.ReadLine(), out baseId);
-                        DalObjects.DalObjects.UpdateDroneCharge(droneId2, baseId);
+                        name.UpdateDroneCharge(droneId2, baseId);
                         break;
                         #endregion
                     case ("2.5")://release DroneCharge
@@ -147,7 +146,7 @@ namespace ConsoleUI
                         PrintFunc(10);
                         int baseId1;
                         int.TryParse(Console.ReadLine(), out baseId1);
-                        DalObjects.DalObjects.ReleaseDroneCharge(droneId1, baseId1);
+                        name.ReleaseDroneCharge(droneId1, baseId1);
                         break;
                         #endregion
                     case ("3.1")://Print BaseStation
@@ -155,7 +154,7 @@ namespace ConsoleUI
                         PrintFunc(10);
                         int baseId2;
                         int.TryParse(Console.ReadLine(), out baseId2);
-                        Console.WriteLine(DalObjects.DalObjects.ReturnBaseStationDataById(baseId2));
+                        Console.WriteLine(name.ReturnBaseStationDataById(baseId2));
                         break;
                         #endregion
                     case ("3.2")://Print Drone
@@ -163,7 +162,7 @@ namespace ConsoleUI
                         PrintFunc(11);
                         int droneId3;
                         int.TryParse(Console.ReadLine(), out droneId3);
-                        Console.WriteLine(DalObjects.DalObjects.ReturnDroneDataById(droneId3));
+                        Console.WriteLine(name.ReturnDroneDataById(droneId3));
                         break;
                         #endregion
                     case ("3.3")://Print Customer
@@ -171,7 +170,7 @@ namespace ConsoleUI
                         PrintFunc(12);
                         int customerId;
                         int.TryParse(Console.ReadLine(), out customerId);
-                        Console.WriteLine(DalObjects.DalObjects.ReturnCustomerDataById(customerId));                       
+                        Console.WriteLine(name.ReturnCustomerDataById(customerId));                       
                         break;
                         #endregion
                     case ("3.4")://Print Parcel
@@ -179,38 +178,38 @@ namespace ConsoleUI
                         PrintFunc(9);
                         int parcelId3;
                         int.TryParse(Console.ReadLine(), out parcelId3);
-                        Console.WriteLine(DalObjects.DalObjects.ReturnParcelDataById(parcelId3));
+                        Console.WriteLine(name.ReturnParcelDataById(parcelId3));
                         break;
                         #endregion
                     case ("4.1")://Display list of base stations
                         #region//Display list of base stations
-                        for (int i = 0; i < DalObjects.DalObjects.GetBaseStationArrIndex(); i++)
+                        for (int i = 0; i < name.GetBaseStationArrIndex(); i++)
                         {
-                            Console.WriteLine(DalObjects.DalObjects.ReturnBaseStationDataByIndex(i));
+                            Console.WriteLine(name.ReturnBaseStationDataByIndex(i));
                         }
                         break;
                         #endregion
                     case ("4.2")://Display list of drones
                         #region//Display list of drones
-                        for (int i = 0; i < DalObjects.DalObjects.GetDroneArrIndex(); i++)
+                        for (int i = 0; i < name.GetDroneArrIndex(); i++)
                         {
-                            Console.WriteLine(DalObjects.DalObjects.ReturnDroneDataByIndex(i));
+                            Console.WriteLine(name.ReturnDroneDataByIndex(i));
                         }
                         break;
                         #endregion
                     case ("4.3")://Display list of customers
                         #region//Display list of customers
-                        for (int i = 0; i < DalObjects.DalObjects.GetCustomerArrIndex(); i++)
+                        for (int i = 0; i < name.GetCustomerArrIndex(); i++)
                         {
-                            Console.WriteLine(DalObjects.DalObjects.ReturnCustomerDataByIndex(i));
+                            Console.WriteLine(name.ReturnCustomerDataByIndex(i));
                         }
                         break;
                         #endregion
                     case ("4.4")://Display list of parcels
                         #region//Display list of parcels
-                        for (int i = 0; i < DalObjects.DalObjects.GetParcelArrIndex(); i++)
+                        for (int i = 0; i < name.GetParcelArrIndex(); i++)
                         {
-                            Console.WriteLine(DalObjects.DalObjects.ReturnParcelDataByIndex(i));
+                            Console.WriteLine(name.ReturnParcelDataByIndex(i));
                         }
                         break;
                         #endregion
@@ -218,11 +217,11 @@ namespace ConsoleUI
                         #region//Display list of parcels who are not associated to a drone
                         
                         bool flag = true; // flag
-                        for (int i = 0; i < DalObjects.DalObjects.GetParcelArrIndex(); i++) // for all parcels in array
+                        for (int i = 0; i < name.GetParcelArrIndex(); i++) // for all parcels in array
                         {
-                            if (DalObjects.DalObjects.CheckDroneIdInParcel(i)) // if not associated
+                            if (name.CheckDroneIdInParcel(i)) // if not associated
                             {
-                                Console.WriteLine(DalObjects.DalObjects.ReturnParcelDataByIndex(i)); // print
+                                Console.WriteLine(name.ReturnParcelDataByIndex(i)); // print
                                 flag = false;
                             }
                         }
@@ -235,11 +234,11 @@ namespace ConsoleUI
                     case ("4.6")://Display list of base stations with free charging stations
                         #region//Display list of base stations with free charging stations
                         bool flag2 = true; // flag
-                        for (int i = 0; i < DalObjects.DalObjects.GetBaseStationArrIndex(); i++) // for all base stations in array
+                        for (int i = 0; i < name.GetBaseStationArrIndex(); i++) // for all base stations in array
                         {
-                            if (DalObjects.DalObjects.CheckChargeSlotsInBaseStation(i)) // if free
+                            if (name.CheckChargeSlotsInBaseStation(i)) // if free
                             {
-                                Console.WriteLine(DalObjects.DalObjects.ReturnBaseStationDataByIndex(i)); // print
+                                Console.WriteLine(name.ReturnBaseStationDataByIndex(i)); // print
                                 flag2 = false;
                             }
                         }

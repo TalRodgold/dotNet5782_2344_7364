@@ -69,7 +69,8 @@ namespace DalObjects
             newBaseStation.ChargeSlots= rnd.Next(0, 10);
             newBaseStation.Longtitude = sexagesimal(rnd.NextDouble() + 31.728959, 'N');
             newBaseStation.Latitude = sexagesimal(rnd.NextDouble() + 35.206714, 'E');
-            
+            BaseStationArr[Config.BaseStationArrIndex] = newBaseStation; // add to array
+            Config.BaseStationArrIndex++;// edvance index to next free cell
             #endregion
         }
         internal static void CreatDrone() // this function creats random drone
@@ -82,41 +83,42 @@ namespace DalObjects
             newDrone.MaxWeight = (WeightCategories)rnd.Next(0, 3);
             newDrone.Status = (DroneStatuses)rnd.Next(0, 3);
             newDrone.Battery = rnd.Next(0, 101);
-            
+            DroneArr[Config.DroneArrIndex] = newDrone; // add to array
+            Config.DroneArrIndex++;// edvance index to next free cell
             #endregion
         }
         internal static void CreatParcel() // this function creats random parcel
         {
             #region // call construct parcel
             Random rnd = new Random(); // generate randome number
-            Parcel newParcel = new Parcel
-            DalObjects.ConstructParcel // construct
-                (
-                Config.ParcelId,
-                CustomerArr[rnd.Next(0, Config.CustomerArrIndex)].Id,
-                CustomerArr[rnd.Next(0, Config.CustomerArrIndex)].Id,
-                (WeightCategories)rnd.Next(0, 3),
-                (Priorities)rnd.Next(0, 3),
-                DateTime.Now,
-                0,
-                DateTime.Now.AddHours(rnd.Next(1, 23)),
-                DateTime.MinValue,
-                DateTime.MinValue
-                );
+            Parcel newParcel = new Parcel();
+            newParcel.Id = Config.ParcelId;
+            newParcel.SenderId = CustomerArr[rnd.Next(0, Config.CustomerArrIndex)].Id;
+            newParcel.TargetId = CustomerArr[rnd.Next(0, Config.CustomerArrIndex)].Id;
+            newParcel.Weight = (WeightCategories)rnd.Next(0, 3);
+            newParcel.Priority = (Priorities)rnd.Next(0, 3);
+            newParcel.Requsted = DateTime.Now;
+            newParcel.DroneId = 0;
+            newParcel.Scheduled = DateTime.Now.AddHours(rnd.Next(1, 23));
+            newParcel.PickedUp = DateTime.MinValue;
+            newParcel.Deliverd = DateTime.MinValue;
+            ParcelArr[Config.ParcelArrIndex] = newParcel; // add to array
+            Config.ParcelArrIndex++; // edvance index to next free cell
+            Config.ParcelId++; // grow runing number by 1
             #endregion
         }
         internal static void CreatCustomer()  // this function creats random customer
         {
             #region // call construct customer
             Random rnd = new Random(); // generate randome number
-            DalObjects.ConstructCustomer // construct
-                (
-                (Byte)DateTime.Now.Ticks,
-                Convert.ToString((RandomNames)rnd.Next(0, 15)),
-                "05" + Convert.ToString(rnd.Next(10000000, 99999999)),
-                rnd.NextDouble() + 31.728959,
-                rnd.NextDouble() + 35.206714
-                );
+            Customer newCustomer = new Customer();
+            newCustomer.Id=(Byte)DateTime.Now.Ticks;
+            newCustomer.Name = Convert.ToString((RandomNames)rnd.Next(0, 15));
+            newCustomer.Phone = "05" + Convert.ToString(rnd.Next(10000000, 99999999));
+            newCustomer.Longtitude = DataSource.sexagesimal(rnd.NextDouble() + 31.72895, 'N');
+            newCustomer.Latitude = DataSource.sexagesimal(rnd.NextDouble() + 35.206714, 'E');
+            CustomerArr[DataSource.Config.CustomerArrIndex] = newCustomer;
+            Config.CustomerArrIndex++; // edvance index to next free cell
             #endregion
         }
         internal static void CreatDroneCharge() // call construct drone charge
