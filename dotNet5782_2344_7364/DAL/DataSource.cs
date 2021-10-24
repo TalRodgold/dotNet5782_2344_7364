@@ -38,6 +38,12 @@ namespace DalObjects
             internal static int ParcelId = 12345; // runing number for parcel Id
             #endregion
         }
+        /// <summary>
+        /// convert double to sexagesimal
+        /// </summary>
+        /// <param name="decimalDegrees"></param>
+        /// <param name="char"></param>
+        /// <returns>cordinations in sexagesimal</returns>
         internal static string sexagesimal(double decimalDegrees, Char c) // convert double to sexagesimal
         {
             #region//convert double to sexagesimal
@@ -58,8 +64,10 @@ namespace DalObjects
             return $"{degrees}°{minutes}'{string.Format("{0:F3}", secondsWithFraction)}\"{c}"; // return string of cordinents
             #endregion
         }
-
-        internal  static void CreatBaseStation() // this function creats random base station
+        /// <summary>
+        /// this function creats random base station
+        /// </summary>
+        internal static void CreatBaseStation() // this function creats random base station
         {
             #region // call construct base station
             Random rnd = new Random(); // generate randome number
@@ -73,6 +81,9 @@ namespace DalObjects
             Config.BaseStationArrIndex++;// edvance index to next free cell
             #endregion
         }
+        /// <summary>
+        /// this function creats random drone
+        /// </summary>
         internal static void CreatDrone() // this function creats random drone
         {
             #region // call construct drone
@@ -87,6 +98,9 @@ namespace DalObjects
             Config.DroneArrIndex++;// edvance index to next free cell
             #endregion
         }
+        /// <summary>
+        /// this function creats random parcel
+        /// </summary>
         internal static void CreatParcel() // this function creats random parcel
         {
             #region // call construct parcel
@@ -107,6 +121,9 @@ namespace DalObjects
             Config.ParcelId++; // grow runing number by 1
             #endregion
         }
+        /// <summary>
+        /// this function creats random customer
+        /// </summary>
         internal static void CreatCustomer()  // this function creats random customer
         {
             #region // call construct customer
@@ -121,10 +138,13 @@ namespace DalObjects
             Config.CustomerArrIndex++; // edvance index to next free cell
             #endregion
         }
+        /// <summary>
+        /// call construct drone charge
+        /// </summary>
         internal static void CreatDroneCharge() // call construct drone charge
         {
             #region // call construct drone charge
-            DroneCharge newDroneCharge = new DroneCharge
+            DroneCharge newDroneCharge = new DroneCharge // creat new drone with negative value
             {
                 DroneId = -1,
                 StationId = -1
@@ -135,6 +155,9 @@ namespace DalObjects
             }
             #endregion
         }
+        /// <summary>
+        /// this function sets 2 randome base stations,  5 randome drones,  10 custemers and 10 parcels
+        /// </summary>
         internal static void Initialize() // this function sets 2 randome base stations,  5 randome drones,  10 custemers and 10 parcels
         {
             #region// call 4 creat functions

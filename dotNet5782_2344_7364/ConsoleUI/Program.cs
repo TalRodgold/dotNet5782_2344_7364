@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
-//using DalObjects;
+
 namespace ConsoleUI
 {
     class Program
@@ -15,8 +15,7 @@ namespace ConsoleUI
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            DalObjects.DalObjects name = new DalObjects.DalObjects();
-            //DalObjects.DalObjects.StartProgram(); // start program with random values
+            DalObjects.DalObjects name = new DalObjects.DalObjects(); // call to initialize (creat an appiriance of DalObjects.DalObjects - it enabls us to reach DalObjects functions)
             PrintFunc(1); // print ascii art.
             PrintFunc(2); // print menu
             while (true) // untill user enters 5 continue running
@@ -89,7 +88,7 @@ namespace ConsoleUI
                       #endregion
                     case ("2.1"): //Update Percel to Drone
                         #region//Update Percel to Drone
-                        PrintFunc(9); 
+                        PrintFunc(9); //print
                         int parcelId;
                         int.TryParse(Console.ReadLine(), out parcelId);
                         PrintFunc(11);
@@ -100,7 +99,7 @@ namespace ConsoleUI
                         #endregion
                     case ("2.2")://Update Parcle pickup
                         #region//Update Parcle pickup
-                        PrintFunc(9);
+                        PrintFunc(9);//print
                         int parcelId1;
                         int.TryParse(Console.ReadLine(), out parcelId1);
                         name.UpdateParclePickup(parcelId1);
@@ -108,7 +107,7 @@ namespace ConsoleUI
                         #endregion
                     case ("2.3")://Update Parcle delivery
                         #region//Update Parcle delivery
-                        PrintFunc(9);
+                        PrintFunc(9);//print
                         int parcelId2;
                         int.TryParse(Console.ReadLine(), out parcelId2);
                         name.UpdateParcleDelivery(parcelId2);
@@ -140,10 +139,10 @@ namespace ConsoleUI
                         #endregion
                     case ("2.5")://release DroneCharge
                         #region//release DroneCharge
-                        PrintFunc(11);
+                        PrintFunc(11);//print
                         int droneId1;
                         int.TryParse(Console.ReadLine(), out droneId1);
-                        PrintFunc(10);
+                        PrintFunc(10);//print
                         int baseId1;
                         int.TryParse(Console.ReadLine(), out baseId1);
                         name.ReleaseDroneCharge(droneId1, baseId1);
@@ -151,7 +150,7 @@ namespace ConsoleUI
                         #endregion
                     case ("3.1")://Print BaseStation
                         #region//Print BaseStation
-                        PrintFunc(10);
+                        PrintFunc(10);//print
                         int baseId2;
                         int.TryParse(Console.ReadLine(), out baseId2);
                         Console.WriteLine(name.ReturnBaseStationDataById(baseId2));
@@ -159,7 +158,7 @@ namespace ConsoleUI
                         #endregion
                     case ("3.2")://Print Drone
                         #region//Print Drone
-                        PrintFunc(11);
+                        PrintFunc(11);//print
                         int droneId3;
                         int.TryParse(Console.ReadLine(), out droneId3);
                         Console.WriteLine(name.ReturnDroneDataById(droneId3));
@@ -167,7 +166,7 @@ namespace ConsoleUI
                         #endregion
                     case ("3.3")://Print Customer
                         #region//Print Customer
-                        PrintFunc(12);
+                        PrintFunc(12);//print
                         int customerId;
                         int.TryParse(Console.ReadLine(), out customerId);
                         Console.WriteLine(name.ReturnCustomerDataById(customerId));                       
@@ -175,7 +174,7 @@ namespace ConsoleUI
                         #endregion
                     case ("3.4")://Print Parcel
                         #region//Print Parcel
-                        PrintFunc(9);
+                        PrintFunc(9);//print
                         int parcelId3;
                         int.TryParse(Console.ReadLine(), out parcelId3);
                         Console.WriteLine(name.ReturnParcelDataById(parcelId3));
@@ -215,7 +214,6 @@ namespace ConsoleUI
                         #endregion
                     case ("4.5")://Display list of parcels who are not associated to a drone
                         #region//Display list of parcels who are not associated to a drone
-                        
                         bool flag = true; // flag
                         for (int i = 0; i < name.GetParcelArrIndex(); i++) // for all parcels in array
                         {
@@ -246,7 +244,6 @@ namespace ConsoleUI
                         {
                             Console.WriteLine(" All base station charging slots are full ");
                         }
-                        
                         break;
                         #endregion
                     case ("5")://exit
@@ -259,6 +256,10 @@ namespace ConsoleUI
                 }
             }
         }
+        /// <summary>
+        /// printing function
+        /// </summary>
+        /// <param name="i"></param>
         static void PrintFunc(int i) // print
         {
             #region//if i = 1   print a welcome intro
