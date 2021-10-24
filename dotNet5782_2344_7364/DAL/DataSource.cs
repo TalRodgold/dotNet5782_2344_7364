@@ -17,11 +17,11 @@ namespace DalObjects
         /// </summary>
         
         #region // 5 arrays for storing data
-        internal static Drone[] Drone_arr = new Drone[10]; // array of drones
-        internal static BaseStation[] BaseStation_arr = new BaseStation[5]; // array of base stations
-        internal static Customer[] Customer_arr = new Customer[100]; // array of customers
-        internal static Parcel[] Parcel_arr = new Parcel[1000]; // array of parcel
-        internal static DroneCharge[] DroneCharge_arr = new DroneCharge[10]; // array of drone charges
+        internal static Drone[] DroneArr = new Drone[10]; // array of drones
+        internal static BaseStation[] BaseStationArr = new BaseStation[5]; // array of base stations
+        internal static Customer[] CustomerArr = new Customer[100]; // array of customers
+        internal static Parcel[] ParcelArr = new Parcel[1000]; // array of parcel
+        internal static DroneCharge[] DroneChargeArr = new DroneCharge[10]; // array of drone charges
         #endregion
         internal class Config // hold index of next free index in array
         {
@@ -30,22 +30,22 @@ namespace DalObjects
             /// </summary>
             
             #region// index for arrays and parcel id
-            internal static int Drone_arr_index = 0; // points to next free index in drone_arr
-            internal static int BaseStation_arr_index = 0; // points to next free index in BaseStation_arr
-            internal static int Customer_arr_index = 0; // points to next free index in Customer_arr
-            internal static int Parcel_arr_index = 0; // points to next free index in Parcel_arr
-            internal static int DroneCharge_arr_size = DroneCharge_arr.Length; // points to next free index in DroneCharge_arr
-            internal static int Parcel_id = 12345; // runing number for parcel Id
+            internal static int DroneArrIndex = 0; // points to next free index in drone_arr
+            internal static int BaseStationArrIndex = 0; // points to next free index in BaseStation_arr
+            internal static int CustomerArrIndex = 0; // points to next free index in Customer_arr
+            internal static int ParcelArrIndex = 0; // points to next free index in Parcel_arr
+            internal static int DroneChargeArrSize = DroneChargeArr.Length; // points to next free index in DroneCharge_arr
+            internal static int ParcelId = 12345; // runing number for parcel Id
             #endregion
         }
-        internal static string sexagesimal(double decimal_degrees, Char c) // convert double to sexagesimal
+        internal static string sexagesimal(double decimalDegrees, Char c) // convert double to sexagesimal
         {
             #region//convert double to sexagesimal
             // caluclate seconds
-            double latDegrees = decimal_degrees;
+            double latDegrees = decimalDegrees;
             int latSeconds = (int)Math.Round(latDegrees * 60 * 60);  
             // calculate degrees
-            double latDegreesWithFraction = decimal_degrees;
+            double latDegreesWithFraction = decimalDegrees;
             int degrees = (int)latDegreesWithFraction;  
             // calculate minutes
             double fractionalDegrees = latDegrees - degrees; 
@@ -63,40 +63,38 @@ namespace DalObjects
         {
             #region // call construct base station
             Random rnd = new Random(); // generate randome number
-            DalObjects.ConstructBaseStation // construct
-                (
-                (Byte)DateTime.Now.Ticks,
-                Convert.ToString((RandomBases)rnd.Next(1, 11)),
-                rnd.Next(0, 10),
-                rnd.NextDouble() + 31.728959,
-                rnd.NextDouble() + 35.206714
-                );
+            BaseStation newBaseStation = new BaseStation();
+            newBaseStation.Id = (Byte)DateTime.Now.Ticks;
+            newBaseStation.Name = Convert.ToString((RandomBases)rnd.Next(1, 11));
+            newBaseStation.ChargeSlots= rnd.Next(0, 10);
+            newBaseStation.Longtitude = sexagesimal(rnd.NextDouble() + 31.728959, 'N');
+            newBaseStation.Latitude = sexagesimal(rnd.NextDouble() + 35.206714, 'E');
+            
             #endregion
         }
         internal static void CreatDrone() // this function creats random drone
         {
             #region // call construct drone
             Random rnd = new Random(); // generate randome number
-            DalObjects.ConstructDrone // construct
-                (
-                (Byte)DateTime.Now.Ticks,
-                $"modle_number{Config.Drone_arr_index + 1}",
-                (WeightCategories)rnd.Next(0, 3),
-                (DroneStatuses)rnd.Next(0, 3),
-                 rnd.Next(0, 101)
-                );
+            Drone newDrone = new Drone();
+            newDrone.Id = (Byte)DateTime.Now.Ticks;
+            newDrone.Model = $"modle_number{Config.DroneArrIndex + 1}";
+            newDrone.MaxWeight = (WeightCategories)rnd.Next(0, 3);
+            newDrone.Status = (DroneStatuses)rnd.Next(0, 3);
+            newDrone.Battery = rnd.Next(0, 101);
+            
             #endregion
         }
         internal static void CreatParcel() // this function creats random parcel
         {
             #region // call construct parcel
             Random rnd = new Random(); // generate randome number
-
+            Parcel newParcel = new Parcel
             DalObjects.ConstructParcel // construct
                 (
-                Config.Parcel_id,
-                Customer_arr[rnd.Next(0, Config.Customer_arr_index)].Id,
-                Customer_arr[rnd.Next(0, Config.Customer_arr_index)].Id,
+                Config.ParcelId,
+                CustomerArr[rnd.Next(0, Config.CustomerArrIndex)].Id,
+                CustomerArr[rnd.Next(0, Config.CustomerArrIndex)].Id,
                 (WeightCategories)rnd.Next(0, 3),
                 (Priorities)rnd.Next(0, 3),
                 DateTime.Now,
@@ -124,14 +122,14 @@ namespace DalObjects
         internal static void CreatDroneCharge() // call construct drone charge
         {
             #region // call construct drone charge
-            DroneCharge new_droneCharge = new DroneCharge
+            DroneCharge newDroneCharge = new DroneCharge
             {
                 DroneId = -1,
                 StationId = -1
             };
-            for (int i = 0; i < Config.DroneCharge_arr_size; i++) // set all cells in array to be free (-1)
+            for (int i = 0; i < Config.DroneChargeArrSize; i++) // set all cells in array to be free (-1)
             {             
-                DroneCharge_arr[i] = new_droneCharge;                
+                DroneChargeArr[i] = newDroneCharge;                
             }
             #endregion
         }

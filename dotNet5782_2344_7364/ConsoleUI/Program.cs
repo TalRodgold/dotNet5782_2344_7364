@@ -4,198 +4,250 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
-using DalObjects;
+//using DalObjects;
 namespace ConsoleUI
 {
     class Program
-    {
+    {   
         /// <summary>
         /// main program
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            DalObjects.DalObjects.Start_program(); // start program with random values
-            print_func(1); // print ascii art.
-            print_func(2); // print menu
+           // DalObjects.DalObjects name = new DalObjects.DalObjects();
+            
+            DalObjects.DalObjects.StartProgram(); // start program with random values
+            PrintFunc(1); // print ascii art.
+            PrintFunc(2); // print menu
             while (true) // untill user enters 5 continue running
             {
-                print_func(3);// print choice request
-                string User_input = Console.ReadLine(); // read user input
-                switch (User_input)
+                PrintFunc(3);// print choice request
+                string UserInput = Console.ReadLine(); // read user input
+                switch (UserInput)
                 {
                     case ("1.1")://BaseStation addition
                         #region// BaseStation addition
-                        print_func(5); // print to user data he needs to type in                   
-                        int User_id;
-                        int.TryParse(Console.ReadLine(), out User_id);
-                        string User_name = Console.ReadLine();
-                        int User_chargeSlots;
-                        int.TryParse(Console.ReadLine(), out User_chargeSlots);
-                        double User_longtitude;
-                        double.TryParse(Console.ReadLine(), out User_longtitude);
-                        double User_latitude;
-                        double.TryParse(Console.ReadLine(), out User_latitude);
-                        DalObjects.DalObjects.ConstructBaseStation(User_id, User_name, User_chargeSlots, User_longtitude, User_latitude);
+                        PrintFunc(5); // print to user data he needs to type in                   
+                        int userId;
+                        int.TryParse(Console.ReadLine(), out userId);
+                        string userName = Console.ReadLine();
+                        int userChargeSlots;
+                        int.TryParse(Console.ReadLine(), out userChargeSlots);
+                        double userLongtitude;
+                        double.TryParse(Console.ReadLine(), out userLongtitude);
+                        double userLatitude;
+                        double.TryParse(Console.ReadLine(), out userLatitude);
+                        DalObjects.DalObjects.ConstructBaseStation(userId, userName, userChargeSlots, userLongtitude, userLatitude);
                         break;
                         #endregion
                     case ("1.2")://Drone addition
                         #region// Drone addition
-                        print_func(6); // print to user data he needs to type in  
-                        int User_DroneId;
-                        int.TryParse(Console.ReadLine(), out User_DroneId);
-                        string User_model = Console.ReadLine();
-                        WeightCategories User_WeightCategories;
-                        WeightCategories.TryParse(Console.ReadLine(), out User_WeightCategories);
-                        DroneStatuses User_DroneStatuses;
-                        DroneStatuses.TryParse(Console.ReadLine(), out User_DroneStatuses);
+                        PrintFunc(6); // print to user data he needs to type in  
+                        int userDroneId;
+                        int.TryParse(Console.ReadLine(), out userDroneId);
+                        string userModel = Console.ReadLine();
+                        WeightCategories userWeightCategories;
+                        WeightCategories.TryParse(Console.ReadLine(), out userWeightCategories);
+                        DroneStatuses userDroneStatuses;
+                        DroneStatuses.TryParse(Console.ReadLine(), out userDroneStatuses);
                         double battery;
                         double.TryParse(Console.ReadLine(), out battery);
-                        DalObjects.DalObjects.ConstructDrone(User_DroneId, User_model, User_WeightCategories, User_DroneStatuses, battery);
+                        DalObjects.DalObjects.ConstructDrone(userDroneId, userModel, userWeightCategories, userDroneStatuses, battery);
                         break;
                     #endregion
                     case ("1.3")://Customer addition
                         #region// Customer addition
-                        print_func(7); // print to user data he needs to type in 
-                        int User_CustomerId;
-                        int.TryParse(Console.ReadLine(), out User_CustomerId);
-                        string User_CustomerName = Console.ReadLine();
-                        string User_PhoneNumber = Console.ReadLine();
-                        double User_CustomerLongtitude;
-                        double.TryParse(Console.ReadLine(), out User_CustomerLongtitude);
-                        double User_CustomerLatitude;
-                        double.TryParse(Console.ReadLine(), out User_CustomerLatitude);                                     
-                        DalObjects.DalObjects.ConstructCustomer(User_CustomerId, User_CustomerName, User_PhoneNumber, User_CustomerLatitude, User_CustomerLatitude);
+                        PrintFunc(7); // print to user data he needs to type in 
+                        int userCustomerId;
+                        int.TryParse(Console.ReadLine(), out userCustomerId);
+                        string userCustomerName = Console.ReadLine();
+                        string userPhoneNumber = Console.ReadLine();
+                        double userCustomerLongtitude;
+                        double.TryParse(Console.ReadLine(), out userCustomerLongtitude);
+                        double userCustomerLatitude;
+                        double.TryParse(Console.ReadLine(), out userCustomerLatitude);                                     
+                        DalObjects.DalObjects.ConstructCustomer(userCustomerId, userCustomerName, userPhoneNumber, userCustomerLatitude, userCustomerLatitude);
                         break;
                         #endregion
                     case ("1.4")://Parcel addition
                         #region// Parcel addition
-                        print_func(8); // print to user data he needs to type in 
-                        int User_ParcelId;
-                        int.TryParse(Console.ReadLine(), out User_ParcelId);
-                        int User_SenderId;
-                        int.TryParse(Console.ReadLine(), out User_SenderId);
-                        int User_TargetId;
-                        int.TryParse(Console.ReadLine(), out User_TargetId);
-                        WeightCategories User_ParcelWeightCategories;
-                        WeightCategories.TryParse(Console.ReadLine(), out User_ParcelWeightCategories);
-                        Priorities User_ParcelPriorities;
-                        Priorities.TryParse(Console.ReadLine(), out User_ParcelPriorities);
-                        DateTime User_Requested;
-                        DateTime.TryParse(Console.ReadLine(), out User_Requested);
-                        DalObjects.DalObjects.ConstructParcel(User_ParcelId, User_SenderId, User_TargetId, User_ParcelWeightCategories, User_ParcelPriorities, User_Requested, 0, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+                        PrintFunc(8); // print to user data he needs to type in 
+                        int userParcelId;
+                        int.TryParse(Console.ReadLine(), out userParcelId);
+                        int userSenderId;
+                        int.TryParse(Console.ReadLine(), out userSenderId);
+                        int userTargetId;
+                        int.TryParse(Console.ReadLine(), out userTargetId);
+                        WeightCategories userParcelWeightCategories;
+                        WeightCategories.TryParse(Console.ReadLine(), out userParcelWeightCategories);
+                        Priorities userParcelPriorities;
+                        Priorities.TryParse(Console.ReadLine(), out userParcelPriorities);
+                        DateTime userRequested;
+                        DateTime.TryParse(Console.ReadLine(), out userRequested);
+                        DalObjects.DalObjects.ConstructParcel(userParcelId, userSenderId, userTargetId, userParcelWeightCategories, userParcelPriorities, userRequested, 0, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
                         break;
                       #endregion
                     case ("2.1"): //Update Percel to Drone
                         #region//Update Percel to Drone
-                        print_func(9); 
-                        int Parcel_id;
-                        int.TryParse(Console.ReadLine(), out Parcel_id);
-                        print_func(11);
-                        int drone_id;
-                        int.TryParse(Console.ReadLine(), out drone_id);
-                        DalObjects.DalObjects.Associate_Drone_to_Parcel( drone_id, Parcel_id);
+                        PrintFunc(9); 
+                        int parcelId;
+                        int.TryParse(Console.ReadLine(), out parcelId);
+                        PrintFunc(11);
+                        int droneId;
+                        int.TryParse(Console.ReadLine(), out droneId);
+                        DalObjects.DalObjects.AssociateDroneToParcel( droneId, parcelId);
                         break;
                         #endregion
                     case ("2.2")://Update Parcle pickup
                         #region//Update Parcle pickup
-                        print_func(9);
-                        int Parcel_id1;
-                        int.TryParse(Console.ReadLine(), out Parcel_id1);
-                        DalObjects.DalObjects.Update_Parcle_pickup(Parcel_id1);
+                        PrintFunc(9);
+                        int parcelId1;
+                        int.TryParse(Console.ReadLine(), out parcelId1);
+                        DalObjects.DalObjects.UpdateParclePickup(parcelId1);
                         break;
                         #endregion
                     case ("2.3")://Update Parcle delivery
                         #region//Update Parcle delivery
-                        print_func(9);
-                        int Parcel_id2;
-                        int.TryParse(Console.ReadLine(), out Parcel_id2);
-                        DalObjects.DalObjects.Update_Parcle_delivery(Parcel_id2);
+                        PrintFunc(9);
+                        int parcelId2;
+                        int.TryParse(Console.ReadLine(), out parcelId2);
+                        DalObjects.DalObjects.UpdateParcleDelivery(parcelId2);
                         break;
                         #endregion
                     case ("2.4")://Print free BaseStation
                         #region//Print free BaseStation
-                        DalObjects.DalObjects.Print_free_BaseStation();
-                        print_func(11);
-                        int Drone_id;
-                        int.TryParse(Console.ReadLine(), out Drone_id);
-                        print_func(10);
-                        int Base_id;
-                        int.TryParse(Console.ReadLine(), out Base_id);
-                        DalObjects.DalObjects.Update_DroneCharge(Drone_id, Base_id);
+                        bool flag3 = true; // flag
+                        for (int i = 0; i < DalObjects.DalObjects.GetBaseStationArrIndex(); i++) // for all base stations in array
+                        {
+                            if (DalObjects.DalObjects.CheckChargeSlotsInBaseStation(i)) // if free
+                            {
+                                Console.WriteLine(DalObjects.DalObjects.ReturnBaseStationDataByIndex(i)); // print
+                                flag3 = false;
+                            }
+                        }
+                        if (flag3) // if all base station charging slots are full
+                        {
+                            Console.WriteLine(" All base station charging slots are full ");
+                        }
+                        PrintFunc(11);
+                        int droneId2;
+                        int.TryParse(Console.ReadLine(), out droneId2);
+                        PrintFunc(10);
+                        int baseId;
+                        int.TryParse(Console.ReadLine(), out baseId);
+                        DalObjects.DalObjects.UpdateDroneCharge(droneId2, baseId);
                         break;
                         #endregion
                     case ("2.5")://release DroneCharge
                         #region//release DroneCharge
-                        print_func(11);
-                        int Drone_id1;
-                        int.TryParse(Console.ReadLine(), out Drone_id1);
-                        print_func(10);
-                        int Base_id1;
-                        int.TryParse(Console.ReadLine(), out Base_id1);
-                        DalObjects.DalObjects.Release_DroneCharge(Drone_id1, Base_id1);
+                        PrintFunc(11);
+                        int droneId1;
+                        int.TryParse(Console.ReadLine(), out droneId1);
+                        PrintFunc(10);
+                        int baseId1;
+                        int.TryParse(Console.ReadLine(), out baseId1);
+                        DalObjects.DalObjects.ReleaseDroneCharge(droneId1, baseId1);
                         break;
                         #endregion
                     case ("3.1")://Print BaseStation
                         #region//Print BaseStation
-                        print_func(10);
-                        int Base_id2;
-                        int.TryParse(Console.ReadLine(), out Base_id2);
-                        DalObjects.DalObjects.Print_BaseStation(Base_id2);
+                        PrintFunc(10);
+                        int baseId2;
+                        int.TryParse(Console.ReadLine(), out baseId2);
+                        Console.WriteLine(DalObjects.DalObjects.ReturnBaseStationDataById(baseId2));
                         break;
                         #endregion
                     case ("3.2")://Print Drone
                         #region//Print Drone
-                        print_func(11);
-                        int Drone_id2;
-                        int.TryParse(Console.ReadLine(), out Drone_id2);
-                        DalObjects.DalObjects.Print_Drone(Drone_id2);
+                        PrintFunc(11);
+                        int droneId3;
+                        int.TryParse(Console.ReadLine(), out droneId3);
+                        Console.WriteLine(DalObjects.DalObjects.ReturnDroneDataById(droneId3));
                         break;
                         #endregion
                     case ("3.3")://Print Customer
                         #region//Print Customer
-                        print_func(12);
-                        int Customer_id;
-                        int.TryParse(Console.ReadLine(), out Customer_id);
-                        DalObjects.DalObjects.Print_Customer(Customer_id);                       
+                        PrintFunc(12);
+                        int customerId;
+                        int.TryParse(Console.ReadLine(), out customerId);
+                        Console.WriteLine(DalObjects.DalObjects.ReturnCustomerDataById(customerId));                       
                         break;
                         #endregion
                     case ("3.4")://Print Parcel
                         #region//Print Parcel
-                        print_func(9);
-                        int Parcel_id3;
-                        int.TryParse(Console.ReadLine(), out Parcel_id3);
-                        DalObjects.DalObjects.Print_Parcel(Parcel_id3);
+                        PrintFunc(9);
+                        int parcelId3;
+                        int.TryParse(Console.ReadLine(), out parcelId3);
+                        Console.WriteLine(DalObjects.DalObjects.ReturnParcelDataById(parcelId3));
                         break;
                         #endregion
                     case ("4.1")://Display list of base stations
                         #region//Display list of base stations
-                        DalObjects.DalObjects.Print_list_of_BaseStations();
+                        for (int i = 0; i < DalObjects.DalObjects.GetBaseStationArrIndex(); i++)
+                        {
+                            Console.WriteLine(DalObjects.DalObjects.ReturnBaseStationDataByIndex(i));
+                        }
                         break;
                         #endregion
                     case ("4.2")://Display list of drones
                         #region//Display list of drones
-                        DalObjects.DalObjects.Print_list_of_Drones();
+                        for (int i = 0; i < DalObjects.DalObjects.GetDroneArrIndex(); i++)
+                        {
+                            Console.WriteLine(DalObjects.DalObjects.ReturnDroneDataByIndex(i));
+                        }
                         break;
                         #endregion
                     case ("4.3")://Display list of customers
                         #region//Display list of customers
-                        DalObjects.DalObjects.Print_list_of_Customers();
+                        for (int i = 0; i < DalObjects.DalObjects.GetCustomerArrIndex(); i++)
+                        {
+                            Console.WriteLine(DalObjects.DalObjects.ReturnCustomerDataByIndex(i));
+                        }
                         break;
                         #endregion
                     case ("4.4")://Display list of parcels
                         #region//Display list of parcels
-                        DalObjects.DalObjects.print_list_of_Parcels();
+                        for (int i = 0; i < DalObjects.DalObjects.GetParcelArrIndex(); i++)
+                        {
+                            Console.WriteLine(DalObjects.DalObjects.ReturnParcelDataByIndex(i));
+                        }
                         break;
                         #endregion
                     case ("4.5")://Display list of parcels who are not associated to a drone
                         #region//Display list of parcels who are not associated to a drone
-                        DalObjects.DalObjects.Print_not_associate();
+                        
+                        bool flag = true; // flag
+                        for (int i = 0; i < DalObjects.DalObjects.GetParcelArrIndex(); i++) // for all parcels in array
+                        {
+                            if (DalObjects.DalObjects.CheckDroneIdInParcel(i)) // if not associated
+                            {
+                                Console.WriteLine(DalObjects.DalObjects.ReturnParcelDataByIndex(i)); // print
+                                flag = false;
+                            }
+                        }
+                        if (flag) // if all parcels have been associated to a drone
+                        {
+                            Console.WriteLine(" All parcels have been associated to a drone ");
+                        }
                         break;
                         #endregion
                     case ("4.6")://Display list of base stations with free charging stations
                         #region//Display list of base stations with free charging stations
-                        DalObjects.DalObjects.Print_free_BaseStation();
+                        bool flag2 = true; // flag
+                        for (int i = 0; i < DalObjects.DalObjects.GetBaseStationArrIndex(); i++) // for all base stations in array
+                        {
+                            if (DalObjects.DalObjects.CheckChargeSlotsInBaseStation(i)) // if free
+                            {
+                                Console.WriteLine(DalObjects.DalObjects.ReturnBaseStationDataByIndex(i)); // print
+                                flag2 = false;
+                            }
+                        }
+                        if (flag2) // if all base station charging slots are full
+                        {
+                            Console.WriteLine(" All base station charging slots are full ");
+                        }
+                        
                         break;
                         #endregion
                     case ("5")://exit
@@ -203,12 +255,12 @@ namespace ConsoleUI
                         return;
                     #endregion
                     default:
-                        print_func(4);// if invalid input                    
+                        PrintFunc(4);// if invalid input                    
                         break;
                 }
             }
         }
-        static void print_func(int i) // print
+        static void PrintFunc(int i) // print
         {
             #region//if i = 1   print a welcome intro
             if (i == 1) // print option welcome intro
