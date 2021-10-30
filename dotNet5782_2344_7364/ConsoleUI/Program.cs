@@ -47,11 +47,7 @@ namespace ConsoleUI
                         string userModel = Console.ReadLine();
                         WeightCategories userWeightCategories;
                         WeightCategories.TryParse(Console.ReadLine(), out userWeightCategories);
-                        DroneStatuses userDroneStatuses;
-                        DroneStatuses.TryParse(Console.ReadLine(), out userDroneStatuses);
-                        double battery;
-                        double.TryParse(Console.ReadLine(), out battery);
-                        name.ConstructDrone(userDroneId, userModel, userWeightCategories, userDroneStatuses, battery);
+                        name.ConstructDrone(userDroneId, userModel, userWeightCategories);
                         break;
                     #endregion
                     case ("1.3")://Customer addition
@@ -325,7 +321,7 @@ namespace ConsoleUI
             #region// if i = 6 print user input for 1.2
             if (i == 6)// print to user data he needs to type in  
             {
-                Console.WriteLine("Please enter following data: \n 1) Id \n 2) Model \n 3) WeightCategories(0 for Light, 1 for Medium, 2 for Heavy) \n 4) DroneStatuses(0 for Avilable, 1 for Delivery, 2 for Maintenance) \n 5) battery ");
+                Console.WriteLine("Please enter following data: \n 1) Id \n 2) Model \n 3) WeightCategories(0 for Light, 1 for Medium, 2 for Heavy) \n ");
                 return;
             }
             #endregion
