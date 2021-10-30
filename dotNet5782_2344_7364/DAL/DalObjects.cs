@@ -38,7 +38,7 @@ namespace DalObjects
                 Longtitude = DataSource.sexagesimal(longtitude, 'N'),
                 Latitude = DataSource.sexagesimal(latitude, 'E')
             };
-            DataSource.BaseStationArr[DataSource.Config.BaseStationArrIndex] = newBaseStation; // add to array
+            DataSource.BaseStationList[DataSource.Config.BaseStationArrIndex] = newBaseStation; // add to array
             DataSource.Config.BaseStationArrIndex++; // edvance index to next free cell
             #endregion
         }
@@ -61,7 +61,7 @@ namespace DalObjects
                 //Status = status,
                 //Battery = battery,
             };
-            DataSource.DroneArr[DataSource.Config.DroneArrIndex] = newDrone; // add to array
+            DataSource.DroneList[DataSource.Config.DroneArrIndex] = newDrone; // add to array
             DataSource.Config.DroneArrIndex++; // edvance index to next free cell
             #endregion
         }
@@ -94,7 +94,7 @@ namespace DalObjects
                 PickedUp = pickUp,
                 Deliverd = deliverd
             };
-            DataSource.ParcelArr[DataSource.Config.ParcelArrIndex] = newParcel; // add to array
+            DataSource.ParcelList[DataSource.Config.ParcelArrIndex] = newParcel; // add to array
             DataSource.Config.ParcelArrIndex++; // edvance index to next free cell
             DataSource.Config.ParcelId++; // grow runing number by 1
             #endregion
@@ -118,7 +118,7 @@ namespace DalObjects
                 Longtitude = DataSource.sexagesimal(longtitude, 'N'),
                 Latitude = DataSource.sexagesimal(latitude, 'E')
             };
-            DataSource.CustomerArr[DataSource.Config.CustomerArrIndex] = newCustomer; // add to array
+            DataSource.CustomerList[DataSource.Config.CustomerArrIndex] = newCustomer; // add to array
             DataSource.Config.CustomerArrIndex++; // edvance index to next free cell
             #endregion
         }
@@ -132,10 +132,10 @@ namespace DalObjects
             #region//construct a new drone charge           
             for (int i = 0; i < DataSource.Config.DroneChargeArrSize; i++)
             {
-                if (DataSource.DroneChargeArr[i].DroneId == -1 && DataSource.DroneChargeArr[i].StationId == -1)
+                if (DataSource.DroneChargeList[i].DroneId == -1 && DataSource.DroneChargeList[i].StationId == -1)
                 {
-                    DataSource.DroneChargeArr[i].DroneId = droneId; // add to array id
-                    DataSource.DroneChargeArr[i].StationId = stationId; // add to array id
+                    DataSource.DroneChargeList[i].DroneId = droneId; // add to array id
+                    DataSource.DroneChargeList[i].StationId = stationId; // add to array id
                     break;
                 }
             }   
@@ -183,7 +183,7 @@ namespace DalObjects
             #region//find drone in array
             for (int index = 0; index < DataSource.Config.DroneArrIndex; index++) // search drone by id
             {
-                if (DataSource.DroneArr[index].Id == id)
+                if (DataSource.DroneList[index].Id == id)
                 {
                     return index; // return index
                 }
@@ -201,7 +201,7 @@ namespace DalObjects
             #region//find BaseStation in array
             for (int index = 0; index < DataSource.Config.BaseStationArrIndex; index++) // search BaseStation by id
             {
-                if (DataSource.BaseStationArr[index].Id == id)
+                if (DataSource.BaseStationList[index].Id == id)
                 {
                     return index; // return index
                 }
@@ -219,7 +219,7 @@ namespace DalObjects
             #region//find Customer in array
             for (int index = 0; index < DataSource.Config.CustomerArrIndex; index++) // searchCustomer by id
             {
-                if (DataSource.CustomerArr[index].Id == id)
+                if (DataSource.CustomerList[index].Id == id)
                 {
                     return index; // return index
                 }
@@ -237,7 +237,7 @@ namespace DalObjects
             #region//find Parcelin array
             for (int index = 0; index < DataSource.Config.ParcelArrIndex; index++) // Parcel by id
             {
-                if (DataSource.ParcelArr[index].Id == id)
+                if (DataSource.ParcelList[index].Id == id)
                 {
                     return index; // return index
                 }
@@ -253,7 +253,7 @@ namespace DalObjects
         public string ReturnDroneDataById(int id) // find drone in array and return it
         {
             #region//find drone in array and return it        
-            return DataSource.DroneArr[FindDroneById(id)].ToString(); 
+            return DataSource.DroneList[FindDroneById(id)].ToString(); 
             #endregion
         }
         /// <summary>
@@ -264,7 +264,7 @@ namespace DalObjects
         public string ReturnBaseStationDataById(int id) // find base station in array and return it
         {
             #region//find base station in array and return it
-           return DataSource.BaseStationArr[FindBaseStationById(id)].ToString(); 
+           return DataSource.BaseStationList[FindBaseStationById(id)].ToString(); 
             #endregion
         }
         /// <summary>
@@ -275,7 +275,7 @@ namespace DalObjects
         public string ReturnCustomerDataById(int id) // find customer in array and return it
         {
             #region//find customer in array and return it         
-            return DataSource.CustomerArr[FindCustomerById(id)].ToString(); 
+            return DataSource.CustomerList[FindCustomerById(id)].ToString(); 
             #endregion
         }
         /// <summary>
@@ -286,7 +286,7 @@ namespace DalObjects
         public string ReturnParcelDataById(int id)// find parcel in array and return it
         {
             #region//find parcel in array and return it     
-            return DataSource.ParcelArr[FindParcelById(id)].ToString(); 
+            return DataSource.ParcelList[FindParcelById(id)].ToString(); 
             #endregion
         }
         /// <summary>
@@ -297,7 +297,7 @@ namespace DalObjects
         public string ReturnDroneDataByIndex(int index) // find drone in array and return it
         {
             #region//find drone in array and return it        
-            return DataSource.DroneArr[index].ToString(); 
+            return DataSource.DroneList[index].ToString(); 
             #endregion
         }
         /// <summary>
@@ -308,7 +308,7 @@ namespace DalObjects
         public string ReturnBaseStationDataByIndex(int index) // find base station in array and return it
         {
             #region//find base station in array and return it
-            return DataSource.BaseStationArr[index].ToString(); 
+            return DataSource.BaseStationList[index].ToString(); 
             #endregion
         }
         /// <summary>
@@ -319,7 +319,7 @@ namespace DalObjects
         public string ReturnCustomerDataByIndex(int index) // find customer in array and return it
         {
             #region//find customer in array and return it         
-            return DataSource.CustomerArr[index].ToString(); 
+            return DataSource.CustomerList[index].ToString(); 
             #endregion
         }
         /// <summary>
@@ -330,7 +330,7 @@ namespace DalObjects
         public string ReturnParcelDataByIndex(int index)// find parcel in array and return it
         {
             #region//find parcel in array and return it     
-            return DataSource.ParcelArr[index].ToString(); 
+            return DataSource.ParcelList[index].ToString(); 
             #endregion
         }
         /// <summary>
@@ -341,7 +341,7 @@ namespace DalObjects
         public bool CheckDroneIdInParcel(int i) // search in spesific index in parcel array if drone id is equal 0
         {
             #region//search in spesific index in parcel array if drone id is equal 0
-            if (DataSource.ParcelArr[i].DroneId == 0)
+            if (DataSource.ParcelList[i].DroneId == 0)
             {
                 return true;
             }
@@ -356,7 +356,7 @@ namespace DalObjects
         public bool CheckChargeSlotsInBaseStation(int i) // search in spesific index in base station array if charge slots equals 0
         {
             #region//search in spesific index in base station array if charge slots equals 0
-            if (DataSource.BaseStationArr[i].ChargeSlots != 0)
+            if (DataSource.BaseStationList[i].ChargeSlots != 0)
             {
                 return true;
             }
@@ -371,7 +371,7 @@ namespace DalObjects
         public void AssociateDroneToParcel(int droneId, int parcleId) // associate a drone to a parcel
         {
             #region//associate a drone to a parcel
-            DataSource.ParcelArr[FindParcelById(parcleId)].DroneId = droneId;
+            DataSource.ParcelList[FindParcelById(parcleId)].DroneId = droneId;
            // DataSource.DroneArr[FindDroneById(droneId)].Status = DroneStatuses.Delivery;
             #endregion
         }
@@ -382,7 +382,7 @@ namespace DalObjects
         public void UpdateParclePickup(int id) // update parcel pickup
         {
             #region//update parcel pickup           
-             DataSource.ParcelArr[FindParcelById(id)].PickedUp = DateTime.Now; // currnt time  
+             DataSource.ParcelList[FindParcelById(id)].PickedUp = DateTime.Now; // currnt time  
             #endregion
         }
         /// <summary>
@@ -392,7 +392,7 @@ namespace DalObjects
         public void UpdateParcleDelivery(int id) // update parcel delivery
         {
             #region//update parcel delivery
-            DataSource.ParcelArr[FindParcelById(id)].Deliverd = DateTime.Now;  // currnt time
+            DataSource.ParcelList[FindParcelById(id)].Deliverd = DateTime.Now;  // currnt time
            // DataSource.DroneArr[FindDroneById(DataSource.ParcelArr[FindParcelById(id)].DroneId)].Status = DroneStatuses.Available; // change drone status to avilable
             #endregion
         }
@@ -406,7 +406,7 @@ namespace DalObjects
             #region//update drones charging
             ConstructDroneCharge(droneId, stationId); // call construct
            // DataSource.DroneArr[FindDroneById(droneId)].Status = DroneStatuses.Maintenance; // update drone status
-            DataSource.BaseStationArr[FindBaseStationById(stationId)].ChargeSlots -= 1;   // change number of free charge slots
+            DataSource.BaseStationList[FindBaseStationById(stationId)].ChargeSlots -= 1;   // change number of free charge slots
             #endregion
         }
         /// <summary>
@@ -418,13 +418,13 @@ namespace DalObjects
         {
             #region//releas drone from charging
            // DataSource.DroneArr[FindDroneById(droneId)].Status = DroneStatuses.Available; // make drone status: Available
-            DataSource.BaseStationArr[FindBaseStationById(stationId)].ChargeSlots++;
+            DataSource.BaseStationList[FindBaseStationById(stationId)].ChargeSlots++;
             for (int index = 0; index < DataSource.Config.DroneChargeArrSize; index++) // search drone by id in drone charge
             {
-                if (DataSource.DroneChargeArr[index].DroneId == droneId)
+                if (DataSource.DroneChargeList[index].DroneId == droneId)
                 {
-                    DataSource.DroneChargeArr[index].DroneId = -1; // set to availeble
-                    DataSource.DroneChargeArr[index].StationId = -1; // set to availeble
+                    DataSource.DroneChargeList[index].DroneId = -1; // set to availeble
+                    DataSource.DroneChargeList[index].StationId = -1; // set to availeble
                     break;
                 }
             }

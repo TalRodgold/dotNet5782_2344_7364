@@ -15,13 +15,13 @@ namespace DalObjects
         /// this class holds all the data of the program in arrays
         /// this class also creats random data to start program
         /// </summary>
-        
+
         #region // 5 arrays for storing data
-        internal static Drone[] DroneArr = new Drone[10]; // array of drones
-        internal static BaseStation[] BaseStationArr = new BaseStation[5]; // array of base stations
-        internal static Customer[] CustomerArr = new Customer[100]; // array of customers
-        internal static Parcel[] ParcelArr = new Parcel[1000]; // array of parcel
-        internal static DroneCharge[] DroneChargeArr = new DroneCharge[10]; // array of drone charges
+        internal static List<Drone> DroneList; // list of drones
+        internal static List<Drone> BaseStationList; // list of base stations
+        internal static List<Drone> CustomerList; // list of customers
+        internal static List<Drone> ParcelList; // list of parcel
+        internal static List<Drone> DroneChargeList; // list of drone charges
         #endregion
         internal class Config // hold index of next free index in array
         {
@@ -30,11 +30,6 @@ namespace DalObjects
             /// </summary>
             
             #region// index for arrays and parcel id
-            internal static int DroneArrIndex = 0; // points to next free index in drone_arr
-            internal static int BaseStationArrIndex = 0; // points to next free index in BaseStation_arr
-            internal static int CustomerArrIndex = 0; // points to next free index in Customer_arr
-            internal static int ParcelArrIndex = 0; // points to next free index in Parcel_arr
-            internal static int DroneChargeArrSize = DroneChargeArr.Length; // points to next free index in DroneCharge_arr
             internal static int ParcelId = 12345; // runing number for parcel Id
             #endregion
         }
@@ -77,7 +72,7 @@ namespace DalObjects
             newBaseStation.ChargeSlots= rnd.Next(0, 10);
             newBaseStation.Longtitude = sexagesimal(rnd.NextDouble() + 31.728959, 'N');
             newBaseStation.Latitude = sexagesimal(rnd.NextDouble() + 35.206714, 'E');
-            BaseStationArr[Config.BaseStationArrIndex] = newBaseStation; // add to array
+            BaseStationList[Config.BaseStationArrIndex] = newBaseStation; // add to array
             Config.BaseStationArrIndex++;// edvance index to next free cell
             #endregion
         }
@@ -94,7 +89,7 @@ namespace DalObjects
             newDrone.MaxWeight = (WeightCategories)rnd.Next(0, 3);
            // newDrone.Status = (DroneStatuses)rnd.Next(0, 3);
            // newDrone.Battery = rnd.Next(0, 101);
-            DroneArr[Config.DroneArrIndex] = newDrone; // add to array
+            DroneList[Config.DroneArrIndex] = newDrone; // add to array
             Config.DroneArrIndex++;// edvance index to next free cell
             #endregion
         }
@@ -107,8 +102,8 @@ namespace DalObjects
             Random rnd = new Random(); // generate randome number
             Parcel newParcel = new Parcel();
             newParcel.Id = Config.ParcelId;
-            newParcel.SenderId = CustomerArr[rnd.Next(0, Config.CustomerArrIndex)].Id;
-            newParcel.TargetId = CustomerArr[rnd.Next(0, Config.CustomerArrIndex)].Id;
+            newParcel.SenderId = CustomerList[rnd.Next(0, Config.CustomerArrIndex)].Id;
+            newParcel.TargetId = CustomerList[rnd.Next(0, Config.CustomerArrIndex)].Id;
             newParcel.Weight = (WeightCategories)rnd.Next(0, 3);
             newParcel.Priority = (Priorities)rnd.Next(0, 3);
             newParcel.Requsted = DateTime.Now;
@@ -116,7 +111,7 @@ namespace DalObjects
             newParcel.Scheduled = DateTime.Now.AddHours(rnd.Next(1, 23));
             newParcel.PickedUp = DateTime.MinValue;
             newParcel.Deliverd = DateTime.MinValue;
-            ParcelArr[Config.ParcelArrIndex] = newParcel; // add to array
+            ParcelList[Config.ParcelArrIndex] = newParcel; // add to array
             Config.ParcelArrIndex++; // edvance index to next free cell
             Config.ParcelId++; // grow runing number by 1
             #endregion
@@ -134,7 +129,7 @@ namespace DalObjects
             newCustomer.Phone = "05" + Convert.ToString(rnd.Next(10000000, 99999999));
             newCustomer.Longtitude = DataSource.sexagesimal(rnd.NextDouble() + 31.72895, 'N');
             newCustomer.Latitude = DataSource.sexagesimal(rnd.NextDouble() + 35.206714, 'E');
-            CustomerArr[DataSource.Config.CustomerArrIndex] = newCustomer;
+            CustomerList[DataSource.Config.CustomerArrIndex] = newCustomer;
             Config.CustomerArrIndex++; // edvance index to next free cell
             #endregion
         }
@@ -151,7 +146,7 @@ namespace DalObjects
             };
             for (int i = 0; i < Config.DroneChargeArrSize; i++) // set all cells in array to be free (-1)
             {             
-                DroneChargeArr[i] = newDroneCharge;                
+                DroneChargeList[i] = newDroneCharge;                
             }
             #endregion
         }
