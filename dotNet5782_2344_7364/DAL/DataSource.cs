@@ -92,8 +92,8 @@ namespace DalObjects
             newDrone.Id = (Byte)DateTime.Now.Ticks;
             newDrone.Model = $"modle_number{Config.DroneArrIndex + 1}";
             newDrone.MaxWeight = (WeightCategories)rnd.Next(0, 3);
-            newDrone.Status = (DroneStatuses)rnd.Next(0, 3);
-            newDrone.Battery = rnd.Next(0, 101);
+           // newDrone.Status = (DroneStatuses)rnd.Next(0, 3);
+           // newDrone.Battery = rnd.Next(0, 101);
             DroneArr[Config.DroneArrIndex] = newDrone; // add to array
             Config.DroneArrIndex++;// edvance index to next free cell
             #endregion

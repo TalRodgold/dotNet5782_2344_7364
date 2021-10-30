@@ -58,8 +58,8 @@ namespace DalObjects
                 Id = id,
                 Model = model,
                 MaxWeight = maxWeight,
-                Status = status,
-                Battery = battery,
+                //Status = status,
+                //Battery = battery,
             };
             DataSource.DroneArr[DataSource.Config.DroneArrIndex] = newDrone; // add to array
             DataSource.Config.DroneArrIndex++; // edvance index to next free cell
@@ -372,7 +372,7 @@ namespace DalObjects
         {
             #region//associate a drone to a parcel
             DataSource.ParcelArr[FindParcelById(parcleId)].DroneId = droneId;
-            DataSource.DroneArr[FindDroneById(droneId)].Status = DroneStatuses.Delivery;
+           // DataSource.DroneArr[FindDroneById(droneId)].Status = DroneStatuses.Delivery;
             #endregion
         }
         /// <summary>
@@ -393,7 +393,7 @@ namespace DalObjects
         {
             #region//update parcel delivery
             DataSource.ParcelArr[FindParcelById(id)].Deliverd = DateTime.Now;  // currnt time
-            DataSource.DroneArr[FindDroneById(DataSource.ParcelArr[FindParcelById(id)].DroneId)].Status = DroneStatuses.Available; // change drone status to avilable
+           // DataSource.DroneArr[FindDroneById(DataSource.ParcelArr[FindParcelById(id)].DroneId)].Status = DroneStatuses.Available; // change drone status to avilable
             #endregion
         }
         /// <summary>
@@ -405,7 +405,7 @@ namespace DalObjects
         {
             #region//update drones charging
             ConstructDroneCharge(droneId, stationId); // call construct
-            DataSource.DroneArr[FindDroneById(droneId)].Status = DroneStatuses.Maintenance; // update drone status
+           // DataSource.DroneArr[FindDroneById(droneId)].Status = DroneStatuses.Maintenance; // update drone status
             DataSource.BaseStationArr[FindBaseStationById(stationId)].ChargeSlots -= 1;   // change number of free charge slots
             #endregion
         }
@@ -417,7 +417,7 @@ namespace DalObjects
         public void ReleaseDroneCharge(int droneId, int stationId) // releas drone from charging
         {
             #region//releas drone from charging
-            DataSource.DroneArr[FindDroneById(droneId)].Status = DroneStatuses.Available; // make drone status: Available
+           // DataSource.DroneArr[FindDroneById(droneId)].Status = DroneStatuses.Available; // make drone status: Available
             DataSource.BaseStationArr[FindBaseStationById(stationId)].ChargeSlots++;
             for (int index = 0; index < DataSource.Config.DroneChargeArrSize; index++) // search drone by id in drone charge
             {

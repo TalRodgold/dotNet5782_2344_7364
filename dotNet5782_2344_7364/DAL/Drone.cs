@@ -18,11 +18,11 @@ namespace IDAL
             public int Id{ get; set; } // drone id
             public string Model{ get; set; } // drone model
             public WeightCategories MaxWeight{ get; set; } // maximum weight drone can carry
-            public DroneStatuses Status{ get; set; } // drones status
-            public double Battery{ get; set; } // Battery left
+            //public DroneStatuses Status{ get; set; } // drones status
+            //public double Battery{ get; set; } // Battery left
             public override string ToString() // return string with all the data
             {
-                return $" Drone #{Id}: \n Model = {Model} \n Status = {Status} \n Max weight = {MaxWeight} \n battery = {(int)Battery} \n";
+                return $" Drone #{Id}: \n Model = {Model}  \n Max weight = {MaxWeight} \n ";
             }
         }
     } 
