@@ -49,7 +49,7 @@ namespace DalObjects
         /// <param name="maxWeight"></param>
         /// <param name="status"></param>
         /// <param name="battery"></param>
-        public void ConstructDrone(int id, string model, WeightCategories maxWeight, DroneStatuses status, double battery) // construct a new drone
+        public void ConstructDrone(int id, string model, WeightCategories maxWeight) // construct a new drone
         {
             #region//construct a new drone
             Drone newDrone = new Drone
@@ -281,5 +281,9 @@ namespace DalObjects
             DataSource.DroneChargeList.RemoveAt(DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId));
             #endregion
         }
+        public int GetCountOfDroneList() { return DataSource.DroneList.Count(); }
+        public int GetCountOfBaseStationList() { return DataSource.BaseStationList.Count(); }
+        public int GetCountOfCustomerList() { return DataSource.CustomerList.Count(); }
+        public int GetCountOfParcelList() { return DataSource.ParcelList.Count(); }
     }
 }
