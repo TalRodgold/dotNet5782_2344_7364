@@ -18,10 +18,10 @@ namespace DalObjects
 
         #region // 5 arrays for storing data
         internal static List<Drone> DroneList; // list of drones
-        internal static List<Drone> BaseStationList; // list of base stations
-        internal static List<Drone> CustomerList; // list of customers
-        internal static List<Drone> ParcelList; // list of parcel
-        internal static List<Drone> DroneChargeList; // list of drone charges
+        internal static List<BaseStation> BaseStationList; // list of base stations
+        internal static List<Customer> CustomerList; // list of customers
+        internal static List<Parcel> ParcelList; // list of parcel
+        internal static List<DroneCharge> DroneChargeList; // list of drone charges
         #endregion
         internal class Config // hold index of next free index in array
         {
@@ -72,7 +72,7 @@ namespace DalObjects
             newBaseStation.ChargeSlots= rnd.Next(0, 10);
             newBaseStation.Longtitude = sexagesimal(rnd.NextDouble() + 31.728959, 'N');
             newBaseStation.Latitude = sexagesimal(rnd.NextDouble() + 35.206714, 'E');
-            BaseStationList[Config.BaseStationArrIndex] = newBaseStation; // add to array
+            BaseStationList.Add(newBaseStation); // add to array
             Config.BaseStationArrIndex++;// edvance index to next free cell
             #endregion
         }
