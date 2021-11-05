@@ -281,7 +281,73 @@ namespace DalObjects // להתייחס לממשק
             DataSource.BaseStationList.Add(newBaseStation);
             DataSource.DroneChargeList.RemoveAt(DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId));
             #endregion
+        } E
+        public double[]lectricity();//צריך לממש והיא תחזיר  5 ערכים פנוי קל בינוני כבד וקצב תעינה
+        /// <summary>
+        ///  return long string of all BaseStations
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="b"></param>
+        public string BaseStationLisToString()//the function return long string of all BaseStation
+        {
+            #region//concatent strings that contain BaseStation data and return long string
+            string s ="";
+            foreach(BaseStation b in DataSource.BaseStationList)
+            {
+                s += b.ToString();
+            }
+            return s;
+            #endregion
         }
+        /// <summary>
+        ///  return long string of all Drones
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="d"></param>
+        public string DroneLisToString()//the function return long string of all Drones
+        {
+            #region//concatent strings that contain Drone data and return long string
+            string s = "";
+            foreach (Drone d in DataSource.DroneList)
+            {
+                s += d.ToString();
+            }
+            return s;
+            #endregion
+        }
+        /// <summary>
+        ///  return long string of all Customers
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="c"></param>
+        public string CustomerListToString()//the function return long string of all Customers
+        {
+            #region//concatent strings that contain Customer data and return long string 
+            string s = "";
+            foreach (Customer c in DataSource.CustomerList)
+            {
+                s += c.ToString();
+            }
+            return s;
+            #endregion
+        }
+        /// <summary>
+        ///  return long string of all Parcels
+        /// </summary>
+        /// <param name="s"></param>
+        /// <param name="c"></param>
+        public string ParcelLisToString()//the function return long string of all Parcels
+        {
+            #region//concatent strings that contain Parcel data and return long string
+            string s = "";
+            foreach (Parcel p in DataSource.ParcelList)
+            {
+                s += p.ToString();
+            }
+            return s;
+            #endregion
+        }
+        //return list of parcels who are not associated to a drone
         public int GetCountOfDroneList() { return DataSource.DroneList.Count(); }
         public int GetCountOfBaseStationList() { return DataSource.BaseStationList.Count(); }
         public int GetCountOfCustomerList() { return DataSource.CustomerList.Count(); }

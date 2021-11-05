@@ -180,17 +180,14 @@ namespace ConsoleUI
                         #endregion
                     case ("4.1")://Display list of base stations
                         #region//Display list of base stations
-                        for (int i = 0; i < name.GetCountOfBaseStationList(); i++)
-                        {
-                            Console.WriteLine(name.ReturnBaseStationDataByIndex(i));
-                        }
+                        Console.Write(name.BaseStationLisToString());
                         break;
                         #endregion
                     case ("4.2")://Display list of drones
                         #region//Display list of drones
                         for (int i = 0; i < name.GetCountOfDroneList(); i++)
                         {
-                            Console.WriteLine(name.ReturnDroneDataByIndex(i));
+                            Console.WriteLine(name.DroneLisToString());
                         }
                         break;
                         #endregion
@@ -198,7 +195,7 @@ namespace ConsoleUI
                         #region//Display list of customers
                         for (int i = 0; i < name.GetCountOfCustomerList(); i++)
                         {
-                            Console.WriteLine(name.ReturnCustomerDataByIndex(i));
+                            Console.WriteLine(name.CustomerListToString());
                         }
                         break;
                         #endregion
@@ -206,7 +203,7 @@ namespace ConsoleUI
                         #region//Display list of parcels
                         for (int i = 0; i < name.GetCountOfParcelList(); i++)
                         {
-                            Console.WriteLine(name.ReturnParcelDataByIndex(i));
+                            Console.WriteLine(name.ParcelLisToString());
                         }
                         break;
                         #endregion
