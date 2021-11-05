@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
 
-namespace IDal
+namespace IDAL
 {
-    interface IDal
+    interface IDAL
     {
         public void ConstructBaseStation(int id, string name, int chargeSlots, double longtitude, double latitude); // construct a new base station
         public void ConstructDrone(int id, string model, WeightCategories maxWeight, DroneStatuses status, double battery); // construct a new drone

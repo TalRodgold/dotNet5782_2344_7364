@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
+//using IDAL;
 
 namespace ConsoleUI
 {
@@ -15,6 +16,7 @@ namespace ConsoleUI
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            
             DalObjects.DalObjects name = new DalObjects.DalObjects(); // call to initialize (creat an appiriance of DalObjects.DalObjects - it enabls us to reach DalObjects functions)
             PrintFunc(1); // print ascii art.
             PrintFunc(2); // print menu

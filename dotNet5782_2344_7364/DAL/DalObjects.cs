@@ -4,8 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using IDAL.DO;
+using IDAL;
 
-namespace DalObjects
+namespace DalObjects // להתייחס לממשק
 {
     /// <summary>
     /// Holds functions that allow to acsses data
