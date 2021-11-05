@@ -60,7 +60,6 @@ namespace DalObjects
             // caluclate seconds with fraction
             double fractionalMinutes = minutesWithFraction - minutes; 
             double secondsWithFraction = 60 * fractionalMinutes;
-            
             return $"{degrees}°{minutes}'{string.Format("{0:F3}", secondsWithFraction)}\"{c}"; // return string of cordinents
             #endregion
         }
