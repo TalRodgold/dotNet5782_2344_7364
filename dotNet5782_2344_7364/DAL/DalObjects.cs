@@ -257,8 +257,9 @@ namespace DalObjects // להתייחס לממשק
             DataSource.BaseStationList.Add(newBaseStation);
             DataSource.DroneChargeList.RemoveAt(DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId));
             #endregion
-        } E
-        public double[]lectricity();//צריך לממש והיא תחזיר  5 ערכים פנוי קל בינוני כבד וקצב תעינה
+        } 
+        public double[] Electricity();//צריך לממש והיא תחזיר  5 ערכים פנוי קל בינוני כבד וקצב תעינה
+        #region//all ToString Functions
         /// <summary>
         ///  return long string of all BaseStations
         /// </summary>
