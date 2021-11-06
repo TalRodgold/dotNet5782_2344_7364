@@ -11,7 +11,7 @@ namespace DalObjects // להתייחס לממשק
     /// <summary>
     /// Holds functions that allow to acsses data
     /// </summary>
-    public class DalObjects
+    public class DalObjects : IDal
     {
         /// <summary>
         /// contains functions that allow to acsses and change the data in DataSource
@@ -93,7 +93,7 @@ namespace DalObjects // להתייחס לממשק
                 PickedUp = pickUp,
                 Deliverd = deliverd
             };
-            DataSource.ParcelList.Add( newParcel); //  add to list
+            DataSource.ParcelList.Add(newParcel); //  add to list
             DataSource.Config.ParcelId++; // grow runing number by 1
             #endregion
         }
@@ -116,7 +116,7 @@ namespace DalObjects // להתייחס לממשק
                 Longtitude = DataSource.sexagesimal(longtitude, 'N'),
                 Latitude = DataSource.sexagesimal(latitude, 'E')
             };
-            DataSource.CustomerList.Add( newCustomer); // add to list
+            DataSource.CustomerList.Add(newCustomer); // add to list
             #endregion
         }
         /// <summary>
@@ -140,7 +140,7 @@ namespace DalObjects // להתייחס לממשק
         public string ReturnDroneDataById(int id) // find drone in list and return it
         {
             #region//find drone in array and return it        
-            return DataSource.DroneList.Find(x => x.Id == id).ToString(); 
+            return DataSource.DroneList.Find(x => x.Id == id).ToString();
             #endregion
         }
         /// <summary>
@@ -151,7 +151,7 @@ namespace DalObjects // להתייחס לממשק
         public string ReturnBaseStationDataById(int id) // find base station in list and return it
         {
             #region//find base station in array and return it
-            return DataSource.BaseStationList.Find(x => x.Id == id).ToString(); 
+            return DataSource.BaseStationList.Find(x => x.Id == id).ToString();
             #endregion
         }
         /// <summary>
@@ -162,7 +162,7 @@ namespace DalObjects // להתייחס לממשק
         public string ReturnCustomerDataById(int id) // find customer in list and return it
         {
             #region//find customer in array and return it         
-            return DataSource.CustomerList.Find(x => x.Id == id).ToString(); 
+            return DataSource.CustomerList.Find(x => x.Id == id).ToString();
             #endregion
         }
         /// <summary>
@@ -201,7 +201,7 @@ namespace DalObjects // להתייחס לממשק
             #region//search in spesific index in base station array if charge slots equals 0
             if ((DataSource.BaseStationList.ElementAt(i).Id == 0))
             {
-               return true;
+                return true;
             }
             return false;
             #endregion
@@ -215,7 +215,7 @@ namespace DalObjects // להתייחס לממשק
         {
             #region//associate a drone to a parcel
 
-         //int i= DataSource.ParcelList.FindIndex(x => x.Id == parcleId);
+            //int i= DataSource.ParcelList.FindIndex(x => x.Id == parcleId);
             Parcel newParcel = DataSource.ParcelList.Find(x => x.Id == parcleId);
             newParcel.DroneId = droneId;
             DataSource.ParcelList.RemoveAt(DataSource.ParcelList.FindIndex(x => x.Id == parcleId));
@@ -246,7 +246,7 @@ namespace DalObjects // להתייחס לממשק
             newParcel.Deliverd = DateTime.Now;
             DataSource.ParcelList.RemoveAt(DataSource.ParcelList.FindIndex(x => x.Id == id));
             DataSource.ParcelList.Add(newParcel);
-           // DataSource.DroneArr[FindDroneById(DataSource.ParcelArr[FindParcelById(id)].DroneId)].Status = DroneStatuses.Available; // change drone status to avilable
+            // DataSource.DroneArr[FindDroneById(DataSource.ParcelArr[FindParcelById(id)].DroneId)].Status = DroneStatuses.Available; // change drone status to avilable
             #endregion
         }
         /// <summary>
@@ -263,7 +263,7 @@ namespace DalObjects // להתייחס לממשק
             newBaseStation.ChargeSlots -= 1;
             DataSource.BaseStationList.RemoveAt(DataSource.BaseStationList.FindIndex(x => x.Id == stationId));
             DataSource.BaseStationList.Add(newBaseStation);
-           // change number of free charge slots
+            // change number of free charge slots
             #endregion
         }
         /// <summary>
@@ -274,15 +274,18 @@ namespace DalObjects // להתייחס לממשק
         public void ReleaseDroneCharge(int droneId, int stationId) // releas drone from charging
         {
             #region//releas drone from charging
-           // DataSource.DroneArr[FindDroneById(droneId)].Status = DroneStatuses.Available; // make drone status: Available
+            // DataSource.DroneArr[FindDroneById(droneId)].Status = DroneStatuses.Available; // make drone status: Available
             BaseStation newBaseStation = DataSource.BaseStationList.Find(x => x.Id == stationId);
             newBaseStation.ChargeSlots += 1;
             DataSource.BaseStationList.RemoveAt(DataSource.BaseStationList.FindIndex(x => x.Id == stationId));
             DataSource.BaseStationList.Add(newBaseStation);
             DataSource.DroneChargeList.RemoveAt(DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId));
             #endregion
-        } E
-        public double[]lectricity();//צריך לממש והיא תחזיר  5 ערכים פנוי קל בינוני כבד וקצב תעינה
+        }
+        public double[] Electricity()//צריך לממש והיא תחזיר  5 ערכים פנוי קל בינוני כבד וקצב תעינה
+        {
+            return null;
+        }
         /// <summary>
         ///  return long string of all BaseStations
         /// </summary>
