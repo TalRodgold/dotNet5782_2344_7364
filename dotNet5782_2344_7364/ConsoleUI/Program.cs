@@ -113,19 +113,7 @@ namespace ConsoleUI
                         #endregion
                     case ("2.4")://Print free BaseStation
                         #region//Print free BaseStation
-                        bool flag3 = true; // flag
-                        for (int i = 0; i < name.GetBaseStationArrIndex(); i++) // for all base stations in array
-                        {
-                            if (name.CheckChargeSlotsInBaseStation(i)) // if free
-                            {
-                                Console.WriteLine(name.ReturnBaseStationDataByIndex(i)); // print
-                                flag3 = false;
-                            }
-                        }
-                        if (flag3) // if all base station charging slots are full
-                        {
-                            Console.WriteLine(" All base station charging slots are full ");
-                        }
+                        Console.Write(name.BaseStationfreeToString());
                         PrintFunc(11);
                         int droneId2;
                         int.TryParse(Console.ReadLine(), out droneId2);
@@ -209,36 +197,12 @@ namespace ConsoleUI
                         #endregion
                     case ("4.5")://Display list of parcels who are not associated to a drone
                         #region//Display list of parcels who are not associated to a drone
-                        bool flag = true; // flag
-                        for (int i = 0; i < name.GetParcelArrIndex(); i++) // for all parcels in array
-                        {
-                            if (name.CheckDroneIdInParcel(i)) // if not associated
-                            {
-                                Console.WriteLine(name.ReturnParcelDataByIndex(i)); // print
-                                flag = false;
-                            }
-                        }
-                        if (flag) // if all parcels have been associated to a drone
-                        {
-                            Console.WriteLine(" All parcels have been associated to a drone ");
-                        }
+                        Console.Write(name.ParcelsNotAssociatedToString());
                         break;
                         #endregion
                     case ("4.6")://Display list of base stations with free charging stations
                         #region//Display list of base stations with free charging stations
-                        bool flag2 = true; // flag
-                        for (int i = 0; i < name.GetBaseStationArrIndex(); i++) // for all base stations in array
-                        {
-                            if (name.CheckChargeSlotsInBaseStation(i)) // if free
-                            {
-                                Console.WriteLine(name.ReturnBaseStationDataByIndex(i)); // print
-                                flag2 = false;
-                            }
-                        }
-                        if (flag2) // if all base station charging slots are full
-                        {
-                            Console.WriteLine(" All base station charging slots are full ");
-                        }
+                        Console.Write(name.BaseStationfreeToString());
                         break;
                         #endregion
                     case ("5")://exit
