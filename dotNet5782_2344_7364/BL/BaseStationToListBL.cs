@@ -14,6 +14,10 @@ namespace IBL
             string Name { set; get; }
             int FreeChargingSlots { set; get; }
             int OccupiedChargingSlots { set; get; }
+            public override string ToString()
+            {
+                return $" Base station #{Id}: \n Name = {Name} \n Free charging slots = {FreeChargingSlots} \n Occupied charging slots = {OccupiedChargingSlots} \n ";
+            }
         }
     }
   

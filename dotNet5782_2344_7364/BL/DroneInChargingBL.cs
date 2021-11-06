@@ -12,6 +12,10 @@ namespace IBL
         {
             int Id { set; get; }
             float Battery { set; get; }
+            public override string ToString()
+            {
+                return $" Drone #{Id}: \n Battery = {Battery} \n";
+            }
         }
     }
     

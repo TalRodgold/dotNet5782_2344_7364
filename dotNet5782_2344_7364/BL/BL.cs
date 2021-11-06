@@ -1,18 +1,21 @@
 ﻿using System;
-
+using IDAL;
+using IBL.BO;
 namespace IBL
-{
-    namespace BO
+{     
+    public partial class BL : IBL
     {
-        public partial class BL
+        BL bl;
+        BL() { IDAL dal = new DalObjects.DalObjects(); }
+    }
+
+    public partial class BL : IBL
+    {
+        float num = DalObjects.DataSource.Config
+        void GetDroneList()
         {
-
-        }
-
-        public partial class BL
-        {
-
+            throw new BLException("sagsg");
         }
     }
-   
+
 }

@@ -11,10 +11,14 @@ namespace IBL
         class ParcelAtCustomerBL
         {
             int Id { set; get; }
-            IDAL.DO.WeightCategories Weight { set; get; }
-            IDAL.DO.Priorities Prioritie { set; get; }
-            IDAL.DO.ParcelStatus ParcelStatus { set; get; }
+            EnumsBL.WeightCategories Weight { set; get; }
+            EnumsBL.Priorities Prioritie { set; get; }
+            EnumsBL.ParcelStatus ParcelStatus { set; get; }
             CustomerInParcelBL customerInParcel { set; get; }
+            public override string ToString()
+            {
+                return $" Parcel #{Id}: \n Weight = {Weight} \n Prioritie = {Prioritie} \n Parcel status = {ParcelStatus} \n Customer in parcel = {customerInParcel} \n ";
+            }
 
         }
     }

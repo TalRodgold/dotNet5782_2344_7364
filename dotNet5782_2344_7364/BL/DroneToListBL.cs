@@ -12,11 +12,15 @@ namespace IBL
         {
             int Id { set; get; }
             string Model { set; get; }
-            IDAL.DO.WeightCategories WeightCategories { set; get; }
+            EnumsBL.WeightCategories Weight { set; get; }
             float Battery { set; get; }
-            IDAL.DO.DroneStatuses DroneStatuses { set; get; }
+            EnumsBL.DroneStatuses DroneStatuses { set; get; }
             LocationBL CurrentLocation { set; get; }
             int NumberOfParcelInTransit { set; get; }
+            public override string ToString()
+            {
+                return $" Drone #{Id}: \n Battery = {Battery} Weight = {Weight} \n Battery = {Battery} \n Drone Status = {DroneStatuses} \n Current location = {CurrentLocation} \n Number of parcel in transit = {NumberOfParcelInTransit} \n";
+            }
         }
     }
     

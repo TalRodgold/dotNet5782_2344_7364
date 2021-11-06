@@ -15,7 +15,10 @@ namespace IBL
             LocationBL Location { set; get; }
             int NumberOfFreeChargingSlots { set; get; }
             List<DroneInChargingBL> ListOfDroneInCharging { set; get; }
-
+            public override string ToString()
+            {
+                return $" Base station #{Id}: \n Name = {Name} \n Location = {Location} \n Number of free charging slots = {NumberOfFreeChargingSlots} \n All drones in charging = {ListOfDroneInCharging} \n ";
+            }
         }
     }
     

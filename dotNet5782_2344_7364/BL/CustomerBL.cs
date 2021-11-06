@@ -15,7 +15,12 @@ namespace IBL
             int Phone { set; get; }
             LocationBL Location { set; get; }
             // רשימת משלוחיםחבילות אצל לקוח - מהלקוח
-           // רשימת משלוחיםחבילות אצל לקוח - אל הלקוח
+            // רשימת משלוחיםחבילות אצל לקוח - אל הלקוח
+
+            public override string ToString()
+            {
+                return $"  ";
+            }
         }
     }
 }

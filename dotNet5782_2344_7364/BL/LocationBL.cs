@@ -12,6 +12,10 @@ namespace IBL
         {
             double longitude { set; get; }
             double Latitude { set; get; }
+            public override string ToString()
+            {
+                return $" Longitude{longitude}: \n Latitude = {Latitude} \n";
+            }
         }
     }
     
