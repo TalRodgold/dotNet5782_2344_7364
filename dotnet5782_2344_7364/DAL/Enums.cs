@@ -16,6 +16,8 @@ namespace IDAL
         { Regular,Express,Urgent }
          public enum DroneStatuses // 3 types of Drone status
         { Available, Delivery, Maintenance }
+        public enum ParcelStatus // 4 types of parcel status
+        { Defined, Associated, Collected, Supplied }
         public enum RandomBases // random list of basses names
         { Gilo, Baaka, Pissgat_zev, Katamon, Malha, Givat_shaul, City_center, San_simon, Givat_mordehai, Arnona}
         public enum RandomNames // random list of names
