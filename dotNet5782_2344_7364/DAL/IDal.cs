@@ -7,10 +7,10 @@ using IDAL.DO;
 
 namespace IDAL
 {
-    interface IDAL
+    interface IDal
     {
         public void ConstructBaseStation(int id, string name, int chargeSlots, double longtitude, double latitude); // construct a new base station
-        public void ConstructDrone(int id, string model, WeightCategories maxWeight, DroneStatuses status, double battery); // construct a new drone
+        public void ConstructDrone(int id, string model, WeightCategories maxWeight); // construct a new drone
         public void ConstructParcel(int id, int senderId, int targetId, WeightCategories weight, Priorities priority, DateTime request, int droneId, DateTime schedual, DateTime pickUp, DateTime deliverd);// construct a new parcel
         public void ConstructCustomer(int id, string name, string phone, double longtitude, double latitude); // construct a new customer
         public void ConstructDroneCharge(int droneId, int stationId); // construct a new drone charge

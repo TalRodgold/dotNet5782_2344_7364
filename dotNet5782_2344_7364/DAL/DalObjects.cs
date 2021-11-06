@@ -11,7 +11,7 @@ namespace DalObjects // להתייחס לממשק
     /// <summary>
     /// Holds functions that allow to acsses data
     /// </summary>
-    public class DalObjects
+    public class DalObjects : IDal
     {
         /// <summary>
         /// contains functions that allow to acsses and change the data in DataSource
@@ -257,9 +257,8 @@ namespace DalObjects // להתייחס לממשק
             DataSource.BaseStationList.Add(newBaseStation);
             DataSource.DroneChargeList.RemoveAt(DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId));
             #endregion
-        }
-        public double[] Electricity();//צריך לממש והיא תחזיר  5 ערכים פנוי קל בינוני כבד וקצב תעינה
-        #region//AllToStringFunction
+        } E
+        public double[]lectricity();//צריך לממש והיא תחזיר  5 ערכים פנוי קל בינוני כבד וקצב תעינה
         /// <summary>
         ///  return long string of all BaseStations
         /// </summary>
