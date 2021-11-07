@@ -8,16 +8,16 @@ namespace IBL
 {
     namespace BO
     {
-        class ParcelInTransitBL
+        class ParcelInTransit
         {
-            int Id { set; get; }
-            EnumsBL.Priorities Priorities { set; get; }
-            EnumsBL.WeightCategories Weight { set; get; }
-            CustomerInParcelBL CustomerInParcelSender { set; get; }
-            CustomerInParcelBL CustomerInParcelReciver { set; get; }
-            LocationBL PickupLocation { set; get; }
-            LocationBL DeliveryLocation { set; get; }
-            double Distance { set; get; }
+            public int Id { set; get; }
+            public Enums.Priorities Priorities { set; get; }
+            public Enums.WeightCategories Weight { set; get; }
+            public CustomerInParcel CustomerInParcelSender { set; get; }
+            public CustomerInParcel CustomerInParcelReciver { set; get; }
+            public Location PickupLocation { set; get; }
+            public Location DeliveryLocation { set; get; }
+            public double Distance { set; get; }
             public override string ToString()
             {
                 return $" Parcel #{Id}: \n Prioritie = {Priorities} \n Weight = {Weight} \n Customer in parcel sender = {CustomerInParcelSender} \n Customer in parcel reciver = {CustomerInParcelReciver} \n Pickup location = {PickupLocation} \n Delivery location = {DeliveryLocation} \n Distance = {Distance} ";

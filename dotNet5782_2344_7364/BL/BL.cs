@@ -3,13 +3,13 @@ using IDAL;
 using IBL.BO;
 namespace IBL
 {     
-    public partial class BL : IBL
+    public partial class BL : IBl
     {
         BL bl;
         BL() { IDAL dal = new DalObjects.DalObjects(); }
     }
 
-    public partial class BL : IBL
+    public partial class BL : IBl
     {
         float num = DalObjects.DataSource.Config
         void GetDroneList()

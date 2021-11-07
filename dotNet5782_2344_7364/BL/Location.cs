@@ -8,13 +8,13 @@ namespace IBL
 {
     namespace BO
     {
-        class CustomerInParcelBL
+        class Location
         {
-            int Id { set; get; }
-            string Name { set; get; }
+            public double longitude { set; get; }
+            public double Latitude { set; get; }
             public override string ToString()
             {
-                return $" Customer #{Id}: \n Name = {Name} \n ";
+                return $" Longitude{longitude}: \n Latitude = {Latitude} \n";
             }
         }
     }

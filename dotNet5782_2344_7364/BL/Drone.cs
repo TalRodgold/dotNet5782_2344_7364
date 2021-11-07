@@ -8,15 +8,15 @@ namespace IBL
 {
     namespace BO
     {
-        class DroneBL
+        class Drone
         {
-            int Id { set; get; }
-            string Model { set; get; }
-            EnumsBL.WeightCategories Weight { set; get; }
-            float Battery { set; get; }
-            EnumsBL.DroneStatuses DroneStatuses { set; get; }
-            ParcelInTransitBL ParcelInTransit { set; get; }
-            LocationBL CurrentLocation { set; get; }
+            public int Id { set; get; }
+            public string Model { set; get; }
+            public Enums.WeightCategories Weight { set; get; }
+            public float Battery { set; get; }
+            public Enums.DroneStatuses DroneStatuses { set; get; }
+            public ParcelInTransit ParcelInTransit { set; get; }
+            public Location CurrentLocation { set; get; }
             public override string ToString()
             {
                 return $" Drone #{Id}: \n Model = {Model} \n Weight = {Weight} \n Battery = {Battery} \n Statuses = {DroneStatuses} \n Parcel in transit {ParcelInTransit} \n  Current location = {CurrentLocation} \n";

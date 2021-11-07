@@ -8,12 +8,12 @@ namespace IBL
 {
     namespace BO
     {
-        class BaseStationToListBL
+        class BaseStationToList
         {
-            int Id { set; get; }
-            string Name { set; get; }
-            int FreeChargingSlots { set; get; }
-            int OccupiedChargingSlots { set; get; }
+            public int Id { set; get; }
+            public string Name { set; get; }
+            public int FreeChargingSlots { set; get; }
+            public int OccupiedChargingSlots { set; get; }
             public override string ToString()
             {
                 return $" Base station #{Id}: \n Name = {Name} \n Free charging slots = {FreeChargingSlots} \n Occupied charging slots = {OccupiedChargingSlots} \n ";

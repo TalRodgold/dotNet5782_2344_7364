@@ -8,13 +8,13 @@ namespace IBL
 {
     namespace BO
     {
-        class ParcelAtCustomerBL
+        class ParcelAtCustomer
         {
-            int Id { set; get; }
-            EnumsBL.WeightCategories Weight { set; get; }
-            EnumsBL.Priorities Prioritie { set; get; }
-            EnumsBL.ParcelStatus ParcelStatus { set; get; }
-            CustomerInParcelBL customerInParcel { set; get; }
+            public int Id { set; get; }
+            public Enums.WeightCategories Weight { set; get; }
+            public Enums.Priorities Prioritie { set; get; }
+            public Enums.ParcelStatus ParcelStatus { set; get; }
+            public CustomerInParcel customerInParcel { set; get; }
             public override string ToString()
             {
                 return $" Parcel #{Id}: \n Weight = {Weight} \n Prioritie = {Prioritie} \n Parcel status = {ParcelStatus} \n Customer in parcel = {customerInParcel} \n ";

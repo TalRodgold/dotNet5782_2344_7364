@@ -8,12 +8,12 @@ namespace IBL
 {
     namespace BO
     {
-        class CustomerBL
+        class Customer
         {
-            int Id { set; get; }
-            string Name { set; get; }
-            int Phone { set; get; }
-            LocationBL Location { set; get; }
+            public int Id { set; get; }
+            public string Name { set; get; }
+            public int Phone { set; get; }
+            public Location Location { set; get; }
             // רשימת משלוחיםחבילות אצל לקוח - מהלקוח
             // רשימת משלוחיםחבילות אצל לקוח - אל הלקוח
 

@@ -8,14 +8,14 @@ namespace IBL
 {
     namespace BO
     {
-        class ParcelToListBL
+        class ParcelToList
         {
-            int Id { set; get; }
-            string SendersName { set; get; }
-            string ReciversName { set; get; }
-            EnumsBL.WeightCategories weight { set; get; }
-            EnumsBL.Priorities Prioritie { set; get; }
-            EnumsBL.ParcelStatus ParcelStatus { set; get; }
+            public int Id { set; get; }
+            public string SendersName { set; get; }
+            public string ReciversName { set; get; }
+            public Enums.WeightCategories weight { set; get; }
+            public Enums.Priorities Prioritie { set; get; }
+            public Enums.ParcelStatus ParcelStatus { set; get; }
 
             public override string ToString()
             {

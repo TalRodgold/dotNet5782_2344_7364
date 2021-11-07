@@ -8,13 +8,13 @@ namespace IBL
 {
     namespace BO
     {
-        class BaseStationBL
+        class BaseStation
         {
-            int Id { set; get; }
-            string Name { set; get; }
-            LocationBL Location { set; get; }
-            int NumberOfFreeChargingSlots { set; get; }
-            List<DroneInChargingBL> ListOfDroneInCharging { set; get; }
+            public int Id { set; get; }
+            public string Name { set; get; }
+            public Location Location { set; get; }
+            public int NumberOfFreeChargingSlots { set; get; }
+            public List<DroneInCharging> ListOfDroneInCharging { set; get; }
             public override string ToString()
             {
                 return $" Base station #{Id}: \n Name = {Name} \n Location = {Location} \n Number of free charging slots = {NumberOfFreeChargingSlots} \n All drones in charging = {ListOfDroneInCharging} \n ";
