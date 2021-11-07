@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class Parcel
+        public class Parcel
         {
             public CustomerInParcel Sender { set; get; }
             public CustomerInParcel Reciver { set; get; }

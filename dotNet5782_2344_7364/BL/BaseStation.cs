@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class BaseStation
+        public class BaseStation
         {
             public int Id { set; get; }
             public string Name { set; get; }

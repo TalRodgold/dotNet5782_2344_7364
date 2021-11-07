@@ -1,21 +1,28 @@
 ﻿using System;
 using IDAL;
 using IBL.BO;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace IBL
 {     
     public partial class BL : IBl
     {
+        public List<DroneToList> droneToLists2 = new List<DroneToList>(); 
         BL bl;
-        BL() { IDAL dal = new DalObjects.DalObjects(); }
+        IDal dal;
+        public DroneToList  = new list<DroneToList>;
+
+        public BL() 
+        {  
+            dal = new DalObjects.DalObjects();
+        }
     }
 
     public partial class BL : IBl
     {
-        float num = DalObjects.DataSource.Config
-        void GetDroneList()
-        {
-            throw new BLException("sagsg");
-        }
+
+        
     }
 
 }

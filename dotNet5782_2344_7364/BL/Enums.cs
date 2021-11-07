@@ -8,7 +8,7 @@ namespace IBL
 {
     namespace BO
     {
-        class Enums
+        public class Enums
         {
             /// <summary>
             /// contains enums

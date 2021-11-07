@@ -1,10 +1,12 @@
 ﻿using System;
+using IBL;
 using IBL.BO;
 namespace ConsoleUI_BL
 {
     class Program
     {
-        IBL.BL name = new IBL.BL();
+        IBl name = new IBL.BL();
+          
         static void Main(string[] args)
         {
         }
