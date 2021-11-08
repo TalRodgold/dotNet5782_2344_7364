@@ -18,6 +18,7 @@ namespace IBL
             {
                 return $" Base station #{Id}: \n Name = {Name} \n Free charging slots = {FreeChargingSlots} \n Occupied charging slots = {OccupiedChargingSlots} \n ";
             }
+
         }
     }
   
