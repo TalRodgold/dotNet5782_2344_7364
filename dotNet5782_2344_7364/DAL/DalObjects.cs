@@ -32,6 +32,10 @@ namespace DalObjects // להתייחס לממשק
         public void ConstructBaseStation(int id, string name, int chargeSlots, double longtitude, double latitude) // construct a new base station
         {
             #region//construct a new base station
+            if (IfBaseStationExsists(id))
+            {
+                throw new DALException("error");// לתקן את כל הזריקות
+            }
             BaseStation newBaseStation = new BaseStation
             {
                 Id = id,
@@ -53,6 +57,10 @@ namespace DalObjects // להתייחס לממשק
         /// <param name="battery"></param>
         public void ConstructDrone(int id, string model, WeightCategories maxWeight) // construct a new drone
         {
+            if (IfDroneExsists(id))
+            {
+                throw new DALException("error");// לתקן את כל הזריקות
+            }
             #region//construct a new drone
             Drone newDrone = new Drone
             {
@@ -81,6 +89,10 @@ namespace DalObjects // להתייחס לממשק
         public void ConstructParcel(int id, int senderId, int targetId, WeightCategories weight, Priorities priority, DateTime request, int droneId, DateTime schedual, DateTime pickUp, DateTime deliverd) // construct a new parcel
         {
             #region//construct a new parcel
+            if (IfParcelExsists(id))
+            {
+                throw new DALException("error");// לתקן את כל הזריקות
+            }
             Parcel newParcel = new Parcel
             {
                 Id = id,
@@ -109,6 +121,10 @@ namespace DalObjects // להתייחס לממשק
         public void ConstructCustomer(int id, string name, string phone, double longtitude, double latitude) // construct a new customer
         {
             #region//construct a new customer
+            if (IfCustomerExsists(id))
+            {
+                throw new DALException("error");// לתקן את כל הזריקות
+            }
             Customer newCustomer = new Customer
             {
                 Id = id,
@@ -368,6 +384,11 @@ namespace DalObjects // להתייחס לממשק
         public int GetCountOfBaseStationList() { return DataSource.BaseStationList.Count(); }
         public int GetCountOfCustomerList() { return DataSource.CustomerList.Count(); }
         public int GetCountOfParcelList() { return DataSource.ParcelList.Count(); }
+        public bool IfDroneExsists(int id) { return DataSource.DroneList.Exists(element => element.Id == id); } // return true if id exisists in list of drones
+        public bool IfBaseStationExsists(int id) { return DataSource.BaseStationList.Exists(element => element.Id == id); } // return  true if id exisists in list of base stations
+        public bool IfCustomerExsists(int id) { return DataSource.CustomerList.Exists(element => element.Id == id); } // return  true if id exisists in list of customers
+        public bool IfParcelExsists(int id) { return DataSource.ParcelList.Exists(element => element.Id == id); } // return  true if id exisists inlist of parcels
+        public int GenerateParcelId() { int x = DataSource.Config.ParcelId; DataSource.Config.ParcelId++; return x; }
     }
 }
 ///// <summary>

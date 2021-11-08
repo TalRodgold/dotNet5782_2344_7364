@@ -10,11 +10,16 @@ namespace IBL
     {
         public class Location
         {
-            public double longitude { set; get; }
+            public double Longitude { set; get; }
             public double Latitude { set; get; }
             public override string ToString()
             {
-                return $" Longitude{longitude}: \n Latitude = {Latitude} \n";
+                return $" Longitude = {Longitude}: \n Latitude = {Latitude} \n";
+            }
+            public Location(double longitude, double latitude)
+            {
+                Longitude = longitude;
+                Latitude = latitude;
             }
         }
     }

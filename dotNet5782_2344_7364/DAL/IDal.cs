@@ -35,6 +35,12 @@ namespace IDAL
         string ParcelLisToString();//the function return long string of all Parcels
         string BaseStationfreeToString();//return all free BaseStation
         string ParcelsNotAssociatedToString();
+        bool IfDroneExsists(int id);  // return true if id exisists in list of drones
+        bool IfBaseStationExsists(int id);  // return  true if id exisists in list of base stations
+        bool IfCustomerExsists(int id); // return  true if id exisists in list of customers
+        bool IfParcelExsists(int id);  // return  true if id exisists inlist of parcels
+        public int GenerateParcelId();
+
 
         //double[] Electricity();
     }

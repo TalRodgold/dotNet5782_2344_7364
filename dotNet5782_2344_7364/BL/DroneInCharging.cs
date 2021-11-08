@@ -16,6 +16,7 @@ namespace IBL
             {
                 return $" Drone #{Id}: \n Battery = {Battery} \n";
             }
+
         }
     }
     
