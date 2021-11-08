@@ -21,6 +21,13 @@ namespace IBL
             {
                 return $"  ";
             }
+            public Customer(int id,string name,int phone,Location location)
+            {
+                Id = id;
+                Name = name;
+                Phone = phone;
+                Location = location;
+            }
         }
     }
 }

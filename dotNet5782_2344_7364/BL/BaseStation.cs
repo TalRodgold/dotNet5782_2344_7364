@@ -19,13 +19,18 @@ namespace IBL
             {
                 return $" Base station #{Id}: \n Name = {Name} \n Location = {Location} \n Number of free charging slots = {NumberOfFreeChargingSlots} \n All drones in charging = {ListOfDroneInCharging} \n ";
             }
-            public BaseStation(int id, string name, Location location, int freeChargingSlots, List<DroneInCharging> droneInCharging) 
+            public BaseStation(int id, string name, Location location, int freeChargingSlots)//, List<DroneInCharging> droneInCharging) ?????????
             {
                 Id = id;
                 Name = name;
                 Location = location;
                 NumberOfFreeChargingSlots = freeChargingSlots;
-                ListOfDroneInCharging = droneInCharging;
+                DroneInCharging droneInCharging = new DroneInCharging(0, 0);
+                for (int i = 0; i < NumberOfFreeChargingSlots; i++)
+                {
+                    ListOfDroneInCharging.Add(droneInCharging);
+                }
+               // ListOfDroneInCharging = droneInCharging;
             }
         }
     }

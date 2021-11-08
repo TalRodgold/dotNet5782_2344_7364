@@ -21,6 +21,16 @@ namespace IBL
             {
                 return $" Drone #{Id}: \n Model = {Model} \n Weight = {Weight} \n Battery = {Battery} \n Statuses = {DroneStatuses} \n Parcel in transit {ParcelInTransit} \n  Current location = {CurrentLocation} \n";
             }
+            public Drone(int id,string model, Enums.WeightCategories weight,int baseStationId)
+            {
+                Id = id;
+                Model = model;
+                Weight = weight;
+                //Battery = ???????
+                //DroneStatuses = ?????????
+                //ParcelInTransit = ?????????????;
+                //CurrentLocation = ??????????;
+            }
         }
     }
    

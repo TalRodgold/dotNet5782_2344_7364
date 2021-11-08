@@ -16,8 +16,13 @@ namespace IBL
             {
                 return $" Drone #{Id}: \n Battery = {Battery} \n";
             }
-
+            public DroneInCharging(int id,float battery)
+            {
+                Id = id;
+                Battery = battery;
+            }
         }
+       
     }
     
 }
