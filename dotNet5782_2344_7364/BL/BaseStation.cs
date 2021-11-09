@@ -25,7 +25,7 @@ namespace IBL
                 Name = name;
                 Location = location;
                 NumberOfFreeChargingSlots = freeChargingSlots;
-                DroneInCharging droneInCharging = new DroneInCharging(0, 0);
+                DroneInCharging droneInCharging = new DroneInCharging(-1, -1);
                 for (int i = 0; i < NumberOfFreeChargingSlots; i++)
                 {
                     ListOfDroneInCharging.Add(droneInCharging);
