@@ -110,7 +110,7 @@ namespace ConsoleUI_BL
             }
             #endregion
         }
-        public enum update { DroneRenameOrRemodel,BaseStationRenameOrNumOfChargeSlot,CustomerRenameOrRephone, SenDronetocharge, Release,Assign, Collect, Deliver}
+        public enum update { DroneRenameOrRemodel,BaseStationRenameOrNumOfChargeSlot,CustomerRenameOrRephone, SenDronetocharge, Release,Assign, Collect, Deliver}//
         private static void Update()//cases for update
         {
             #region//cases for update
