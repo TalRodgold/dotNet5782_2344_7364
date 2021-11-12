@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IBL.BO;
 
 namespace IBL
 {
@@ -21,15 +22,17 @@ namespace IBL
             {
                 return $" Drone #{Id}: \n Model = {Model} \n Weight = {Weight} \n Battery = {Battery} \n Statuses = {DroneStatuses} \n Parcel in transit {ParcelInTransit} \n  Current location = {CurrentLocation} \n";
             }
-            public Drone(int id,string model, Enums.WeightCategories weight,int baseStationId)
+            public Drone() { }
+            public Drone(int id,string model, Enums.WeightCategories weight)
             {
+                Random rnd = new Random(); // generate randome number
+
                 Id = id;
                 Model = model;
                 Weight = weight;
-                //Battery = ???????
-                //DroneStatuses = ?????????
-                //ParcelInTransit = ?????????????;
-                //CurrentLocation = ??????????;
+                DroneStatuses = Enums.DroneStatuses.Maintenance;
+                Battery = rnd.Next(20, 40);
+                
             }
         }
     }

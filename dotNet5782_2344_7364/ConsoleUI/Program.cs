@@ -69,8 +69,7 @@ namespace ConsoleUI
                     case ("1.4")://Parcel addition
                         #region// Parcel addition
                         PrintFunc(8); // print to user data he needs to type in 
-                        int userParcelId;
-                        int.TryParse(Console.ReadLine(), out userParcelId);
+                     
                         int userSenderId;
                         int.TryParse(Console.ReadLine(), out userSenderId);
                         int userTargetId;
@@ -81,7 +80,7 @@ namespace ConsoleUI
                         Priorities.TryParse(Console.ReadLine(), out userParcelPriorities);
                         DateTime userRequested;
                         DateTime.TryParse(Console.ReadLine(), out userRequested);
-                        name.ConstructParcel(userParcelId, userSenderId, userTargetId, userParcelWeightCategories, userParcelPriorities, userRequested, 0, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+                        name.ConstructParcel(userSenderId, userTargetId, userParcelWeightCategories, userParcelPriorities, userRequested, 0, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
                         break;
                       #endregion
                     case ("2.1"): //Update Percel to Drone
@@ -168,14 +167,14 @@ namespace ConsoleUI
                         #endregion
                     case ("4.1")://Display list of base stations
                         #region//Display list of base stations
-                        Console.Write(name.BaseStationLisToString());
+                        Console.Write(name.BaseStationListToString());
                         break;
                         #endregion
                     case ("4.2")://Display list of drones
                         #region//Display list of drones
                         for (int i = 0; i < name.GetCountOfDroneList(); i++)
                         {
-                            Console.WriteLine(name.DroneLisToString());
+                            Console.WriteLine(name.DroneListToString());
                         }
                         break;
                         #endregion
@@ -191,7 +190,7 @@ namespace ConsoleUI
                         #region//Display list of parcels
                         for (int i = 0; i < name.GetCountOfParcelList(); i++)
                         {
-                            Console.WriteLine(name.ParcelLisToString());
+                            Console.WriteLine(name.ParcelListToString());
                         }
                         break;
                         #endregion
@@ -298,7 +297,7 @@ namespace ConsoleUI
             #region// if i = 8 print user input for 1.4
             if (i == 8) // print to user data he needs to type in 
             {
-                Console.WriteLine("Please enter following data: \n 1) Id \n 2) sender id \n 3) target id \n 4) WeightCategories(0 for Light, 1 for Medium, 2 for Heavy) \n 5) priorities( 0 for Regular, 1 for Express, 2 for Urgant ) \n 6)requested time ");
+                Console.WriteLine("Please enter following data: \n 1) sender id \n 2) target id \n 3) WeightCategories(0 for Light, 1 for Medium, 2 for Heavy) \n 4) priorities( 0 for Regular, 1 for Express, 2 for Urgant ) \n 5)requested time ");
                 return;
             }
             #endregion

@@ -8,46 +8,38 @@ namespace IBL
 {
     public partial class BL : IBl
     {
-        public List<DroneToList> droneToLists2 = new List<DroneToList>();
+        public List<DroneToList> ListOfDronsBL = new List<DroneToList>();
         BL bl;
         IDal dal;
-        //public DroneToList  = new list<DroneToList>;
-
         public BL()
         {
             dal = new DalObjects.DalObjects();
         }
 
-        public void AddBaseStation(int id, string name, double longtitude, double latitude, int freeChargingSlots)
+        public void AddBaseStation(BaseStation b)
         {
             try
             {
-                dal.ConstructBaseStation(id, name, freeChargingSlots, longtitude, latitude);
+                dal.ConstructBaseStation(b.Id, b.Name, b.NumberOfFreeChargingSlots, b.Location.Longitude, b.Location.Latitude);
             }
             catch (Exception)
             {
 
                 throw;
             }
-            //Location location = new Location(longtitude, latitude); // creat location
-            //List<DroneInCharging> listDroneInCharging = new List<DroneInCharging>(); // creat empty list
-            //BaseStation newBaseStation = new BaseStation(id, name, location, freeChargingSlots, listDroneInCharging); // creat new base station
-            //if (dal.IfBaseStationExsists(newBaseStation.Id)) // if id already exisists
-            //{
-            //    throw "?"; // throw expretion
-            //}
-
         }
-        public void AddDrone(int id, string model, int maxWeight, int startingBaseStation)
+        public void AddDrone(Drone d, int startingBaseStation)
         {
             try
             {
-                dal.ConstructDrone(id, model, (IDAL.DO.WeightCategories)maxWeight); // creat drone
-                if (!dal.IfBaseStationExsists(startingBaseStation)) // check if start station exisists
+                if (!dal.IfBaseStationExsists(startingBaseStation)) // check if start station exisists!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! kadosh wants to chang
                 {
                     throw "?";
                 }
-                dal.UpdateDroneCharge(id, startingBaseStation); // connect drone to charging base station
+                d.CurrentLocation = GetBaseStationById(startingBaseStation).Location;
+                dal.ConstructDrone(d.Id, d.Model, (IDAL.DO.WeightCategories)d.Weight); // creat drone
+                dal.UpdateDroneCharge(d.Id, startingBaseStation); // connect drone to charging base station
+                ListOfDronsBL.Add(new DroneToList(d.Id, d.Model, d.Weight, d.Battery, d.DroneStatuses, d.CurrentLocation, d.ParcelInTransit.Id));
             }
             catch (Exception)
             {
@@ -55,11 +47,11 @@ namespace IBL
                 throw;
             }
         }
-        public void AddCustomer(int id, string name, string phone, double longtitude, double latitude)
+        public void AddCustomer(Customer c)
         {
             try
             {
-                dal.ConstructCustomer(id, name, phone, longtitude, latitude);
+                dal.ConstructCustomer(c.Id, c.Name, c.Phone, c.Location.Longitude, c.Location.Latitude);
             }
             catch (Exception)
             {
@@ -67,11 +59,14 @@ namespace IBL
                 throw;
             }
         }
-        public void AddParcel(int sender, int reciver, int weight, int priority)
+        public void AddParcel(Parcel p)
         {
+
+            p.Reciver.Name = dal.GetParcel(p.Reciver.Id);
+            p.Sender.Name = dal.GetNameOfCustomerById(p.Sender.Id);
             try
             {
-                dal.ConstructParcel(dal.GenerateParcelId(),sender,reciver, (IDAL.DO.WeightCategories)weight, (IDAL.DO.Priorities)priority,DateTime.MinValue,NULL, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue)
+                dal.ConstructParcel(p.Sender.Id, p.Reciver.Id, (IDAL.DO.WeightCategories)p.Weight, (IDAL.DO.Priorities)p.Prioritie, DateTime.Now, p.DroneInParcel.Id, p.AssociationTime, p.PickupTime, p.DeliveryTime);
             }
             catch (Exception)
             {
@@ -81,6 +76,61 @@ namespace IBL
         }
     }
 
+    public partial class BL : IBl
+    {
+        
+        Customer GetCustomerById(int id)
+        {
+            if (!dal.IfCustomerExsists(id))
+            {
+                throw "?";
+            }
+            IDAL.DO.Customer idalCustomer = dal.GetCustomer(id);
+            Customer newCustomer = new Customer();
+            newCustomer.Id = idalCustomer.Id;
+            newCustomer.Name = idalCustomer.Name;
+            newCustomer.Phone = idalCustomer.Phone;
+            newCustomer.Location = new Location(idalCustomer.Longtitude, idalCustomer.Latitude);
+            //
+            //
+            return newCustomer;
+        }
+        Parcel GetParcelById(int id)
+        {
+            if (!dal.IfParcelExsists(id))
+            {
+                throw "?";
+            }
+            IDAL.DO.Parcel idalParcel = dal.GetParcel(id);
+            Parcel newParcel = new Parcel();
+            newParcel.AssociationTime = idalParcel.
+        }
+        Drone GetDroneById(int id)
+        {
+            if (!dal.IfDroneExsists(id))
+            {
+                throw "?";
+            }
+            IDAL.DO.Drone idalDrone = dal.GetDrone(id);
+            Drone newDrone = new Drone();
+            newDrone.Id = idalDrone.Id;
+            newDrone.Model = idalDrone.Model;
+            newDrone.Weight = (Enums.WeightCategories)idalDrone.MaxWeight;
+            newDrone.Battery = ListOfDronsBL.Find(element => element.Id == id).Battery;
 
-
+        }
+        BaseStation GetBaseStationById(int id)
+        {
+            if (!dal.IfBaseStationExsists(id))
+            {
+                throw "?";
+            }
+            IDAL.DO.BaseStation idalBaseStation = dal.GetBaseStation(id);
+            BaseStation newBaseStation = new BaseStation();
+            newBaseStation.Id = idalBaseStation.Id;
+            newBaseStation.Name = idalBaseStation.Name;
+            newBaseStation.Location = new Location(idalBaseStation.Longtitude, idalBaseStation.Latitude);
+            newBaseStation.NumberOfFreeChargingSlots = idalBaseStation.
+        }
+    }
 }

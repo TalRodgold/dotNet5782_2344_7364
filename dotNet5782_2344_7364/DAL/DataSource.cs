@@ -74,8 +74,8 @@ namespace DalObjects
             newBaseStation.Id = (Byte)DateTime.Now.Ticks;
             newBaseStation.Name = Convert.ToString((RandomBases)rnd.Next(1, 11));
             newBaseStation.ChargeSlots= rnd.Next(0, 10);
-            newBaseStation.Longtitude = sexagesimal(rnd.NextDouble() + 31.728959, 'N');
-            newBaseStation.Latitude = sexagesimal(rnd.NextDouble() + 35.206714, 'E');
+            newBaseStation.Longtitude = rnd.NextDouble() + 31.728959;
+            newBaseStation.Latitude = rnd.NextDouble() + 35.206714;
             BaseStationList.Add(newBaseStation); // add to list
             #endregion
         }
@@ -128,8 +128,8 @@ namespace DalObjects
             newCustomer.Id=(Byte)DateTime.Now.Ticks;
             newCustomer.Name = Convert.ToString((RandomNames)rnd.Next(0, 15));
             newCustomer.Phone = "05" + Convert.ToString(rnd.Next(10000000, 99999999));
-            newCustomer.Longtitude = DataSource.sexagesimal(rnd.NextDouble() + 31.72895, 'N');
-            newCustomer.Latitude = DataSource.sexagesimal(rnd.NextDouble() + 35.206714, 'E');
+            newCustomer.Longtitude = rnd.NextDouble() + 31.72895;
+            newCustomer.Latitude = rnd.NextDouble() + 35.206714;
             CustomerList.Add(newCustomer); // add to list
             #endregion
         }

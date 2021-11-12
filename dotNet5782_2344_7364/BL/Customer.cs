@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IBL.BO;
 
 namespace IBL
 {
@@ -12,16 +13,17 @@ namespace IBL
         {
             public int Id { set; get; }
             public string Name { set; get; }
-            public int Phone { set; get; }
+            public string Phone { set; get; }
             public Location Location { set; get; }
-            // רשימת משלוחיםחבילות אצל לקוח - מהלקוח
-            // רשימת משלוחיםחבילות אצל לקוח - אל הלקוח
+            public ParcelAtCustomer ParcelFromCustomer { set; get; }
+            public ParcelAtCustomer parcelToCustomer { set; get; }
 
             public override string ToString()
             {
                 return $"  ";
             }
-            public Customer(int id,string name,int phone,Location location)
+            public Customer() { }
+            public Customer(int id,string name,string phone,Location location)
             {
                 Id = id;
                 Name = name;

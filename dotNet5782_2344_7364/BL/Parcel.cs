@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using IBL.BO;
 
 namespace IBL
 {
@@ -23,6 +24,7 @@ namespace IBL
             {
                 return $" Sender = {Sender} \n Reciver = {Reciver} \n weight = {Weight} \n Prioritie = {Prioritie} \n Drone in parcel = {DroneInParcel} \n Parcel creating time {ParcelCreatingTime} \n Association time = {AssociationTime} \n Pickup time = {PickupTime} \n Delivery time = {DeliveryTime} \n";
             }
+            public Parcel() { }
             public Parcel(CustomerInParcel sender,CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie)
             {
                 Sender = sender;

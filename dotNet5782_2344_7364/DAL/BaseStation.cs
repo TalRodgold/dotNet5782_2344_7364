@@ -18,11 +18,11 @@ namespace IDAL
             public int Id { get; set; } // Id number for each base station 
             public string Name { get; set; } // base station name
             public int ChargeSlots { get; set; } // Number of free charging satstions
-            public string Longtitude { get; set; } // Longitude 
-            public string Latitude { get; set; } // Latitude
+            public double Longtitude { get; set; } // Longitude 
+            public double Latitude { get; set; } // Latitude
             public string ToString() // return string with all the data
             {
-                return $" Base station #{Id}: \n Name = {Name} \n Charge slots = {ChargeSlots} \n Longtitude = {Longtitude} \n Latitude = {Latitude} \n ";
+                return $" Base station #{Id}: \n Name = {Name} \n Charge slots = {ChargeSlots} \n Longtitude = {DalObjects.DataSource.sexagesimal(Longtitude, 'N')} \n Latitude = {DalObjects.DataSource.sexagesimal(Longtitude, 'E')} \n ";
             }
         }
       

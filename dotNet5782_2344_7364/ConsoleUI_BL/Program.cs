@@ -5,7 +5,8 @@ namespace ConsoleUI_BL
 {
     class Program
     {
-        static IBl name = new IBL.BL();
+        static IBL.BL name = new BL();
+
         public enum Option { ADDop, Updateop, DisplayByIdop, ListDisplayop }//0,1,2 
         static void Main(string[] args)
         {
@@ -29,10 +30,12 @@ namespace ConsoleUI_BL
                 default:
                     break;
             }
+            
         }
         public enum InputOption { ADDBaseStation, ADDDrone, ADDCastomer, ADDParcel }//0,1,2,3
         private static void Input()//cases for add
         {
+
             #region//cases for add
             InputOption input;
             PrintFunc(3);//print choice request for adding
@@ -68,8 +71,8 @@ namespace ConsoleUI_BL
                     Enums.WeightCategories.TryParse(Console.ReadLine(), out userWeightCategories);
                     int userBaseStation;
                     int.TryParse(Console.ReadLine(), out userBaseStation);
-                    Drone newDrone = new Drone(userDroneId, userModel, userWeightCategories, userBaseStation);
-                    name.AddDrone(newDrone);
+                    Drone newDrone = new Drone(userDroneId, userModel, userWeightCategories);
+                    name.AddDrone(newDrone, userBaseStation);
                     break;
                 #endregion
                 case InputOption.ADDCastomer:
