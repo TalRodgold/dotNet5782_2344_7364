@@ -22,7 +22,16 @@ namespace IBL
             {
                 return $" Drone #{Id}: \n Model = {Model} \n Weight = {Weight} \n Battery = {Battery} \n Statuses = {DroneStatuses} \n Parcel in transit {ParcelInTransit} \n  Current location = {CurrentLocation} \n";
             }
-            public Drone() { }
+            public Drone(int id, string model, Enums.WeightCategories weight, double battery, Enums.DroneStatuses droneStatuses, ParcelInTransit parcelInTransit, Location location) 
+            {
+                Id = id;
+                Model = model;
+                Weight = weight;
+                Battery = battery;
+                DroneStatuses = droneStatuses;
+                ParcelInTransit = parcelInTransit;
+                CurrentLocation = location;
+            }
             public Drone(int id,string model, Enums.WeightCategories weight)
             {
                 Random rnd = new Random(); // generate randome number
