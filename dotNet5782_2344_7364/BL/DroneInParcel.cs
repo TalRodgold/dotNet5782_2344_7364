@@ -11,8 +11,14 @@ namespace IBL
         public class DroneInParcel
         {
             public int Id { set; get; }
-            public float Battery { set; get; }
+            public double Battery { set; get; }
             public Location CurrentLocation { set; get; }
+            public DroneInParcel(int id, double battery, Location location)
+            {
+                Id = id;
+                Battery = battery;
+                CurrentLocation = location;
+            }
             public override string ToString()
             {
                 return $" Drone #{Id}: \n Battery = {Battery} \n Current location {CurrentLocation} \n";

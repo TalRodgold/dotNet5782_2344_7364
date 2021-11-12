@@ -13,13 +13,22 @@ namespace IBL
             public int Id { set; get; }
             public string SendersName { set; get; }
             public string ReciversName { set; get; }
-            public Enums.WeightCategories weight { set; get; }
+            public Enums.WeightCategories Weight { set; get; }
             public Enums.Priorities Prioritie { set; get; }
             public Enums.ParcelStatus ParcelStatus { set; get; }
 
+            public ParcelToList(int id, string sendersName, string reciversName, Enums.WeightCategories weight, Enums.Priorities prioritie, Enums.ParcelStatus parcelStatus)
+            {
+                Id = id;
+                SendersName = sendersName;
+                ReciversName = reciversName;
+                Weight = weight;
+                Prioritie = prioritie;
+                ParcelStatus = parcelStatus;
+            }
             public override string ToString()
             {
-                return $" Parcel #{Id}: \n Sender = {SendersName} \n Reciver = {ReciversName} \n weight = {weight} \n Prioritie = {Prioritie} \n Parcel status = {ParcelStatus} \n";
+                return $" Parcel #{Id}: \n Sender = {SendersName} \n Reciver = {ReciversName} \n weight = {Weight} \n Prioritie = {Prioritie} \n Parcel status = {ParcelStatus} \n";
             }
         }
     }

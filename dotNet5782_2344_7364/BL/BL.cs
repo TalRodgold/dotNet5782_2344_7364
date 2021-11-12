@@ -74,28 +74,30 @@ namespace IBL
                 throw;
             }
         }
+
     }
 
     public partial class BL : IBl
     {
-        Customer GetCustomerById(int id)
+        public Customer GetCustomerById(int id)
         {
             try
             {
                 IDAL.DO.Customer idalCustomer = dal.GetCustomer(id); // get a customer of dal type
                 Customer newCustomer = new Customer(idalCustomer.Id, idalCustomer.Name, idalCustomer.Phone, new Location(idalCustomer.Longtitude, idalCustomer.Latitude)); // creat and add to a customer of bl type
 
-            
+
                 Predicate<IDAL.DO.Parcel> predicate = element => element.SenderId == id; // predicat to find parcel based on senders id
                 Predicate<IDAL.DO.Parcel> predicate1 = element => element.TargetId == id; // predicat to find parcel based on targets id
-                IDAL.DO.Parcel idalParcel = dal.GetParcel(predicate); // get parcel of dal type based on senders id
+               
+                IDAL.DO.Parcel newParcel = dal.GetParcel(id, predicate); // get parcel of dal type based on senders id
 
                 CustomerInParcel newCustomerInParcel = new CustomerInParcel(idalCustomer.Id, idalCustomer.Name); // creat a customer in parcel based on current customer
-                ParcelAtCustomer newparcelAtCustomer = new ParcelAtCustomer(idalParcel.Id, (Enums.WeightCategories)idalParcel.Weight, (Enums.Priorities)idalParcel.Priority, newCustomerInParcel );
+                ParcelAtCustomer newparcelAtCustomer = new ParcelAtCustomer(newParcel.Id, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, newCustomerInParcel);
 
-                idalParcel = dal.GetParcel(predicate1); // get parcel of dal type based on target id
+                newParcel = dal.GetParcel(id, predicate1); // get parcel of dal type based on target id
 
-                ParcelAtCustomer newparcelAtCustomer1 = new ParcelAtCustomer(idalParcel.Id, (Enums.WeightCategories)idalParcel.Weight, (Enums.Priorities)idalParcel.Priority, newCustomerInParcel);
+                ParcelAtCustomer newparcelAtCustomer1 = new ParcelAtCustomer(newParcel.Id, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, newCustomerInParcel);
 
                 newCustomer.ParcelFromCustomer = newparcelAtCustomer; // add to new customer the parcel from customer
                 newCustomer.parcelToCustomer = newparcelAtCustomer1; // add to new customer the parcel to customer
@@ -108,31 +110,37 @@ namespace IBL
                 throw;
             }
         }
-        Parcel GetParcelById(int id)
+        public Parcel GetParcelById(int id, Predicate<IDAL.DO.Parcel> predicate)
         {
-            if (!dal.IfParcelExsists(id))
-            {
-                throw "?";
-            }
-            IDAL.DO.Parcel idalParcel = dal.GetParcel(id);
-            Parcel newParcel = new Parcel();
-            newParcel.AssociationTime = idalParcel.
-        }
-        Drone GetDroneById(int id)
-        {
-            if (!dal.IfDroneExsists(id))
-            {
-                throw "?";
-            }
-            IDAL.DO.Drone idalDrone = dal.GetDrone(id);
-            Drone newDrone = new Drone();
-            newDrone.Id = idalDrone.Id;
-            newDrone.Model = idalDrone.Model;
-            newDrone.Weight = (Enums.WeightCategories)idalDrone.MaxWeight;
-            newDrone.Battery = ListOfDronsBL.Find(element => element.Id == id).Battery;
+
+            IDAL.DO.Parcel idalParcel = dal.GetParcel(id, predicate);
+            Customer senderCustomer = GetCustomerById(idalParcel.SenderId); // creat a new customer based on the sender of the parcel
+            Customer reciverCustomer = GetCustomerById(idalParcel.TargetId); // creat a new customer based on the reciver of the parcel
+
+            CustomerInParcel senderCustomerInParcel = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name); // creat a customer in parcel based on current customer
+            CustomerInParcel reciverCustomerInParcel = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name); // creat a customer in parcel based on current customer
+
+            Drone newDrone = GetDroneById(idalParcel.DroneId);
+            DroneInParcel newDroneInParcel = new DroneInParcel(newDrone.Id, newDrone.Battery, newDrone.CurrentLocation);
+
+
+
+            Parcel newParcel = new Parcel(senderCustomerInParcel, reciverCustomerInParcel, (Enums.WeightCategories)idalParcel.Weight, newDroneInParcel, idalParcel.Requsted, idalParcel.Scheduled, idalParcel.PickedUp, idalParcel.Deliverd);
 
         }
-        BaseStation GetBaseStationById(int id)
+        public Drone GetDroneById(int id)
+        {
+         
+            IDAL.DO.Drone idalDrone = dal.GetDrone(id);
+            Predicate<IDAL.DO.Parcel> predicate = element => element.DroneId == id;
+
+            Parcel newParcel = GetParcelById(predicate);
+            ParcelInTransit newParcelInTransit = GetParcelInTransitById(ListOfDronsBL.Find(element => element.Id == id).NumberOfParcelInTransit);
+            Drone newDrone = new Drone(idalDrone.Id, idalDrone.Model, (Enums.WeightCategories)idalDrone.MaxWeight, CalculateBattery(id), ,;
+            
+
+        }
+        public BaseStation GetBaseStationById(int id)
         {
             if (!dal.IfBaseStationExsists(id))
             {
@@ -145,5 +153,46 @@ namespace IBL
             newBaseStation.Location = new Location(idalBaseStation.Longtitude, idalBaseStation.Latitude);
             newBaseStation.NumberOfFreeChargingSlots = idalBaseStation.
         }
+        public ParcelToList GetParcelToListById(int id)
+        {
+            Predicate<IDAL.DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
+
+            IDAL.DO.Parcel newParcel = dal.GetParcel(predicate);
+            Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
+            Customer reciverCustomer = GetCustomerById(newParcel.TargetId); // creat a new customer based on the reciver of the parcel
+            ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, (Enums.ParcelStatus))
+            return newParcelToList;
+        }
+        public ParcelInTransit GetParcelInTransitById(int id)
+        {
+            Predicate<IDAL.DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
+            IDAL.DO.Parcel newParcel = dal.GetParcel(predicate);
+            Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
+            Customer reciverCustomer = GetCustomerById(newParcel.TargetId); // creat a new customer based on the reciver of the parcel
+            CustomerInParcel sCustomer = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name);
+            CustomerInParcel rCustomer = new CustomerInParcel(reciverCustomer.Id, reciverCustomer.Name);
+            return new ParcelInTransit(id, (Enums.Priorities)newParcel.Priority, (Enums.WeightCategories)newParcel.Weight, sCustomer, rCustomer, senderCustomer.Location, reciverCustomer.Location, CalculateDistance());
+
+        }
+    }
+
+
+    public partial class BL : IBl
+    {
+        public double CalculateBattery(int id)
+        {
+            double banan =  ListOfDronsBL.Find(element => element.Id == id).Battery);
+            return;
+        }
+
+        public Location CalculateLocation(DroneToList drone)
+        {
+            return;
+        }
+        public double CalculateDistance()
+        {
+            return;
+        }
     }
 }
+
