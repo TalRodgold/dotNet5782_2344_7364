@@ -14,7 +14,7 @@ namespace IBL
             public int Id { set; get; }
             public string Model { set; get; }
             public Enums.WeightCategories Weight { set; get; }
-            public float Battery { set; get; }
+            public double Battery { set; get; }
             public Enums.DroneStatuses DroneStatuses { set; get; }
             public ParcelInTransit ParcelInTransit { set; get; }
             public Location CurrentLocation { set; get; }
@@ -31,7 +31,7 @@ namespace IBL
                 Model = model;
                 Weight = weight;
                 DroneStatuses = Enums.DroneStatuses.Maintenance;
-                Battery = rnd.Next(20, 40);
+                Battery = rnd.Next(20, 39) + rnd.NextDouble();
                 
             }
         }

@@ -16,10 +16,10 @@ namespace IBL
             {
                 return $" Customer #{Id}: \n Name = {Name} \n ";
             }
-            public CustomerInParcel(int id)
+            public CustomerInParcel(int id, string name)
             {
                 Id = id;
-                //Name=//func that return the name by id
+                Name = name;
             }
         }
     }

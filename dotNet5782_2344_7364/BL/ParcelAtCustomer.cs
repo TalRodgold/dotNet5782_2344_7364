@@ -14,10 +14,18 @@ namespace IBL
             public Enums.WeightCategories Weight { set; get; }
             public Enums.Priorities Prioritie { set; get; }
             public Enums.ParcelStatus ParcelStatus { set; get; }
-            public CustomerInParcel customerInParcel { set; get; }
+            public CustomerInParcel CustomerInParcel { set; get; }
+            public ParcelAtCustomer( int id, Enums.WeightCategories weight, Enums.Priorities prioritie, CustomerInParcel customerInParcel) 
+            {
+                Id = id;
+                Weight = weight;
+                Prioritie = prioritie;
+                ParcelStatus = ;
+                CustomerInParcel = customerInParcel;
+            }
             public override string ToString()
             {
-                return $" Parcel #{Id}: \n Weight = {Weight} \n Prioritie = {Prioritie} \n Parcel status = {ParcelStatus} \n Customer in parcel = {customerInParcel} \n ";
+                return $" Parcel #{Id}: \n Weight = {Weight} \n Prioritie = {Prioritie} \n Parcel status = {ParcelStatus} \n Customer in parcel = {CustomerInParcel} \n ";
             }
 
         }

@@ -78,22 +78,35 @@ namespace IBL
 
     public partial class BL : IBl
     {
-        
         Customer GetCustomerById(int id)
         {
-            if (!dal.IfCustomerExsists(id))
+            try
             {
-                throw "?";
+                IDAL.DO.Customer idalCustomer = dal.GetCustomer(id); // get a customer of dal type
+                Customer newCustomer = new Customer(idalCustomer.Id, idalCustomer.Name, idalCustomer.Phone, new Location(idalCustomer.Longtitude, idalCustomer.Latitude)); // creat and add to a customer of bl type
+
+            
+                Predicate<IDAL.DO.Parcel> predicate = element => element.SenderId == id; // predicat to find parcel based on senders id
+                Predicate<IDAL.DO.Parcel> predicate1 = element => element.TargetId == id; // predicat to find parcel based on targets id
+                IDAL.DO.Parcel idalParcel = dal.GetParcel(predicate); // get parcel of dal type based on senders id
+
+                CustomerInParcel newCustomerInParcel = new CustomerInParcel(idalCustomer.Id, idalCustomer.Name); // creat a customer in parcel based on current customer
+                ParcelAtCustomer newparcelAtCustomer = new ParcelAtCustomer(idalParcel.Id, (Enums.WeightCategories)idalParcel.Weight, (Enums.Priorities)idalParcel.Priority, newCustomerInParcel );
+
+                idalParcel = dal.GetParcel(predicate1); // get parcel of dal type based on target id
+
+                ParcelAtCustomer newparcelAtCustomer1 = new ParcelAtCustomer(idalParcel.Id, (Enums.WeightCategories)idalParcel.Weight, (Enums.Priorities)idalParcel.Priority, newCustomerInParcel);
+
+                newCustomer.ParcelFromCustomer = newparcelAtCustomer; // add to new customer the parcel from customer
+                newCustomer.parcelToCustomer = newparcelAtCustomer1; // add to new customer the parcel to customer
+
+                return newCustomer;
             }
-            IDAL.DO.Customer idalCustomer = dal.GetCustomer(id);
-            Customer newCustomer = new Customer();
-            newCustomer.Id = idalCustomer.Id;
-            newCustomer.Name = idalCustomer.Name;
-            newCustomer.Phone = idalCustomer.Phone;
-            newCustomer.Location = new Location(idalCustomer.Longtitude, idalCustomer.Latitude);
-            //
-            //
-            return newCustomer;
+            catch (Exception)
+            {
+
+                throw;
+            }
         }
         Parcel GetParcelById(int id)
         {
