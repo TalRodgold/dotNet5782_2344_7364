@@ -38,10 +38,10 @@ namespace IDAL
         bool IfCustomerExsists(int id); // return  true if id exisists in list of customers
         bool IfParcelExsists(int id);  // return  true if id exisists inlist of parcels
         Customer GetCustomer(int id); // find a customer by id and return all his data as customer class
-        Parcel GetParcel(int id=0,Predicate<Parcel> predicate); // find a Parcel by id and return all his data as Parcel class
+        Parcel GetParcel(int id,Predicate<Parcel> predicate = null); // find a Parcel by id and return all his data as Parcel class
         Drone GetDrone(int id); // find a Drone by id and return all his data as Drone class
         BaseStation GetBaseStation(int id); // find a BaseStation by id and return all his data as BaseStation class
-
+        DroneCharge GetDroneCharge(int id);
 
         //double[] Electricity();
     }

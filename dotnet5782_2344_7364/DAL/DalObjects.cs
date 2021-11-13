@@ -255,6 +255,7 @@ namespace DalObjects // להתייחס לממשק
             // change number of free charge slots
             #endregion
         }
+
         /// <summary>
         /// releas drone from charging
         /// </summary>
@@ -384,10 +385,11 @@ namespace DalObjects // להתייחס לממשק
         public bool IfCustomerExsists(int id) { return DataSource.CustomerList.Exists(element => element.Id == id); } // return  true if id exisists in list of customers
         public bool IfParcelExsists(int id) { return DataSource.ParcelList.Exists(element => element.Id == id); } // return  true if id exisists inlist of parcels
         public Customer GetCustomer(int id) {if(! IfCustomerExsists(id)) throw "?"; return DataSource.CustomerList.Find(element => element.Id == id);  } // find a customer by id and return all his data as customer class
-        public Parcel GetParcel(int id=0,Predicate<Parcel> predicate){if ((!IfParcelExsists(id)) & (id != 0))  throw "?";  return DataSource.ParcelList.Find(predicate); } // find a Parcel by id and return all his data as Parcel class
+        public Parcel GetParcel(int id,Predicate<Parcel> predicate = null){if ((!IfParcelExsists(id)) & (id != 0))  throw "?"; if (predicate == null) return DataSource.ParcelList.Find(element => element.Id == id); return DataSource.ParcelList.Find(predicate); } // find a Parcel by id and return all his data as Parcel class
         public Drone GetDrone(int id) { if (!IfDroneExsists(id)) throw "?"; return DataSource.DroneList.Find(element => element.Id == id); } // find a Drone by id and return all his data as Drone class
         public BaseStation GetBaseStation(int id) { if (!IfBaseStationExsists(id)) throw "?"; return DataSource.BaseStationList.Find(element => element.Id == id); } // find a BaseStation by id and return all his data as BaseStation class
-
+        public DroneCharge GetDroneCharge(int id) { if ((!IfDroneExsists(id)) throw "?"; return DataSource.DroneChargeList.Find(element => element.DroneId == id);  } 
+        
         //public double[] Electricity();//צריך לממש והיא תחזיר  5 ערכים פנוי קל בינוני כבד וקצב תעינה
 
 

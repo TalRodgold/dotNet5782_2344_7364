@@ -62,8 +62,8 @@ namespace IBL
         public void AddParcel(Parcel p)
         {
 
-            p.Reciver.Name = dal.GetParcel(p.Reciver.Id);
-            p.Sender.Name = dal.GetNameOfCustomerById(p.Sender.Id);
+            p.Reciver.Name = GetCustomerById(p.Reciver.Id).Name;
+            p.Sender.Name = GetCustomerById(p.Sender.Id).Name;
             try
             {
                 dal.ConstructParcel(p.Sender.Id, p.Reciver.Id, (IDAL.DO.WeightCategories)p.Weight, (IDAL.DO.Priorities)p.Prioritie, DateTime.Now, p.DroneInParcel.Id, p.AssociationTime, p.PickupTime, p.DeliveryTime);
@@ -134,7 +134,7 @@ namespace IBL
             IDAL.DO.Drone idalDrone = dal.GetDrone(id);
             Predicate<IDAL.DO.Parcel> predicate = element => element.DroneId == id;
 
-            Parcel newParcel = GetParcelById(predicate);
+            Parcel newParcel = GetParcelById(0, predicate);
             ParcelInTransit newParcelInTransit = GetParcelInTransitById(ListOfDronsBL.Find(element => element.Id == id).NumberOfParcelInTransit);
             Drone newDrone = new Drone(idalDrone.Id, idalDrone.Model, (Enums.WeightCategories)idalDrone.MaxWeight, CalculateBattery(id), ,;
             
@@ -144,7 +144,7 @@ namespace IBL
         {
             if (!dal.IfBaseStationExsists(id))
             {
-                throw "?";
+                throw new BLException("error");
             }
             IDAL.DO.BaseStation idalBaseStation = dal.GetBaseStation(id);
             BaseStation newBaseStation = new BaseStation();
@@ -157,16 +157,16 @@ namespace IBL
         {
             Predicate<IDAL.DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
 
-            IDAL.DO.Parcel newParcel = dal.GetParcel(predicate);
+            IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
             Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
             Customer reciverCustomer = GetCustomerById(newParcel.TargetId); // creat a new customer based on the reciver of the parcel
-            ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, (Enums.ParcelStatus))
+            ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, (Enums.ParcelStatus));
             return newParcelToList;
         }
         public ParcelInTransit GetParcelInTransitById(int id)
         {
             Predicate<IDAL.DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
-            IDAL.DO.Parcel newParcel = dal.GetParcel(predicate);
+            IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
             Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
             Customer reciverCustomer = GetCustomerById(newParcel.TargetId); // creat a new customer based on the reciver of the parcel
             CustomerInParcel sCustomer = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name);
@@ -174,6 +174,7 @@ namespace IBL
             return new ParcelInTransit(id, (Enums.Priorities)newParcel.Priority, (Enums.WeightCategories)newParcel.Weight, sCustomer, rCustomer, senderCustomer.Location, reciverCustomer.Location, CalculateDistance());
 
         }
+
     }
 
 
@@ -185,13 +186,49 @@ namespace IBL
             return;
         }
 
-        public Location CalculateLocation(DroneToList drone)
+        public void CalculateLocation(DroneToList drone)
         {
-            return;
+            switch (drone.DroneStatuses)
+            {
+                case Enums.DroneStatuses.Available:  
+                    return;
+                case Enums.DroneStatuses.Delivery:
+
+                    double a = CalculateDistance(drone.CurrentLocation, GetBaseStationById(dal.GetDroneCharge(drone.Id).StationId).Location);
+                    double b = CalculateDistance(drone.CurrentLocation, GetCustomerById(dal.GetParcel(drone.NumberOfParcelInTransit).SenderId).Location);
+                    double c = CalculateDistance(drone.CurrentLocation, GetCustomerById(dal.GetParcel(drone.NumberOfParcelInTransit).TargetId).Location);
+                    if (a >= b && a >= c)
+                    {
+                        ListOfDronsBL.Find(element => element.Id == drone.Id).CurrentLocation = GetBaseStationById(dal.GetDroneCharge(drone.Id).StationId).Location;
+                        return;
+                    }
+                    if (b >= a && b >= c)
+                    {
+                        ListOfDronsBL.Find(element => element.Id == drone.Id).CurrentLocation = GetCustomerById(dal.GetParcel(drone.NumberOfParcelInTransit).SenderId).Location;
+                        return;
+                    }
+                    else
+                    {
+                        ListOfDronsBL.Find(element => element.Id == drone.Id).CurrentLocation = GetCustomerById(dal.GetParcel(drone.NumberOfParcelInTransit).TargetId).Location;
+                        return;
+                    }                   
+                case Enums.DroneStatuses.Maintenance:
+                    ListOfDronsBL.Find(element => element.Id == drone.Id).CurrentLocation = GetBaseStationById(dal.GetDroneCharge(drone.Id).StationId).Location;
+                    return;
+                
+            }
         }
-        public double CalculateDistance()
+        public double CalculateDistance(Location x, Location y)
         {
-            return;
+            return Math.Sqrt(Math.Pow((x.Longitude - y.Longitude), 2) + Math.Pow((x.Latitude - y.Latitude), 2));
+        }
+        public int ReciveParcelId(Parcel parcel)
+        {
+            Predicate<IDAL.DO.Parcel> predicate = element => element.SenderId == parcel.Sender.Id; // predicat to find parcel based on senders id
+
+            IDAL.DO.Parcel newParcel = dal.GetParcel(parcel.Sender.Id, predicate); // get parcel of dal type based on senders id
+            return newParcel.Id;
+
         }
     }
 }
