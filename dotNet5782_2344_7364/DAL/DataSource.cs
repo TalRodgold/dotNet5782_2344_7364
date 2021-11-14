@@ -31,11 +31,11 @@ namespace DalObjects
             
             #region// runing number
             internal static int ParcelId = 12345; // runing number for parcel Id
-            internal static DroneStatuses Availiblity { get; set; } = DroneStatuses.Available; //drone status avilable
-            internal static WeightCategories LightWeight { get; set; } = WeightCategories.Light; // light weight
-            internal static WeightCategories MediumWeight { get; set; } = WeightCategories.Medium; // mediumweight
-            internal static WeightCategories HeavyWeight { get; set; } = WeightCategories.Heavy; // heavy weight
-            internal static float DroneChargingPaste { get; set; } // speed of drone charging per hour in %
+            internal static double ElectricityUseAvailiblity { get; set; } = 1; //drone status avilable
+            internal static double ElectricityUseLightWeight { get; set; } = 2; // light weight
+            internal static double ElectricityUseMediumWeight { get; set; } = 3; // mediumweight
+            internal static double ElectricityUseHeavyWeight { get; set; } = 4; // heavy weight
+            internal static double DroneChargingPaste { get; set; } = 100; // speed of drone charging per hour in %
             #endregion
         }
         /// <summary>
