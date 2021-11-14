@@ -222,9 +222,33 @@ namespace IBL
                 
             }
         }
+       
         public double CalculateDistance(Location x, Location y)
         {
-            return Math.Sqrt(Math.Pow((x.Longitude - y.Longitude), 2) + Math.Pow((x.Latitude - y.Latitude), 2));
+            double ConvertToRadians(double angle)
+            {
+                return (Math.PI / 180) * angle;
+            }
+            int R = 6371;
+
+            double f1 = ConvertToRadians(x.Latitude);
+            double f2 = ConvertToRadians(y.Latitude);
+
+            double df = ConvertToRadians(x.Latitude - y.Latitude);
+            double dl = ConvertToRadians(x.Longitude - y.Longitude);
+
+            double a = Math.Sin(df / 2) * Math.Sin(df / 2) +
+            Math.Cos(f1) * Math.Cos(f2) *
+            Math.Sin(dl / 2) * Math.Sin(dl / 2);
+
+            double c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+
+            // Calculate the distance.
+            double d = R * c;
+
+            return d;
+
+
         }
         public int ReciveParcelId(Parcel parcel)
         {
