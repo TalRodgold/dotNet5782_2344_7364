@@ -32,7 +32,7 @@ namespace IDAL.DO
         }
         public override string ToString()
         {
-            return $"ERROR: There is already a {Text} with the ID number {ID}";
+            return $"ERROR: There is already a {Text} with the ID number: {ID}";
         }
     }
 }
