@@ -21,6 +21,8 @@ namespace IBL
             try
             {
                 dal.ConstructBaseStation(b.Id, b.Name, b.NumberOfFreeChargingSlots, b.Location.Longitude, b.Location.Latitude);
+
+
             }
             catch (Exception)
             {
@@ -101,7 +103,7 @@ namespace IBL
 
                 newCustomer.ParcelFromCustomer = newparcelAtCustomer; // add to new customer the parcel from customer
                 newCustomer.parcelToCustomer = newparcelAtCustomer1; // add to new customer the parcel to customer
-
+               
                 return newCustomer;
             }
             catch (Exception)
@@ -126,7 +128,7 @@ namespace IBL
 
 
             Parcel newParcel = new Parcel(senderCustomerInParcel, reciverCustomerInParcel, (Enums.WeightCategories)idalParcel.Weight, newDroneInParcel, idalParcel.Requsted, idalParcel.Scheduled, idalParcel.PickedUp, idalParcel.Deliverd);
-
+            return newParcel;
         }
         public Drone GetDroneById(int id)
         {
@@ -136,7 +138,8 @@ namespace IBL
 
             Parcel newParcel = GetParcelById(0, predicate);
             ParcelInTransit newParcelInTransit = GetParcelInTransitById(ListOfDronsBL.Find(element => element.Id == id).NumberOfParcelInTransit);
-            Drone newDrone = new Drone(idalDrone.Id, idalDrone.Model, (Enums.WeightCategories)idalDrone.MaxWeight, CalculateBattery(id), ,;
+            Drone newDrone = new Drone(idalDrone.Id, idalDrone.Model, (Enums.WeightCategories)idalDrone.MaxWeight, CalculateBattery(id), ,);
+            return newDrone;
             
 
         }
@@ -144,14 +147,15 @@ namespace IBL
         {
             if (!dal.IfBaseStationExsists(id))
             {
-                throw new BLException("error");
+                throw new IdAlreadyExsistsExceptions("error");
             }
             IDAL.DO.BaseStation idalBaseStation = dal.GetBaseStation(id);
             BaseStation newBaseStation = new BaseStation();
             newBaseStation.Id = idalBaseStation.Id;
             newBaseStation.Name = idalBaseStation.Name;
             newBaseStation.Location = new Location(idalBaseStation.Longtitude, idalBaseStation.Latitude);
-            newBaseStation.NumberOfFreeChargingSlots = idalBaseStation.
+            newBaseStation.NumberOfFreeChargingSlots = idalBaseStation. ;
+            return newBaseStation;
         }
         public ParcelToList GetParcelToListById(int id)
         {

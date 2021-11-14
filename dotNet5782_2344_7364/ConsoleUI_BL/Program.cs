@@ -98,8 +98,8 @@ namespace ConsoleUI_BL
                     int.TryParse(Console.ReadLine(), out userSenderId);
                     int userTargetId;
                     int.TryParse(Console.ReadLine(), out userTargetId);
-                    CustomerInParcel userSenderIdd = new CustomerInParcel(userSenderId);
-                    CustomerInParcel userTargetIdd = new CustomerInParcel(userTargetId);
+                    CustomerInParcel userSenderIdd = new CustomerInParcel(userSenderId); //?
+                    CustomerInParcel userTargetIdd = new CustomerInParcel(userTargetId); //?
                     Enums.WeightCategories userParcelWeightCategories;
                     Enums.WeightCategories.TryParse(Console.ReadLine(), out userParcelWeightCategories);
                     Enums.Priorities userParcelPriorities;
