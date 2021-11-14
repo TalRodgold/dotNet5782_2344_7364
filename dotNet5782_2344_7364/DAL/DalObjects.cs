@@ -6,13 +6,12 @@ using System.Threading.Tasks;
 using IDAL.DO;
 using IDAL;
 
-
 namespace DalObjects // להתייחס לממשק
 {
     /// <summary>
     /// Holds functions that allow to acsses data
     /// </summary>
-    public class DalObjects : IDal 
+    public class DalObjects : IDal
     {
         /// <summary>
         /// contains functions that allow to acsses and change the data in DataSource
@@ -60,7 +59,7 @@ namespace DalObjects // להתייחס לממשק
         {
             if (IfDroneExsists(id))
             {
-                throw new DALException("error");// לתקן את כל הזריקות
+                throw new IdAlreadyExsistsExceptions("drone", id);// לתקן את כל הזריקות
             }
             #region//construct a new drone
             Drone newDrone = new Drone
@@ -119,7 +118,7 @@ namespace DalObjects // להתייחס לממשק
             #region//construct a new customer
             if (IfCustomerExsists(id))
             {
-                throw new DALException("error");// לתקן את כל הזריקות
+                throw new IdAlreadyExsistsExceptions("customer", id);// לתקן את כל הזריקות
             }
             Customer newCustomer = new Customer
             {
@@ -204,7 +203,7 @@ namespace DalObjects // להתייחס לממשק
         {
             #region//associate a drone to a parcel
 
-            int i= DataSource.ParcelList.FindIndex(element => element.Id == parcleId);
+            int i = DataSource.ParcelList.FindIndex(element => element.Id == parcleId);
             Parcel newParcel = DataSource.ParcelList.Find(element => element.Id == parcleId);
             newParcel.DroneId = droneId;
             DataSource.ParcelList[i] = newParcel;
@@ -217,11 +216,11 @@ namespace DalObjects // להתייחס לממשק
         public void UpdateParclePickup(int id) // update parcel pickup 
         {
             #region//update parcel pickup  
-            int i= DataSource.ParcelList.FindIndex(element => element.Id == id);
+            int i = DataSource.ParcelList.FindIndex(element => element.Id == id);
             Parcel newParcel = DataSource.ParcelList.Find(element => element.Id == id);
             newParcel.PickedUp = DateTime.Now;
             DataSource.ParcelList[i] = newParcel;
-           
+
             #endregion
         }
         /// <summary>
@@ -272,7 +271,7 @@ namespace DalObjects // להתייחס לממשק
             DataSource.BaseStationList.Add(newBaseStation);
             DataSource.DroneChargeList.RemoveAt(DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId));
             #endregion
-        } 
+        }
         #region//all ToString Functions
         /// <summary>
         ///  return long string of all BaseStations
@@ -340,19 +339,19 @@ namespace DalObjects // להתייחס לממשק
         }
         public string BaseStationfreeToString()//return all free BaseStation
         {
-            bool flag=true;
+            bool flag = true;
             string s = "";
-            foreach(BaseStation b in DataSource.BaseStationList)
+            foreach (BaseStation b in DataSource.BaseStationList)
             {
-                if (b.ChargeSlots== 0) // if free
+                if (b.ChargeSlots == 0) // if free
                 {
                     s += b.ToString();
-                    flag= false;
+                    flag = false;
                 }
             }
             if (flag) // if all base station charging slots are full
             {
-                s+=" All base station charging slots are full ";
+                s += " All base station charging slots are full ";
             }
             return s;
         }
@@ -363,7 +362,7 @@ namespace DalObjects // להתייחס לממשק
             bool flag = true;
             foreach (Parcel p in DataSource.ParcelList)// for all parcels in array
             {
-                if(p.DroneId==0) //search in spesific index in parcel list if drone id is equal 0
+                if (p.DroneId == 0) //search in spesific index in parcel list if drone id is equal 0
                 {
                     s += p.ToString();
                     flag = false;
@@ -377,7 +376,7 @@ namespace DalObjects // להתייחס לממשק
             #endregion
         }
         #endregion
-        
+
         #region//all exist functions
         public bool IfDroneExsists(int id) { return DataSource.DroneList.Exists(element => element.Id == id); } // return true if id exisists in list of drones
         public bool IfBaseStationExsists(int id) { return DataSource.BaseStationList.Exists(element => element.Id == id); } // return  true if id exisists in list of base stations
@@ -389,19 +388,27 @@ namespace DalObjects // להתייחס לממשק
         public int GetCountOfBaseStationList() { return DataSource.BaseStationList.Count(); } // returns size of base station list
         public int GetCountOfCustomerList() { return DataSource.CustomerList.Count(); } // returns size of customer list
         public int GetCountOfParcelList() { return DataSource.ParcelList.Count(); } // returns size of parcel list
-        public bool IfDroneExsists(int id) { return DataSource.DroneList.Exists(element => element.Id == id); } // return true if id exisists in list of drones
-        public bool IfBaseStationExsists(int id) { return DataSource.BaseStationList.Exists(element => element.Id == id); } // return  true if id exisists in list of base stations
-        public bool IfCustomerExsists(int id) { return DataSource.CustomerList.Exists(element => element.Id == id); } // return  true if id exisists in list of customers
-        public bool IfParcelExsists(int id) { return DataSource.ParcelList.Exists(element => element.Id == id); } // return  true if id exisists inlist of parcels
-        public Customer GetCustomer(int id) {if(! IfCustomerExsists(id)) throw "?"; return DataSource.CustomerList.Find(element => element.Id == id);  } // find a customer by id and return all his data as customer class
-        public Parcel GetParcel(int id,Predicate<Parcel> predicate = null){if ((!IfParcelExsists(id)) & (id != 0))  throw "?"; if (predicate == null) return DataSource.ParcelList.Find(element => element.Id == id); return DataSource.ParcelList.Find(predicate); } // find a Parcel by id and return all his data as Parcel class
-        public Drone GetDrone(int id) { if (!IfDroneExsists(id)) throw "?"; return DataSource.DroneList.Find(element => element.Id == id); } // find a Drone by id and return all his data as Drone class
-        public BaseStation GetBaseStation(int id) { if (!IfBaseStationExsists(id)) throw "?"; return DataSource.BaseStationList.Find(element => element.Id == id); } // find a BaseStation by id and return all his data as BaseStation class
-        public DroneCharge GetDroneCharge(int id) { if ((!IfDroneExsists(id)) throw "?"; return DataSource.DroneChargeList.Find(element => element.DroneId == id);  } 
-        
-        //public double[] Electricity();//צריך לממש והיא תחזיר  5 ערכים פנוי קל בינוני כבד וקצב תעינה
-
+        public Customer GetCustomer(int id) { if (!IfCustomerExsists(id)) throw new IdNotExsistException("customer", id); return DataSource.CustomerList.Find(element => element.Id == id); } // find a customer by id and return all his data as customer class
+        public Parcel GetParcel(int id, Predicate<Parcel> predicate = null) { if ((!IfParcelExsists(id)) & (id != 0)) throw new IdNotExsistException("parcel", id); if (predicate == null) return DataSource.ParcelList.Find(element => element.Id == id); return DataSource.ParcelList.Find(predicate); } // find a Parcel by id and return all his data as Parcel class
+        public Drone GetDrone(int id) { if (!IfDroneExsists(id)) throw new IdNotExsistException("drone", id); return DataSource.DroneList.Find(element => element.Id == id); } // find a Drone by id and return all his data as Drone class
+        public BaseStation GetBaseStation(int id) { if (!IfBaseStationExsists(id)) throw new IdNotExsistException("base station", id); return DataSource.BaseStationList.Find(element => element.Id == id); } // find a BaseStation by id and return all his data as BaseStation class
+        public DroneCharge GetDroneCharge(int id) { if (!IfDroneExsists(id)) throw new IdNotExsistException("drone charge", id); return DataSource.DroneChargeList.Find(element => element.DroneId == id); }
+        public IEnumerable<Customer> GetListOfCastomer(Predicate<Customer> predicate) { return DataSource.CustomerList.FindAll(predicate); }
+        public IEnumerable<Parcel> GetListOfParcel(Predicate<Parcel> predicate) { return DataSource.ParcelList.FindAll(predicate); }
+        public IEnumerable<Drone> GetListOfDrone(Predicate<Drone> predicate) { return DataSource.DroneList.FindAll(predicate); }
+        public IEnumerable<BaseStation> GetListOfBaseStation(Predicate<BaseStation> predicate) { return DataSource.BaseStationList.FindAll(predicate); }
+        public IEnumerable<DroneCharge> GetListOfDroneCharge(Predicate<DroneCharge> predicate) { return DataSource.DroneChargeList.FindAll(predicate); }
+        public double[] Electricity()
+        {
+            double[] electricity = new double[5];
+            electricity[0] = DataSource.Config.ElectricityUseAvailiblity;
+            electricity[1] = DataSource.Config.ElectricityUseLightWeight;
+            electricity[2] = DataSource.Config.ElectricityUseMediumWeight;
+            electricity[3] = DataSource.Config.ElectricityUseHeavyWeight;
+            electricity[4] = DataSource.Config.DroneChargingPaste;
+            return electricity;
+        }//
+        #endregion
 
     }
 }
-
