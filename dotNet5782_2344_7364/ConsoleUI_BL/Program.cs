@@ -48,8 +48,6 @@ namespace ConsoleUI_BL
                     int userId;
                     int.TryParse(Console.ReadLine(), out userId);
                     string userName = Console.ReadLine();
-                    int userChargeSlots;
-                    int.TryParse(Console.ReadLine(), out userChargeSlots);
                     double userLongtitude;
                     double.TryParse(Console.ReadLine(), out userLongtitude);
                     double userLatitude;
@@ -58,7 +56,7 @@ namespace ConsoleUI_BL
                     int userFreeChargeSlots;
                     int.TryParse(Console.ReadLine(), out userFreeChargeSlots);
                     BaseStation NewBaseStation = new BaseStation(userId, userName, UserLocation, userFreeChargeSlots);
-                    name.AddBaseStation(BaseStation);
+                    name.AddBaseStation(NewBaseStation);
                     break;
                 #endregion
                 case InputOption.ADDDrone://Drone addition
@@ -98,8 +96,8 @@ namespace ConsoleUI_BL
                     int.TryParse(Console.ReadLine(), out userSenderId);
                     int userTargetId;
                     int.TryParse(Console.ReadLine(), out userTargetId);
-                    CustomerInParcel userSenderIdd = new CustomerInParcel(userSenderId); //?
-                    CustomerInParcel userTargetIdd = new CustomerInParcel(userTargetId); //?
+                    CustomerInParcel userSenderIdd = new CustomerInParcel(userSenderId,name.GetCustomerById(userSenderId).Name); 
+                    CustomerInParcel userTargetIdd = new CustomerInParcel(userTargetId,name.GetCustomerById(userTargetId).Name); 
                     Enums.WeightCategories userParcelWeightCategories;
                     Enums.WeightCategories.TryParse(Console.ReadLine(), out userParcelWeightCategories);
                     Enums.Priorities userParcelPriorities;

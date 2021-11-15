@@ -393,11 +393,11 @@ namespace DalObjects // להתייחס לממשק
         public Drone GetDrone(int id) { if (!IfDroneExsists(id)) throw new IdNotExsistException("drone", id); return DataSource.DroneList.Find(element => element.Id == id); } // find a Drone by id and return all his data as Drone class
         public BaseStation GetBaseStation(int id) { if (!IfBaseStationExsists(id)) throw new IdNotExsistException("base station", id); return DataSource.BaseStationList.Find(element => element.Id == id); } // find a BaseStation by id and return all his data as BaseStation class
         public DroneCharge GetDroneCharge(int id) { if (!IfDroneExsists(id)) throw new IdNotExsistException("drone charge", id); return DataSource.DroneChargeList.Find(element => element.DroneId == id); }
-        public IEnumerable<Customer> GetListOfCastomer(Predicate<Customer> predicate) { return DataSource.CustomerList.FindAll(predicate); }
-        public IEnumerable<Parcel> GetListOfParcel(Predicate<Parcel> predicate) { return DataSource.ParcelList.FindAll(predicate); }
-        public IEnumerable<Drone> GetListOfDrone(Predicate<Drone> predicate) { return DataSource.DroneList.FindAll(predicate); }
-        public IEnumerable<BaseStation> GetListOfBaseStation(Predicate<BaseStation> predicate) { return DataSource.BaseStationList.FindAll(predicate); }
-        public IEnumerable<DroneCharge> GetListOfDroneCharge(Predicate<DroneCharge> predicate) { return DataSource.DroneChargeList.FindAll(predicate); }
+        public IEnumerable<Customer> GetListOfCastomer(Predicate<Customer> predicate=null) { if(predicate==null) return DataSource.CustomerList.ToList(); return DataSource.CustomerList.FindAll(predicate).ToList(); }
+        public IEnumerable<Parcel> GetListOfParcel(Predicate<Parcel> predicate=null) { if (predicate == null) return DataSource.ParcelList.ToList(); return DataSource.ParcelList.FindAll(predicate).ToList(); }
+        public IEnumerable<Drone> GetListOfDrone(Predicate<Drone> predicate=null) { if (predicate == null) return DataSource.DroneList.ToList(); return DataSource.DroneList.FindAll(predicate).ToList(); }
+        public IEnumerable<BaseStation> GetListOfBaseStation(Predicate<BaseStation> predicate=null) { if (predicate == null) return DataSource.BaseStationList.ToList(); return DataSource.BaseStationList.FindAll(predicate).ToList(); }
+        public IEnumerable<DroneCharge> GetListOfDroneCharge(Predicate<DroneCharge> predicate=null) { if (predicate == null) return DataSource.DroneChargeList.ToList(); return DataSource.DroneChargeList.FindAll(predicate).ToList(); }
         public double[] Electricity()
         {
             double[] electricity = new double[5];

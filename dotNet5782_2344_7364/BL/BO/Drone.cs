@@ -40,7 +40,7 @@ namespace IBL
                 Model = model;
                 Weight = weight;
                 DroneStatuses = Enums.DroneStatuses.Maintenance;
-                Battery = rnd.Next(20, 39) + rnd.NextDouble();
+                Battery = (double)rnd.Next(20,40)/100;
                 
             }
         }

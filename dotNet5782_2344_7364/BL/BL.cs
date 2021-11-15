@@ -21,8 +21,6 @@ namespace IBL
             try
             {
                 dal.ConstructBaseStation(b.Id, b.Name, b.NumberOfFreeChargingSlots, b.Location.Longitude, b.Location.Latitude);
-
-
             }
             catch (Exception)
             {
@@ -64,8 +62,6 @@ namespace IBL
         public void AddParcel(Parcel p)
         {
 
-            p.Reciver.Name = GetCustomerById(p.Reciver.Id).Name;
-            p.Sender.Name = GetCustomerById(p.Sender.Id).Name;
             try
             {
                 dal.ConstructParcel(p.Sender.Id, p.Reciver.Id, (IDAL.DO.WeightCategories)p.Weight, (IDAL.DO.Priorities)p.Prioritie, DateTime.Now, p.DroneInParcel.Id, p.AssociationTime, p.PickupTime, p.DeliveryTime);
@@ -91,7 +87,7 @@ namespace IBL
 
                 Predicate<IDAL.DO.Parcel> predicate = element => element.SenderId == id; // predicat to find parcel based on senders id
                 Predicate<IDAL.DO.Parcel> predicate1 = element => element.TargetId == id; // predicat to find parcel based on targets id
-               
+
                 IDAL.DO.Parcel newParcel = dal.GetParcel(id, predicate); // get parcel of dal type based on senders id
 
                 CustomerInParcel newCustomerInParcel = new CustomerInParcel(idalCustomer.Id, idalCustomer.Name); // creat a customer in parcel based on current customer
@@ -103,7 +99,7 @@ namespace IBL
 
                 newCustomer.ParcelFromCustomer = newparcelAtCustomer; // add to new customer the parcel from customer
                 newCustomer.parcelToCustomer = newparcelAtCustomer1; // add to new customer the parcel to customer
-               
+
                 return newCustomer;
             }
             catch (Exception)
@@ -126,22 +122,20 @@ namespace IBL
             DroneInParcel newDroneInParcel = new DroneInParcel(newDrone.Id, newDrone.Battery, newDrone.CurrentLocation);
 
 
-
-            Parcel newParcel = new Parcel(senderCustomerInParcel, reciverCustomerInParcel, (Enums.WeightCategories)idalParcel.Weight, newDroneInParcel, idalParcel.Requsted, idalParcel.Scheduled, idalParcel.PickedUp, idalParcel.Deliverd);
+            Parcel newParcel = new Parcel(senderCustomerInParcel, reciverCustomerInParcel, (Enums.WeightCategories)idalParcel.Weight, (Enums.Priorities)idalParcel.Priority, newDroneInParcel, idalParcel.Requsted, idalParcel.Scheduled, idalParcel.PickedUp, idalParcel.Deliverd);
             return newParcel;
         }
         public Drone GetDroneById(int id)
         {
-         
-            IDAL.DO.Drone idalDrone = dal.GetDrone(id);
             Predicate<IDAL.DO.Parcel> predicate = element => element.DroneId == id;
-
             Parcel newParcel = GetParcelById(0, predicate);
-            ParcelInTransit newParcelInTransit = GetParcelInTransitById(ListOfDronsBL.Find(element => element.Id == id).NumberOfParcelInTransit);
-            Drone newDrone = new Drone(idalDrone.Id, idalDrone.Model, (Enums.WeightCategories)idalDrone.MaxWeight, CalculateBattery(id), ,);
+            ParcelInTransit newParcelInTransit = GetParcelInTransitById(GetDroneToList(id).NumberOfParcelInTransit);
+            Drone newDrone = new Drone(GetDroneToList(id).Id, GetDroneToList(id).Model, GetDroneToList(id).Weight, GetDroneToList(id).Battery, GetDroneToList(id).DroneStatuses, newParcelInTransit, GetDroneToList(id).CurrentLocation);
             return newDrone;
-            
-
+        }
+        public DroneToList GetDroneToList(int id)
+        {
+            return ListOfDronsBL.Find(element => element.Id == id);
         }
         public BaseStation GetBaseStationById(int id)
         {
@@ -150,11 +144,7 @@ namespace IBL
                 throw new IdAlreadyExsistsExceptions("error");
             }
             IDAL.DO.BaseStation idalBaseStation = dal.GetBaseStation(id);
-            BaseStation newBaseStation = new BaseStation();
-            newBaseStation.Id = idalBaseStation.Id;
-            newBaseStation.Name = idalBaseStation.Name;
-            newBaseStation.Location = new Location(idalBaseStation.Longtitude, idalBaseStation.Latitude);
-            newBaseStation.NumberOfFreeChargingSlots = idalBaseStation. ;
+            BaseStation newBaseStation = new BaseStation(idalBaseStation.Id, idalBaseStation.Name, new Location(idalBaseStation.Longtitude, idalBaseStation.Latitude), idalBaseStation.ChargeSlots, dal.GetListOfDroneCharge());
             return newBaseStation;
         }
         public ParcelToList GetParcelToListById(int id)
@@ -186,7 +176,7 @@ namespace IBL
     {
         public double CalculateBattery(int id)
         {
-            double banan =  ListOfDronsBL.Find(element => element.Id == id).Battery);
+            double banan = ListOfDronsBL.Find(element => element.Id == id).Battery);
             return;
         }
 
@@ -194,7 +184,7 @@ namespace IBL
         {
             switch (drone.DroneStatuses)
             {
-                case Enums.DroneStatuses.Available:  
+                case Enums.DroneStatuses.Available:
                     return;
                 case Enums.DroneStatuses.Delivery:
 
@@ -215,14 +205,14 @@ namespace IBL
                     {
                         ListOfDronsBL.Find(element => element.Id == drone.Id).CurrentLocation = GetCustomerById(dal.GetParcel(drone.NumberOfParcelInTransit).TargetId).Location;
                         return;
-                    }                   
+                    }
                 case Enums.DroneStatuses.Maintenance:
                     ListOfDronsBL.Find(element => element.Id == drone.Id).CurrentLocation = GetBaseStationById(dal.GetDroneCharge(drone.Id).StationId).Location;
                     return;
-                
+
             }
         }
-       
+
         public double CalculateDistance(Location x, Location y)
         {
             double ConvertToRadians(double angle)
@@ -256,6 +246,13 @@ namespace IBL
 
             IDAL.DO.Parcel newParcel = dal.GetParcel(parcel.Sender.Id, predicate); // get parcel of dal type based on senders id
             return newParcel.Id;
+
+        }
+    }
+    public partial class BL : IBl
+    {
+        public void UpdateDroneModel(int id,string newMOdel)
+        {
 
         }
     }
