@@ -253,7 +253,11 @@ namespace IBL
     {
         public void UpdateDroneModel(int id,string newMOdel)
         {
-
+            DroneToList newDroneToList = GetDroneToList(id);
+            newDroneToList.Model = newMOdel;
+            int index = ListOfDronsBL.FindIndex(element => element.Id == id);
+            ListOfDronsBL[index] = newDroneToList;
+            dal.UpdateDroneModel(id, newMOdel);
         }
     }
 }

@@ -126,7 +126,7 @@ namespace ConsoleUI_BL
                     int userDroneId;
                     int.TryParse(Console.ReadLine(), out userDroneId);
                     string userModel = Console.ReadLine();
-                    name.//Func(userId,userModel)
+                    name.UpdateDroneModel(userDroneId, userModel);//function update drone model
                     break;
                     #endregion
                 case update.BaseStationRenameOrNumOfChargeSlot:
