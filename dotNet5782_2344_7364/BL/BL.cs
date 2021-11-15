@@ -97,8 +97,8 @@ namespace IBL
 
                 ParcelAtCustomer newparcelAtCustomer1 = new ParcelAtCustomer(newParcel.Id, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, newCustomerInParcel);
 
-                newCustomer.ParcelFromCustomer = newparcelAtCustomer; // add to new customer the parcel from customer
-                newCustomer.parcelToCustomer = newparcelAtCustomer1; // add to new customer the parcel to customer
+                newCustomer.ParcelFromCustomer.Add(newparcelAtCustomer); // add to new customer the parcel from customer
+                newCustomer.ParcelToCustomer.Add(newparcelAtCustomer1); // add to new customer the parcel to customer
 
                 return newCustomer;
             }

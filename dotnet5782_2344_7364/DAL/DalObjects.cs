@@ -255,6 +255,17 @@ namespace DalObjects // להתייחס לממשק
             // change number of free charge slots
             #endregion
         }
+        public void UpdateDroneModel(int id, string newModel )
+        {
+            if(!IfDroneExsists(id))
+            {
+                throw new IdNotExsistException("drone", id);
+            }
+            Drone newDrone = DataSource.DroneList.Find(element => element.Id == id);
+            newDrone.Model = newModel;
+            int index = DataSource.DroneList.FindIndex(element => element.Id == id);
+            DataSource.DroneList[index] = newDrone;
+        }
 
         /// <summary>
         /// releas drone from charging

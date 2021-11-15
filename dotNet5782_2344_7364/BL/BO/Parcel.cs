@@ -37,6 +37,18 @@ namespace IBL
                 PickupTime = DateTime.MinValue;
                 DeliveryTime = DateTime.MinValue;
             }
+            public Parcel(CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie, DroneInParcel droneInParcel, DateTime parcelCreatingTime, DateTime associationTime, DateTime pickupTime, DateTime deliveryTime)
+            {
+                Sender = sender;
+                Reciver = reciver;
+                Weight = weight;
+                Prioritie = prioritie;
+                DroneInParcel = droneInParcel;
+                ParcelCreatingTime = parcelCreatingTime;
+                AssociationTime = associationTime;
+                PickupTime = pickupTime;
+                DeliveryTime = deliveryTime;
+            }
 
         }
     }
