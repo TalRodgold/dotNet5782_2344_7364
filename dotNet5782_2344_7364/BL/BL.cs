@@ -14,6 +14,17 @@ namespace IBL
         public BL()
         {
             dal = new DalObjects.DalObjects();
+            double[] arr = dal.Electricity();
+            double ElectricityUseAvailiblity = arr[0];
+            double ElectricityUseLightWeight = arr[1];
+            double ElectricityUseMediumWeight = arr[2];
+            double ElectricityUseHeavyWeight = arr[3];
+            double DroneChargingPaste = arr[4];
+            var listOfDrones = dal.GetListOfDrone();
+            foreach (var item in listOfDrones)
+            {
+                ListOfDronsBL.Add()
+            }
         }
 
         public void AddBaseStation(BaseStation b)
@@ -32,9 +43,9 @@ namespace IBL
         {
             try
             {
-                if (!dal.IfBaseStationExsists(startingBaseStation)) // check if start station exisists!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!ץ!! kadosh wants to chang
+                if (!dal.IfBaseStationExsists(startingBaseStation))
                 {
-                    throw "?";
+                    throw new IdNotExsistException("base station", startingBaseStation);
                 }
                 d.CurrentLocation = GetBaseStationById(startingBaseStation).Location;
                 dal.ConstructDrone(d.Id, d.Model, (IDAL.DO.WeightCategories)d.Weight); // creat drone
@@ -141,10 +152,19 @@ namespace IBL
         {
             if (!dal.IfBaseStationExsists(id))
             {
-                throw new IdAlreadyExsistsExceptions("error");
+                throw new IdNotExsistException("base station", id);
             }
             IDAL.DO.BaseStation idalBaseStation = dal.GetBaseStation(id);
-            BaseStation newBaseStation = new BaseStation(idalBaseStation.Id, idalBaseStation.Name, new Location(idalBaseStation.Longtitude, idalBaseStation.Latitude), idalBaseStation.ChargeSlots, dal.GetListOfDroneCharge());
+
+            IEnumerable<IDAL.DO.DroneCharge> listOfDronesCharging = dal.GetListOfDroneCharge();
+            listOfDronesCharging
+
+            foreach (var item in dal.GetListOfDroneCharge())
+            {
+                listOfDronesCharging.Add(new DroneInCharging(item.DroneId, ListOfDronsBL.Find(element => element.Id == item.DroneId).Battery));
+            }
+
+            BaseStation newBaseStation = new BaseStation(idalBaseStation.Id, idalBaseStation.Name, new Location(idalBaseStation.Longtitude, idalBaseStation.Latitude), idalBaseStation.ChargeSlots, listOfDronesCharging);
             return newBaseStation;
         }
         public ParcelToList GetParcelToListById(int id)
@@ -154,18 +174,24 @@ namespace IBL
             IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
             Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
             Customer reciverCustomer = GetCustomerById(newParcel.TargetId); // creat a new customer based on the reciver of the parcel
-            ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, (Enums.ParcelStatus));
+            ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, (Enums.ParcelStatus)newParcel.s);
             return newParcelToList;
         }
         public ParcelInTransit GetParcelInTransitById(int id)
         {
             Predicate<IDAL.DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
             IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
+            bool status = true;
+            if (newParcel.PickedUp != DateTime.MinValue)
+            {
+                status = false;
+            }
             Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
             Customer reciverCustomer = GetCustomerById(newParcel.TargetId); // creat a new customer based on the reciver of the parcel
             CustomerInParcel sCustomer = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name);
             CustomerInParcel rCustomer = new CustomerInParcel(reciverCustomer.Id, reciverCustomer.Name);
-            return new ParcelInTransit(id, (Enums.Priorities)newParcel.Priority, (Enums.WeightCategories)newParcel.Weight, sCustomer, rCustomer, senderCustomer.Location, reciverCustomer.Location, CalculateDistance());
+
+            return new ParcelInTransit(id, status, (Enums.Priorities)newParcel.Priority, (Enums.WeightCategories)newParcel.Weight, sCustomer, rCustomer, senderCustomer.Location, reciverCustomer.Location, CalculateDistance(senderCustomer.Location, reciverCustomer.Location));
 
         }
 
@@ -248,16 +274,62 @@ namespace IBL
             return newParcel.Id;
 
         }
+        public Enums.ParcelStatus StatusCalculate(Parcel p)
+        {
+            if (p.DeliveryTime != DateTime.MinValue)
+                return Enums.ParcelStatus.Supplied;
+            if (p.PickupTime != DateTime.MinValue)
+                return Enums.ParcelStatus.Collected;
+            if (p.AssociationTime != DateTime.MinValue)
+                return Enums.ParcelStatus.Associated;
+            return Enums.ParcelStatus.Defined;
+
+        }
     }
     public partial class BL : IBl
     {
-        public void UpdateDroneModel(int id,string newMOdel)
+        public void UpdateDroneModel(int id, string newModel)
         {
             DroneToList newDroneToList = GetDroneToList(id);
-            newDroneToList.Model = newMOdel;
+            newDroneToList.Model = newModel;
             int index = ListOfDronsBL.FindIndex(element => element.Id == id);
             ListOfDronsBL[index] = newDroneToList;
-            dal.UpdateDroneModel(id, newMOdel);
+            dal.UpdateDroneModel(id, newModel);
+        }
+    }
+    public partial class BL : IBl
+    {
+        public DroneToList ConvertDroneToList(IDAL.DO.Drone idalDrone)
+        {
+            bool flag = true;
+            Random rnd = new Random();
+            DroneToList newDrone = new DroneToList();
+            newDrone.Id = idalDrone.Id;
+            newDrone.Model = idalDrone.Model;
+            newDrone.Weight = (Enums.WeightCategories)idalDrone.MaxWeight;
+            Predicate<IDAL.DO.Drone> predicate;
+            newDrone.Battery = CalculateBattery(predicate);
+            var listOfParcels = dal.GetListOfParcel();
+            foreach (var item in listOfParcels)
+            {
+                if (item.DroneId == idalDrone.Id)
+                {
+                    newDrone.DroneStatuses = Enums.DroneStatuses.Delivery;
+
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag)
+            {
+                var myValues = new int[] { 0, 2 }; // Will work with array or list
+                newDrone.DroneStatuses = (Enums.DroneStatuses)myValues[rnd.Next(0, 1)];
+                if (newDrone.DroneStatuses == Enums.DroneStatuses.Maintenance)
+                {
+                    List<IDAL.DO.BaseStation> sraback = dal.GetListOfBaseStation();
+                    newDrone.CurrentLocation = sraback.
+                }
+            }
         }
     }
 }

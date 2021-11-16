@@ -11,6 +11,7 @@ namespace IBL
         public class ParcelInTransit
         {
             public int Id { set; get; }
+            public bool Status { set; get; }
             public Enums.Priorities Priorities { set; get; }
             public Enums.WeightCategories Weight { set; get; }
             public CustomerInParcel CustomerInParcelSender { set; get; }
@@ -18,9 +19,10 @@ namespace IBL
             public Location PickupLocation { set; get; }
             public Location DeliveryLocation { set; get; }
             public double Distance { set; get; }
-            public ParcelInTransit(int id, Enums.Priorities priorities, Enums.WeightCategories weight, CustomerInParcel customerInParcelSender, CustomerInParcel customerInParcelReciver, Location pickupLocation, Location deliveryLocation, double distance)
+            public ParcelInTransit(int id, bool status, Enums.Priorities priorities, Enums.WeightCategories weight, CustomerInParcel customerInParcelSender, CustomerInParcel customerInParcelReciver, Location pickupLocation, Location deliveryLocation, double distance)
             {
                 Id = id;
+                Status = status;
                 Priorities = priorities;
                 Weight = weight;
                 CustomerInParcelSender = customerInParcelSender;

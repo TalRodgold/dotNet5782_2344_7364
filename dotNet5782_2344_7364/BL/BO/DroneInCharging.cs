@@ -11,12 +11,12 @@ namespace IBL
         public class DroneInCharging
         {
             public int Id { set; get; }
-            public float Battery { set; get; }
+            public double Battery { set; get; }
             public override string ToString()
             {
                 return $" Drone #{Id}: \n Battery = {Battery} \n";
             }
-            public DroneInCharging(int id,float battery)
+            public DroneInCharging(int id,double battery)
             {
                 Id = id;
                 Battery = battery;
