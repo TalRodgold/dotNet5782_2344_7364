@@ -3,23 +3,29 @@ using IDAL;
 using IBL.BO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-
+using System.Text;
+using System.Linq;
 namespace IBL
 {
     public partial class BL : IBl
     {
         public List<DroneToList> ListOfDronsBL = new List<DroneToList>();
+        double ElectricityUseAvailiblity;
+        double ElectricityUseLightWeight;
+        double ElectricityUseMediumWeight;
+        double ElectricityUseHeavyWeight ;
+        double DroneChargingPaste ;
         BL bl;
         IDal dal;
         public BL()
         {
             dal = new DalObjects.DalObjects();
             double[] arr = dal.Electricity();
-            double ElectricityUseAvailiblity = arr[0];
-            double ElectricityUseLightWeight = arr[1];
-            double ElectricityUseMediumWeight = arr[2];
-            double ElectricityUseHeavyWeight = arr[3];
-            double DroneChargingPaste = arr[4];
+            ElectricityUseAvailiblity = arr[0];
+            ElectricityUseLightWeight = arr[1];
+            ElectricityUseMediumWeight = arr[2];
+            ElectricityUseHeavyWeight = arr[3];
+            DroneChargingPaste = arr[4];
             var listOfDrones = dal.GetListOfDrone();
             foreach (var item in listOfDrones)
             {
@@ -200,10 +206,45 @@ namespace IBL
 
     public partial class BL : IBl
     {
-        public double CalculateBattery(int id)
+        public double CalculateBattery(DroneToList drone)
         {
-            double banan = ListOfDronsBL.Find(element => element.Id == id).Battery);
-            return;
+            Random rnd = new Random();
+            //double banan = ListOfDronsBL.Find(element => element.Id == id).Battery);
+            int baseStationId;
+            double distance;
+            double battery=0;
+            baseStationId = CalculateMinDistance(drone.CurrentLocation);
+            IDAL.DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
+            distance = CalculateDistance(drone.CurrentLocation, new Location(newBaseStation.Longtitude, newBaseStation.Latitude));
+            switch (drone.DroneStatuses)
+            {
+                case Enums.DroneStatuses.Available:
+                    battery = distance * ElectricityUseAvailiblity;
+                    battery = battery / 100;
+                    battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
+                    break;
+                case Enums.DroneStatuses.Delivery:
+                    switch (drone.Weight)
+                    {
+                        case Enums.WeightCategories.Light:
+                            battery = distance * ElectricityUseLightWeight;
+                            battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
+                            break;
+                        case Enums.WeightCategories.Medium:
+                            battery = distance * ElectricityUseMediumWeight;
+                            battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
+                            break;
+                        case Enums.WeightCategories.Heavy:
+                            battery = distance * ElectricityUseHeavyWeight;
+                            battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
+                            break;
+                    }
+                    break;
+                case Enums.DroneStatuses.Maintenance:
+                    battery = (double)rnd.Next(0, 20) / 100;//i think it not lottering good
+                    break;
+            }
+            return battery;
         }
 
         public void CalculateLocation(DroneToList drone)
@@ -263,10 +304,24 @@ namespace IBL
             double d = R * c;
 
             return d;
-
-
         }
-        public int ReciveParcelId(Parcel parcel)
+        public int CalculateMinDistance( Location y)
+        {
+            double max = double.MaxValue;
+            int baseStationId = 0;
+            double distance;
+            foreach (var item in dal.GetListOfBaseStation())//check which station is clothest for the sender
+            {
+                distance = CalculateDistance(new Location(item.Latitude, item.Latitude), y);
+                if (distance < max)
+                {
+                    baseStationId = item.Id;
+                    max = distance;
+                }
+            }
+            return baseStationId;
+        }
+            public int ReciveParcelId(Parcel parcel)
         {
             Predicate<IDAL.DO.Parcel> predicate = element => element.SenderId == parcel.Sender.Id; // predicat to find parcel based on senders id
 
@@ -307,29 +362,49 @@ namespace IBL
             newDrone.Id = idalDrone.Id;
             newDrone.Model = idalDrone.Model;
             newDrone.Weight = (Enums.WeightCategories)idalDrone.MaxWeight;
+            
             Predicate<IDAL.DO.Drone> predicate;
-            newDrone.Battery = CalculateBattery(predicate);
-            var listOfParcels = dal.GetListOfParcel();
-            foreach (var item in listOfParcels)
+            //newDrone.Battery = CalculateBattery(predicate);
+            var listOfParcels = dal.GetListOfParcel().ToList();
+            IDAL.DO.Parcel newParcel=listOfParcels.Find(element => element.DroneId == idalDrone.Id);
+            if (newParcel != null)//if there have a parcel with this drone id
             {
-                if (item.DroneId == idalDrone.Id)
+                newDrone.DroneStatuses = Enums.DroneStatuses.Delivery;
+                if (newParcel.Scheduled < DateTime.MinValue)//the parcel didn't pick-upp
                 {
-                    newDrone.DroneStatuses = Enums.DroneStatuses.Delivery;
-
-                    flag = false;
-                    break;
+                    Location newLocation = new Location(dal.GetCustomer(newParcel.SenderId).Longtitude, dal.GetCustomer(newParcel.SenderId).Lnatitude);
+                    int baseStationId = CalculateMinDistance(newLocation);
+                    IDAL.DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
+                    newDrone.CurrentLocation = new Location(newBaseStation.Longtitude, newBaseStation.Latitude);
                 }
+                else//the parcel was pick-upp
+                {
+                    newDrone.CurrentLocation = new Location(dal.GetCustomer(newParcel.SenderId).Longtitude, dal.GetCustomer(newParcel.SenderId).Latitude);//he get the the sender customer address
+                }
+
             }
-            if (flag)
+            else //if there no have parcel with this drone id
             {
                 var myValues = new int[] { 0, 2 }; // Will work with array or list
                 newDrone.DroneStatuses = (Enums.DroneStatuses)myValues[rnd.Next(0, 1)];
-                if (newDrone.DroneStatuses == Enums.DroneStatuses.Maintenance)
+                if (newDrone.DroneStatuses == Enums.DroneStatuses.Maintenance)//if the drone in maintence status
                 {
-                    List<IDAL.DO.BaseStation> sraback = dal.GetListOfBaseStation();
-                    newDrone.CurrentLocation = sraback.
+                    List<IDAL.DO.BaseStation> baseStationsList = dal.GetListOfBaseStation().ToList();
+                    int index = rnd.Next(baseStationsList.Count);
+                    newDrone.CurrentLocation = new Location(baseStationsList[index].Longtitude, baseStationsList[index].Latitude);
+                    newDrone.Battery = CalculateBattery(newDrone);
+                }
+                else//if the drone is in avilible status
+                {
+                    Predicate<IDAL.DO.Parcel> predicate1 = element => element.Deliverd > DateTime.MinValue;
+                    List<IDAL.DO.Parcel> listOfDeliveredParcel = dal.GetListOfParcel(predicate1).ToList();
+                    listOfDeliveredParcel = listOfDeliveredParcel.FindAll(element => element.DroneId == newDrone.Id);
+                    IDAL.DO.Parcel newParcel_ = listOfDeliveredParcel[rnd.Next(listOfDeliveredParcel.Count)];
+                    IDAL.DO.Customer newCustomer = dal.GetCustomer(newParcel_.TargetId);
+                    newDrone.CurrentLocation = new Location(newCustomer.Longtitude, newCustomer.Latitude);
                 }
             }
+            newDrone.Battery = CalculateBattery(newDrone);
         }
     }
 }
