@@ -202,11 +202,15 @@ namespace ConsoleUI_BL
         {
             #region//cases for display
             display d;
+          
             PrintFunc(5);
             d = (display)int.Parse(Console.ReadLine());
+            int id = int.TryParse(Console.ReadLine(), out );
+
             switch (d)
             {
                 case display.basestation:
+                    Console.WriteLine(Get)
                     break;
                 case display.drone:
                     break;
@@ -219,7 +223,7 @@ namespace ConsoleUI_BL
             }
             #endregion
         }
-        public enum displaylist { basestationList, droneList, castomerList, parcelList, notAssigned, freeChargingStations }
+        public enum displaylist { basestationList, droneList, customerList, parcelList, notAssigned, freeChargingStations }
         private static void Displaylist()//cases for display list
         {
             #region//cases for display list
@@ -229,16 +233,22 @@ namespace ConsoleUI_BL
             switch (d)
             {
                 case displaylist.basestationList:
+                    PrintFunc(18);
                     break;
                 case displaylist.droneList:
+                    PrintFunc(19);
                     break;
-                case displaylist.castomerList:
+                case displaylist.customerList:
+                    PrintFunc(20);
                     break;
                 case displaylist.parcelList:
+                    PrintFunc(21);
                     break;
                 case displaylist.notAssigned:
+                    PrintFunc(22);
                     break;
                 case displaylist.freeChargingStations:
+                    PrintFunc(23);
                     break;
                 default:
                     break;
@@ -400,6 +410,60 @@ namespace ConsoleUI_BL
             {
                 Console.WriteLine("Pleas enter Parcel ID: ");
                 return;
+            }
+            #endregion
+            #region// if i = 18 print list of base stations
+            if (i == 18)
+            {
+                foreach (var item in name.GetListOfBaseStations())
+                {
+                    Console.WriteLine(item.ToString());
+                }
+            }
+            #endregion
+            #region// if i = 19 print list of drones
+            if (i == 19)
+            {
+                foreach (var item in name.GetListOfDrones())
+                {
+                    Console.WriteLine(item.ToString());
+                }
+            }
+            #endregion
+            #region// if i = 20 print list of customers
+            if (i == 20)
+            {
+                foreach (var item in name.GetListOfCustomers())
+                {
+                    Console.WriteLine(item.ToString());
+                }
+            }
+            #endregion
+            #region// if i = 21 print list of parcels
+            if (i == 21)
+            {
+                foreach (var item in name.GetListOfParcels())
+                {
+                    Console.WriteLine(item.ToString());
+                }
+            }
+            #endregion
+            #region// if i = 22 print list of not assigned
+            if (i == 22)
+            {
+                foreach (var item in name.GetListOfAssigned())
+                {
+                    Console.WriteLine(item.ToString());
+                }
+            }
+            #endregion
+            #region// if i = 23 print list of freeChargingStations
+            if (i == 23)
+            {
+                foreach (var item in name.GetListOfFreeChargingStations())
+                {
+                    Console.WriteLine(item.ToString());
+                }
             }
             #endregion
             return;
