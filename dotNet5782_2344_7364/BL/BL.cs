@@ -438,8 +438,30 @@ namespace IBL
             int index=ListOfDronsBL.FindIndex(element => element.Id == id);
             ListOfDronsBL[index] = newDrone;
             station.NumberOfFreeChargingSlots-=  1;
-            dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.NumberOfFreeChargingSlots);
+            dal.UpdateStationNumOfFreeDroneCharges(station.Id, station.NumberOfFreeChargingSlots);
+        }
+        public void UpdateReleseDrone(int id,double time)
+        {
+            DroneToList drone = GetDroneToList(id);
+            if(drone.DroneStatuses!=Enums.DroneStatuses.Maintenance)
+            {
+                throw;
+            }
+            drone.Battery = drone.Battery * time * DroneChargingPaste;
+            drone.DroneStatuses = Enums.DroneStatuses.Available;
+            IDAL.DO.BaseStation station = dal.getBaseStationByDroneId(id);
+            station.ChargeSlots -= 1;
+            dal.UpdateStationNumOfFreeDroneCharges(station.Id, station.ChargeSlots);
+            dal.ReleaseDroneCharge(id, station.Id);
+        }
+        public void UpdateAssosiateDrone(int id)
+        {
             
+            List<IDAL.DO.Parcel> newParcelList= dal.GetListOfParcel().ToList();
+            foreach (var item in newParcelList)
+            {
+
+            }
         }
     }
     public partial class BL : IBl

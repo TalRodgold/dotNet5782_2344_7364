@@ -27,7 +27,6 @@ namespace IDAL
         void UpdateChargingSlotsNumber(int id, int numberOfChargingSlots);
         void UpdateCustomerName(int id, string name);
         void UpdateCustomerPhone(int id, string phone);
-
         void ReleaseDroneCharge(int droneId, int stationId); // releas drone from charging 
         string BaseStationListToString();//the function return long string of all BaseStation
         string DroneListToString();//the function return long string of all Drones
@@ -47,6 +46,7 @@ namespace IDAL
         Parcel GetParcel(int id,Predicate<Parcel> predicate = null); // find a Parcel by id and return all his data as Parcel class
         Drone GetDrone(int id); // find a Drone by id and return all his data as Drone class
         BaseStation GetBaseStation(int id); // find a BaseStation by id and return all his data as BaseStation class
+        public BaseStation getBaseStationByDroneId(int id);
         DroneCharge GetDroneCharge(int id);
         IEnumerable<DroneCharge> GetListOfDroneCharge(Predicate<DroneCharge> predicate = null);
         public IEnumerable<Customer> GetListOfCastomer(Predicate<Customer> predicate=null);

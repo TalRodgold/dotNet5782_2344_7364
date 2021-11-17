@@ -339,9 +339,9 @@ namespace DalObjects // להתייחס לממשק
             #region//releas drone from charging
             // DataSource.DroneArr[FindDroneById(droneId)].Status = DroneStatuses.Available; // make drone status: Available
             BaseStation newBaseStation = DataSource.BaseStationList.Find(x => x.Id == stationId);
+            int index = DataSource.BaseStationList.FindIndex(x => x.Id == stationId);
             newBaseStation.ChargeSlots += 1;
-            DataSource.BaseStationList.RemoveAt(DataSource.BaseStationList.FindIndex(x => x.Id == stationId));
-            DataSource.BaseStationList.Add(newBaseStation);
+            DataSource.BaseStationList[index] = newBaseStation;
             DataSource.DroneChargeList.RemoveAt(DataSource.DroneChargeList.FindIndex(x => x.DroneId == droneId));
             #endregion
         }
@@ -462,8 +462,9 @@ namespace DalObjects // להתייחס לממשק
         public int GetCountOfCustomerList() { return DataSource.CustomerList.Count(); } // returns size of customer list
         public int GetCountOfParcelList() { return DataSource.ParcelList.Count(); } // returns size of parcel list
         public Customer GetCustomer(int id) { if (!IfCustomerExsists(id)) throw new IdNotExsistException("customer", id); return DataSource.CustomerList.Find(element => element.Id == id); } // find a customer by id and return all his data as customer class
-        public Parcel GetParcel(int id, Predicate<Parcel> predicate = null) { if ((!IfParcelExsists(id)) & (id != 0)) throw new IdNotExsistException("parcel", id); if (predicate == null) return DataSource.ParcelList.Find(element => element.Id == id); return DataSource.ParcelList.Find(predicate); } // find a Parcel by id and return all his data as Parcel class
+        public Parcel GetParcel(int id, Predicate<Parcel> predicate = null) { if ((!IfParcelExsists(id)) & (id != 0)) throw new IdNotExsistException("parcel", id); if (predicate.Equals(null)) return DataSource.ParcelList.Find(element => element.Id == id);return DataSource.ParcelList.Find(predicate); } // find a Parcel by id and return all his data as Parcel class
         public Drone GetDrone(int id) { if (!IfDroneExsists(id)) throw new IdNotExsistException("drone", id); return DataSource.DroneList.Find(element => element.Id == id); } // find a Drone by id and return all his data as Drone class
+        public BaseStation getBaseStationByDroneId(int id) { if (!IfDroneExsists(id)) throw new IdNotExsistException("drone", id); return GetBaseStation(DataSource.DroneChargeList.Find(element => element.DroneId == id).StationId); } // find a Drone by id and return all his data as Drone class }
         public BaseStation GetBaseStation(int id) { if (!IfBaseStationExsists(id)) throw new IdNotExsistException("base station", id); return DataSource.BaseStationList.Find(element => element.Id == id); } // find a BaseStation by id and return all his data as BaseStation class
         public DroneCharge GetDroneCharge(int id) { if (!IfDroneExsists(id)) throw new IdNotExsistException("drone charge", id); return DataSource.DroneChargeList.Find(element => element.DroneId == id); }
         public IEnumerable<Customer> GetListOfCastomer(Predicate<Customer> predicate=null) { if(predicate==null) return DataSource.CustomerList.ToList(); return DataSource.CustomerList.FindAll(predicate).ToList(); }
