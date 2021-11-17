@@ -13,8 +13,8 @@ namespace IBL
         double ElectricityUseAvailiblity;
         double ElectricityUseLightWeight;
         double ElectricityUseMediumWeight;
-        double ElectricityUseHeavyWeight ;
-        double DroneChargingPaste ;
+        double ElectricityUseHeavyWeight;
+        double DroneChargingPaste;
         BL bl;
         IDal dal;
         public BL()
@@ -29,7 +29,7 @@ namespace IBL
             var listOfDrones = dal.GetListOfDrone();
             foreach (var item in listOfDrones)
             {
-                ListOfDronsBL.Add()
+                ListOfDronsBL.Add(ConvertDroneToList(item));
             }
         }
 
@@ -94,6 +94,7 @@ namespace IBL
 
     public partial class BL : IBl
     {
+
         public Customer GetCustomerById(int id)
         {
             try
@@ -163,14 +164,16 @@ namespace IBL
             IDAL.DO.BaseStation idalBaseStation = dal.GetBaseStation(id);
 
             IEnumerable<IDAL.DO.DroneCharge> listOfDronesCharging = dal.GetListOfDroneCharge();
-            listOfDronesCharging
-
-            foreach (var item in dal.GetListOfDroneCharge())
+            List<DroneInCharging> listToAdd = new List<DroneInCharging>();
+            foreach (var item in listOfDronesCharging)
             {
-                listOfDronesCharging.Add(new DroneInCharging(item.DroneId, ListOfDronsBL.Find(element => element.Id == item.DroneId).Battery));
-            }
+                if (item.StationId == idalBaseStation.Id)
+                {
+                    listToAdd.Add(new DroneInCharging(item.DroneId, ListOfDronsBL.Find(element => element.Id == item.DroneId).Battery));
 
-            BaseStation newBaseStation = new BaseStation(idalBaseStation.Id, idalBaseStation.Name, new Location(idalBaseStation.Longtitude, idalBaseStation.Latitude), idalBaseStation.ChargeSlots, listOfDronesCharging);
+                }
+            }
+            BaseStation newBaseStation = new BaseStation(idalBaseStation.Id, idalBaseStation.Name, new Location(idalBaseStation.Longtitude, idalBaseStation.Latitude), idalBaseStation.ChargeSlots, listToAdd);
             return newBaseStation;
         }
         public ParcelToList GetParcelToListById(int id)
@@ -180,7 +183,7 @@ namespace IBL
             IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
             Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
             Customer reciverCustomer = GetCustomerById(newParcel.TargetId); // creat a new customer based on the reciver of the parcel
-            ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, (Enums.ParcelStatus)newParcel.s);
+            ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, StatusCalculate(GetParcelById(newParcel.Id, predicate)));
             return newParcelToList;
         }
         public ParcelInTransit GetParcelInTransitById(int id)
@@ -212,7 +215,7 @@ namespace IBL
             //double banan = ListOfDronsBL.Find(element => element.Id == id).Battery);
             int baseStationId;
             double distance;
-            double battery=0;
+            double battery = 0;
             baseStationId = CalculateMinDistance(drone.CurrentLocation);
             IDAL.DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
             distance = CalculateDistance(drone.CurrentLocation, new Location(newBaseStation.Longtitude, newBaseStation.Latitude));
@@ -305,7 +308,7 @@ namespace IBL
 
             return d;
         }
-        public int CalculateMinDistance( Location y)
+        public int CalculateMinDistance(Location y)
         {
             double max = double.MaxValue;
             int baseStationId = 0;
@@ -321,7 +324,7 @@ namespace IBL
             }
             return baseStationId;
         }
-            public int ReciveParcelId(Parcel parcel)
+        public int ReciveParcelId(Parcel parcel)
         {
             Predicate<IDAL.DO.Parcel> predicate = element => element.SenderId == parcel.Sender.Id; // predicat to find parcel based on senders id
 
@@ -351,28 +354,57 @@ namespace IBL
             ListOfDronsBL[index] = newDroneToList;
             dal.UpdateDroneModel(id, newModel);
         }
+
+        public void UpdateBaseStation(int id, string name = "", int numberOfChargingSlots = -1)
+        {
+            if (name != "")
+            {
+                dal.UpdateBaseStationName(id, name);
+            }
+            if (numberOfChargingSlots != -1)
+            {
+                dal.UpdateChargingSlotsNumber(id, numberOfChargingSlots);
+            }
+        }
+        public void UpdateCustomer(int id, string name = "", string phone = "")
+        {
+            if (name != "")
+            {
+                dal.UpdateCustomerName(id, name);
+            }
+            if (phone != "")
+            {
+                dal.UpdateCustomerPhone(id, phone);
+            }
+        }
+        public void UpdateSendDroneToCharge(int droneId)
+        {
+            DroneToList newDrone = ListOfDronsBL.Find(element => element.Id == droneId);
+            if (newDrone.DroneStatuses == Enums.DroneStatuses.Available)
+                throw new UnavailableExeption()
+            
+        }
     }
     public partial class BL : IBl
     {
         public DroneToList ConvertDroneToList(IDAL.DO.Drone idalDrone)
         {
-            bool flag = true;
+
             Random rnd = new Random();
             DroneToList newDrone = new DroneToList();
             newDrone.Id = idalDrone.Id;
             newDrone.Model = idalDrone.Model;
             newDrone.Weight = (Enums.WeightCategories)idalDrone.MaxWeight;
-            
-            Predicate<IDAL.DO.Drone> predicate;
-            //newDrone.Battery = CalculateBattery(predicate);
+
+
             var listOfParcels = dal.GetListOfParcel().ToList();
-            IDAL.DO.Parcel newParcel=listOfParcels.Find(element => element.DroneId == idalDrone.Id);
-            if (newParcel != null)//if there have a parcel with this drone id
+            IDAL.DO.Parcel newParcel = listOfParcels.Find(element => element.DroneId == idalDrone.Id);
+            if (!newParcel.Equals(null))//if there have a parcel with this drone id
             {
                 newDrone.DroneStatuses = Enums.DroneStatuses.Delivery;
                 if (newParcel.Scheduled < DateTime.MinValue)//the parcel didn't pick-upp
                 {
-                    Location newLocation = new Location(dal.GetCustomer(newParcel.SenderId).Longtitude, dal.GetCustomer(newParcel.SenderId).Lnatitude);
+                    Location newLocation = new Location(dal.GetCustomer(newParcel.SenderId).Longtitude, dal.GetCustomer(newParcel.SenderId).Latitude);
                     int baseStationId = CalculateMinDistance(newLocation);
                     IDAL.DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
                     newDrone.CurrentLocation = new Location(newBaseStation.Longtitude, newBaseStation.Latitude);
@@ -381,7 +413,7 @@ namespace IBL
                 {
                     newDrone.CurrentLocation = new Location(dal.GetCustomer(newParcel.SenderId).Longtitude, dal.GetCustomer(newParcel.SenderId).Latitude);//he get the the sender customer address
                 }
-
+                newDrone.NumberOfParcelInTransit = newParcel.Id;
             }
             else //if there no have parcel with this drone id
             {
@@ -403,9 +435,16 @@ namespace IBL
                     IDAL.DO.Customer newCustomer = dal.GetCustomer(newParcel_.TargetId);
                     newDrone.CurrentLocation = new Location(newCustomer.Longtitude, newCustomer.Latitude);
                 }
+                newDrone.NumberOfParcelInTransit = -1;
             }
             newDrone.Battery = CalculateBattery(newDrone);
+
+            return newDrone;
         }
+    }
+    public partial class BL : IBl
+    {
+        
     }
 }
 

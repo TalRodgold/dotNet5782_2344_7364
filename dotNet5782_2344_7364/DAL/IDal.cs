@@ -23,6 +23,11 @@ namespace IDAL
         void UpdateParcleDelivery(int id); // update parcel delivery
         void UpdateDroneCharge(int droneId, int stationId); // update drones charging
         void UpdateDroneModel(int id, string newModel);
+        void UpdateBaseStationName(int id, string name);
+        void UpdateChargingSlotsNumber(int id, int numberOfChargingSlots);
+        void UpdateCustomerName(int id, string name);
+        void UpdateCustomerPhone(int id, string phone);
+
         void ReleaseDroneCharge(int droneId, int stationId); // releas drone from charging 
         string BaseStationListToString();//the function return long string of all BaseStation
         string DroneListToString();//the function return long string of all Drones

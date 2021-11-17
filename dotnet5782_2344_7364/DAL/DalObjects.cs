@@ -266,6 +266,57 @@ namespace DalObjects // להתייחס לממשק
             int index = DataSource.DroneList.FindIndex(element => element.Id == id);
             DataSource.DroneList[index] = newDrone;
         }
+        public void UpdateBaseStationName(int id, string name)
+        {
+            if (!IfBaseStationExsists(id))
+            {
+                throw new IdNotExsistException("base station", id);
+            }
+            BaseStation newBaseStation = DataSource.BaseStationList.Find(element => element.Id == id);
+            newBaseStation.Name = name;
+            int index = DataSource.BaseStationList.FindIndex(element => element.Id == id);
+            DataSource.BaseStationList[index] = newBaseStation;
+        }
+        public void UpdateChargingSlotsNumber(int id, int numberOfChargingSlots)
+        {
+            if (!IfBaseStationExsists(id))
+            {
+                throw new IdNotExsistException("base station", id);
+            }
+            if (GetListOfDroneCharge(element => element.StationId == id).ToList().Count() > numberOfChargingSlots)
+            {
+                throw new SizeProblemException("To small", GetListOfDroneCharge(element => element.StationId == id).ToList().Count());
+            }
+            BaseStation newBaseStation = DataSource.BaseStationList.Find(element => element.Id == id);
+            newBaseStation.ChargeSlots = numberOfChargingSlots;
+            int index = DataSource.BaseStationList.FindIndex(element => element.Id == id);
+            DataSource.BaseStationList[index] = newBaseStation;
+        }
+
+        public void UpdateCustomerName(int id, string name)
+        {
+            if (!IfCustomerExsists(id))
+            {
+                throw new IdNotExsistException("customer", id);
+            }
+            Customer newCustomer = DataSource.CustomerList.Find(element => element.Id == id);
+            newCustomer.Name = name;
+            int index = DataSource.CustomerList.FindIndex(element => element.Id == id);
+            DataSource.CustomerList[index] = newCustomer;
+
+        }
+
+        public void UpdateCustomerPhone(int id, string phone)
+        {
+            if (!IfCustomerExsists(id))
+            {
+                throw new IdNotExsistException("customer", id);
+            }
+            Customer newCustomer = DataSource.CustomerList.Find(element => element.Id == id);
+            newCustomer.Phone = phone;
+            int index = DataSource.CustomerList.FindIndex(element => element.Id == id);
+            DataSource.CustomerList[index] = newCustomer;
+        }
 
         /// <summary>
         /// releas drone from charging
