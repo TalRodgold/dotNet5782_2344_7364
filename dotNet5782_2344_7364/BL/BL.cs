@@ -308,18 +308,64 @@ namespace IBL
 
             return d;
         }
-        public int CalculateMinDistance(Location y)
+        public double ConvertBatteryToDistance(DroneToList drone)
         {
-            double max = double.MaxValue;
+            double battery = drone.Battery;
+            double distance = 0;
+            switch (drone.DroneStatuses)
+            {
+                case Enums.DroneStatuses.Available:
+
+                    distance = (battery * 100) / ElectricityUseAvailiblity;
+                    break;
+                case Enums.DroneStatuses.Delivery:
+                    switch (drone.Weight)
+                    {
+                        case Enums.WeightCategories.Light:
+                            distance = (battery * 100) / ElectricityUseLightWeight;
+                            break;
+                        case Enums.WeightCategories.Medium:
+                            distance = (battery * 100) / ElectricityUseMediumWeight;
+                            break;
+                        case Enums.WeightCategories.Heavy:
+                            distance = (battery * 100) / ElectricityUseHeavyWeight;
+                            break;
+                    }
+                    break;
+                case Enums.DroneStatuses.Maintenance:
+                    distance = (battery * 100) /;////
+                    break;
+            }
+            return distance;
+        }
+        public int CalculateMinDistance(Location y, Predicate<BaseStation>predicate = null, Predicate<BaseStation> predicate1 = null)
+        {
+            double min = double.MaxValue;
             int baseStationId = 0;
             double distance;
-            foreach (var item in dal.GetListOfBaseStation())//check which station is clothest for the sender
+            if (predicate == null && predicate1 == null)
             {
-                distance = CalculateDistance(new Location(item.Latitude, item.Latitude), y);
-                if (distance < max)
+                
+                foreach (var item in dal.GetListOfBaseStation())//check which station is clothest for the sender
                 {
-                    baseStationId = item.Id;
-                    max = distance;
+                    distance = CalculateDistance(new Location(item.Latitude, item.Latitude), y);
+                    if (distance < min)
+                    {
+                        baseStationId = item.Id;
+                        min = distance;
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in dal.GetListOfBaseStation())//check which station is clothest for the sender
+                {
+                    distance = CalculateDistance(new Location(item.Latitude, item.Latitude), y);
+                    if (distance < min && predicate.Equals(true) && predicate1.Equals(true))
+                    {
+                        baseStationId = item.Id;
+                        min = distance;
+                    }
                 }
             }
             return baseStationId;
@@ -377,11 +423,22 @@ namespace IBL
                 dal.UpdateCustomerPhone(id, phone);
             }
         }
-        public void UpdateSendDroneToCharge(int droneId)
+        public void UpdateSendDroneToCharge(int id)
         {
-            DroneToList newDrone = ListOfDronsBL.Find(element => element.Id == droneId);
+            DroneToList newDrone = ListOfDronsBL.Find(element => element.Id == id);
             if (newDrone.DroneStatuses == Enums.DroneStatuses.Available)
-                throw new UnavailableExeption()
+                throw new UnavailableExeption("drone", id);
+            int stationId = CalculateMinDistance(GetDroneById(id).CurrentLocation, element => element.NumberOfFreeChargingSlots > 0, element => CalculateDistance(element.Location, newDrone.CurrentLocation) <= ConvertBatteryToDistance(newDrone));
+            if (stationId == 0)
+                throw new UnavailableExeption("base station", stationId);
+            BaseStation station = GetBaseStationById(stationId);
+            newDrone.Battery = CalculateBattery(newDrone);
+            newDrone.CurrentLocation = station.Location;
+            newDrone.DroneStatuses = Enums.DroneStatuses.Maintenance;
+            int index=ListOfDronsBL.FindIndex(element => element.Id == id);
+            ListOfDronsBL[index] = newDrone;
+            station.NumberOfFreeChargingSlots-=  1;
+            dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.NumberOfFreeChargingSlots);
             
         }
     }

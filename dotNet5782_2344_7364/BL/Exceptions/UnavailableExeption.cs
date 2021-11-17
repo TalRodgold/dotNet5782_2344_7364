@@ -27,7 +27,14 @@ namespace IBL
         }
         public override string ToString()
         {
-            return $"ERROR: The {Text} {ID} is Unaviliable ";
+            if (ID != 0)
+            {
+                return $"ERROR: The {Text} {ID} is Unaviliable ";
+            }
+            else
+            {
+                return $"ERROR: there are no {Text}s aviliable ";
+            }
         }
     }
 }

@@ -277,6 +277,17 @@ namespace DalObjects // להתייחס לממשק
             int index = DataSource.BaseStationList.FindIndex(element => element.Id == id);
             DataSource.BaseStationList[index] = newBaseStation;
         }
+        public void UpdateBaseStationNumOfFreeDroneCharges(int id, int newnum)
+        {
+            if (!IfBaseStationExsists(id))
+            {
+                throw new IdNotExsistException("base station", id);
+            }
+            BaseStation newBaseStation = DataSource.BaseStationList.Find(element => element.Id == id);
+            newBaseStation.ChargeSlots = newnum;
+            int index = DataSource.BaseStationList.FindIndex(element => element.Id == id);
+            DataSource.BaseStationList[index] = newBaseStation;
+        }
         public void UpdateChargingSlotsNumber(int id, int numberOfChargingSlots)
         {
             if (!IfBaseStationExsists(id))
