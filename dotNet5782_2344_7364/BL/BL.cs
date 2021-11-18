@@ -41,7 +41,7 @@ namespace IBL
             }
             catch (IDAL.DO.IdAlreadyExsistsExceptions exception) // if base station id already exsists and was thrown from dal objects
             {
-                
+
                 throw new IdAlreadyExsistsExceptions(exception.Text, exception.ID, exception); // throw
             }
         }
@@ -80,7 +80,7 @@ namespace IBL
             }
         }
         public void AddParcel(CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie)
-        {    
+        {
             int id = dal.ConstructParcel(sender.Id, reciver.Id, (IDAL.DO.WeightCategories)weight, (IDAL.DO.Priorities)prioritie, DateTime.Now, -1, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
             Parcel newParcel = new Parcel(id, sender, reciver, weight, prioritie, null, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
         }
@@ -241,43 +241,62 @@ namespace IBL
 
     public partial class BL : IBl
     {
-        public double CalculateBattery(DroneToList drone)
+        public double CalculateBattery(DroneToList drone = null, Drone drone1 = null)
         {
-            Random rnd = new Random();
-            //double banan = ListOfDronsBL.Find(element => element.Id == id).Battery);
             int baseStationId;
             double distance;
             double battery = 0;
-            baseStationId = CalculateMinDistance(drone.CurrentLocation);
-            IDAL.DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
-            distance = CalculateDistance(drone.CurrentLocation, new Location(newBaseStation.Longtitude, newBaseStation.Latitude));
-            switch (drone.DroneStatuses)
+            if (drone1.Equals(null))
             {
-                case Enums.DroneStatuses.Available:
-                    battery = distance * ElectricityUseAvailiblity;
-                    battery = battery / 100;
-                    battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
-                    break;
-                case Enums.DroneStatuses.Delivery:
-                    switch (drone.Weight)
-                    {
-                        case Enums.WeightCategories.Light:
-                            battery = distance * ElectricityUseLightWeight;
-                            battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
-                            break;
-                        case Enums.WeightCategories.Medium:
-                            battery = distance * ElectricityUseMediumWeight;
-                            battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
-                            break;
-                        case Enums.WeightCategories.Heavy:
-                            battery = distance * ElectricityUseHeavyWeight;
-                            battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
-                            break;
-                    }
-                    break;
-                case Enums.DroneStatuses.Maintenance:
-                    battery = (double)rnd.Next(0, 20) / 100;//i think it not lottering good
-                    break;
+                Random rnd = new Random();
+                //double banan = ListOfDronsBL.Find(element => element.Id == id).Battery);
+                baseStationId = CalculateMinDistance(drone.CurrentLocation);
+                IDAL.DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
+                distance = CalculateDistance(drone.CurrentLocation, new Location(newBaseStation.Longtitude, newBaseStation.Latitude));
+                switch (drone.DroneStatuses)
+                {
+                    case Enums.DroneStatuses.Available:
+                        battery = distance * ElectricityUseAvailiblity;
+                        battery = battery / 100;
+                        battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
+                        break;
+                    case Enums.DroneStatuses.Delivery:
+                        switch (drone.Weight)
+                        {
+                            case Enums.WeightCategories.Light:
+                                battery = distance * ElectricityUseLightWeight;
+                                battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
+                                break;
+                            case Enums.WeightCategories.Medium:
+                                battery = distance * ElectricityUseMediumWeight;
+                                battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
+                                break;
+                            case Enums.WeightCategories.Heavy:
+                                battery = distance * ElectricityUseHeavyWeight;
+                                battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
+                                break;
+                        }
+                        break;
+                    case Enums.DroneStatuses.Maintenance:
+                        battery = (double)rnd.Next(0, 20) / 100;//i think it not lottering good
+                        break;
+                }
+            }
+            else
+            {
+                distance = CalculateDistance(drone1.CurrentLocation, drone1.ParcelInTransit.DeliveryLocation);
+                switch (drone.Weight)
+                {
+                    case Enums.WeightCategories.Light:
+                        battery = distance * ElectricityUseLightWeight;
+                        break;
+                    case Enums.WeightCategories.Medium:
+                        battery = distance * ElectricityUseMediumWeight;
+                        break;
+                    case Enums.WeightCategories.Heavy:
+                        battery = distance * ElectricityUseHeavyWeight;
+                        break;
+                }
             }
             return battery;
         }
@@ -370,14 +389,14 @@ namespace IBL
             }
             return distance;
         }
-        public int CalculateMinDistance(Location y, Predicate<BaseStation>predicate = null, Predicate<BaseStation> predicate1 = null)
+        public int CalculateMinDistance(Location y, Predicate<BaseStation> predicate = null, Predicate<BaseStation> predicate1 = null)
         {
             double min = double.MaxValue;
             int baseStationId = 0;
             double distance;
             if (predicate == null && predicate1 == null)
             {
-                
+
                 foreach (var item in dal.GetListOfBaseStation())//check which station is clothest for the sender
                 {
                     distance = CalculateDistance(new Location(item.Latitude, item.Latitude), y);
@@ -480,10 +499,10 @@ namespace IBL
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
             }
         }
-        public void UpdateReleseDrone(int id,double time)
+        public void UpdateReleseDrone(int id, double time)
         {
             DroneToList drone = GetDroneToList(id);
-            if(drone.DroneStatuses!=Enums.DroneStatuses.Maintenance)
+            if (drone.DroneStatuses != Enums.DroneStatuses.Maintenance)
             {
                 throw new UnavailableExeption("drone", id);
             }
@@ -553,7 +572,7 @@ namespace IBL
                 }
                 ListOfDronsBL.Find(element => element.Id == id).DroneStatuses = Enums.DroneStatuses.Delivery;
                 dal.AssociateDroneToParcel(id, currentParcel.Id);
-            
+
             }
             catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
             {
@@ -572,7 +591,12 @@ namespace IBL
                     throw new UnavailableExeption("drone", droneId);
                 }
                 drone.Battery = drone.Battery * ElectricityUseAvailiblity * CalculateDistance(drone.CurrentLocation, drone.ParcelInTransit.PickupLocation);
-                
+                drone.CurrentLocation = drone.ParcelInTransit.PickupLocation;
+                DroneToList newDrone = ConvertDroneBlToList(drone);
+                int index = ListOfDronsBL.FindIndex(element => element.Id == droneId);
+                ListOfDronsBL[index] = newDrone;
+                dal.UpdateParclePickup(drone.ParcelInTransit.Id);
+
             }
             catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
             {
@@ -580,10 +604,34 @@ namespace IBL
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
             }
         }
+        public void DilaveryParcelByDrone(int droneId)
+        {
+            Drone drone = GetDroneById(droneId);
+            try
+            {
+                if (drone.DroneStatuses != Enums.DroneStatuses.Available || !drone.ParcelInTransit.Status)
+                {
+                    throw new UnavailableExeption("drone", droneId);
+                }
+                drone.Battery = CalculateBattery(null, drone);
+                drone.CurrentLocation = drone.ParcelInTransit.DeliveryLocation;
+                drone.DroneStatuses = Enums.DroneStatuses.Available;
+                DroneToList newDrone = ConvertDroneBlToList(drone);
+                int index = ListOfDronsBL.FindIndex(element => element.Id == droneId);
+                ListOfDronsBL[index] = newDrone;
+                dal.UpdateParcleDelivery(drone.ParcelInTransit.Id);
+            }
+            catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
+            {
+
+                throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
+            }
+
+        }
     }
     public partial class BL : IBl
     {
-        public DroneToList ConvertDroneToList(IDAL.DO.Drone idalDrone)
+        public DroneToList ConvertDroneDalToList(IDAL.DO.Drone idalDrone)
         {
 
             Random rnd = new Random();
@@ -637,7 +685,11 @@ namespace IBL
 
             return newDrone;
         }
-
+        public DroneToList ConvertDroneBlToList(Drone blDrone)
+        {
+            DroneToList newDrone = new DroneToList(blDrone.Id, blDrone.Model, blDrone.Weight, blDrone.Battery, blDrone.DroneStatuses, blDrone.CurrentLocation, blDrone.ParcelInTransit.Id);
+            return newDrone;
+        }
     }
     public partial class BL : IBl
     {
@@ -668,15 +720,15 @@ namespace IBL
             }
             return list;
         }
-         public List<Parcel> GetListOfParcels()
-         {
+        public List<Parcel> GetListOfParcels()
+        {
             List<Parcel> list = new List<Parcel>();
             foreach (var item in dal.GetListOfParcel())
             {
                 list.Add(GetParcelById(item.Id));
             }
             return list;
-         }
+        }
         public List<Parcel> GetListOfNotAssigned()
         {
             List<Parcel> list = new List<Parcel>();
@@ -694,10 +746,11 @@ namespace IBL
                 if (GetBaseStationById(item.Id).NumberOfFreeChargingSlots > 0)
                 {
                     list.Add(GetBaseStationById(item.Id));
-                }  
+                }
             }
             return list;
         }
     }
 }
+
 
