@@ -170,7 +170,7 @@ namespace IBL
             {
                 if (!dal.IfBaseStationExsists(id))
                 {
-                    throw new IdNotExsistException("base station", id);
+                    throw new IdNotExsistException("base station", id, new IDAL.DO.IdNotExsistException("base station", id));
                 }
                 IDAL.DO.BaseStation idalBaseStation = dal.GetBaseStation(id);
 
