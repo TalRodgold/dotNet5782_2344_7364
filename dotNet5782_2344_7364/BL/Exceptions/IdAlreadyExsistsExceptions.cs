@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace IDAL.DO
+namespace IBL.BO
 {
     [Serializable]
     public class IdAlreadyExsistsExceptions : Exception
     {
-        public string Text;
-        public int ID;
+        private string Text;
+        private int ID;
 
         public IdAlreadyExsistsExceptions()
         {
@@ -23,8 +23,10 @@ namespace IDAL.DO
             this.ID = id;
         }
 
-        public IdAlreadyExsistsExceptions(string message, Exception innerException) : base(message, innerException)
+        public IdAlreadyExsistsExceptions(string message, int id, Exception innerException) : base(message, innerException)
         {
+            this.Text = message;
+            this.ID = id;
         }
 
         protected IdAlreadyExsistsExceptions(SerializationInfo info, StreamingContext context) : base(info, context)

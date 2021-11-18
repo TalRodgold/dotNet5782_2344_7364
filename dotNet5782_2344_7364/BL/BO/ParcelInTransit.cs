@@ -11,7 +11,7 @@ namespace IBL
         public class ParcelInTransit
         {
             public int Id { set; get; }
-            public bool Status { set; get; }
+            public bool Status { set; get; } // true = waiting for pickup | false = on transit to location
             public Enums.Priorities Priorities { set; get; }
             public Enums.WeightCategories Weight { set; get; }
             public CustomerInParcel CustomerInParcelSender { set; get; }

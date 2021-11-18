@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace IBL
+namespace IBL.BO
 {
     [Serializable]
-    internal class UnavailableExeption : Exception
+    public class UnavailableExeption : Exception
     {
-        private string Text;
-        private int ID;
+        public string Text;
+        public int ID;
         public UnavailableExeption()
         {
         }
@@ -18,8 +18,11 @@ namespace IBL
             this.ID = id;
         }
 
-        public UnavailableExeption(string message, Exception innerException) : base(message, innerException)
+        public UnavailableExeption(string message, int id, Exception innerException) : base(message, innerException)
         {
+
+            this.Text = message;
+            this.ID = id;
         }
 
         protected UnavailableExeption(SerializationInfo info, StreamingContext context) : base(info, context)

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace DalObjects
+namespace IDAL.DO
 {
     [Serializable]
-    internal class IdNotExsistException : Exception
+    public class IdNotExsistException : Exception
     {
-        private string Text;
-        private int ID;
+        public string Text;
+        public int ID;
         public IdNotExsistException()
         {
         }

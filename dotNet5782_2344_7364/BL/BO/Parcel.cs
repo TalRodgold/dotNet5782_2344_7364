@@ -11,6 +11,7 @@ namespace IBL
     {
         public class Parcel
         {
+            public int Id { set; get; }
             public CustomerInParcel Sender { set; get; }
             public CustomerInParcel Reciver { set; get; }
             public Enums.WeightCategories Weight { set; get; }
@@ -22,23 +23,13 @@ namespace IBL
             public DateTime DeliveryTime { set; get; }
             public override string ToString()
             {
-                return $" Sender = {Sender} \n Reciver = {Reciver} \n weight = {Weight} \n Prioritie = {Prioritie} \n Drone in parcel = {DroneInParcel} \n Parcel creating time {ParcelCreatingTime} \n Association time = {AssociationTime} \n Pickup time = {PickupTime} \n Delivery time = {DeliveryTime} \n";
+                return $" ID = {Id} \n Sender = {Sender} \n Reciver = {Reciver} \n weight = {Weight} \n Prioritie = {Prioritie} \n Drone in parcel = {DroneInParcel} \n Parcel creating time {ParcelCreatingTime} \n Association time = {AssociationTime} \n Pickup time = {PickupTime} \n Delivery time = {DeliveryTime} \n";
             }
             public Parcel() { }
-            public Parcel(CustomerInParcel sender,CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie)
+           
+            public Parcel(int id, CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie, DroneInParcel droneInParcel, DateTime parcelCreatingTime, DateTime associationTime, DateTime pickupTime, DateTime deliveryTime)
             {
-                Sender = sender;
-                Reciver = reciver;
-                Weight = weight;
-                Prioritie = prioritie;
-                DroneInParcel = null;
-                ParcelCreatingTime = DateTime.Now;
-                AssociationTime = DateTime.MinValue;
-                PickupTime = DateTime.MinValue;
-                DeliveryTime = DateTime.MinValue;
-            }
-            public Parcel(CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie, DroneInParcel droneInParcel, DateTime parcelCreatingTime, DateTime associationTime, DateTime pickupTime, DateTime deliveryTime)
-            {
+                Id = id;
                 Sender = sender;
                 Reciver = reciver;
                 Weight = weight;

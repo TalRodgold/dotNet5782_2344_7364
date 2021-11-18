@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace DalObjects
+namespace IDAL.DO
 {
     [Serializable]
-    internal class SizeProblemException : Exception
+    public class SizeProblemException : Exception
     {
-        private int Number;
+        public int Number;
         public SizeProblemException()
         {
         }

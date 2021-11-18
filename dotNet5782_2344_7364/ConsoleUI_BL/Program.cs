@@ -7,7 +7,7 @@ namespace ConsoleUI_BL
     {
         static IBL.BL name = new BL();
 
-        public enum Option { ADDop, Updateop, DisplayByIdop, ListDisplayop }//0,1,2 
+        public enum Option { Addop, Updateop, DisplayByIdop, ListDisplayop }//0,1,2 
         static void Main(string[] args)
         {
             Option option;
@@ -15,7 +15,7 @@ namespace ConsoleUI_BL
             option = (Option)int.Parse(Console.ReadLine());
             switch (option)
             {
-                case Option.ADDop:
+                case Option.Addop:
                     Input();
                     break;
                 case Option.Updateop:
@@ -102,8 +102,8 @@ namespace ConsoleUI_BL
                     Enums.WeightCategories.TryParse(Console.ReadLine(), out userParcelWeightCategories);
                     Enums.Priorities userParcelPriorities;
                     Enums.Priorities.TryParse(Console.ReadLine(), out userParcelPriorities);
-                    Parcel newParcel = new Parcel(userSenderIdd, userTargetIdd, userParcelWeightCategories, userParcelPriorities);
-                    name.AddParcel(newParcel);
+                    name.AddParcel(userSenderIdd, userTargetIdd, userParcelWeightCategories, userParcelPriorities);
+                    
                     break;
                 #endregion
                 default:
@@ -451,7 +451,7 @@ namespace ConsoleUI_BL
             #region// if i = 22 print list of not assigned
             if (i == 22)
             {
-                foreach (var item in name.GetListOfAssigned())
+                foreach (var item in name.GetListOfNotAssigned())
                 {
                     Console.WriteLine(item.ToString());
                 }
@@ -468,5 +468,5 @@ namespace ConsoleUI_BL
             #endregion
             return;
         }
-    }
+    }  
 }

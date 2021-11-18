@@ -39,10 +39,10 @@ namespace IBL
             {
                 dal.ConstructBaseStation(b.Id, b.Name, b.NumberOfFreeChargingSlots, b.Location.Longitude, b.Location.Latitude);
             }
-            catch (Exception)
+            catch (IDAL.DO.IdAlreadyExsistsExceptions exception) // if base station id already exsists and was thrown from dal objects
             {
-
-                throw;
+                
+                throw new IdAlreadyExsistsExceptions(exception.Text, exception.ID, exception); // throw
             }
         }
         public void AddDrone(Drone d, int startingBaseStation)
@@ -58,11 +58,14 @@ namespace IBL
                 dal.UpdateDroneCharge(d.Id, startingBaseStation); // connect drone to charging base station
                 ListOfDronsBL.Add(new DroneToList(d.Id, d.Model, d.Weight, d.Battery, d.DroneStatuses, d.CurrentLocation, d.ParcelInTransit.Id));
             }
-            catch (Exception)
+            catch (IDAL.DO.IdAlreadyExsistsExceptions exception) // if drone id already exsists and was thrown from dal objects
             {
-
-                throw;
+                throw new IdAlreadyExsistsExceptions(exception.Text, exception.ID, exception); // throw
             }
+            //catch( IdAlreadyExsistsExceptions exception)
+            //{
+            //    throw new IdAlreadyExsistsExceptions(exception.Message, startingBaseStation, exception); // throw
+            //}
         }
         public void AddCustomer(Customer c)
         {
@@ -70,26 +73,17 @@ namespace IBL
             {
                 dal.ConstructCustomer(c.Id, c.Name, c.Phone, c.Location.Longitude, c.Location.Latitude);
             }
-            catch (Exception)
+            catch (IDAL.DO.IdAlreadyExsistsExceptions exception) // if customer id already exsists and was thrown from dal objects
             {
 
-                throw;
+                throw new IdAlreadyExsistsExceptions(exception.Text, exception.ID, exception); // throw
             }
         }
-        public void AddParcel(Parcel p)
-        {
-
-            try
-            {
-                dal.ConstructParcel(p.Sender.Id, p.Reciver.Id, (IDAL.DO.WeightCategories)p.Weight, (IDAL.DO.Priorities)p.Prioritie, DateTime.Now, p.DroneInParcel.Id, p.AssociationTime, p.PickupTime, p.DeliveryTime);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
+        public void AddParcel(CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie)
+        {    
+            int id = dal.ConstructParcel(sender.Id, reciver.Id, (IDAL.DO.WeightCategories)weight, (IDAL.DO.Priorities)prioritie, DateTime.Now, -1, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+            Parcel newParcel = new Parcel(id, sender, reciver, weight, prioritie, null, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
         }
-
     }
 
     public partial class BL : IBl
@@ -120,36 +114,51 @@ namespace IBL
 
                 return newCustomer;
             }
-            catch (Exception)
+            catch (IDAL.DO.IdNotExsistException exception) // if customer id does not exsists and was thrown from dal objects
             {
 
-                throw;
+                throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
             }
         }
-        public Parcel GetParcelById(int id, Predicate<IDAL.DO.Parcel> predicate)
+        public Parcel GetParcelById(int id, Predicate<IDAL.DO.Parcel> predicate = null)
         {
+            try
+            {
+                IDAL.DO.Parcel idalParcel = dal.GetParcel(id, predicate);
+                Customer senderCustomer = GetCustomerById(idalParcel.SenderId); // creat a new customer based on the sender of the parcel
+                Customer reciverCustomer = GetCustomerById(idalParcel.TargetId); // creat a new customer based on the reciver of the parcel
 
-            IDAL.DO.Parcel idalParcel = dal.GetParcel(id, predicate);
-            Customer senderCustomer = GetCustomerById(idalParcel.SenderId); // creat a new customer based on the sender of the parcel
-            Customer reciverCustomer = GetCustomerById(idalParcel.TargetId); // creat a new customer based on the reciver of the parcel
+                CustomerInParcel senderCustomerInParcel = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name); // creat a customer in parcel based on current customer
+                CustomerInParcel reciverCustomerInParcel = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name); // creat a customer in parcel based on current customer
 
-            CustomerInParcel senderCustomerInParcel = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name); // creat a customer in parcel based on current customer
-            CustomerInParcel reciverCustomerInParcel = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name); // creat a customer in parcel based on current customer
-
-            Drone newDrone = GetDroneById(idalParcel.DroneId);
-            DroneInParcel newDroneInParcel = new DroneInParcel(newDrone.Id, newDrone.Battery, newDrone.CurrentLocation);
+                Drone newDrone = GetDroneById(idalParcel.DroneId);
+                DroneInParcel newDroneInParcel = new DroneInParcel(newDrone.Id, newDrone.Battery, newDrone.CurrentLocation);
 
 
-            Parcel newParcel = new Parcel(senderCustomerInParcel, reciverCustomerInParcel, (Enums.WeightCategories)idalParcel.Weight, (Enums.Priorities)idalParcel.Priority, newDroneInParcel, idalParcel.Requsted, idalParcel.Scheduled, idalParcel.PickedUp, idalParcel.Deliverd);
-            return newParcel;
+                Parcel newParcel = new Parcel(idalParcel.Id, senderCustomerInParcel, reciverCustomerInParcel, (Enums.WeightCategories)idalParcel.Weight, (Enums.Priorities)idalParcel.Priority, newDroneInParcel, idalParcel.Requsted, idalParcel.Scheduled, idalParcel.PickedUp, idalParcel.Deliverd);
+                return newParcel;
+            }
+            catch (IDAL.DO.IdNotExsistException exception) // if parcel id does not exsists and was thrown from dal objects
+            {
+
+                throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
+            }
         }
         public Drone GetDroneById(int id)
         {
-            Predicate<IDAL.DO.Parcel> predicate = element => element.DroneId == id;
-            Parcel newParcel = GetParcelById(0, predicate);
-            ParcelInTransit newParcelInTransit = GetParcelInTransitById(GetDroneToList(id).NumberOfParcelInTransit);
-            Drone newDrone = new Drone(GetDroneToList(id).Id, GetDroneToList(id).Model, GetDroneToList(id).Weight, GetDroneToList(id).Battery, GetDroneToList(id).DroneStatuses, newParcelInTransit, GetDroneToList(id).CurrentLocation);
-            return newDrone;
+            try
+            {
+                Predicate<IDAL.DO.Parcel> predicate = element => element.DroneId == id;
+                Parcel newParcel = GetParcelById(0, predicate);
+                ParcelInTransit newParcelInTransit = GetParcelInTransitById(GetDroneToList(id).NumberOfParcelInTransit);
+                Drone newDrone = new Drone(GetDroneToList(id).Id, GetDroneToList(id).Model, GetDroneToList(id).Weight, GetDroneToList(id).Battery, GetDroneToList(id).DroneStatuses, newParcelInTransit, GetDroneToList(id).CurrentLocation);
+                return newDrone;
+            }
+            catch (IDAL.DO.IdNotExsistException exception) // if drone id does not exsists and was thrown from dal objects
+            {
+
+                throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
+            }
         }
         public DroneToList GetDroneToList(int id)
         {
@@ -157,53 +166,76 @@ namespace IBL
         }
         public BaseStation GetBaseStationById(int id)
         {
-            if (!dal.IfBaseStationExsists(id))
+            try
             {
-                throw new IdNotExsistException("base station", id);
-            }
-            IDAL.DO.BaseStation idalBaseStation = dal.GetBaseStation(id);
-
-            IEnumerable<IDAL.DO.DroneCharge> listOfDronesCharging = dal.GetListOfDroneCharge();
-            List<DroneInCharging> listToAdd = new List<DroneInCharging>();
-            foreach (var item in listOfDronesCharging)
-            {
-                if (item.StationId == idalBaseStation.Id)
+                if (!dal.IfBaseStationExsists(id))
                 {
-                    listToAdd.Add(new DroneInCharging(item.DroneId, ListOfDronsBL.Find(element => element.Id == item.DroneId).Battery));
-
+                    throw new IdNotExsistException("base station", id);
                 }
+                IDAL.DO.BaseStation idalBaseStation = dal.GetBaseStation(id);
+
+                IEnumerable<IDAL.DO.DroneCharge> listOfDronesCharging = dal.GetListOfDroneCharge();
+                List<DroneInCharging> listToAdd = new List<DroneInCharging>();
+                foreach (var item in listOfDronesCharging)
+                {
+                    if (item.StationId == idalBaseStation.Id)
+                    {
+                        listToAdd.Add(new DroneInCharging(item.DroneId, ListOfDronsBL.Find(element => element.Id == item.DroneId).Battery));
+
+                    }
+                }
+                BaseStation newBaseStation = new BaseStation(idalBaseStation.Id, idalBaseStation.Name, new Location(idalBaseStation.Longtitude, idalBaseStation.Latitude), idalBaseStation.ChargeSlots, listToAdd);
+                return newBaseStation;
             }
-            BaseStation newBaseStation = new BaseStation(idalBaseStation.Id, idalBaseStation.Name, new Location(idalBaseStation.Longtitude, idalBaseStation.Latitude), idalBaseStation.ChargeSlots, listToAdd);
-            return newBaseStation;
+            catch (IDAL.DO.IdNotExsistException exception) // if base station id does not exsists and was thrown from dal objects
+            {
+
+                throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
+            }
         }
         public ParcelToList GetParcelToListById(int id)
         {
-            Predicate<IDAL.DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
+            try
+            {
+                Predicate<IDAL.DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
 
-            IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
-            Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
-            Customer reciverCustomer = GetCustomerById(newParcel.TargetId); // creat a new customer based on the reciver of the parcel
-            ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, StatusCalculate(GetParcelById(newParcel.Id, predicate)));
-            return newParcelToList;
+                IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
+                Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
+                Customer reciverCustomer = GetCustomerById(newParcel.TargetId); // creat a new customer based on the reciver of the parcel
+                ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, StatusCalculate(GetParcelById(newParcel.Id, predicate)));
+                return newParcelToList;
+            }
+            catch (IDAL.DO.IdNotExsistException exception) // if parcel or customer id does not exsists and was thrown from dal objects
+            {
+
+                throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
+            }
         }
         public ParcelInTransit GetParcelInTransitById(int id)
         {
-            Predicate<IDAL.DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
-            IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
-            bool status = true;
-            if (newParcel.PickedUp != DateTime.MinValue)
+            try
             {
-                status = false;
+                Predicate<IDAL.DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
+                IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
+                bool status = true;
+                if (newParcel.PickedUp != DateTime.MinValue)
+                {
+                    status = false;
+                }
+                Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
+                Customer reciverCustomer = GetCustomerById(newParcel.TargetId); // creat a new customer based on the reciver of the parcel
+                CustomerInParcel sCustomer = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name);
+                CustomerInParcel rCustomer = new CustomerInParcel(reciverCustomer.Id, reciverCustomer.Name);
+
+                return new ParcelInTransit(id, status, (Enums.Priorities)newParcel.Priority, (Enums.WeightCategories)newParcel.Weight, sCustomer, rCustomer, senderCustomer.Location, reciverCustomer.Location, CalculateDistance(senderCustomer.Location, reciverCustomer.Location));
+
             }
-            Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
-            Customer reciverCustomer = GetCustomerById(newParcel.TargetId); // creat a new customer based on the reciver of the parcel
-            CustomerInParcel sCustomer = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name);
-            CustomerInParcel rCustomer = new CustomerInParcel(reciverCustomer.Id, reciverCustomer.Name);
+            catch (IDAL.DO.IdNotExsistException exception) // if customer or parcel id does not exsists and was thrown from dal objects
+            {
 
-            return new ParcelInTransit(id, status, (Enums.Priorities)newParcel.Priority, (Enums.WeightCategories)newParcel.Weight, sCustomer, rCustomer, senderCustomer.Location, reciverCustomer.Location, CalculateDistance(senderCustomer.Location, reciverCustomer.Location));
-
+                throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
+            }
         }
-
     }
 
 
@@ -425,42 +457,127 @@ namespace IBL
         }
         public void UpdateSendDroneToCharge(int id)
         {
-            DroneToList newDrone = ListOfDronsBL.Find(element => element.Id == id);
-            if (newDrone.DroneStatuses == Enums.DroneStatuses.Available)
-                throw new UnavailableExeption("drone", id);
-            int stationId = CalculateMinDistance(GetDroneById(id).CurrentLocation, element => element.NumberOfFreeChargingSlots > 0, element => CalculateDistance(element.Location, newDrone.CurrentLocation) <= ConvertBatteryToDistance(newDrone));
-            if (stationId == 0)
-                throw new UnavailableExeption("base station", stationId);
-            BaseStation station = GetBaseStationById(stationId);
-            newDrone.Battery = CalculateBattery(newDrone);
-            newDrone.CurrentLocation = station.Location;
-            newDrone.DroneStatuses = Enums.DroneStatuses.Maintenance;
-            int index=ListOfDronsBL.FindIndex(element => element.Id == id);
-            ListOfDronsBL[index] = newDrone;
-            station.NumberOfFreeChargingSlots-=  1;
-            dal.UpdateStationNumOfFreeDroneCharges(station.Id, station.NumberOfFreeChargingSlots);
+            try
+            {
+                DroneToList newDrone = ListOfDronsBL.Find(element => element.Id == id);
+                if (newDrone.DroneStatuses == Enums.DroneStatuses.Available)
+                    throw new UnavailableExeption("drone", id);
+                int stationId = CalculateMinDistance(GetDroneById(id).CurrentLocation, element => element.NumberOfFreeChargingSlots > 0, element => CalculateDistance(element.Location, newDrone.CurrentLocation) <= ConvertBatteryToDistance(newDrone));
+                if (stationId == 0)
+                    throw new UnavailableExeption("base station", stationId);
+                BaseStation station = GetBaseStationById(stationId);
+                newDrone.Battery = CalculateBattery(newDrone);
+                newDrone.CurrentLocation = station.Location;
+                newDrone.DroneStatuses = Enums.DroneStatuses.Maintenance;
+                int index = ListOfDronsBL.FindIndex(element => element.Id == id);
+                ListOfDronsBL[index] = newDrone;
+                station.NumberOfFreeChargingSlots -= 1;
+                dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.NumberOfFreeChargingSlots);
+            }
+            catch (IDAL.DO.IdNotExsistException exception) // if base station id does not exsists and was thrown from dal objects
+            {
+
+                throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
+            }
         }
         public void UpdateReleseDrone(int id,double time)
         {
             DroneToList drone = GetDroneToList(id);
             if(drone.DroneStatuses!=Enums.DroneStatuses.Maintenance)
             {
-                throw;
+                throw new UnavailableExeption("drone", id);
             }
             drone.Battery = drone.Battery * time * DroneChargingPaste;
             drone.DroneStatuses = Enums.DroneStatuses.Available;
             IDAL.DO.BaseStation station = dal.getBaseStationByDroneId(id);
             station.ChargeSlots -= 1;
-            dal.UpdateStationNumOfFreeDroneCharges(station.Id, station.ChargeSlots);
+            dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.ChargeSlots);
             dal.ReleaseDroneCharge(id, station.Id);
         }
         public void UpdateAssosiateDrone(int id)
         {
+            try
+            {
+                Drone drone = GetDroneById(id);
+                if (drone.DroneStatuses != Enums.DroneStatuses.Available)
+                {
+                    throw new UnavailableExeption("drone", id);
+                }
+                List<Parcel> list = new List<Parcel>();
+
+                foreach (var item in dal.GetListOfParcel())
+                {
+                    list.Add(GetParcelById(item.Id, element => element.DroneId > 0));
+                }
+                Parcel currentParcel;
+                foreach (var item in list)
+                {
+                    if (item.AssociationTime == DateTime.MinValue)
+                    {
+                        if (item.Weight > drone.Weight)
+                        {
+                            list.Remove(item);
+                        }
+                    }
+                    else
+                    {
+                        list.Remove(item);
+                    }
+
+                }
+                if (list.Count() == 0)
+                {
+                    throw new UnavailableExeption("drones", 0);
+                }
+                if (list.Count() == 1)
+                {
+                    currentParcel = list[0];
+                }
+                else
+                {
+                    currentParcel = list[0];
+                    for (int i = 1; i < list.Count(); i++)
+                    {
+                        if (list[i].Prioritie >= currentParcel.Prioritie)
+                        {
+                            if (list[i].Prioritie > currentParcel.Prioritie)
+                            {
+                                currentParcel = list[i];
+                            }
+                            else if (list[i].Weight > currentParcel.Weight)
+                            {
+                                currentParcel = list[i];
+                            }
+                        }
+                    }
+                }
+                ListOfDronsBL.Find(element => element.Id == id).DroneStatuses = Enums.DroneStatuses.Delivery;
+                dal.AssociateDroneToParcel(id, currentParcel.Id);
             
-            List<IDAL.DO.Parcel> newParcelList= dal.GetListOfParcel().ToList();
-            foreach (var item in newParcelList)
+            }
+            catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
             {
 
+                throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
+            }
+        }
+        public void PickupParcelByDrone(int droneId)
+        {
+            //DroneToList droneInList = ListOfDronsBL.Find(element => element.Id == droneId);
+            Drone drone = GetDroneById(droneId);
+            try
+            {
+                if (drone.DroneStatuses != Enums.DroneStatuses.Available || drone.ParcelInTransit.Status)
+                {
+                    throw new UnavailableExeption("drone", droneId);
+                }
+                drone.Battery = drone.Battery * ElectricityUseAvailiblity * CalculateDistance(drone.CurrentLocation, drone.ParcelInTransit.PickupLocation);
+                
+            }
+            catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
+            {
+
+                throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
             }
         }
     }
@@ -520,10 +637,67 @@ namespace IBL
 
             return newDrone;
         }
+
     }
     public partial class BL : IBl
     {
-        
+        public List<BaseStation> GetListOfBaseStations()
+        {
+            List<BaseStation> list = new List<BaseStation>();
+            foreach (var item in dal.GetListOfBaseStation())
+            {
+                list.Add(GetBaseStationById(item.Id));
+            }
+            return list;
+        }
+        public List<Drone> GetListOfDrones()
+        {
+            List<Drone> list = new List<Drone>();
+            foreach (var item in dal.GetListOfDrone())
+            {
+                list.Add(GetDroneById(item.Id));
+            }
+            return list;
+        }
+        public List<Customer> GetListOfCustomers()
+        {
+            List<Customer> list = new List<Customer>();
+            foreach (var item in dal.GetListOfCustomer())
+            {
+                list.Add(GetCustomerById(item.Id));
+            }
+            return list;
+        }
+         public List<Parcel> GetListOfParcels()
+         {
+            List<Parcel> list = new List<Parcel>();
+            foreach (var item in dal.GetListOfParcel())
+            {
+                list.Add(GetParcelById(item.Id));
+            }
+            return list;
+         }
+        public List<Parcel> GetListOfNotAssigned()
+        {
+            List<Parcel> list = new List<Parcel>();
+            foreach (var item in dal.GetListOfParcel())
+            {
+                list.Add(GetParcelById(item.Id, element => element.DroneId > 0));
+            }
+            return list;
+        }
+        public List<BaseStation> GetListOfFreeChargingStations()
+        {
+            List<BaseStation> list = new List<BaseStation>();
+            foreach (var item in dal.GetListOfBaseStation())
+            {
+                if (GetBaseStationById(item.Id).NumberOfFreeChargingSlots > 0)
+                {
+                    list.Add(GetBaseStationById(item.Id));
+                }  
+            }
+            return list;
+        }
     }
 }
 

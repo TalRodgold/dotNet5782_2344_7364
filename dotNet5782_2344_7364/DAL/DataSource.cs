@@ -7,7 +7,7 @@ using IDAL.DO;
 namespace DalObjects
 {
     /// <summary>
-    /// Holds data in arrays
+    /// Data source layer, holds all the data
     /// </summary>
     public class DataSource
     {
@@ -23,21 +23,20 @@ namespace DalObjects
         internal static List<Parcel> ParcelList; // list of parcel
         internal static List<DroneCharge> DroneChargeList; // list of drone charges
         #endregion
-        internal class Config // hold runing number for id
+        #region// hold runing number for id plus electricity usege 
+        /// <summary>
+        /// hold runing number for parcel id plus electricity usege 
+        /// </summary>
+        internal class Config // hold runing number for id plus electricity usege 
         {
-            /// <summary>
-            /// hold runing number for id
-            /// </summary>
-            
-            #region// runing number
             internal static int ParcelId = 12345; // runing number for parcel Id
-            internal static double ElectricityUseAvailiblity { get; set; } = 1; //drone status avilable
-            internal static double ElectricityUseLightWeight { get; set; } = 2; // light weight
-            internal static double ElectricityUseMediumWeight { get; set; } = 3; // mediumweight
-            internal static double ElectricityUseHeavyWeight { get; set; } = 4; // heavy weight
+            internal static double ElectricityUseAvailiblity { get; set; } = 1; //electricity usege for avilable
+            internal static double ElectricityUseLightWeight { get; set; } = 2; // electricity usege for light weight
+            internal static double ElectricityUseMediumWeight { get; set; } = 3; // electricity usege for  medium weight
+            internal static double ElectricityUseHeavyWeight { get; set; } = 4; // electricity usege for heavy weight
             internal static double DroneChargingPaste { get; set; } = 100; // speed of drone charging per hour in %
-            #endregion
         }
+        #endregion
         /// <summary>
         /// convert double to sexagesimal
         /// </summary>
