@@ -5,19 +5,22 @@ namespace ConsoleUI_BL
 {
     class Program
     {
-        static IBL.BL bl = new BL(); // call constructor
-        public enum Option { Addop, Updateop, DisplayByIdop, ListDisplayop } // enum for option menu
+        static IBL.BL bl; // call constructor
+        public enum Option { Addop = 1, Updateop, DisplayByIdop, ListDisplayop } // enum for option menu
         /// <summary>
         /// main program
         /// </summary>
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+            bl = new BL();
             while (true)
             {
                 Option option; // read users option choice
                 PrintFunc(2);//print menu
-                option = (Option)int.Parse(Console.ReadLine());
+                int userInput;
+                int.TryParse(Console.ReadLine(), out userInput);
+                option = (Option)userInput;
                 switch (option)
                 {
                     case Option.Addop: // add
@@ -39,7 +42,7 @@ namespace ConsoleUI_BL
             }
         }
         #region//cases for add
-        public enum InputOption { ADDBaseStation, ADDDrone, ADDCastomer, ADDParcel } // enum for input option
+        public enum InputOption { ADDBaseStation = 1, ADDDrone, ADDCastomer, ADDParcel } // enum for input option
         /// <summary>
         /// All input operations
         /// </summary>
@@ -50,7 +53,9 @@ namespace ConsoleUI_BL
             {
                 InputOption input;
                 PrintFunc(3);//print choice request for adding
-                input = (InputOption)int.Parse(Console.ReadLine());
+                int userInput;
+                int.TryParse(Console.ReadLine(), out userInput);
+                input = (InputOption)userInput;
                 switch (input)
                 {
                     case InputOption.ADDBaseStation:
@@ -134,14 +139,16 @@ namespace ConsoleUI_BL
         /// <summary>
         /// cases for update
         /// </summary>
-        public enum update { DroneRenameOrRemodel,BaseStationRenameOrNumOfChargeSlot,CustomerRenameOrRephone, SendDronetocharge, Release,Assign, Collect, Deliver } // enum for update option
+        public enum update { DroneRenameOrRemodel = 1,BaseStationRenameOrNumOfChargeSlot,CustomerRenameOrRephone, SendDronetocharge, Release,Assign, Collect, Deliver } // enum for update option
         private static void Update()//cases for update
         {
             try
             {
                 update up;
                 PrintFunc(4);
-                up = (update)int.Parse(Console.ReadLine());
+                int userInput;
+                int.TryParse(Console.ReadLine(), out userInput);
+                up = (update)userInput;
                 switch (up)
                 {
                     case update.DroneRenameOrRemodel:
@@ -235,7 +242,7 @@ namespace ConsoleUI_BL
         }
            
         #endregion
-        public enum display { basestation, drone, customer, parcel } // enum for display option
+        public enum display { basestation = 1, drone, customer, parcel } // enum for display option
         private static void Display()//cases for display
         {
             #region//cases for display
@@ -274,7 +281,7 @@ namespace ConsoleUI_BL
             }
             #endregion
         }
-        public enum displaylist { basestationList, droneList, customerList, parcelList, notAssigned, freeChargingStations }
+        public enum displaylist { basestationList = 1, droneList, customerList, parcelList, notAssigned, freeChargingStations }
         private static void Displaylist()//cases for display list
         {
             #region//cases for display list

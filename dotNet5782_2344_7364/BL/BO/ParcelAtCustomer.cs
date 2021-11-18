@@ -15,12 +15,12 @@ namespace IBL
             public Enums.Priorities Prioritie { set; get; }
             public Enums.ParcelStatus ParcelStatus { set; get; }
             public CustomerInParcel CustomerInParcel { set; get; }
-            public ParcelAtCustomer( int id, Enums.WeightCategories weight, Enums.Priorities prioritie, CustomerInParcel customerInParcel) 
+            public ParcelAtCustomer( int id, Enums.WeightCategories weight, Enums.Priorities prioritie, Enums.ParcelStatus parcelStatus, CustomerInParcel customerInParcel) 
             {
                 Id = id;
                 Weight = weight;
                 Prioritie = prioritie;
-                ParcelStatus = ;
+                ParcelStatus = parcelStatus;
                 CustomerInParcel = customerInParcel;
             }
             public override string ToString()

@@ -17,23 +17,32 @@ namespace IBL
         double DroneChargingPaste;
         BL bl;
         IDal dal;
-        public BL()
-        {
-            dal = new DalObjects.DalObjects();
-            double[] arr = dal.Electricity();
+        #region//BL constructor 
+        /// <summary>
+        /// BL constructor 
+        /// </summary>
+        public BL()//BL constructor 
+        { 
+            dal = new DalObjects.DalObjects();//call to constructor
+            double[] arr = dal.Electricity();//retun arrey from config contain electrisity data
             ElectricityUseAvailiblity = arr[0];
             ElectricityUseLightWeight = arr[1];
             ElectricityUseMediumWeight = arr[2];
             ElectricityUseHeavyWeight = arr[3];
             DroneChargingPaste = arr[4];
-            var listOfDrones = dal.GetListOfDrone();
-            foreach (var item in listOfDrones)
+            var listOfDrones = dal.GetListOfDrone();//get the list of drone from datasource
+            foreach (var item in listOfDrones)//insert the list od data source drone to list of drone to list
             {
-                ListOfDronsBL.Add(ConvertDroneToList(item));
+                ListOfDronsBL.Add(ConvertDroneDalToList(item));
             }
         }
-
-        public void AddBaseStation(BaseStation b)
+        #endregion
+        #region//Base station addition
+        /// <summary>
+        /// Base station addition
+        /// </summary>
+        /// <param name="b"></param>
+        public void AddBaseStation(BaseStation b)//Base station addition
         {
             try
             {
@@ -45,7 +54,14 @@ namespace IBL
                 throw new IdAlreadyExsistsExceptions(exception.Text, exception.ID, exception); // throw
             }
         }
-        public void AddDrone(Drone d, int startingBaseStation)
+        #endregion
+        #region//Drone addition
+        /// <summary>
+        /// Drone addition
+        /// </summary>
+        /// <param name="d"></param>
+        /// <param name="startingBaseStation"></param>
+        public void AddDrone(Drone d, int startingBaseStation)//Drone addition
         {
             try
             {
@@ -67,7 +83,13 @@ namespace IBL
             //    throw new IdAlreadyExsistsExceptions(exception.Message, startingBaseStation, exception); // throw
             //}
         }
-        public void AddCustomer(Customer c)
+        #endregion
+        #region//Customer addition
+        /// <summary>
+        /// Customer addition
+        /// </summary>
+        /// <param name="c"></param>
+        public void AddCustomer(Customer c)//Customer addition
         {
             try
             {
@@ -79,17 +101,32 @@ namespace IBL
                 throw new IdAlreadyExsistsExceptions(exception.Text, exception.ID, exception); // throw
             }
         }
+        #endregion
+        #region//Parcel addition
+        /// <summary>
+        /// Parcel addition
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="reciver"></param>
+        /// <param name="weight"></param>
+        /// <param name="prioritie"></param>
         public void AddParcel(CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie)
         {
             int id = dal.ConstructParcel(sender.Id, reciver.Id, (IDAL.DO.WeightCategories)weight, (IDAL.DO.Priorities)prioritie, DateTime.Now, -1, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
             Parcel newParcel = new Parcel(id, sender, reciver, weight, prioritie, null, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
         }
+        #endregion
     }
 
     public partial class BL : IBl
     {
-
-        public Customer GetCustomerById(int id)
+        #region//Get customer from data-source by id
+        /// <summary>
+        /// //Get customer from data-source by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Customer GetCustomerById(int id)//Get customer from data-source by id
         {
             try
             {
@@ -103,11 +140,11 @@ namespace IBL
                 IDAL.DO.Parcel newParcel = dal.GetParcel(id, predicate); // get parcel of dal type based on senders id
 
                 CustomerInParcel newCustomerInParcel = new CustomerInParcel(idalCustomer.Id, idalCustomer.Name); // creat a customer in parcel based on current customer
-                ParcelAtCustomer newparcelAtCustomer = new ParcelAtCustomer(newParcel.Id, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, newCustomerInParcel);
+                ParcelAtCustomer newparcelAtCustomer = new ParcelAtCustomer(newParcel.Id, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, StatusCalculate(GetParcelById(newParcel.Id)) ,newCustomerInParcel);
 
                 newParcel = dal.GetParcel(id, predicate1); // get parcel of dal type based on target id
 
-                ParcelAtCustomer newparcelAtCustomer1 = new ParcelAtCustomer(newParcel.Id, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, newCustomerInParcel);
+                ParcelAtCustomer newparcelAtCustomer1 = new ParcelAtCustomer(newParcel.Id, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, StatusCalculate(GetParcelById(newParcel.Id)), newCustomerInParcel);
 
                 newCustomer.ParcelFromCustomer.Add(newparcelAtCustomer); // add to new customer the parcel from customer
                 newCustomer.ParcelToCustomer.Add(newparcelAtCustomer1); // add to new customer the parcel to customer
@@ -120,7 +157,15 @@ namespace IBL
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
             }
         }
-        public Parcel GetParcelById(int id, Predicate<IDAL.DO.Parcel> predicate = null)
+        #endregion
+        #region //Get parcel from data-source by id
+        /// <summary>
+        /// from data-source by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public Parcel GetParcelById(int id, Predicate<IDAL.DO.Parcel> predicate = null)//from data-source by id
         {
             try
             {
@@ -144,7 +189,14 @@ namespace IBL
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
             }
         }
-        public Drone GetDroneById(int id)
+        #endregion
+        #region //Get drone from data-source by id
+        /// <summary>
+        /// Get drone from data-source by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public Drone GetDroneById(int id)//Get drone from data-source by id
         {
             try
             {
@@ -160,11 +212,25 @@ namespace IBL
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
             }
         }
-        public DroneToList GetDroneToList(int id)
+        #endregion
+        #region//Get drone from list that is held here by id
+        /// <summary>
+        /// Get drone from list that is held here by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public DroneToList GetDroneToList(int id)//Get drone from list that is held here by id
         {
             return ListOfDronsBL.Find(element => element.Id == id);
         }
-        public BaseStation GetBaseStationById(int id)
+        #endregion
+        #region//Get base station from data-source by id
+        /// <summary>
+        /// Get base station from data-source by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public BaseStation GetBaseStationById(int id)//Get base station from data-source by id
         {
             try
             {
@@ -193,7 +259,14 @@ namespace IBL
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
             }
         }
-        public ParcelToList GetParcelToListById(int id)
+        #endregion
+        #region//Get parceltolist with manipulation from data source by id
+        /// <summary>
+        /// //Get parceltolist with manipulation from data source by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ParcelToList GetParcelToListById(int id)//Get parceltolist with manipulation from data source by id
         {
             try
             {
@@ -211,7 +284,14 @@ namespace IBL
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
             }
         }
-        public ParcelInTransit GetParcelInTransitById(int id)
+        #endregion
+        #region//Get parceltolist with manipulation from data source by id
+        /// <summary>
+        /// //Get parceltolist with manipulation from data source by id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public ParcelInTransit GetParcelInTransitById(int id)//Get parceltolist with manipulation from data source by id
         {
             try
             {
@@ -236,12 +316,20 @@ namespace IBL
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
             }
         }
+        #endregion
     }
 
 
     public partial class BL : IBl
     {
-        public double CalculateBattery(DroneToList drone = null, Drone drone1 = null)
+        #region//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
+        /// <summary>
+        /// //Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
+        /// </summary>
+        /// <param name="drone"></param>
+        /// <param name="drone1"></param>
+        /// <returns></returns>
+        public double CalculateBattery(DroneToList drone = null, Drone drone1 = null)//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
         {
             int baseStationId;
             double distance;
@@ -300,7 +388,8 @@ namespace IBL
             }
             return battery;
         }
-
+        #endregion
+        #region//calculate 
         public void CalculateLocation(DroneToList drone)
         {
             switch (drone.DroneStatuses)
@@ -333,8 +422,15 @@ namespace IBL
 
             }
         }
-
-        public double CalculateDistance(Location x, Location y)
+        #endregion
+        #region//Calculate distance between 2 location return double
+        /// <summary>
+        /// CalculateDistance
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public double CalculateDistance(Location x, Location y)//Calculate distance between 2 location return double
         {
             double ConvertToRadians(double angle)
             {
@@ -359,7 +455,14 @@ namespace IBL
 
             return d;
         }
-        public double ConvertBatteryToDistance(DroneToList drone)
+        #endregion
+        #region//Convert battery to distance by state and weight 
+        /// <summary>
+        /// //Convert battery to distance by state and weight 
+        /// </summary>
+        /// <param name="drone"></param>
+        /// <returns></returns>
+        public double ConvertBatteryToDistance(DroneToList drone)//Convert battery to distance by state and weight 
         {
             double battery = drone.Battery;
             double distance = 0;
@@ -383,12 +486,14 @@ namespace IBL
                             break;
                     }
                     break;
-                case Enums.DroneStatuses.Maintenance:
-                    distance = (battery * 100);
-                    break;
+                //case Enums.DroneStatuses.Maintenance:
+                  //  distance = (battery * 100) /DroneInCharging;////
+                    //break;
             }
             return distance;
         }
+        #endregion
+        #region//Calculate min distance between loction y and 2 option 1.the closer station 2.the closer station and more 2 terms
         public int CalculateMinDistance(Location y, Predicate<BaseStation> predicate = null, Predicate<BaseStation> predicate1 = null)
         {
             double min = double.MaxValue;
@@ -421,6 +526,8 @@ namespace IBL
             }
             return baseStationId;
         }
+        #endregion
+        
         public int ReciveParcelId(Parcel parcel)
         {
             Predicate<IDAL.DO.Parcel> predicate = element => element.SenderId == parcel.Sender.Id; // predicat to find parcel based on senders id
@@ -429,6 +536,12 @@ namespace IBL
             return newParcel.Id;
 
         }
+        #region//calculate state of parcel 
+        /// <summary>
+        /// calculate state of parcel 
+        /// </summary>
+        /// <param name="p"></param>
+        /// <returns></returns>
         public Enums.ParcelStatus StatusCalculate(Parcel p)
         {
             if (p.DeliveryTime != DateTime.MinValue)
@@ -440,6 +553,7 @@ namespace IBL
             return Enums.ParcelStatus.Defined;
 
         }
+        #endregion
     }
     public partial class BL : IBl
     {
