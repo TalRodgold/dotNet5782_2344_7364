@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace IDAL.DO
 {
+    /// <summary>
+    /// throw exception for error where there is a size problem
+    /// </summary>
     [Serializable]
     public class SizeProblemException : Exception
     {

@@ -5,199 +5,237 @@ namespace ConsoleUI_BL
 {
     class Program
     {
-        static IBL.BL name = new BL();
-
-        public enum Option { Addop, Updateop, DisplayByIdop, ListDisplayop }//0,1,2 
+        static IBL.BL bl = new BL(); // call constructor
+        public enum Option { Addop, Updateop, DisplayByIdop, ListDisplayop } // enum for option menu
+        /// <summary>
+        /// main program
+        /// </summary>
+        /// <param name="args"></param>
         static void Main(string[] args)
         {
-            Option option;
-            PrintFunc(2);//print menue
-            option = (Option)int.Parse(Console.ReadLine());
-            switch (option)
+            while (true)
             {
-                case Option.Addop:
-                    Input();
-                    break;
-                case Option.Updateop:
-                    Update();
-                    break;
-                case Option.DisplayByIdop:
-                    Display();
-                    break;
-                case Option.ListDisplayop:
-                    Displaylist();
-                    break;
-                default:
-                    break;
+                Option option; // read users option choice
+                PrintFunc(2);//print menu
+                option = (Option)int.Parse(Console.ReadLine());
+                switch (option)
+                {
+                    case Option.Addop: // add
+                        Input();
+                        break;
+                    case Option.Updateop: // update
+                        Update();
+                        break;
+                    case Option.DisplayByIdop: // display
+                        Display();
+                        break;
+                    case Option.ListDisplayop: // display all
+                        Displaylist();
+                        break;
+                    default:
+                        PrintFunc(24);
+                        break;
+                }
             }
-            
         }
-        public enum InputOption { ADDBaseStation, ADDDrone, ADDCastomer, ADDParcel }//0,1,2,3
+        #region//cases for add
+        public enum InputOption { ADDBaseStation, ADDDrone, ADDCastomer, ADDParcel } // enum for input option
+        /// <summary>
+        /// All input operations
+        /// </summary>
         private static void Input()//cases for add
         {
-
-            #region//cases for add
-            InputOption input;
-            PrintFunc(3);//print choice request for adding
-            input = (InputOption)int.Parse(Console.ReadLine());
-            switch (input)
+            
+            try
             {
-                case InputOption.ADDBaseStation:
-                    #region//BaseStation addition
-                    PrintFunc(7);//print to user data he needs to type in  
-                    int userId;
-                    int.TryParse(Console.ReadLine(), out userId);
-                    string userName = Console.ReadLine();
-                    double userLongtitude;
-                    double.TryParse(Console.ReadLine(), out userLongtitude);
-                    double userLatitude;
-                    double.TryParse(Console.ReadLine(), out userLatitude);
-                    Location UserLocation = new Location(userLongtitude, userLatitude);
-                    int userFreeChargeSlots;
-                    int.TryParse(Console.ReadLine(), out userFreeChargeSlots);
-                    BaseStation NewBaseStation = new BaseStation(userId, userName, UserLocation, userFreeChargeSlots);
-                    name.AddBaseStation(NewBaseStation);
-                    break;
-                #endregion
-                case InputOption.ADDDrone://Drone addition
-                    #region// Drone addition
-                    PrintFunc(8); // print to user data he needs to type in  
-                    int userDroneId;
-                    int.TryParse(Console.ReadLine(), out userDroneId);
-                    string userModel = Console.ReadLine();
-                    Enums.WeightCategories userWeightCategories;
-                    Enums.WeightCategories.TryParse(Console.ReadLine(), out userWeightCategories);
-                    int userBaseStation;
-                    int.TryParse(Console.ReadLine(), out userBaseStation);
-                    Drone newDrone = new Drone(userDroneId, userModel, userWeightCategories);
-                    name.AddDrone(newDrone, userBaseStation);
-                    break;
-                #endregion
-                case InputOption.ADDCastomer:
-                    #region// Customer addition
-                    PrintFunc(9); // print to user data he needs to type in 
-                    int userCustomerId;
-                    int.TryParse(Console.ReadLine(), out userCustomerId);
-                    string userCustomerName = Console.ReadLine();
-                    string userPhoneNumber = Console.ReadLine();
-                    double userCustomerLongtitude;
-                    double.TryParse(Console.ReadLine(), out userCustomerLongtitude);
-                    double userCustomerLatitude;
-                    double.TryParse(Console.ReadLine(), out userCustomerLatitude);
-                    Location location = new Location(userCustomerLongtitude, userCustomerLatitude);
-                    Customer newCastomer = new Customer(userCustomerId, userCustomerName, userPhoneNumber, location);
-                    name.AddCustomer(newCastomer);
-                    break;
-                #endregion
-                case InputOption.ADDParcel:
-                    #region// Parcel addition
-                    PrintFunc(10); // print to user data he needs to type in 
-                    int userSenderId;
-                    int.TryParse(Console.ReadLine(), out userSenderId);
-                    int userTargetId;
-                    int.TryParse(Console.ReadLine(), out userTargetId);
-                    CustomerInParcel userSenderIdd = new CustomerInParcel(userSenderId,name.GetCustomerById(userSenderId).Name); 
-                    CustomerInParcel userTargetIdd = new CustomerInParcel(userTargetId,name.GetCustomerById(userTargetId).Name); 
-                    Enums.WeightCategories userParcelWeightCategories;
-                    Enums.WeightCategories.TryParse(Console.ReadLine(), out userParcelWeightCategories);
-                    Enums.Priorities userParcelPriorities;
-                    Enums.Priorities.TryParse(Console.ReadLine(), out userParcelPriorities);
-                    name.AddParcel(userSenderIdd, userTargetIdd, userParcelWeightCategories, userParcelPriorities);
-                    
-                    break;
-                #endregion
-                default:
-                    break;
+                InputOption input;
+                PrintFunc(3);//print choice request for adding
+                input = (InputOption)int.Parse(Console.ReadLine());
+                switch (input)
+                {
+                    case InputOption.ADDBaseStation:
+                        #region//BaseStation addition
+                        PrintFunc(7);//print to user data he needs to type in  
+                        int userId;
+                        int.TryParse(Console.ReadLine(), out userId);
+                        string userName = Console.ReadLine();
+                        double userLongtitude;
+                        double.TryParse(Console.ReadLine(), out userLongtitude);
+                        double userLatitude;
+                        double.TryParse(Console.ReadLine(), out userLatitude);
+                        Location UserLocation = new Location(userLongtitude, userLatitude);
+                        int userFreeChargeSlots;
+                        int.TryParse(Console.ReadLine(), out userFreeChargeSlots);
+                        BaseStation NewBaseStation = new BaseStation(userId, userName, UserLocation, userFreeChargeSlots);
+                        bl.AddBaseStation(NewBaseStation);
+                        break;
+                    #endregion
+                    case InputOption.ADDDrone://Drone addition
+                        #region// Drone addition
+                        PrintFunc(8); // print to user data he needs to type in  
+                        int userDroneId;
+                        int.TryParse(Console.ReadLine(), out userDroneId);
+                        string userModel = Console.ReadLine();
+                        Enums.WeightCategories userWeightCategories;
+                        Enums.WeightCategories.TryParse(Console.ReadLine(), out userWeightCategories);
+                        int userBaseStation;
+                        int.TryParse(Console.ReadLine(), out userBaseStation);
+                        Drone newDrone = new Drone(userDroneId, userModel, userWeightCategories);
+                        bl.AddDrone(newDrone, userBaseStation);
+                        break;
+                    #endregion
+                    case InputOption.ADDCastomer:
+                        #region// Customer addition
+                        PrintFunc(9); // print to user data he needs to type in 
+                        int userCustomerId;
+                        int.TryParse(Console.ReadLine(), out userCustomerId);
+                        string userCustomerName = Console.ReadLine();
+                        string userPhoneNumber = Console.ReadLine();
+                        double userCustomerLongtitude;
+                        double.TryParse(Console.ReadLine(), out userCustomerLongtitude);
+                        double userCustomerLatitude;
+                        double.TryParse(Console.ReadLine(), out userCustomerLatitude);
+                        Location location = new Location(userCustomerLongtitude, userCustomerLatitude);
+                        Customer newCastomer = new Customer(userCustomerId, userCustomerName, userPhoneNumber, location);
+                        bl.AddCustomer(newCastomer);
+                        break;
+                    #endregion
+                    case InputOption.ADDParcel:
+                        #region// Parcel addition
+                        PrintFunc(10); // print to user data he needs to type in 
+                        int userSenderId;
+                        int.TryParse(Console.ReadLine(), out userSenderId);
+                        int userTargetId;
+                        int.TryParse(Console.ReadLine(), out userTargetId);
+                        CustomerInParcel userSenderIdd = new CustomerInParcel(userSenderId, bl.GetCustomerById(userSenderId).Name);
+                        CustomerInParcel userTargetIdd = new CustomerInParcel(userTargetId, bl.GetCustomerById(userTargetId).Name);
+                        Enums.WeightCategories userParcelWeightCategories;
+                        Enums.WeightCategories.TryParse(Console.ReadLine(), out userParcelWeightCategories);
+                        Enums.Priorities userParcelPriorities;
+                        Enums.Priorities.TryParse(Console.ReadLine(), out userParcelPriorities);
+                        bl.AddParcel(userSenderIdd, userTargetIdd, userParcelWeightCategories, userParcelPriorities);
+
+                        break;
+                    #endregion
+                    default:
+                        PrintFunc(24);
+                        break;
+                }
             }
-            #endregion
+            catch ( IBL.BO.IdAlreadyExsistsExceptions exception)
+            {
+
+                Console.WriteLine(exception.ToString());
+            }       
         }
-        public enum update { DroneRenameOrRemodel,BaseStationRenameOrNumOfChargeSlot,CustomerRenameOrRephone, SenDronetocharge, Release,Assign, Collect, Deliver}//
+        #endregion
+
+        #region//cases for update
+        /// <summary>
+        /// cases for update
+        /// </summary>
+        public enum update { DroneRenameOrRemodel,BaseStationRenameOrNumOfChargeSlot,CustomerRenameOrRephone, SendDronetocharge, Release,Assign, Collect, Deliver } // enum for update option
         private static void Update()//cases for update
         {
-            #region//cases for update
-            update up;
-            PrintFunc(4);
-            up = (update)int.Parse(Console.ReadLine());
-            switch (up)
+            try
             {
-                case update.DroneRenameOrRemodel:
-                    #region//Update drone name or model or both
-                    PrintFunc(11);// print to user data he needs to type in 
-                    int userDroneId;
-                    int.TryParse(Console.ReadLine(), out userDroneId);
-                    string userModel = Console.ReadLine();
-                    name.UpdateDroneModel(userDroneId, userModel);//function update drone model
-                    break;
+                update up;
+                PrintFunc(4);
+                up = (update)int.Parse(Console.ReadLine());
+                switch (up)
+                {
+                    case update.DroneRenameOrRemodel:
+                        #region//Update drone name or model or both
+                        PrintFunc(11);// print to user data he needs to type in 
+                        int userDroneId;
+                        int.TryParse(Console.ReadLine(), out userDroneId);
+                        string userModel = Console.ReadLine();
+                        bl.UpdateDroneModel(userDroneId, userModel);//function update drone model
+                        break;
                     #endregion
-                case update.BaseStationRenameOrNumOfChargeSlot:
-                    #region//Update Base Station name or free charge slots number or both
-                    PrintFunc(12);// print to user data he needs to type in 
-                    int userBasestationId;
-                    int.TryParse(Console.ReadLine(), out userBasestationId);
-                    string UserNewBaseStationName = Console.ReadLine();
-                    int userNewFreeChargeSlots;
-                    int.TryParse(Console.ReadLine(), out userNewFreeChargeSlots);
-                    //func
-                    break;
+                    case update.BaseStationRenameOrNumOfChargeSlot:
+                        #region//Update Base Station name or free charge slots number or both
+                        PrintFunc(12);// print to user data he needs to type in 
+                        int userBasestationId;
+                        int.TryParse(Console.ReadLine(), out userBasestationId);
+                        string UserNewBaseStationName = Console.ReadLine();
+                        int userNewFreeChargeSlots;
+                        int.TryParse(Console.ReadLine(), out userNewFreeChargeSlots);
+                        bl.UpdateBaseStation(userBasestationId, UserNewBaseStationName, userNewFreeChargeSlots);
+                        break;
                     #endregion
-                case update.CustomerRenameOrRephone:
-                    #region//Update Customer name or phone or both
-                    PrintFunc(13);//
-                    int userDroneId1;
-                    int.TryParse(Console.ReadLine(), out userDroneId1);
-                    string UserNewCustomerName = Console.ReadLine();
-                    int userNewPhone;
-                    int.TryParse(Console.ReadLine(), out userNewPhone);
-                    //Func
-                    break;
+                    case update.CustomerRenameOrRephone:
+                        #region//Update Customer name or phone or both
+                        PrintFunc(13);// print to user data he needs to type in 
+                        int userDroneId1;
+                        int.TryParse(Console.ReadLine(), out userDroneId1);
+                        string UserNewCustomerName = Console.ReadLine();            
+                        string userNewPhone = Console.ReadLine();                     
+                        bl.UpdateCustomer(userDroneId1, UserNewCustomerName, userNewPhone);
+                        break;
                     #endregion
-                case update.SenDronetocharge:
-                    #region//send drone to charge
-                    PrintFunc(14);//
-                    int userDroneId2;
-                    int.TryParse(Console.ReadLine(), out userDroneId2);
-                    //Func()
-                    break;
+                    case update.SendDronetocharge:
+                        #region//send drone to charge
+                        PrintFunc(14);// print to user data he needs to type in 
+                        int userDroneId2;
+                        int.TryParse(Console.ReadLine(), out userDroneId2);
+                        bl.UpdateSendDroneToCharge(userDroneId2);
+                        break;
                     #endregion
-                case update.Release:
-                    #region//release drone from charge slot
-                    PrintFunc(14);
-                    int userDroneId3;
-                    int.TryParse(Console.ReadLine(), out userDroneId3);
-                    //פרק זמן בטעינה
-                    //Func()
-                    break;
+                    case update.Release:
+                        #region//release drone from charge slot
+                        PrintFunc(14); // print to user data he needs to type in 
+                        int userDroneId3;
+                        int.TryParse(Console.ReadLine(), out userDroneId3);
+                        double time;
+                        double.TryParse(Console.ReadLine(), out time);
+                        bl.UpdateReleseDrone(userDroneId3, time);
+                        break;
                     #endregion
-                case update.Assign:
-                    #region//associate drone to base station
-                    PrintFunc(14);
-                    int userDroneId4;
-                    int.TryParse(Console.ReadLine(), out userDroneId4);
-                    //Func()
-                    break;
+                    case update.Assign:
+                        #region//associate drone to base station
+                        PrintFunc(14);// print to user data he needs to type in 
+                        int userDroneId4;
+                        int.TryParse(Console.ReadLine(), out userDroneId4);
+                        bl.UpdateAssosiateDrone(userDroneId4);
+                        break;
                     #endregion
-                case update.Collect:
-                    #region//collect parcel by drone
-                    PrintFunc(14);
-                    int userDroneId5;
-                    int.TryParse(Console.ReadLine(), out userDroneId5);
-                    //Func()
-                    break;
+                    case update.Collect:
+                        #region//collect parcel by drone
+                        PrintFunc(14); // print to user data he needs to type in 
+                        int userDroneId5;
+                        int.TryParse(Console.ReadLine(), out userDroneId5);
+                        bl.PickupParcelByDrone(userDroneId5);
+                        break;
                     #endregion
-                case update.Deliver:
-                    #region//deliver parcel 
-                    PrintFunc(14);
-                    int userDroneId6;
-                    int.TryParse(Console.ReadLine(), out userDroneId6);
-                    //Func()
-                    break;
+                    case update.Deliver:
+                        #region//deliver parcel 
+                        PrintFunc(14);// print to user data he needs to type in 
+                        int userDroneId6;
+                        int.TryParse(Console.ReadLine(), out userDroneId6);
+                        bl.DilaveryParcelByDrone(userDroneId6);
+                        break;
                     #endregion
-                default:
-                    break;
+                    default:
+                        PrintFunc(24);
+                        break;
+                }
+
             }
-            #endregion
+            catch (IBL.BO.IdNotExsistException exception)
+            {
+
+                Console.WriteLine(exception.ToString());
+            }
+            catch (IBL.BO.UnavailableExeption exception)
+            {
+
+                Console.WriteLine(exception.ToString());
+            }
         }
-        public enum display { basestation, drone, castomer, parcel }
+           
+        #endregion
+        public enum display { basestation, drone, customer, parcel } // enum for display option
         private static void Display()//cases for display
         {
             #region//cases for display
@@ -205,20 +243,33 @@ namespace ConsoleUI_BL
           
             PrintFunc(5);
             d = (display)int.Parse(Console.ReadLine());
-            int id = int.TryParse(Console.ReadLine(), out );
+            
+            int id;
 
             switch (d)
             {
                 case display.basestation:
-                    Console.WriteLine(Get)
+                    PrintFunc(16);
+                    int.TryParse(Console.ReadLine(), out id);
+                    Console.WriteLine(bl.GetBaseStationById(id).ToString());
                     break;
                 case display.drone:
+                    PrintFunc(14);
+                    int.TryParse(Console.ReadLine(), out id);
+                    Console.WriteLine(bl.GetDroneById(id).ToString());
                     break;
-                case display.castomer:
+                case display.customer:
+                    PrintFunc(15);
+                    int.TryParse(Console.ReadLine(), out id);
+                    Console.WriteLine(bl.GetCustomerById(id).ToString());
                     break;
                 case display.parcel:
+                    PrintFunc(17);
+                    int.TryParse(Console.ReadLine(), out id);
+                    Console.WriteLine(bl.GetParcelById(id).ToString());
                     break;
                 default:
+                    PrintFunc(24);
                     break;
             }
             #endregion
@@ -415,7 +466,7 @@ namespace ConsoleUI_BL
             #region// if i = 18 print list of base stations
             if (i == 18)
             {
-                foreach (var item in name.GetListOfBaseStations())
+                foreach (var item in bl.GetListOfBaseStations())
                 {
                     Console.WriteLine(item.ToString());
                 }
@@ -424,7 +475,7 @@ namespace ConsoleUI_BL
             #region// if i = 19 print list of drones
             if (i == 19)
             {
-                foreach (var item in name.GetListOfDrones())
+                foreach (var item in bl.GetListOfDrones())
                 {
                     Console.WriteLine(item.ToString());
                 }
@@ -433,7 +484,7 @@ namespace ConsoleUI_BL
             #region// if i = 20 print list of customers
             if (i == 20)
             {
-                foreach (var item in name.GetListOfCustomers())
+                foreach (var item in bl.GetListOfCustomers())
                 {
                     Console.WriteLine(item.ToString());
                 }
@@ -442,7 +493,7 @@ namespace ConsoleUI_BL
             #region// if i = 21 print list of parcels
             if (i == 21)
             {
-                foreach (var item in name.GetListOfParcels())
+                foreach (var item in bl.GetListOfParcels())
                 {
                     Console.WriteLine(item.ToString());
                 }
@@ -451,7 +502,7 @@ namespace ConsoleUI_BL
             #region// if i = 22 print list of not assigned
             if (i == 22)
             {
-                foreach (var item in name.GetListOfNotAssigned())
+                foreach (var item in bl.GetListOfNotAssigned())
                 {
                     Console.WriteLine(item.ToString());
                 }
@@ -460,10 +511,17 @@ namespace ConsoleUI_BL
             #region// if i = 23 print list of freeChargingStations
             if (i == 23)
             {
-                foreach (var item in name.GetListOfFreeChargingStations())
+                foreach (var item in bl.GetListOfFreeChargingStations())
                 {
                     Console.WriteLine(item.ToString());
                 }
+            }
+            #endregion
+            #region// if i = 24 print invalid input
+            if (i == 24) // invalid input
+            {
+                Console.WriteLine("INVALID INPUT");
+                return;
             }
             #endregion
             return;

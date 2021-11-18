@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace IDAL.DO
 {
+    /// <summary>
+    /// throw exception for error where id dosent exsists
+    /// </summary>
     [Serializable]
     public class IdNotExsistException : Exception
     {

@@ -384,7 +384,7 @@ namespace IBL
                     }
                     break;
                 case Enums.DroneStatuses.Maintenance:
-                    distance = (battery * 100) /;////
+                    distance = (battery * 100);
                     break;
             }
             return distance;

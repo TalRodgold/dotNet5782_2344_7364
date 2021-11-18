@@ -3,7 +3,11 @@ using System.Runtime.Serialization;
 
 namespace IDAL.DO
 {
+    /// <summary>
+    /// throw exception for error where id already exsists
+    /// </summary>
     [Serializable]
+    
     public class IdAlreadyExsistsExceptions : Exception
     {
         public string Text;

@@ -20,7 +20,7 @@ namespace IDAL
             public int ChargeSlots { get; set; } // Number of free charging satstions
             public double Longtitude { get; set; } // Longitude 
             public double Latitude { get; set; } // Latitude
-            public string ToString() // return string with all the data
+            public override string ToString() // return string with all the data
             {
                 return $" Base station #{Id}: \n Name = {Name} \n Charge slots = {ChargeSlots} \n Longtitude = {DalObjects.DataSource.sexagesimal(Longtitude, 'N')} \n Latitude = {DalObjects.DataSource.sexagesimal(Longtitude, 'E')} \n ";
             }
