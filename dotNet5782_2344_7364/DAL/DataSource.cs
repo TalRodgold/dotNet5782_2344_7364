@@ -108,7 +108,7 @@ namespace DalObjects
             newParcel.Weight = (WeightCategories)rnd.Next(0, 3);
             newParcel.Priority = (Priorities)rnd.Next(0, 3);
             newParcel.Requsted = DateTime.Now;
-            newParcel.DroneId = 0;
+            newParcel.DroneId = -1;
             newParcel.Scheduled = DateTime.Now.AddHours(rnd.Next(1, 23));
             newParcel.PickedUp = DateTime.MinValue;
             newParcel.Deliverd = DateTime.MinValue;

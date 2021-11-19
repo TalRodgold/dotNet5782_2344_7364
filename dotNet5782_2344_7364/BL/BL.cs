@@ -568,7 +568,6 @@ namespace IBL
             ListOfDronsBL[index] = newDroneToList;
             dal.UpdateDroneModel(id, newModel);
         }
-
         public void UpdateBaseStation(int id, string name = "", int numberOfChargingSlots = -1)
         {
             if (name != "")
@@ -797,13 +796,14 @@ namespace IBL
                         IDAL.DO.Parcel newParcel_ = listOfDeliveredParcel[rnd.Next(listOfDeliveredParcel.Count)];
                         IDAL.DO.Customer newCustomer = dal.GetCustomer(newParcel_.TargetId);
                         newDrone.CurrentLocation = new Location(newCustomer.Longtitude, newCustomer.Latitude);
-
                     }
                     else//if the drone isn't associeting
                     {
-
-                    }
-                       
+                        List<Customer> newCustomerToList = GetListOfCustomerDalivered();
+                        int random = rnd.Next(0, newCustomerToList.Count);
+                        newDrone.CurrentLocation = newCustomerToList[random].Location;
+                        //check battery if need more one here
+                    }   
                 }
                 newDrone.NumberOfParcelInTransit = -1;
             }
@@ -815,6 +815,30 @@ namespace IBL
         {
             DroneToList newDrone = new DroneToList(blDrone.Id, blDrone.Model, blDrone.Weight, blDrone.Battery, blDrone.DroneStatuses, blDrone.CurrentLocation, blDrone.ParcelInTransit.Id);
             return newDrone;
+        }
+        public Customer convertCustomerDalToBl(IDAL.DO.Customer customer)
+        {
+            List<IDAL.DO.Parcel> parcelList = dal.GetListOfParcel(element => (element.SenderId != -1)).ToList();
+            if (parcelList.Count != 0)
+            {
+                List<ParcelAtCustomer> parcelAtCustomersListSender = null;
+                foreach (var item in parcelList)
+                {
+                    parcelAtCustomersListSender.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, StatusCalculate(GetParcelById(item.Id)), new CustomerInParcel(item.SenderId, GetCustomerById(item.SenderId).Name)));
+                }
+                parcelList = dal.GetListOfParcel(element => (element.TargetId != -1)).ToList();
+                if (parcelList.Count != 0)
+                {
+                    List<ParcelAtCustomer> parcelAtCustomersListReciver = null;
+                    foreach (var item in parcelList)
+                    {
+                        parcelAtCustomersListReciver.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, StatusCalculate(GetParcelById(item.Id)), new CustomerInParcel(item.TargetId, GetCustomerById(item.TargetId).Name)));
+                    }
+                    return new Customer(customer.Id, customer.Name, customer.Phone, new Location(customer.Longtitude, customer.Latitude), parcelAtCustomersListSender, parcelAtCustomersListReciver);
+                }
+                else return null;//maybe exption
+            }
+            else return null;//maybe exption
         }
     }
     public partial class BL : IBl
@@ -875,6 +899,16 @@ namespace IBL
                 }
             }
             return list;
+        }
+        public List<Customer> GetListOfCustomerDalivered()
+        {
+            var customerDalList = dal.GetListOfCustomer().ToList();
+            List<Customer> customerBlList = null;
+            foreach (var item in customerDalList)
+            {
+                customerBlList.Add(convertCustomerDalToBl(item));
+            }
+            return customerBlList.FindAll(element => element.ParcelToCustomer.Find(elementi => elementi.ParcelStatus == Enums.ParcelStatus.Supplied).Equals(null));
         }
     }
 }
