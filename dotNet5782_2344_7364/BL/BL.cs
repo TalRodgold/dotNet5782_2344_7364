@@ -137,8 +137,8 @@ namespace IBL
                 Predicate<IDAL.DO.Parcel> predicate = element => element.SenderId == id; // predicat to find parcel based on senders id
                 Predicate<IDAL.DO.Parcel> predicate1 = element => element.TargetId == id; // predicat to find parcel based on targets id
 
-                IDAL.DO.Parcel newParcel = dal.GetParcel(id, predicate); // get parcel of dal type based on senders id
-
+                List<IDAL.DO.Parcel> newSenderParcel = dal.GetListOfParcel (predicate).ToList(); // get parcel of dal type based on senders id
+                List<IDAL.DO.Parcel> newReciveParcels= dal.GetListOfParcel(predicate1).ToList(); // get parcel of dal type based on reciver id
                 CustomerInParcel newCustomerInParcel = new CustomerInParcel(idalCustomer.Id, idalCustomer.Name); // creat a customer in parcel based on current customer
                 ParcelAtCustomer newparcelAtCustomer = new ParcelAtCustomer(newParcel.Id, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, StatusCalculate(GetParcelById(newParcel.Id)) ,newCustomerInParcel);
 
@@ -757,10 +757,10 @@ namespace IBL
 
             var listOfParcels = dal.GetListOfParcel().ToList();
             IDAL.DO.Parcel newParcel = listOfParcels.Find(element => element.DroneId == idalDrone.Id);
-            if (!newParcel.Equals(null))//if there have a parcel with this drone id
+            if (newParcel.Id!=0)//(!newParcel.Equals(null))//if there have a parcel with this drone id
             {
                 newDrone.DroneStatuses = Enums.DroneStatuses.Delivery;
-                if (newParcel.Scheduled < DateTime.MinValue)//the parcel didn't pick-upp
+                if (newParcel.Scheduled <= DateTime.MinValue)//the parcel didn't pick-upp
                 {
                     Location newLocation = new Location(dal.GetCustomer(newParcel.SenderId).Longtitude, dal.GetCustomer(newParcel.SenderId).Latitude);
                     int baseStationId = CalculateMinDistance(newLocation);
@@ -789,9 +789,18 @@ namespace IBL
                     Predicate<IDAL.DO.Parcel> predicate1 = element => element.Deliverd > DateTime.MinValue;
                     List<IDAL.DO.Parcel> listOfDeliveredParcel = dal.GetListOfParcel(predicate1).ToList();
                     listOfDeliveredParcel = listOfDeliveredParcel.FindAll(element => element.DroneId == newDrone.Id);
-                    IDAL.DO.Parcel newParcel_ = listOfDeliveredParcel[rnd.Next(listOfDeliveredParcel.Count)];
-                    IDAL.DO.Customer newCustomer = dal.GetCustomer(newParcel_.TargetId);
-                    newDrone.CurrentLocation = new Location(newCustomer.Longtitude, newCustomer.Latitude);
+                    if (listOfDeliveredParcel.Count != 0)//if there have pacel that has been associated 
+                    {
+                        IDAL.DO.Parcel newParcel_ = listOfDeliveredParcel[rnd.Next(listOfDeliveredParcel.Count)];
+                        IDAL.DO.Customer newCustomer = dal.GetCustomer(newParcel_.TargetId);
+                        newDrone.CurrentLocation = new Location(newCustomer.Longtitude, newCustomer.Latitude);
+
+                    }
+                    else//if the drone isn't associeting
+                    {
+
+                    }
+                       
                 }
                 newDrone.NumberOfParcelInTransit = -1;
             }
