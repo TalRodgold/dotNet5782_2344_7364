@@ -141,17 +141,18 @@ namespace IBL
                 List<ParcelAtCustomer> list = new List<ParcelAtCustomer>();
                 foreach (var item in newSenderParcel)
                 {
-                    list.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, StatusCalculate(GetParcelById(item.Id)), new CustomerInParcel(newCustomer.Id, newCustomer.Name)));
+                    list.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, StatusCalculate(dal.GetParcel(item.Id)), new CustomerInParcel(newCustomer.Id, newCustomer.Name)));
                 }
                 newCustomer.ParcelFromCustomer = list; // add to new customer the parcel from customer
 
                 List<IDAL.DO.Parcel> newReciveParcels= dal.GetListOfParcel(predicate1).ToList(); // get parcel of dal type based on reciver id
+                List<ParcelAtCustomer> list1 = new List<ParcelAtCustomer>();
                 foreach (var item in newReciveParcels)
                 {
-                    list.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, StatusCalculate(GetParcelById(item.Id)), new CustomerInParcel(newCustomer.Id, newCustomer.Name)));
+                    list1.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, StatusCalculate(dal.GetParcel(item.Id)), new CustomerInParcel(newCustomer.Id, newCustomer.Name)));
 
                 }
-                newCustomer.ParcelToCustomer = list; // add to new customer the parcel from customer
+                newCustomer.ParcelToCustomer = list1; // add to new customer the parcel from customer
                 return newCustomer;
             }
             catch (IDAL.DO.IdNotExsistException exception) // if customer id does not exsists and was thrown from dal objects
@@ -204,7 +205,6 @@ namespace IBL
             try
             {
                 Predicate<IDAL.DO.Parcel> predicate = element => element.DroneId == id;
-                Parcel newParcel = GetParcelById(0, predicate);
                 ParcelInTransit newParcelInTransit = GetParcelInTransitById(GetDroneToList(id).NumberOfParcelInTransit);
                 Drone newDrone = new Drone(GetDroneToList(id).Id, GetDroneToList(id).Model, GetDroneToList(id).Weight, GetDroneToList(id).Battery, GetDroneToList(id).DroneStatuses, newParcelInTransit, GetDroneToList(id).CurrentLocation);
                 return newDrone;
@@ -278,7 +278,7 @@ namespace IBL
                 IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
                 Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
                 Customer reciverCustomer = GetCustomerById(newParcel.TargetId); // creat a new customer based on the reciver of the parcel
-                ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, StatusCalculate(GetParcelById(newParcel.Id, predicate)));
+                ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, StatusCalculate(dal.GetParcel(GetParcelById(newParcel.Id, predicate).Id)));
                 return newParcelToList;
             }
             catch (IDAL.DO.IdNotExsistException exception) // if parcel or customer id does not exsists and was thrown from dal objects
@@ -545,13 +545,13 @@ namespace IBL
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public Enums.ParcelStatus StatusCalculate(Parcel p)
+        public Enums.ParcelStatus StatusCalculate(IDAL.DO.Parcel p)
         {
-            if (p.DeliveryTime != DateTime.MinValue)
+            if (p.Deliverd != DateTime.MinValue)
                 return Enums.ParcelStatus.Supplied;
-            if (p.PickupTime != DateTime.MinValue)
+            if (p.PickedUp  != DateTime.MinValue)
                 return Enums.ParcelStatus.Collected;
-            if (p.AssociationTime != DateTime.MinValue)
+            if (p.Scheduled  != DateTime.MinValue)//AssociationTime
                 return Enums.ParcelStatus.Associated;
             return Enums.ParcelStatus.Defined;
 
@@ -789,20 +789,18 @@ namespace IBL
                 else//if the drone is in avilible status
                 {
                     Predicate<IDAL.DO.Parcel> predicate1 = element => element.Deliverd > DateTime.MinValue;
-                    List<IDAL.DO.Parcel> listOfDeliveredParcel = dal.GetListOfParcel(predicate1).ToList();
-                    listOfDeliveredParcel = listOfDeliveredParcel.FindAll(element => element.DroneId == newDrone.Id);
-                    if (listOfDeliveredParcel.Count != 0)//if there have pacel that has been associated 
+                    List<IDAL.DO.Parcel> listOfDeliveredParcel = dal.GetListOfParcel(predicate1).ToList();//all the parcel that delivered
+                   // listOfDeliveredParcel = listOfDeliveredParcel.FindAll(element => element.DroneId == newDrone.Id);
+                    if (listOfDeliveredParcel.Count != 0)//if there have pacel that has been delivered
                     {
                         IDAL.DO.Parcel newParcel_ = listOfDeliveredParcel[rnd.Next(listOfDeliveredParcel.Count)];
                         IDAL.DO.Customer newCustomer = dal.GetCustomer(newParcel_.TargetId);
                         newDrone.CurrentLocation = new Location(newCustomer.Longtitude, newCustomer.Latitude);
                     }
-                    else//if the drone isn't associeting
+                    else//if there no have delivered parcel 
                     {
-                        List<Customer> newCustomerToList = GetListOfCustomerDalivered();
-                        int random = rnd.Next(0, newCustomerToList.Count);
-                        newDrone.CurrentLocation = newCustomerToList[random].Location;
-                        //check battery if need more one here
+                        List<BaseStation> baseTationList = GetListOfBaseStations();
+                        newDrone.CurrentLocation = baseTationList[rnd.Next(0, baseTationList.Count)].Location;
                     }   
                 }
                 newDrone.NumberOfParcelInTransit = -1;
@@ -819,24 +817,21 @@ namespace IBL
         public Customer convertCustomerDalToBl(IDAL.DO.Customer customer)
         {
             List<IDAL.DO.Parcel> parcelList = dal.GetListOfParcel(element => (element.SenderId != -1)).ToList();
+            List<IDAL.DO.Parcel> parcelListEnder = parcelList.FindAll(element => element.SenderId == customer.Id);
+            List<IDAL.DO.Parcel> parcelListReciver = parcelList.FindAll(element => element.TargetId == customer.Id);
             if (parcelList.Count != 0)
             {
                 List<ParcelAtCustomer> parcelAtCustomersListSender = null;
-                foreach (var item in parcelList)
+                foreach (var item in parcelListEnder)
                 {
-                    parcelAtCustomersListSender.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, StatusCalculate(GetParcelById(item.Id)), new CustomerInParcel(item.SenderId, GetCustomerById(item.SenderId).Name)));
+                    parcelAtCustomersListSender.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, StatusCalculate(dal.GetParcel(item.Id)), new CustomerInParcel(item.SenderId, GetCustomerById(item.SenderId).Name)));
                 }
-                parcelList = dal.GetListOfParcel(element => (element.TargetId != -1)).ToList();
-                if (parcelList.Count != 0)
+                List<ParcelAtCustomer> parcelAtCustomersListReciver = null;
+                foreach (var item in parcelListReciver)
                 {
-                    List<ParcelAtCustomer> parcelAtCustomersListReciver = null;
-                    foreach (var item in parcelList)
-                    {
-                        parcelAtCustomersListReciver.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, StatusCalculate(GetParcelById(item.Id)), new CustomerInParcel(item.TargetId, GetCustomerById(item.TargetId).Name)));
-                    }
-                    return new Customer(customer.Id, customer.Name, customer.Phone, new Location(customer.Longtitude, customer.Latitude), parcelAtCustomersListSender, parcelAtCustomersListReciver);
+                    parcelAtCustomersListReciver.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, StatusCalculate(dal.GetParcel(item.Id)), new CustomerInParcel(item.TargetId, GetCustomerById(item.TargetId).Name)));
                 }
-                else return null;//maybe exption
+                return new Customer(customer.Id, customer.Name, customer.Phone, new Location(customer.Longtitude, customer.Latitude), parcelAtCustomersListSender, parcelAtCustomersListReciver);
             }
             else return null;//maybe exption
         }
@@ -863,7 +858,7 @@ namespace IBL
         }
         public List<Customer> GetListOfCustomers()
         {
-            List<Customer> list = new List<Customer>();
+            List<Customer> list = null;
             foreach (var item in dal.GetListOfCustomer())
             {
                 list.Add(GetCustomerById(item.Id));
@@ -872,7 +867,7 @@ namespace IBL
         }
         public List<Parcel> GetListOfParcels()
         {
-            List<Parcel> list = new List<Parcel>();
+            List<Parcel> list = null;
             foreach (var item in dal.GetListOfParcel())
             {
                 list.Add(GetParcelById(item.Id));

@@ -593,7 +593,7 @@ namespace DalObjects
             {
                 throw new IdNotExsistException("parcel", id); // throw exception
             }
-            if (predicate.Equals(null))
+            if (predicate==null)
             {
                 return DataSource.ParcelList.Find(element => element.Id == id);
             }

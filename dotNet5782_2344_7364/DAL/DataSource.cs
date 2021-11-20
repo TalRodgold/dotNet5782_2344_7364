@@ -152,7 +152,7 @@ namespace DalObjects
             {
                 CreatCustomer();
             }
-            for (int i = 0; i < 10; i++) // set 10 parcels and 10 drone charges
+            for (int i = 0; i < 1; i++) // set 10 parcels and 10 drone charges
             {
                 CreatParcel();
             }
