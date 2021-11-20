@@ -18,9 +18,9 @@ namespace IBL
             public List<DroneInCharging> ListOfDroneInCharging { set; get; }
             public override string ToString()
             {
-                return $" Base station #{Id}: \n Name = {Name} \n Location = {Location} \n Number of free charging slots = {NumberOfFreeChargingSlots} \n All drones in charging = {ListOfDroneInCharging} \n ";
+                return $" Base station #{Id}: \n Name = {Name} \n {Location.ToString()} \n Number of free charging slots = {NumberOfFreeChargingSlots} \n All drones in charging: {printList(ListOfDroneInCharging)} \n ";
             }
-            public BaseStation() { }
+            public BaseStation() { ListOfDroneInCharging = new List<DroneInCharging>(); }
 
             public BaseStation(int id, string name, Location location, int freeChargingSlots)//, List<DroneInCharging> droneInCharging) ?????????
             {
@@ -29,6 +29,7 @@ namespace IBL
                 Location = location;
                 NumberOfFreeChargingSlots = freeChargingSlots;
                 DroneInCharging droneInCharging = new DroneInCharging(-1, -1);
+                ListOfDroneInCharging = new List<DroneInCharging>();
                 for (int i = 0; i < NumberOfFreeChargingSlots; i++)
                 {
                     ListOfDroneInCharging.Add(droneInCharging);
@@ -42,6 +43,15 @@ namespace IBL
                 Location = location;
                 NumberOfFreeChargingSlots = freeChargingSlots;
                 ListOfDroneInCharging = listOfDroneInCharging;
+            }
+            private string printList(List<DroneInCharging> l)
+            {
+                string s = "";
+                foreach (var item in l)
+                {
+                    s += item.ToString();
+                }
+                return s;
             }
         }
     }

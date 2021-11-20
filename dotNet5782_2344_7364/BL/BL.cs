@@ -158,7 +158,7 @@ namespace IBL
             catch (IDAL.DO.IdNotExsistException exception) // if customer id does not exsists and was thrown from dal objects
             {
 
-                throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
+                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
             }
         }
         #endregion
@@ -174,14 +174,26 @@ namespace IBL
             try
             {
                 IDAL.DO.Parcel idalParcel = dal.GetParcel(id, predicate);
+                if (idalParcel.Id <= 0)
+                {
+                    return null;
+                }
                 Customer senderCustomer = GetCustomerById(idalParcel.SenderId); // creat a new customer based on the sender of the parcel
                 Customer reciverCustomer = GetCustomerById(idalParcel.TargetId); // creat a new customer based on the reciver of the parcel
 
                 CustomerInParcel senderCustomerInParcel = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name); // creat a customer in parcel based on current customer
                 CustomerInParcel reciverCustomerInParcel = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name); // creat a customer in parcel based on current customer
+                DroneInParcel newDroneInParcel;
+                if (idalParcel.DroneId == -1)
+                {
+                    newDroneInParcel = null;
+                }
+                else
+                {
+                    Drone newDrone = GetDroneById(idalParcel.DroneId);
+                    newDroneInParcel = new DroneInParcel(newDrone.Id, newDrone.Battery, newDrone.CurrentLocation);
 
-                Drone newDrone = GetDroneById(idalParcel.DroneId);
-                DroneInParcel newDroneInParcel = new DroneInParcel(newDrone.Id, newDrone.Battery, newDrone.CurrentLocation);
+                }
 
 
                 Parcel newParcel = new Parcel(idalParcel.Id, senderCustomerInParcel, reciverCustomerInParcel, (Enums.WeightCategories)idalParcel.Weight, (Enums.Priorities)idalParcel.Priority, newDroneInParcel, idalParcel.Requsted, idalParcel.Scheduled, idalParcel.PickedUp, idalParcel.Deliverd);
@@ -204,8 +216,21 @@ namespace IBL
         {
             try
             {
+                if (id == -1)
+                {
+                    throw new IdNotExsistException("drone", id); // throw
+                }
                 Predicate<IDAL.DO.Parcel> predicate = element => element.DroneId == id;
-                ParcelInTransit newParcelInTransit = GetParcelInTransitById(GetDroneToList(id).NumberOfParcelInTransit);
+                ParcelInTransit newParcelInTransit;
+                if (GetDroneToList(id).NumberOfParcelInTransit == -1)
+                {
+                    newParcelInTransit = new ParcelInTransit();
+                }
+                else
+                {
+                    newParcelInTransit = GetParcelInTransitById(GetDroneToList(id).NumberOfParcelInTransit);
+
+                }
                 Drone newDrone = new Drone(GetDroneToList(id).Id, GetDroneToList(id).Model, GetDroneToList(id).Weight, GetDroneToList(id).Battery, GetDroneToList(id).DroneStatuses, newParcelInTransit, GetDroneToList(id).CurrentLocation);
                 return newDrone;
             }
@@ -224,7 +249,20 @@ namespace IBL
         /// <returns></returns>
         public DroneToList GetDroneToList(int id)//Get drone from list that is held here by id
         {
-            return ListOfDronsBL.Find(element => element.Id == id);
+            try
+            {
+                if (!dal.IfDroneExsists(id))
+                {
+                    throw new IdNotExsistException("drone", id, new IDAL.DO.IdNotExsistException("drone", id));
+                }
+                return ListOfDronsBL.Find(element => element.Id == id);
+
+            }
+            catch (IDAL.DO.IdNotExsistException exception) // if base station id does not exsists and was thrown from dal objects
+            {
+
+                throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
+            }
         }
         #endregion
         #region//Get base station from data-source by id
@@ -858,7 +896,7 @@ namespace IBL
         }
         public List<Customer> GetListOfCustomers()
         {
-            List<Customer> list = null;
+            List<Customer> list = new List<Customer>();
             foreach (var item in dal.GetListOfCustomer())
             {
                 list.Add(GetCustomerById(item.Id));
@@ -867,7 +905,7 @@ namespace IBL
         }
         public List<Parcel> GetListOfParcels()
         {
-            List<Parcel> list = null;
+            List<Parcel> list = new List<Parcel>();
             foreach (var item in dal.GetListOfParcel())
             {
                 list.Add(GetParcelById(item.Id));
@@ -879,7 +917,10 @@ namespace IBL
             List<Parcel> list = new List<Parcel>();
             foreach (var item in dal.GetListOfParcel())
             {
-                list.Add(GetParcelById(item.Id, element => element.DroneId > 0));
+                if (GetParcelById(item.Id, element => element.DroneId > 0) != null)
+                {
+                    list.Add(GetParcelById(item.Id, element => element.DroneId > 0));
+                }
             }
             return list;
         }

@@ -19,6 +19,7 @@ namespace IBL
             public Location PickupLocation { set; get; }
             public Location DeliveryLocation { set; get; }
             public double Distance { set; get; }
+            public ParcelInTransit() { }
             public ParcelInTransit(int id, bool status, Enums.Priorities priorities, Enums.WeightCategories weight, CustomerInParcel customerInParcelSender, CustomerInParcel customerInParcelReciver, Location pickupLocation, Location deliveryLocation, double distance)
             {
                 Id = id;
