@@ -6,7 +6,7 @@ namespace ConsoleUI_BL
     class Program
     {
         static IBL.BL bl; // call constructor
-        public enum Option { Addop = 1, Updateop, DisplayByIdop, ListDisplayop } // enum for option menu
+        public enum Option { Addop = 1, Updateop, DisplayByIdop, ListDisplayop, Exit } // enum for option menu
         /// <summary>
         /// main program
         /// </summary>
@@ -35,6 +35,8 @@ namespace ConsoleUI_BL
                     case Option.ListDisplayop: // display all
                         Displaylist();
                         break;
+                    case Option.Exit:
+                        return;
                     default:
                         PrintFunc(24);
                         break;
@@ -129,9 +131,16 @@ namespace ConsoleUI_BL
             }
             catch ( IBL.BO.IdAlreadyExsistsExceptions exception)
             {
-
+                Console.WriteLine("\n");
                 Console.WriteLine(exception.ToString());
-            }       
+                Console.WriteLine("\n");
+            }
+            catch (IBL.BO.IdNotExsistException exception)
+            {
+                Console.WriteLine("\n");
+                Console.WriteLine(exception.ToString());
+                Console.WriteLine("\n");
+            }
         }
         #endregion
 
@@ -231,13 +240,15 @@ namespace ConsoleUI_BL
             }
             catch (IBL.BO.IdNotExsistException exception)
             {
-
+                Console.WriteLine("\n");
                 Console.WriteLine(exception.ToString());
+                Console.WriteLine("\n");
             }
             catch (IBL.BO.UnavailableExeption exception)
             {
-
+                Console.WriteLine("\n");
                 Console.WriteLine(exception.ToString());
+                Console.WriteLine("\n");
             }
         }
            
@@ -252,33 +263,43 @@ namespace ConsoleUI_BL
             d = (display)int.Parse(Console.ReadLine());
             
             int id;
-
-            switch (d)
+            try
             {
-                case display.basestation:
-                    PrintFunc(16);
-                    int.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine(bl.GetBaseStationById(id).ToString());
-                    break;
-                case display.drone:
-                    PrintFunc(14);
-                    int.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine(bl.GetDroneById(id).ToString());
-                    break;
-                case display.customer:
-                    PrintFunc(15);
-                    int.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine(bl.GetCustomerById(id).ToString());
-                    break;
-                case display.parcel:
-                    PrintFunc(17);
-                    int.TryParse(Console.ReadLine(), out id);
-                    Console.WriteLine(bl.GetParcelById(id).ToString());
-                    break;
-                default:
-                    PrintFunc(24);
-                    break;
+                switch (d)
+                {
+
+                    case display.basestation:
+                        PrintFunc(16);
+                        int.TryParse(Console.ReadLine(), out id);
+                        Console.WriteLine(bl.GetBaseStationById(id).ToString());
+                        break;
+                    case display.drone:
+                        PrintFunc(14);
+                        int.TryParse(Console.ReadLine(), out id);
+                        Console.WriteLine(bl.GetDroneById(id).ToString());
+                        break;
+                    case display.customer:
+                        PrintFunc(15);
+                        int.TryParse(Console.ReadLine(), out id);
+                        Console.WriteLine(bl.GetCustomerById(id).ToString());
+                        break;
+                    case display.parcel:
+                        PrintFunc(17);
+                        int.TryParse(Console.ReadLine(), out id);
+                        Console.WriteLine(bl.GetParcelById(id).ToString());
+                        break;
+                    default:
+                        PrintFunc(24);
+                        break;
+                }
             }
+            catch (IBL.BO.IdNotExsistException exception)
+            {
+                Console.WriteLine("\n");
+                Console.WriteLine(exception.ToString());
+                Console.WriteLine("\n");
+            }
+            
             #endregion
         }
         public enum displaylist { basestationList = 1, droneList, customerList, parcelList, notAssigned, freeChargingStations }
@@ -354,7 +375,7 @@ namespace ConsoleUI_BL
             #region//if i = 2  print main menu
             if (i == 2) // print a main menu
             {
-                Console.WriteLine("TO SELECT OPTION ENTER SECTION NUMBER\n\n1) ADDING OPTIONS:\n2) UPDATE OPTIONS:\n\n3) DISPLAY DATA:\n\n4) DISPLAY LISTS\n\n5) EXIT\n");
+                Console.WriteLine("TO SELECT OPTION ENTER SECTION NUMBER\n\n1) ADDING OPTIONS:\n\n2) UPDATE OPTIONS:\n\n3) DISPLAY DATA:\n\n4) DISPLAY LISTS\n\n5) EXIT\n");
                 return;
             }
             //
@@ -362,28 +383,28 @@ namespace ConsoleUI_BL
             #region//if i = 3 print  choice request for adding
             if (i == 3)
             {
-                Console.WriteLine("Please enter your ADD choice:\n\t1.1) Add base station\n\t1.2) Add drone\n\t1.3) Add customer\n\t1.4) Add parcel\n\n");  // print choice request
+                Console.WriteLine("Please enter your ADD choice:\n\t1) Add base station\n\t2) Add drone\n\t3) Add customer\n\t4) Add parcel\n\n");  // print choice request
                 return;
             }
             #endregion
             #region// if i = 4 print choice request for updating
             if (i == 4) //request for updating
             {
-                Console.WriteLine("Please enter your Update choice:\n\t2.1) Assign parcel to customer\n\t2.2) Collect parcel by drone\n\t2.3) Deliver parcel to customer\n\t2.4) Send drone to charge at base station\n\t2.5) Release drone from charging\n");
+                Console.WriteLine("Please enter your Update choice:\n\t1) Assign parcel to customer\n\t2) Collect parcel by drone\n\t3) Deliver parcel to customer\n\t4) Send drone to charge at base station\n\t5) Release drone from charging\n");
                 return;
             }
             #endregion
             #region// if i = 5 print choice request for Displaying By Id
             if (i == 5) //  request for Display By Id 
             {
-                Console.WriteLine("Please enter your Display choice:\n\t3.1) Display base station\n\t3.2) Display drone\n\t3.3) Display customer\n\t3.4) Display parcel\n");
+                Console.WriteLine("Please enter your Display choice:\n\t1) Display base station\n\t2) Display drone\n\t3) Display customer\n\t4) Display parcel\n");
                 return;
             }
             #endregion
             #region// if i = 6 print choice request for  List Display
             if (i == 6) // print to user data he needs to type in  
             {
-                Console.WriteLine("Please enter your Display list choice:\n\t4.1) Display list of base stations\n\t4.2) Display list of drones\n\t4.3) Display list of customers\n\t4.4) Display list of parcels\n\t4.5) Display list of parcels that are not assigned to drone\n\t4.6) Display list of base stations with free charging stations\n ");
+                Console.WriteLine("Please enter your Display list choice:\n\t1) Display list of base stations\n\t2) Display list of drones\n\t3) Display list of customers\n\t4) Display list of parcels\n\t5) Display list of parcels that are not assigned to drone\n\t6) Display list of base stations with free charging stations\n ");
                 return;
             }
             #endregion
@@ -475,7 +496,9 @@ namespace ConsoleUI_BL
             {
                 foreach (var item in bl.GetListOfBaseStations())
                 {
+                    Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - ");
                     Console.WriteLine(item.ToString());
+                    Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - ");
                 }
             }
             #endregion
@@ -484,7 +507,9 @@ namespace ConsoleUI_BL
             {
                 foreach (var item in bl.GetListOfDrones())
                 {
+                    Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - ");
                     Console.WriteLine(item.ToString());
+                    Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - ");
                 }
             }
             #endregion
@@ -493,7 +518,9 @@ namespace ConsoleUI_BL
             {
                 foreach (var item in bl.GetListOfCustomers())
                 {
+                    Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - ");
                     Console.WriteLine(item.ToString());
+                    Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - ");
                 }
             }
             #endregion
@@ -502,7 +529,9 @@ namespace ConsoleUI_BL
             {
                 foreach (var item in bl.GetListOfParcels())
                 {
+                    Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - ");
                     Console.WriteLine(item.ToString());
+                    Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - ");
                 }
             }
             #endregion
@@ -511,7 +540,9 @@ namespace ConsoleUI_BL
             {
                 foreach (var item in bl.GetListOfNotAssigned())
                 {
+                    Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - ");
                     Console.WriteLine(item.ToString());
+                    Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - ");
                 }
             }
             #endregion
@@ -520,7 +551,9 @@ namespace ConsoleUI_BL
             {
                 foreach (var item in bl.GetListOfFreeChargingStations())
                 {
+                    Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - ");
                     Console.WriteLine(item.ToString());
+                    Console.WriteLine("- - - - - - - - - - - - - - - - - - - - - - - - - - ");
                 }
             }
             #endregion

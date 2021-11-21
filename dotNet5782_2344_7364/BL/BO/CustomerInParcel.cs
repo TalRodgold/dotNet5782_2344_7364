@@ -14,7 +14,7 @@ namespace IBL
             public string Name { set; get; }
             public override string ToString()
             {
-                return $" Customer #{Id}: \n Name = {Name} \n ";
+                return $" Customer #{Id}: \n Name = {Name}";
             }
             public CustomerInParcel(int id, string name)
             {

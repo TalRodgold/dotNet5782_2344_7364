@@ -14,12 +14,31 @@ namespace IBL
             public double Latitude { set; get; }
             public override string ToString()
             {
-                return $" Longitude = {Longitude}: \n Latitude = {Latitude} \n";
+                return $" Longitude = {sexagesimal(Longitude, 'N')}: \n Latitude = {sexagesimal(Latitude, 'E')} \n";
             }
             public Location(double longitude, double latitude)
             {
                 Longitude = longitude;
                 Latitude = latitude;
+            }
+            internal static string sexagesimal(double decimalDegrees, Char c) // convert double to sexagesimal
+            {
+                #region//convert double to sexagesimal
+                // caluclate seconds
+                double latDegrees = decimalDegrees;
+                int latSeconds = (int)Math.Round(latDegrees * 60 * 60);
+                // calculate degrees
+                double latDegreesWithFraction = decimalDegrees;
+                int degrees = (int)latDegreesWithFraction;
+                // calculate minutes
+                double fractionalDegrees = latDegrees - degrees;
+                double minutesWithFraction = 60 * fractionalDegrees;
+                int minutes = (int)minutesWithFraction;
+                // caluclate seconds with fraction
+                double fractionalMinutes = minutesWithFraction - minutes;
+                double secondsWithFraction = 60 * fractionalMinutes;
+                return $"{degrees}°{minutes}'{string.Format("{0:F3}", secondsWithFraction)}\"{c}"; // return string of cordinents
+                #endregion
             }
         }
     }

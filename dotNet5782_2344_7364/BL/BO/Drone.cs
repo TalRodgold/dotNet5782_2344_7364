@@ -20,7 +20,7 @@ namespace IBL
             public Location CurrentLocation { set; get; }
             public override string ToString()
             {
-                return $" Drone #{Id}: \n Model = {Model} \n Weight = {Weight} \n Battery = {Battery} \n Statuses = {DroneStatuses} \n Parcel in transit {ParcelInTransit} \n  Current location = {CurrentLocation} \n";
+                return $" Drone #{Id}: \n Model = {Model} \n Weight = {Weight} \n Battery = {Battery} \n Statuses = {DroneStatuses} \n Parcel in transit {ParcelInTransit} \n  {CurrentLocation} \n";
             }
            
             public Drone(int id, string model, Enums.WeightCategories weight, double battery, Enums.DroneStatuses droneStatuses, ParcelInTransit parcelInTransit, Location location) 

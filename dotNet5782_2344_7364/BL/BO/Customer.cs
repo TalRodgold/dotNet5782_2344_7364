@@ -20,7 +20,7 @@ namespace IBL
 
             public override string ToString()
             {
-                return $"  ";
+                return $" Customer #{Id}: \n Name = {Name} \n Phone = {Phone} \n {Location.ToString()} \n List of Parcels From Customer: \n {printList(ParcelFromCustomer)} \n List of Parcels To Customer: \n {printList(ParcelToCustomer)}";
             }
             public Customer() { }
             public Customer(int id,string name,string phone,Location location)
@@ -38,6 +38,15 @@ namespace IBL
                 Location = location;
                 ParcelFromCustomer = parcelFromCustomer;
                 ParcelToCustomer = parcelToCustomer;
+            }
+            private string printList(List<ParcelAtCustomer> l)
+            {
+                string s = "";
+                foreach (var item in l)
+                {
+                    s += item.ToString();
+                }
+                return s;
             }
         }
     }

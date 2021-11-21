@@ -70,7 +70,7 @@ namespace DalObjects
             #region // call construct base station
             Random rnd = new Random(); // generate randome number
             BaseStation newBaseStation = new BaseStation();
-            newBaseStation.Id = (Byte)DateTime.Now.Ticks;
+            newBaseStation.Id = (Byte)DateTime.Now.Ticks + 1;
             newBaseStation.Name = Convert.ToString((RandomBases)rnd.Next(1, 11));
             newBaseStation.ChargeSlots= rnd.Next(0, 10);
             newBaseStation.Longtitude = rnd.NextDouble() + 31.728959;
@@ -86,7 +86,7 @@ namespace DalObjects
             #region // call construct drone
             Random rnd = new Random(); // generate randome number
             Drone newDrone = new Drone();
-            newDrone.Id = (Byte)DateTime.Now.Ticks;
+            newDrone.Id = (Byte)DateTime.Now.Ticks + 1;
             newDrone.Model = $"modle_number{DroneList.Count() + 1}";
             newDrone.MaxWeight = (WeightCategories)rnd.Next(0, 3);
            // newDrone.Status = (DroneStatuses)rnd.Next(0, 3);
@@ -124,7 +124,7 @@ namespace DalObjects
             #region // call construct customer
             Random rnd = new Random(); // generate randome number
             Customer newCustomer = new Customer();
-            newCustomer.Id=(Byte)DateTime.Now.Ticks;
+            newCustomer.Id=(Byte)DateTime.Now.Ticks + 1;
             newCustomer.Name = Convert.ToString((RandomNames)rnd.Next(0, 15));
             newCustomer.Phone = "05" + Convert.ToString(rnd.Next(10000000, 99999999));
             newCustomer.Longtitude = rnd.NextDouble() + 31.72895;
@@ -152,7 +152,7 @@ namespace DalObjects
             {
                 CreatCustomer();
             }
-            for (int i = 0; i < 1; i++) // set 10 parcels and 10 drone charges
+            for (int i = 0; i < 10; i++) // set 10 parcels and 10 drone charges
             {
                 CreatParcel();
             }
