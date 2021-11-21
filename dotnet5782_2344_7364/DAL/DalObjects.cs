@@ -585,7 +585,7 @@ namespace DalObjects
         /// find a Parcel by id and return all his data as Parcel class
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="predicate"></param>
+        /// <param name="predicate"></param>    
         /// <returns></returns>
         public Parcel GetParcel(int id, Predicate<Parcel> predicate = null) // find a Parcel by id and return all his data as Parcel class
         {
