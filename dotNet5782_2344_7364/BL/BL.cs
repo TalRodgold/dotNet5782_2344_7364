@@ -637,7 +637,10 @@ namespace IBL
                     throw new UnavailableExeption("drone", id);
                 int stationId = CalculateMinDistance(GetDroneById(id).CurrentLocation, element => element.NumberOfFreeChargingSlots > 0, element => CalculateDistance(element.Location, newDrone.CurrentLocation) <= ConvertBatteryToDistance(newDrone));
                 if (stationId == 0)
+                {
                     throw new UnavailableExeption("base station", stationId);
+                }
+                dal.ConstructDroneCharge(id, stationId);
                 BaseStation station = GetBaseStationById(stationId);
                 newDrone.Battery = CalculateBattery(newDrone);
                 newDrone.CurrentLocation = station.Location;
@@ -660,10 +663,17 @@ namespace IBL
             {
                 throw new UnavailableExeption("drone", id);
             }
-            drone.Battery = drone.Battery * time * DroneChargingPaste;
+            if (drone.Battery * time * DroneChargingPaste >= 1)
+            {
+                drone.Battery = 1 ;
+            }
+            else
+            {
+                drone.Battery = drone.Battery * time * DroneChargingPaste;
+            }
             drone.DroneStatuses = Enums.DroneStatuses.Available;
-            IDAL.DO.DroneCharge droneCharge = dal.GetDroneCharge(0,element => element.DroneId == id);
-            IDAL.DO.BaseStation station = dal.getBaseStationByDroneId(droneCharge.StationId);//
+            IDAL.DO.DroneCharge droneCharge = dal.GetDroneCharge(id,element => element.DroneId == id);
+            IDAL.DO.BaseStation station = dal.getBaseStationByDroneId(droneCharge.DroneId);//
             station.ChargeSlots -= 1;
             dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.ChargeSlots);
             dal.ReleaseDroneCharge(id, station.Id);
@@ -937,7 +947,7 @@ namespace IBL
             }
             return list;
         }
-        public List<Customer> GetListOfCustomerDalivered()
+        public List<Customer> GetListOfCustomerDalivered() 
         {
             var customerDalList = dal.GetListOfCustomer().ToList();
             List<Customer> customerBlList = null;
