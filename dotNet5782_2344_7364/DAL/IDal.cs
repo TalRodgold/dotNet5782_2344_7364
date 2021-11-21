@@ -51,7 +51,7 @@ namespace IDAL
         Drone GetDrone(int id); // find a Drone by id and return all his data as Drone class
         BaseStation GetBaseStation(int id); // find a BaseStation by id and return all his data as BaseStation class
         BaseStation getBaseStationByDroneId(int id); // find a Drone by id and return all his data as Drone class 
-        DroneCharge GetDroneCharge(int id); // find a DroneCharge by id and return all his data as DroneCharge class
+        DroneCharge GetDroneCharge(int id = 0, Predicate<DroneCharge> predicate = null); // find a DroneCharge by id and return all his data as DroneCharge class
         IEnumerable<DroneCharge> GetListOfDroneCharge(Predicate<DroneCharge> predicate = null); // Get an IEnumerable of all base drone charge
         IEnumerable<Customer> GetListOfCustomer(Predicate<Customer> predicate=null); // Get an IEnumerable of all customers
         IEnumerable<Parcel> GetListOfParcel(Predicate<Parcel> predicate=null); // Get an IEnumerable of all parcels

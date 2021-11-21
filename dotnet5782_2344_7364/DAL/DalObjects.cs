@@ -651,13 +651,17 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public DroneCharge GetDroneCharge(int id)  // find a DroneCharge by id and return all his data as DroneCharge class
+        public DroneCharge GetDroneCharge(int id = 0, Predicate<DroneCharge> predicate = null)  // find a DroneCharge by id and return all his data as DroneCharge class
         {
-            if (!IfDroneExsists(id)) // if id doesnt exsist
+            if (predicate == null)
             {
-                throw new IdNotExsistException("drone charge", id); // throw exception
+                if (!IfDroneExsists(id)) // if id doesnt exsist
+                {
+                    throw new IdNotExsistException("drone charge", id); // throw exception
+                }
+                return DataSource.DroneChargeList.Find(element => element.DroneId == id);
             }
-            return DataSource.DroneChargeList.Find(element => element.DroneId == id);
+            return DataSource.DroneChargeList.Find(predicate);
         }
         #endregion
         #region//return an array of electricity data

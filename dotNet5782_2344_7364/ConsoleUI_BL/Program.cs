@@ -14,6 +14,7 @@ namespace ConsoleUI_BL
         static void Main(string[] args)
         {
             bl = new BL();
+            PrintFunc(1);
             while (true)
             {
                 Option option; // read users option choice
@@ -388,9 +389,9 @@ namespace ConsoleUI_BL
             }
             #endregion
             #region// if i = 4 print choice request for updating
-            if (i == 4) //request for updating
+            if (i == 4) //request for updating       
             {
-                Console.WriteLine("Please enter your Update choice:\n\t1) Assign parcel to customer\n\t2) Collect parcel by drone\n\t3) Deliver parcel to customer\n\t4) Send drone to charge at base station\n\t5) Release drone from charging\n");
+                Console.WriteLine("Please enter your Update choice:\n\t1) Drone rename or remodel\n\t2) Base tation rename or renum of chargeSlot\n\t3) Customer rename or rephone\n\t4) Send drone to charge at base station\n\t5) Release drone from charging\n\t6)Associate drone\n\t7)Collect parcel by drone\n\t8)Deliver parcel");
                 return;
             }
             #endregion

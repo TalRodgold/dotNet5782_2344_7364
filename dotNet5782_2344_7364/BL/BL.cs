@@ -229,9 +229,9 @@ namespace IBL
                 else
                 {
                     newParcelInTransit = GetParcelInTransitById(GetDroneToList(id).NumberOfParcelInTransit);
-
                 }
-                Drone newDrone = new Drone(GetDroneToList(id).Id, GetDroneToList(id).Model, GetDroneToList(id).Weight, GetDroneToList(id).Battery, GetDroneToList(id).DroneStatuses, newParcelInTransit, GetDroneToList(id).CurrentLocation);
+                DroneToList droneToList = GetDroneToList(id);
+                Drone newDrone = new Drone(droneToList.Id, droneToList.Model, droneToList.Weight, droneToList.Battery, droneToList.DroneStatuses, newParcelInTransit, droneToList.CurrentLocation);
                 return newDrone;
             }
             catch (IDAL.DO.IdNotExsistException exception) // if drone id does not exsists and was thrown from dal objects
@@ -558,7 +558,7 @@ namespace IBL
                 foreach (var item in dal.GetListOfBaseStation())//check which station is clothest for the sender
                 {
                     distance = CalculateDistance(new Location(item.Latitude, item.Latitude), y);
-                    if (distance < min && predicate.Equals(true) && predicate1.Equals(true))
+                    if (distance < min && (predicate!=null) && (predicate1!=null))
                     {
                         baseStationId = item.Id;
                         min = distance;
@@ -633,7 +633,7 @@ namespace IBL
             try
             {
                 DroneToList newDrone = ListOfDronsBL.Find(element => element.Id == id);
-                if (newDrone.DroneStatuses == Enums.DroneStatuses.Available)
+                if (newDrone.DroneStatuses != Enums.DroneStatuses.Available)
                     throw new UnavailableExeption("drone", id);
                 int stationId = CalculateMinDistance(GetDroneById(id).CurrentLocation, element => element.NumberOfFreeChargingSlots > 0, element => CalculateDistance(element.Location, newDrone.CurrentLocation) <= ConvertBatteryToDistance(newDrone));
                 if (stationId == 0)
@@ -662,7 +662,8 @@ namespace IBL
             }
             drone.Battery = drone.Battery * time * DroneChargingPaste;
             drone.DroneStatuses = Enums.DroneStatuses.Available;
-            IDAL.DO.BaseStation station = dal.getBaseStationByDroneId(id);
+            IDAL.DO.DroneCharge droneCharge = dal.GetDroneCharge(0,element => element.DroneId == id);
+            IDAL.DO.BaseStation station = dal.getBaseStationByDroneId(droneCharge.StationId);//
             station.ChargeSlots -= 1;
             dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.ChargeSlots);
             dal.ReleaseDroneCharge(id, station.Id);

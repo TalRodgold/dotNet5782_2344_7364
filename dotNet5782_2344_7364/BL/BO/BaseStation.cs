@@ -18,7 +18,7 @@ namespace IBL
             public List<DroneInCharging> ListOfDroneInCharging { set; get; }
             public override string ToString()
             {
-                return $" Base station #{Id}: \n Name = {Name} \n {Location.ToString()} \n Number of free charging slots = {NumberOfFreeChargingSlots} \n All drones in charging: {printList(ListOfDroneInCharging)} \n ";
+                return $" Base station #{Id}: \n Name = {Name} \n{Location.ToString()} Number of free charging slots = {NumberOfFreeChargingSlots} \n All drones in charging: {printList(ListOfDroneInCharging)} \n ";
             }
             public BaseStation() { ListOfDroneInCharging = new List<DroneInCharging>(); }
 

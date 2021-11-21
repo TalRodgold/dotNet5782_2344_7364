@@ -23,7 +23,7 @@ namespace IBL
             public DateTime DeliveryTime { set; get; }
             public override string ToString()
             {
-                return $" ID = {Id} \n Sender = {Sender} \n Reciver = {Reciver} \n weight = {Weight} \n Prioritie = {Prioritie} \n Drone in parcel = {DroneInParcel} \n Parcel creating time {ParcelCreatingTime} \n Association time = {AssociationTime} \n Pickup time = {PickupTime} \n Delivery time = {DeliveryTime} \n";
+                return $" ID = {Id} \n Sender = \n{Sender} \n Reciver = \n{Reciver} \n weight = {Weight} \n Prioritie = {Prioritie} \n Drone in parcel = {DroneInParcel} \n Parcel creating time {ParcelCreatingTime} \n Association time = {AssociationTime} \n Pickup time = {PickupTime} \n Delivery time = {DeliveryTime} \n";
             }
             public Parcel() { }
            

@@ -25,7 +25,7 @@ namespace IBL
             }
             public override string ToString()
             {
-                return $" Parcel #{Id}: \n Weight = {Weight} \n Prioritie = {Prioritie} \n Parcel status = {ParcelStatus} \n Customer in parcel = {CustomerInParcel} \n ";
+                return $"Parcel #{Id}: \n Weight = {Weight} \n Prioritie = {Prioritie} \n Parcel status = {ParcelStatus} \n Customer in parcel =\n \t {CustomerInParcel} \n ";
             }
 
         }

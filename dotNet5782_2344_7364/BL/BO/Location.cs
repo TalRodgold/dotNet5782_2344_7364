@@ -14,7 +14,7 @@ namespace IBL
             public double Latitude { set; get; }
             public override string ToString()
             {
-                return $" Longitude = {sexagesimal(Longitude, 'N')}: \n Latitude = {sexagesimal(Latitude, 'E')} \n";
+                return $"Longitude = {sexagesimal(Longitude, 'N')}: \n Latitude = {sexagesimal(Latitude, 'E')} \n";
             }
             public Location(double longitude, double latitude)
             {
