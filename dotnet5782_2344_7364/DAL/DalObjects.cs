@@ -94,7 +94,10 @@ namespace DalObjects
         /// <param name="deliverd"></param>
         public int ConstructParcel(int senderId, int targetId, WeightCategories weight, Priorities priority, DateTime request, int droneId, DateTime schedual, DateTime pickUp, DateTime deliverd) // construct a new parcel
         {
-           
+            if (senderId == targetId)
+            {
+                throw new SameIdException("senders ID and recivers ID ", senderId);
+            }
             Parcel newParcel = new Parcel
             {
                 Id = DataSource.Config.ParcelId++, // grow runing number by 1
@@ -109,8 +112,7 @@ namespace DalObjects
                 Deliverd = deliverd
             };
             DataSource.ParcelList.Add(newParcel); //  add to list
-            return newParcel.Id;
-            
+            return newParcel.Id;  
         }
         #endregion
         #region//construct a new customer

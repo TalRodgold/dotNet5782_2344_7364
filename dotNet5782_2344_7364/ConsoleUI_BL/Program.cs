@@ -383,7 +383,7 @@ namespace ConsoleUI_BL
         /// printing function
         /// </summary>
         /// <param name="i"></param>
-        static void PrintFunc(int i) // print function
+        static void PrintFunc(int i) // print function.
         {
             #region//if i = 1   print a welcome intro
             if (i == 1) // print option welcome intro
@@ -434,7 +434,7 @@ namespace ConsoleUI_BL
             #region// if i = 4 print choice request for updating
             if (i == 4) //request for updating       
             {
-                Console.WriteLine("Please enter your Update choice:\n\t1) Drone rename or remodel\n\t2) Base station rename or change size of charge Slot\n\t3) Customer rename or change phone number\n\t4) Send drone to charge at base station\n\t5) Release drone from charging\n\t6) Associate drone\n\t7) Collect parcel by drone\n\t8) Deliver parcel");
+                Console.WriteLine("Please enter your Update choice:\n\t1) Drone rename model\n\t2) Base station rename or/and change size of charge Slot\n\t3) Customer rename and/or change phone number\n\t4) Send drone to charge at base station\n\t5) Release drone from charging\n\t6) Associate drone\n\t7) Collect parcel by drone\n\t8) Deliver parcel");
                 return;
             }
             #endregion
@@ -480,21 +480,20 @@ namespace ConsoleUI_BL
                 return;
             }
             #endregion
-            #region// if i = 11 print user input for Drone associate
-            if (i == 11) // print to user data he needs to type in 
+            #region// if i = 11 print drone rename model
+            if (i == 11) // print to user the data he needs to type in 
             {
-                Console.WriteLine("Pleas enter drone ID: ");
-                Console.WriteLine("Pleas enter model to change to");
+                Console.WriteLine("Please enter drone ID: ");
+                Console.WriteLine("Please enter new model name:");
                 return;
             }
             #endregion
             #region// if i = 12 print user input for Drone associate
             if (i == 12) // print to user data he needs to type in 
             {
-                Console.WriteLine("Pleas enter base stationId ID: ");
-                Console.WriteLine("Pleas enter model to change to");
-                Console.WriteLine("Pleas enter new base station name");
-                Console.WriteLine("Pleas enter new free charge slots number");
+                Console.WriteLine("Please enter base stationId ID: ");
+                Console.WriteLine("Please enter new base station name");
+                Console.WriteLine("Please enter new free charge slots number");
                 return;
             }
             #endregion
