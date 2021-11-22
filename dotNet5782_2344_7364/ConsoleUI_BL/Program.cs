@@ -270,7 +270,7 @@ namespace ConsoleUI_BL
                         PrintFunc(14);// print to user data he needs to type in 
                         int userDroneId6;
                         int.TryParse(Console.ReadLine(), out userDroneId6);
-                        bl.DilaveryParcelByDrone(userDroneId6);
+                        bl.DeliveryParcelByDrone(userDroneId6);
                         break;
                     #endregion
                     default:
@@ -385,7 +385,7 @@ namespace ConsoleUI_BL
         /// <param name="i"></param>
         static void PrintFunc(int i) // print function.
         {
-            #region//if i = 1   print a welcome intro
+            #region// if i = 1  print a welcome intro
             if (i == 1) // print option welcome intro
             {
 
@@ -417,14 +417,14 @@ namespace ConsoleUI_BL
                 return;
             }
             #endregion
-            #region//if i = 2  print main menu
+            #region// if i = 2  print main menu
             if (i == 2) // print a main menu
             {
                 Console.WriteLine("TO SELECT OPTION ENTER SECTION NUMBER\n\n1) ADDING OPTIONS:\n\n2) UPDATE OPTIONS:\n\n3) DISPLAY DATA:\n\n4) DISPLAY LISTS\n\n5) EXIT\n");
                 return;
             }
             #endregion
-            #region//if i = 3 print  choice request for adding
+            #region// if i = 3 print  choice request for adding
             if (i == 3)//if i = 3 print  choice request for adding
             {
                 Console.WriteLine("Please enter your ADD choice:\n\t1) Add base station\n\t2) Add drone\n\t3) Add customer\n\t4) Add parcel\n\n");  // print choice request
@@ -452,35 +452,35 @@ namespace ConsoleUI_BL
                 return;
             }
             #endregion
-            #region//print to user data he needs to type in
+            #region// if i = 7 print to user data he needs to type in to add base station
             if (i == 7) // print to user data he needs to type in  
             {
                 Console.WriteLine("Please enter following data: \n 1) Id \n 2) Name \n 3) Longtitude \n 4) Latitude \n 5) Number of charge slots ");
                 return;
             }
             #endregion
-            #region// if i = 8 print to user data he needs to type in 
+            #region// if i = 8 print to user data he needs to type in to add drone
             if (i == 8)// print to user data he needs to type in  
             {
                 Console.WriteLine("Please enter following data: \n 1) Id \n 2) Model \n 3) Weight categorie: 0 for Light,  1 for Medium,  2 for Heavy \n 4) base station Id to associate");
                 return;
             }
             #endregion
-            #region// if i = 9 print to user data he needs to type in 
+            #region// if i = 9 print to user data he needs to type in to add customer
             if (i == 9) // print to user data he needs to type in 
             {
                 Console.WriteLine("Please enter following data: \n 1) Id \n 2) Name \n 3) phone number \n 4) Longtitude \n 5) Latitude ");
                 return;
             }
             #endregion
-            #region// if i = 10 print to user data he needs to type in 
+            #region// if i = 10 print to user data he needs to type in to add parcel
             if (i == 10) // print to user data he needs to type in 
             {
                 Console.WriteLine("Please enter following data: \n 1) sender id \n 2) target id \n 3) Weight categories 0 for Light,  1 for Medium,  2 for Heavy \n 4) prioritie  0 for Regular,  1 for Express,  2 for Urgant  \n ");
                 return;
             }
             #endregion
-            #region// if i = 11 print drone rename model
+            #region// if i = 11 print update drone rename model
             if (i == 11) // print to user the data he needs to type in 
             {
                 Console.WriteLine("Please enter drone ID: ");
@@ -488,16 +488,16 @@ namespace ConsoleUI_BL
                 return;
             }
             #endregion
-            #region// if i = 12 print user input for Drone associate
+            #region// if i = 12 print update base station rename and/or charging slots
             if (i == 12) // print to user data he needs to type in 
             {
                 Console.WriteLine("Please enter base stationId ID: ");
                 Console.WriteLine("Please enter new base station name");
-                Console.WriteLine("Please enter new free charge slots number");
+                Console.WriteLine("Please enter new number of free charging slots ");
                 return;
             }
             #endregion
-            #region// if i = 13 print user input for Drone associate
+            #region// if i = 13 print update customer rename and/or phone number
             if (i == 13) // print to user data he needs to type in 
             {
                 Console.WriteLine("Pleas enter customer ID: ");
@@ -506,28 +506,28 @@ namespace ConsoleUI_BL
                 return;
             }
             #endregion
-            #region// if i = 14 print user input for Drone associate
+            #region// if i = 14 print enter drone id
             if (i == 14) // print to user data he needs to type in 
             {
                 Console.WriteLine("Pleas enter drone ID: ");
                 return;
             }
             #endregion
-            #region// if i = 15 print user input for Drone associate
+            #region// if i = 15 print enter customer id
             if (i == 15) // print to user data he needs to type in 
             {
                 Console.WriteLine("Pleas enter customer ID: ");
                 return;
             }
             #endregion
-            #region// if i = 16 print user input for Drone associate
+            #region// if i = 16 print enter station id
             if (i == 16) // print to user data he needs to type in 
             {
                 Console.WriteLine("Pleas enter base station ID: ");
                 return;
             }
             #endregion
-            #region// if i = 17 print user input for Drone associate
+            #region// if i = 17 print enter parcel id
             if (i == 17) // print to user data he needs to type in 
             {
                 Console.WriteLine("Pleas enter parcel ID: ");

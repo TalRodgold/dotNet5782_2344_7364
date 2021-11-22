@@ -20,12 +20,16 @@ namespace IBL
         {
             try
             {
+                if (id < 0) // if id is negative
+                {
+                    throw new InvalidIdException("negative", id);
+                }
                 IDAL.DO.Customer idalCustomer = dal.GetCustomer(id); // get a customer of dal type
                 Customer newCustomer = new Customer(idalCustomer.Id, idalCustomer.Name, idalCustomer.Phone, new Location(idalCustomer.Longtitude, idalCustomer.Latitude)); // creat and add to a customer of bl type
 
 
                 Predicate<IDAL.DO.Parcel> predicate = element => element.SenderId == id; // predicat to find parcel based on senders id
-                Predicate<IDAL.DO.Parcel> predicate1 = element => element.TargetId == id; // predicat to find parcel based on targets id
+                Predicate<IDAL.DO.Parcel> predicate1 = element => element.ReciverId == id; // predicat to find parcel based on targets id
 
                 List<IDAL.DO.Parcel> newSenderParcel = dal.GetListOfParcel(predicate).ToList(); // get parcel of dal type based on senders id
                 List<ParcelAtCustomer> list = new List<ParcelAtCustomer>();
@@ -63,13 +67,17 @@ namespace IBL
         {
             try
             {
+                if (id < 0) // if id is negative
+                {
+                    throw new InvalidIdException("negative", id);
+                }
                 IDAL.DO.Parcel idalParcel = dal.GetParcel(id, predicate);//Get parcel by id or by predicate
                 if (idalParcel.Id <= 0)//if the parcel is empty
                 {
                     return null;
                 }
                 Customer senderCustomer = GetCustomerById(idalParcel.SenderId); // creat a new customer based on the sender of the parcel
-                Customer reciverCustomer = GetCustomerById(idalParcel.TargetId); // creat a new customer based on the reciver of the parcel
+                Customer reciverCustomer = GetCustomerById(idalParcel.ReciverId); // creat a new customer based on the reciver of the parcel
 
                 CustomerInParcel senderCustomerInParcel = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name); // creat a customer in parcel based on current customer
                 CustomerInParcel reciverCustomerInParcel = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name); // creat a customer in parcel based on current customer
@@ -86,7 +94,7 @@ namespace IBL
                 }
 
 
-                Parcel newParcel = new Parcel(idalParcel.Id, senderCustomerInParcel, reciverCustomerInParcel, (Enums.WeightCategories)idalParcel.Weight, (Enums.Priorities)idalParcel.Priority, newDroneInParcel, idalParcel.Requsted, idalParcel.Scheduled, idalParcel.PickedUp, idalParcel.Deliverd);//creat new parcel
+                Parcel newParcel = new Parcel(idalParcel.Id, senderCustomerInParcel, reciverCustomerInParcel, (Enums.WeightCategories)idalParcel.Weight, (Enums.Priorities)idalParcel.Priority, newDroneInParcel, idalParcel.CreatingTime, idalParcel.AssociatedTime, idalParcel.PickedUp, idalParcel.Deliverd);//creat new parcel
                 return newParcel;
             }
             catch (IDAL.DO.IdNotExsistException exception) // if parcel id does not exsists and was thrown from dal objects
@@ -106,6 +114,10 @@ namespace IBL
         {
             try
             {
+                if (id < 0)// if id is negative
+                {
+                    throw new InvalidIdException("negative", id);
+                }
                 if (id == -1)
                 {
                     throw new IdNotExsistException("drone", id); // throw
@@ -141,6 +153,10 @@ namespace IBL
         {
             try
             {
+                if (id < 0) // if id is negative
+                {
+                    throw new InvalidIdException("negative", id);
+                }
                 if (!dal.IfDroneExsists(id))
                 {
                     throw new IdNotExsistException("drone", id, new IDAL.DO.IdNotExsistException("drone", id));
@@ -165,6 +181,10 @@ namespace IBL
         {
             try
             {
+                if (id < 0) // if id is negative
+                {
+                    throw new InvalidIdException("negative", id);
+                }
                 if (!dal.IfBaseStationExsists(id))
                 {
                     throw new IdNotExsistException("base station", id, new IDAL.DO.IdNotExsistException("base station", id));
@@ -201,11 +221,15 @@ namespace IBL
         {
             try
             {
+                if (id < 0)// if id is negative
+                {
+                    throw new InvalidIdException("negative", id);
+                }
                 Predicate<IDAL.DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
 
                 IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
                 Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
-                Customer reciverCustomer = GetCustomerById(newParcel.TargetId); // creat a new customer based on the reciver of the parcel
+                Customer reciverCustomer = GetCustomerById(newParcel.ReciverId); // creat a new customer based on the reciver of the parcel
                 ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, StatusCalculate(dal.GetParcel(GetParcelById(newParcel.Id, predicate).Id)));
                 return newParcelToList;
             }
@@ -226,6 +250,10 @@ namespace IBL
         {
             try
             {
+                if (id < 0)// if id is negative
+                {
+                    throw new InvalidIdException("negative", id);
+                }
                 Predicate<IDAL.DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
                 IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
                 bool status = true;
@@ -234,7 +262,7 @@ namespace IBL
                     status = false;
                 }
                 Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
-                Customer reciverCustomer = GetCustomerById(newParcel.TargetId); // creat a new customer based on the reciver of the parcel
+                Customer reciverCustomer = GetCustomerById(newParcel.ReciverId); // creat a new customer based on the reciver of the parcel
                 CustomerInParcel sCustomer = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name);
                 CustomerInParcel rCustomer = new CustomerInParcel(reciverCustomer.Id, reciverCustomer.Name);
 

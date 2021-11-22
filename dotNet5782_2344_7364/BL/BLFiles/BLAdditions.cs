@@ -17,8 +17,13 @@ namespace IBL
         /// <param name="b"></param>
         public void AddBaseStation(BaseStation b)//Base station addition
         {
+           
             try
             {
+                if (b.Id < 0) // if id is negative
+                {
+                    throw new InvalidIdException("negative", b.Id);
+                }
                 dal.ConstructBaseStation(b.Id, b.Name, b.NumberOfFreeChargingSlots, b.Location.Longitude, b.Location.Latitude);//call for constructor
             }
             catch (IDAL.DO.IdAlreadyExsistsExceptions exception) // if base station id already exsists and was thrown from dal objects
@@ -38,6 +43,10 @@ namespace IBL
         {
             try
             {
+                if (d.Id < 0)// if id is negative
+                {
+                    throw new InvalidIdException("negative", d.Id);
+                }
                 if (!dal.IfBaseStationExsists(startingBaseStation))//if base atstion already exist
                 {
                     throw new IdNotExsistException("base station", startingBaseStation);
@@ -51,10 +60,6 @@ namespace IBL
             {
                 throw new IdAlreadyExsistsExceptions(exception.Text, exception.ID, exception); // throw
             }
-            //catch( IdAlreadyExsistsExceptions exception)
-            //{
-            //    throw new IdAlreadyExsistsExceptions(exception.Message, startingBaseStation, exception); // throw
-            //}
         }
         #endregion
         #region//Customer addition
@@ -66,8 +71,14 @@ namespace IBL
         {
             try
             {
+                if (c.Id < 0)// if id is negative
+                {
+                    throw new InvalidIdException("negative", c.Id);
+                }
                 if (dal.IfCustomerExsists(c.Id))//if customer already exist 
+                {
                     throw new IdAlreadyExsistsExceptions("Customer", c.Id);
+                }
                 dal.ConstructCustomer(c.Id, c.Name, c.Phone, c.Location.Longitude, c.Location.Latitude);//call to the constructor
             }
             catch (IDAL.DO.IdAlreadyExsistsExceptions exception) // if customer id already exsists and was thrown from dal objects
@@ -89,6 +100,14 @@ namespace IBL
         {
             try
             {
+                if (sender.Id < 0) // if id is negative
+                {
+                    throw new InvalidIdException("negative", sender.Id);
+                }
+                if (reciver.Id < 0) // if id is negative
+                {
+                    throw new InvalidIdException("negative", reciver.Id);
+                }
                 int id = dal.ConstructParcel(sender.Id, reciver.Id, (IDAL.DO.WeightCategories)weight, (IDAL.DO.Priorities)prioritie, DateTime.Now, -1, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);//call the constructor
                 Parcel newParcel = new Parcel(id, sender, reciver, weight, prioritie, null, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
             }

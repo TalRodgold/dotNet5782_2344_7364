@@ -104,12 +104,12 @@ namespace DalObjects
             Parcel newParcel = new Parcel();
             newParcel.Id = Config.ParcelId;
             newParcel.SenderId = CustomerList.ElementAt(rnd.Next(0, CustomerList.Count())).Id;
-            newParcel.TargetId = CustomerList.ElementAt(rnd.Next(0, CustomerList.Count())).Id;
+            newParcel.ReciverId = CustomerList.ElementAt(rnd.Next(0, CustomerList.Count())).Id;
             newParcel.Weight = (WeightCategories)rnd.Next(0, 3);
             newParcel.Priority = (Priorities)rnd.Next(0, 3);
-            newParcel.Requsted = DateTime.Now;
+            newParcel.CreatingTime = DateTime.Now;
             newParcel.DroneId = -1;
-            newParcel.Scheduled = DateTime.Now.AddHours(rnd.Next(1, 23));
+            newParcel.AssociatedTime = DateTime.Now.AddHours(rnd.Next(1, 23));
             newParcel.PickedUp = DateTime.MinValue;
             newParcel.Deliverd = DateTime.MinValue;
             ParcelList.Add(newParcel); // add to list

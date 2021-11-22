@@ -102,12 +102,12 @@ namespace DalObjects
             {
                 Id = DataSource.Config.ParcelId++, // grow runing number by 1
                 SenderId = senderId,
-                TargetId = targetId,
+                ReciverId = targetId,
                 Weight = weight,
                 Priority = priority,
-                Requsted = request,
+                CreatingTime = request,
                 DroneId = droneId,
-                Scheduled = schedual,
+                AssociatedTime = schedual,
                 PickedUp = pickUp,
                 Deliverd = deliverd
             };
@@ -334,7 +334,7 @@ namespace DalObjects
             }
             if (GetListOfDroneCharge(element => element.StationId == id).ToList().Count() > numberOfChargingSlots) // if the new number is smaller than the number of drones charging currently
             {
-                throw new SizeProblemException("To small", GetListOfDroneCharge(element => element.StationId == id).ToList().Count()); // throw exception
+                throw new SizeProblemException("bigger", GetListOfDroneCharge(element => element.StationId == id).ToList().Count()); // throw exception
             }
             BaseStation newBaseStation = DataSource.BaseStationList.Find(element => element.Id == id);
             newBaseStation.ChargeSlots = numberOfChargingSlots;
@@ -421,7 +421,7 @@ namespace DalObjects
             int i = DataSource.ParcelList.FindIndex(element => element.Id == parcleId);
             Parcel newParcel = DataSource.ParcelList.Find(element => element.Id == parcleId);
             newParcel.DroneId = droneId;
-            newParcel.Requsted = DateTime.Now;
+            newParcel.CreatingTime = DateTime.Now;
             DataSource.ParcelList[i] = newParcel;
         }
         #endregion

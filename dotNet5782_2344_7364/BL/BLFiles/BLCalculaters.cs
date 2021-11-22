@@ -88,7 +88,7 @@ namespace IBL
 
                     double a = CalculateDistance(drone.CurrentLocation, GetBaseStationById(dal.GetDroneCharge(drone.Id).StationId).Location);
                     double b = CalculateDistance(drone.CurrentLocation, GetCustomerById(dal.GetParcel(drone.NumberOfParcelInTransit).SenderId).Location);
-                    double c = CalculateDistance(drone.CurrentLocation, GetCustomerById(dal.GetParcel(drone.NumberOfParcelInTransit).TargetId).Location);
+                    double c = CalculateDistance(drone.CurrentLocation, GetCustomerById(dal.GetParcel(drone.NumberOfParcelInTransit).ReciverId).Location);
                     if (a >= b && a >= c)
                     {
                         ListOfDronsBL.Find(element => element.Id == drone.Id).CurrentLocation = GetBaseStationById(dal.GetDroneCharge(drone.Id).StationId).Location;
@@ -101,7 +101,7 @@ namespace IBL
                     }
                     else
                     {
-                        ListOfDronsBL.Find(element => element.Id == drone.Id).CurrentLocation = GetCustomerById(dal.GetParcel(drone.NumberOfParcelInTransit).TargetId).Location;
+                        ListOfDronsBL.Find(element => element.Id == drone.Id).CurrentLocation = GetCustomerById(dal.GetParcel(drone.NumberOfParcelInTransit).ReciverId).Location;
                         return;
                     }
                 case Enums.DroneStatuses.Maintenance:
@@ -236,7 +236,7 @@ namespace IBL
                 return Enums.ParcelStatus.Supplied;
             if (p.PickedUp != DateTime.MinValue)
                 return Enums.ParcelStatus.Collected;
-            if (p.Scheduled != DateTime.MinValue)//AssociationTime
+            if (p.AssociatedTime != DateTime.MinValue)//AssociationTime
                 return Enums.ParcelStatus.Associated;
             return Enums.ParcelStatus.Defined;
 

@@ -36,7 +36,7 @@ namespace IBL
         void UpdateReleseDrone(int id, double time);
         void UpdateAssosiateDrone(int id);
         void PickupParcelByDrone(int droneId);
-        void DilaveryParcelByDrone(int droneId);
+        void DeliveryParcelByDrone(int droneId);
         DroneToList ConvertDroneDalToList(IDAL.DO.Drone idalDrone);
         DroneToList ConvertDroneBlToList(Drone blDrone);
         Customer convertCustomerDalToBl(IDAL.DO.Customer customer);

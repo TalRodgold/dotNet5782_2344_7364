@@ -31,7 +31,7 @@ namespace IBL
             if (newParcel.Id != 0)//(!newParcel.Equals(null))//if there have a parcel with this drone id
             {
                 newDrone.DroneStatuses = Enums.DroneStatuses.Delivery;
-                if (newParcel.Scheduled <= DateTime.MinValue)//the parcel didn't pick-upp
+                if (newParcel.AssociatedTime <= DateTime.MinValue)//the parcel didn't pick-upp
                 {
                     Location newLocation = new Location(dal.GetCustomer(newParcel.SenderId).Longtitude, dal.GetCustomer(newParcel.SenderId).Latitude);
                     int baseStationId = CalculateMinDistance(newLocation);
@@ -63,7 +63,7 @@ namespace IBL
                     if (listOfDeliveredParcel.Count != 0)//if there have pacel that has been delivered
                     {
                         IDAL.DO.Parcel newParcel_ = listOfDeliveredParcel[rnd.Next(listOfDeliveredParcel.Count)];
-                        IDAL.DO.Customer newCustomer = dal.GetCustomer(newParcel_.TargetId);
+                        IDAL.DO.Customer newCustomer = dal.GetCustomer(newParcel_.ReciverId);
                         newDrone.CurrentLocation = new Location(newCustomer.Longtitude, newCustomer.Latitude);
                     }
                     else//if there no have delivered parcel 
@@ -101,7 +101,7 @@ namespace IBL
         {
             List<IDAL.DO.Parcel> parcelList = dal.GetListOfParcel(element => (element.SenderId != -1)).ToList();
             List<IDAL.DO.Parcel> parcelListEnder = parcelList.FindAll(element => element.SenderId == customer.Id);
-            List<IDAL.DO.Parcel> parcelListReciver = parcelList.FindAll(element => element.TargetId == customer.Id);
+            List<IDAL.DO.Parcel> parcelListReciver = parcelList.FindAll(element => element.ReciverId == customer.Id);
             if (parcelList.Count != 0)
             {
                 List<ParcelAtCustomer> parcelAtCustomersListSender = null;
@@ -112,7 +112,7 @@ namespace IBL
                 List<ParcelAtCustomer> parcelAtCustomersListReciver = null;
                 foreach (var item in parcelListReciver)
                 {
-                    parcelAtCustomersListReciver.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, StatusCalculate(dal.GetParcel(item.Id)), new CustomerInParcel(item.TargetId, GetCustomerById(item.TargetId).Name)));
+                    parcelAtCustomersListReciver.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, StatusCalculate(dal.GetParcel(item.Id)), new CustomerInParcel(item.ReciverId, GetCustomerById(item.ReciverId).Name)));
                 }
                 return new Customer(customer.Id, customer.Name, customer.Phone, new Location(customer.Longtitude, customer.Latitude), parcelAtCustomersListSender, parcelAtCustomersListReciver);
             }

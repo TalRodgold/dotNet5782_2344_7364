@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
 using System.Linq;
+using System.Runtime.Serialization;
 
 namespace IBL
 {
@@ -18,11 +19,23 @@ namespace IBL
         /// <param name="newModel"></param>
         public void UpdateDroneModel(int id, string newModel)//Update drone model
         {
-            DroneToList newDroneToList = GetDroneToList(id);
-            newDroneToList.Model = newModel;
-            int index = ListOfDronsBL.FindIndex(element => element.Id == id);
-            ListOfDronsBL[index] = newDroneToList;
-            dal.UpdateDroneModel(id, newModel);
+            try
+            {
+                if (id < 0)// if id is negative
+                {
+                    throw new InvalidIdException("negative", id);
+                }
+                DroneToList newDroneToList = GetDroneToList(id);
+                newDroneToList.Model = newModel;
+                int index = ListOfDronsBL.FindIndex(element => element.Id == id);
+                ListOfDronsBL[index] = newDroneToList;
+                dal.UpdateDroneModel(id, newModel);
+            }
+            catch (IDAL.DO.IdNotExsistException exception)
+            {
+
+                throw new IdNotExsistException(exception.Text, exception.ID, exception);
+            } 
         }
         #endregion
         #region//Update base station name/number of charging slots
@@ -32,15 +45,31 @@ namespace IBL
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="numberOfChargingSlots"></param>
-        public void UpdateBaseStation(int id, string name = "", int numberOfChargingSlots = -1)//Update base station name/number of charging slots
+        public void UpdateBaseStation(int id, string name = "", int numberOfChargingSlots = 0)//Update base station name/number of charging slots
         {
-            if (name != "")
+            try
             {
-                dal.UpdateBaseStationName(id, name);
+                if (id < 0) // if id is negative
+                {
+                    throw new InvalidIdException("negative", id);
+                }
+                if (name != "")
+                {
+                    dal.UpdateBaseStationName(id, name);
+                }
+                if (numberOfChargingSlots != 0)
+                {
+                    dal.UpdateChargingSlotsNumber(id, numberOfChargingSlots);
+                }
             }
-            if (numberOfChargingSlots != -1)
+            catch (IDAL.DO.IdNotExsistException exception)
             {
-                dal.UpdateChargingSlotsNumber(id, numberOfChargingSlots);
+
+                throw new IdNotExsistException(exception.Text, exception.ID, exception);
+            }
+            catch  (IDAL.DO.SizeProblemException exception)
+            {
+                throw new SizeProblemException(exception.Text ,exception.Number, exception);
             }
         }
         #endregion
@@ -53,13 +82,25 @@ namespace IBL
         /// <param name="phone"></param>
         public void UpdateCustomer(int id, string name = "", string phone = "")//Update customer name/phone
         {
-            if (name != "")
+            try
             {
-                dal.UpdateCustomerName(id, name);
+                if (id < 0) // if id is negative
+                {
+                    throw new InvalidIdException("negative", id);
+                }
+                if (name != "")
+                {
+                    dal.UpdateCustomerName(id, name);
+                }
+                if (phone != "")
+                {
+                    dal.UpdateCustomerPhone(id, phone);
+                }
             }
-            if (phone != "")
+            catch (IDAL.DO.IdNotExsistException exception)
             {
-                dal.UpdateCustomerPhone(id, phone);
+
+                throw new IdNotExsistException(exception.Text, exception.ID, exception);
             }
         }
         #endregion
@@ -72,11 +113,17 @@ namespace IBL
         {
             try
             {
+                if (id < 0) // if id is negative
+                {
+                    throw new InvalidIdException("negative", id);
+                }
                 DroneToList newDrone = ListOfDronsBL.Find(element => element.Id == id);
-                if (newDrone.DroneStatuses != Enums.DroneStatuses.Available)
+                if (newDrone.DroneStatuses != Enums.DroneStatuses.Available) // if drone is unavalible
+                {
                     throw new UnavailableExeption("drone", id);
+                }
                 int stationId = CalculateMinDistance(GetDroneById(id).CurrentLocation, element => element.NumberOfFreeChargingSlots > 0, element => CalculateDistance(element.Location, newDrone.CurrentLocation) <= ConvertBatteryToDistance(newDrone));
-                if (stationId == 0)
+                if (stationId == 0) // if there are no free base stations
                 {
                     throw new UnavailableExeption("base station", stationId);
                 }
@@ -105,12 +152,16 @@ namespace IBL
         /// <param name="time"></param>
         public void UpdateReleseDrone(int id, double time)//Update-relese drone from charging slot
         {
+            if (id < 0) // if id is negative
+            {
+                throw new InvalidIdException("negative", id);
+            }
             DroneToList drone = GetDroneToList(id);
             if (drone.DroneStatuses != Enums.DroneStatuses.Maintenance)
             {
                 throw new UnavailableExeption("drone", id);
             }
-            if (drone.Battery * time * DroneChargingPaste >= 1)
+            if (drone.Battery * time * DroneChargingPaste >= 1) // if charged more than 100 %
             {
                 drone.Battery = 1;
             }
@@ -135,8 +186,12 @@ namespace IBL
         {
             try
             {
+                if (id < 0) // if id is negative
+                {
+                    throw new InvalidIdException("negative", id);
+                }
                 Drone drone = GetDroneById(id);
-                if (drone.DroneStatuses != Enums.DroneStatuses.Available)
+                if (drone.DroneStatuses != Enums.DroneStatuses.Available) // if drone is unavalible
                 {
                     throw new UnavailableExeption("drone", id);
                 }
@@ -164,7 +219,7 @@ namespace IBL
                 }
                 if (list.Count() == 0)
                 {
-                    throw new UnavailableExeption("drones", 0);
+                    throw new UnavailableExeption("parcel", 0);
                 }
                 if (list.Count() == 1)
                 {
@@ -190,7 +245,7 @@ namespace IBL
                 }
                 ListOfDronsBL.Find(element => element.Id == id).DroneStatuses = Enums.DroneStatuses.Delivery;
                 dal.AssociateDroneToParcel(id, currentParcel.Id);
-
+                // change the bool!!!!!!!!!!!!!
             }
             catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
             {
@@ -207,12 +262,22 @@ namespace IBL
         public void PickupParcelByDrone(int droneId)//Update-pick-up parcel by drone
         {
             //DroneToList droneInList = ListOfDronsBL.Find(element => element.Id == droneId);
-            Drone drone = GetDroneById(droneId);
+            
             try
             {
+                
+                if (droneId < 0) // if id is negative
+                {
+                    throw new InvalidIdException("negative", droneId);
+                }
+                Drone drone = GetDroneById(droneId);
                 if (drone.DroneStatuses != Enums.DroneStatuses.Available || drone.ParcelInTransit.Status)
                 {
                     throw new UnavailableExeption("drone", droneId);
+                }
+                if (GetParcelById(drone.ParcelInTransit.Id).AssociationTime != DateTime.MinValue)
+                {
+                    throw new NotAssociatedException("drone", droneId);
                 }
                 drone.Battery = drone.Battery * ElectricityUseAvailiblity * CalculateDistance(drone.CurrentLocation, drone.ParcelInTransit.PickupLocation);
                 drone.CurrentLocation = drone.ParcelInTransit.PickupLocation;
@@ -234,14 +299,23 @@ namespace IBL
         /// Update-dilavery parcel by drone
         /// </summary>
         /// <param name="droneId"></param>
-        public void DilaveryParcelByDrone(int droneId)//Update-dilavery parcel by drone
+        public void DeliveryParcelByDrone(int droneId)//Update-dilavery parcel by drone
         {
-            Drone drone = GetDroneById(droneId);
+         
             try
             {
+                if (droneId < 0) // if id is negative
+                {
+                    throw new InvalidIdException("negative", droneId);
+                }
+                Drone drone = GetDroneById(droneId);
                 if (drone.DroneStatuses != Enums.DroneStatuses.Available || !drone.ParcelInTransit.Status)
                 {
                     throw new UnavailableExeption("drone", droneId);
+                }
+                if (GetParcelById(drone.ParcelInTransit.Id).PickupTime != DateTime.MinValue)
+                {
+                    throw new NotAssociatedException("drone", droneId);
                 }
                 drone.Battery = CalculateBattery(null, drone);
                 drone.CurrentLocation = drone.ParcelInTransit.DeliveryLocation;

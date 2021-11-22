@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace IDAL.DO
+namespace IBL.BO
 {
     /// <summary>
     /// throw exception for error where there is a size problem
@@ -21,9 +21,11 @@ namespace IDAL.DO
             Text = message;
         }
 
-        public SizeProblemException(string message, Exception innerException) : base(message, innerException)
+        public SizeProblemException(string message, int number, Exception innerException) : base(message, innerException)
         {
-           
+            Number = number;
+            Text = message;
+
         }
 
         protected SizeProblemException(SerializationInfo info, StreamingContext context) : base(info, context)
