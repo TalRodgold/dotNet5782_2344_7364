@@ -162,17 +162,9 @@ namespace ConsoleUI_BL
                         break;
                 }
             }
-            catch ( IBL.BO.IdAlreadyExsistsExceptions exception)
+            catch (Exception exception)
             {
-                Console.WriteLine("\n");
-                Console.WriteLine(exception.ToString());
-                Console.WriteLine("\n");
-            }
-            catch (IBL.BO.IdNotExsistException exception)
-            {
-                Console.WriteLine("\n");
-                Console.WriteLine(exception.ToString());
-                Console.WriteLine("\n");
+                PrintException(exception);
             }
         }
         #endregion
@@ -287,17 +279,9 @@ namespace ConsoleUI_BL
                 }
 
             }
-            catch (IBL.BO.IdNotExsistException exception)
+            catch (Exception exception)
             {
-                Console.WriteLine("\n");
-                Console.WriteLine(exception.ToString());
-                Console.WriteLine("\n");
-            }
-            catch (IBL.BO.UnavailableExeption exception)
-            {
-                Console.WriteLine("\n");
-                Console.WriteLine(exception.ToString());
-                Console.WriteLine("\n");
+                PrintException(exception);
             }
         }
 
