@@ -46,7 +46,7 @@ namespace IBL
         {
             try
             {
-                dal.ConstructBaseStation(b.Id, b.Name, b.NumberOfFreeChargingSlots, b.Location.Longitude, b.Location.Latitude);
+                dal.ConstructBaseStation(b.Id, b.Name, b.NumberOfFreeChargingSlots, b.Location.Longitude, b.Location.Latitude);//call for constructor
             }
             catch (IDAL.DO.IdAlreadyExsistsExceptions exception) // if base station id already exsists and was thrown from dal objects
             {
@@ -65,14 +65,14 @@ namespace IBL
         {
             try
             {
-                if (!dal.IfBaseStationExsists(startingBaseStation))
+                if (!dal.IfBaseStationExsists(startingBaseStation))//if base atstion already exist
                 {
                     throw new IdNotExsistException("base station", startingBaseStation);
                 }
-                d.CurrentLocation = GetBaseStationById(startingBaseStation).Location;
+                d.CurrentLocation = GetBaseStationById(startingBaseStation).Location;//update the location to be like his starting base station
                 dal.ConstructDrone(d.Id, d.Model, (IDAL.DO.WeightCategories)d.Weight); // creat drone
                 dal.UpdateDroneCharge(d.Id, startingBaseStation); // connect drone to charging base station
-                ListOfDronsBL.Add(new DroneToList(d.Id, d.Model, d.Weight, d.Battery, d.DroneStatuses, d.CurrentLocation, d.ParcelInTransit.Id));
+                ListOfDronsBL.Add(new DroneToList(d.Id, d.Model, d.Weight, d.Battery, d.DroneStatuses, d.CurrentLocation, d.ParcelInTransit.Id));//add the drone to the local list of drones
             }
             catch (IDAL.DO.IdAlreadyExsistsExceptions exception) // if drone id already exsists and was thrown from dal objects
             {
@@ -93,7 +93,9 @@ namespace IBL
         {
             try
             {
-                dal.ConstructCustomer(c.Id, c.Name, c.Phone, c.Location.Longitude, c.Location.Latitude);
+                if (dal.IfCustomerExsists(c.Id))//if customer already exist 
+                    throw new IdNotExsistException("Customer", c.Id); 
+                dal.ConstructCustomer(c.Id, c.Name, c.Phone, c.Location.Longitude, c.Location.Latitude);//call to the constructor
             }
             catch (IDAL.DO.IdAlreadyExsistsExceptions exception) // if customer id already exsists and was thrown from dal objects
             {
@@ -112,7 +114,7 @@ namespace IBL
         /// <param name="prioritie"></param>
         public void AddParcel(CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie)
         {
-            int id = dal.ConstructParcel(sender.Id, reciver.Id, (IDAL.DO.WeightCategories)weight, (IDAL.DO.Priorities)prioritie, DateTime.Now, -1, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+            int id = dal.ConstructParcel(sender.Id, reciver.Id, (IDAL.DO.WeightCategories)weight, (IDAL.DO.Priorities)prioritie, DateTime.Now, -1, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);//call the constructor
             Parcel newParcel = new Parcel(id, sender, reciver, weight, prioritie, null, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
         }
         #endregion
@@ -173,8 +175,8 @@ namespace IBL
         {
             try
             {
-                IDAL.DO.Parcel idalParcel = dal.GetParcel(id, predicate);
-                if (idalParcel.Id <= 0)
+                IDAL.DO.Parcel idalParcel = dal.GetParcel(id, predicate);//Get parcel by id or by predicate
+                if (idalParcel.Id <= 0)//if the parcel is empty
                 {
                     return null;
                 }
@@ -184,19 +186,19 @@ namespace IBL
                 CustomerInParcel senderCustomerInParcel = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name); // creat a customer in parcel based on current customer
                 CustomerInParcel reciverCustomerInParcel = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name); // creat a customer in parcel based on current customer
                 DroneInParcel newDroneInParcel;
-                if (idalParcel.DroneId == -1)
+                if (idalParcel.DroneId == -1)//if the parcel not assosiate
                 {
                     newDroneInParcel = null;
                 }
-                else
+                else//if the parcel is assosiate
                 {
-                    Drone newDrone = GetDroneById(idalParcel.DroneId);
-                    newDroneInParcel = new DroneInParcel(newDrone.Id, newDrone.Battery, newDrone.CurrentLocation);
+                    Drone newDrone = GetDroneById(idalParcel.DroneId);//get drone by drone id
+                    newDroneInParcel = new DroneInParcel(newDrone.Id, newDrone.Battery, newDrone.CurrentLocation);//creat new drone in parcel 
 
                 }
 
 
-                Parcel newParcel = new Parcel(idalParcel.Id, senderCustomerInParcel, reciverCustomerInParcel, (Enums.WeightCategories)idalParcel.Weight, (Enums.Priorities)idalParcel.Priority, newDroneInParcel, idalParcel.Requsted, idalParcel.Scheduled, idalParcel.PickedUp, idalParcel.Deliverd);
+                Parcel newParcel = new Parcel(idalParcel.Id, senderCustomerInParcel, reciverCustomerInParcel, (Enums.WeightCategories)idalParcel.Weight, (Enums.Priorities)idalParcel.Priority, newDroneInParcel, idalParcel.Requsted, idalParcel.Scheduled, idalParcel.PickedUp, idalParcel.Deliverd);//creat new parcel
                 return newParcel;
             }
             catch (IDAL.DO.IdNotExsistException exception) // if parcel id does not exsists and was thrown from dal objects
@@ -430,7 +432,7 @@ namespace IBL
             return battery;
         }
         #endregion
-        #region//calculate 
+        #region//calculate location
         public void CalculateLocation(DroneToList drone)
         {
             switch (drone.DroneStatuses)
@@ -598,7 +600,13 @@ namespace IBL
     }
     public partial class BL : IBl
     {
-        public void UpdateDroneModel(int id, string newModel)
+        #region//Update drone model
+        /// <summary>
+        /// Update drone model
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="newModel"></param>
+        public void UpdateDroneModel(int id, string newModel)//Update drone model
         {
             DroneToList newDroneToList = GetDroneToList(id);
             newDroneToList.Model = newModel;
@@ -606,7 +614,15 @@ namespace IBL
             ListOfDronsBL[index] = newDroneToList;
             dal.UpdateDroneModel(id, newModel);
         }
-        public void UpdateBaseStation(int id, string name = "", int numberOfChargingSlots = -1)
+        #endregion
+        #region//Update base station name/number of charging slots
+        /// <summary>
+        /// Update base station name/number of charging slots
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="numberOfChargingSlots"></param>
+        public void UpdateBaseStation(int id, string name = "", int numberOfChargingSlots = -1)//Update base station name/number of charging slots
         {
             if (name != "")
             {
@@ -617,7 +633,15 @@ namespace IBL
                 dal.UpdateChargingSlotsNumber(id, numberOfChargingSlots);
             }
         }
-        public void UpdateCustomer(int id, string name = "", string phone = "")
+        #endregion
+        #region//Update customer name/phone
+        /// <summary>
+        /// Update customer name/phone
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="phone"></param>
+        public void UpdateCustomer(int id, string name = "", string phone = "")//Update customer name/phone
         {
             if (name != "")
             {
@@ -628,7 +652,13 @@ namespace IBL
                 dal.UpdateCustomerPhone(id, phone);
             }
         }
-        public void UpdateSendDroneToCharge(int id)
+        #endregion
+        #region//Update-send drone to charge
+        /// <summary>
+        /// Update-send drone to charge
+        /// </summary>
+        /// <param name="id"></param>
+        public void UpdateSendDroneToCharge(int id)//Update-send drone to charge
         {
             try
             {
@@ -656,7 +686,14 @@ namespace IBL
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
             }
         }
-        public void UpdateReleseDrone(int id, double time)
+        #endregion
+        #region//Update-relese drone from charging slot
+        /// <summary>
+        /// Update-relese drone from charging slot
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="time"></param>
+        public void UpdateReleseDrone(int id, double time)//Update-relese drone from charging slot
         {
             DroneToList drone = GetDroneToList(id);
             if (drone.DroneStatuses != Enums.DroneStatuses.Maintenance)
@@ -678,7 +715,13 @@ namespace IBL
             dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.ChargeSlots);
             dal.ReleaseDroneCharge(id, station.Id);
         }
-        public void UpdateAssosiateDrone(int id)
+        #endregion
+        #region//Update-assosiate drone to parcel
+        /// <summary>
+        /// Update-assosiate drone to parcel
+        /// </summary>
+        /// <param name="id"></param>
+        public void UpdateAssosiateDrone(int id)//Update-assosiate drone to parcel
         {
             try
             {
@@ -745,7 +788,13 @@ namespace IBL
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
             }
         }
-        public void PickupParcelByDrone(int droneId)
+        #endregion
+        #region//Update-pick-up parcel by drone
+        /// <summary>
+        /// Update-pick-up parcel by drone
+        /// </summary>
+        /// <param name="droneId"></param>
+        public void PickupParcelByDrone(int droneId)//Update-pick-up parcel by drone
         {
             //DroneToList droneInList = ListOfDronsBL.Find(element => element.Id == droneId);
             Drone drone = GetDroneById(droneId);
@@ -769,7 +818,13 @@ namespace IBL
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
             }
         }
-        public void DilaveryParcelByDrone(int droneId)
+        #endregion
+        #region//Update-dilavery parcel by drone
+        /// <summary>
+        /// Update-dilavery parcel by drone
+        /// </summary>
+        /// <param name="droneId"></param>
+        public void DilaveryParcelByDrone(int droneId)//Update-dilavery parcel by drone
         {
             Drone drone = GetDroneById(droneId);
             try
@@ -793,10 +848,17 @@ namespace IBL
             }
 
         }
+        #endregion
     }
     public partial class BL : IBl
     {
-        public DroneToList ConvertDroneDalToList(IDAL.DO.Drone idalDrone)
+        #region//Convert from dal drone to drone to list
+        /// <summary>
+        /// Convert from dal drone to drone to list
+        /// </summary>
+        /// <param name="idalDrone"></param>
+        /// <returns></returns>
+        public DroneToList ConvertDroneDalToList(IDAL.DO.Drone idalDrone)//Convert from dal drone to drone to list
         {
 
             Random rnd = new Random();
@@ -858,12 +920,26 @@ namespace IBL
 
             return newDrone;
         }
+        #endregion
+        #region//Convert from bl drone to drone to list
+        /// <summary>
+        /// Convert from bl drone to drone to list
+        /// </summary>
+        /// <param name="blDrone"></param>
+        /// <returns></returns>
         public DroneToList ConvertDroneBlToList(Drone blDrone)
         {
             DroneToList newDrone = new DroneToList(blDrone.Id, blDrone.Model, blDrone.Weight, blDrone.Battery, blDrone.DroneStatuses, blDrone.CurrentLocation, blDrone.ParcelInTransit.Id);
             return newDrone;
         }
-        public Customer convertCustomerDalToBl(IDAL.DO.Customer customer)
+        #endregion
+        #region//Convert from dal customer to bl customer
+        /// <summary>
+        /// //Convert from dal customer to bl customer
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
+        public Customer convertCustomerDalToBl(IDAL.DO.Customer customer)////Convert from dal customer to bl customer
         {
             List<IDAL.DO.Parcel> parcelList = dal.GetListOfParcel(element => (element.SenderId != -1)).ToList();
             List<IDAL.DO.Parcel> parcelListEnder = parcelList.FindAll(element => element.SenderId == customer.Id);
@@ -884,10 +960,16 @@ namespace IBL
             }
             else return null;//maybe exption
         }
+        #endregion
     }
     public partial class BL : IBl
     {
-        public List<BaseStation> GetListOfBaseStations()
+        #region//Get list of base stations
+        /// <summary>
+        /// //Get list of base stations
+        /// </summary>
+        /// <returns></returns>
+        public List<BaseStation> GetListOfBaseStations()////Get list of base stations
         {
             List<BaseStation> list = new List<BaseStation>();
             foreach (var item in dal.GetListOfBaseStation())
@@ -896,7 +978,13 @@ namespace IBL
             }
             return list;
         }
-        public List<Drone> GetListOfDrones()
+        #endregion
+        #region//Get list of drones
+        /// <summary>
+        /// Get list of drones
+        /// </summary>
+        /// <returns></returns>
+        public List<Drone> GetListOfDrones()//Get list of drones
         {
             List<Drone> list = new List<Drone>();
             foreach (var item in dal.GetListOfDrone())
@@ -905,7 +993,13 @@ namespace IBL
             }
             return list;
         }
-        public List<Customer> GetListOfCustomers()
+        #endregion
+        #region//Get list of customers
+        /// <summary>
+        /// //Get list of customers
+        /// </summary>
+        /// <returns></returns>
+        public List<Customer> GetListOfCustomers()////Get list of customers
         {
             List<Customer> list = new List<Customer>();
             foreach (var item in dal.GetListOfCustomer())
@@ -914,7 +1008,13 @@ namespace IBL
             }
             return list;
         }
-        public List<Parcel> GetListOfParcels()
+        #endregion
+        #region//Get list of parcels
+        /// <summary>
+        /// Get list of parcels
+        /// </summary>
+        /// <returns></returns>
+        public List<Parcel> GetListOfParcels()//Get list of parcels
         {
             List<Parcel> list = new List<Parcel>();
             foreach (var item in dal.GetListOfParcel())
@@ -923,7 +1023,13 @@ namespace IBL
             }
             return list;
         }
-        public List<Parcel> GetListOfNotAssigned()
+        #endregion
+        #region//Get list of assosiated drones
+        /// <summary>
+        /// Get list of assosiated drones
+        /// </summary>
+        /// <returns></returns>
+        public List<Parcel> GetListOfNotAssigned()//Get list of assosiated drones
         {
             List<Parcel> list = new List<Parcel>();
             foreach (var item in dal.GetListOfParcel())
@@ -935,7 +1041,13 @@ namespace IBL
             }
             return list;
         }
-        public List<BaseStation> GetListOfFreeChargingStations()
+        #endregion
+        #region//Get list of free charging stations
+        /// <summary>
+        /// Get list of free charging stations
+        /// </summary>
+        /// <returns></returns>
+        public List<BaseStation> GetListOfFreeChargingStations()//Get list of free charging stations
         {
             List<BaseStation> list = new List<BaseStation>();
             foreach (var item in dal.GetListOfBaseStation())
@@ -947,7 +1059,13 @@ namespace IBL
             }
             return list;
         }
-        public List<Customer> GetListOfCustomerDalivered() 
+        #endregion
+        #region//Get list of customers that dalivered
+        /// <summary>
+        /// Get list of customers that dalivered
+        /// </summary>
+        /// <returns></returns>
+        public List<Customer> GetListOfCustomerDalivered() //Get list of customers that dalivered
         {
             var customerDalList = dal.GetListOfCustomer().ToList();
             List<Customer> customerBlList = null;
@@ -957,6 +1075,7 @@ namespace IBL
             }
             return customerBlList.FindAll(element => element.ParcelToCustomer.Find(elementi => elementi.ParcelStatus == Enums.ParcelStatus.Supplied).Equals(null));
         }
+        #endregion
     }
 }
 
