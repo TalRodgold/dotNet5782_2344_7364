@@ -36,7 +36,7 @@ namespace IDAL.DO
         }
         public override string ToString()
         {
-            return $"ERROR: There is already a {Text} with the ID number: {ID}";
+            return $"DAL EXCEPTION: There is already a {Text} with the ID number: {ID}";
         }
     }
 }

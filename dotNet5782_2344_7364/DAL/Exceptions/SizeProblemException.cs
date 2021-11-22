@@ -28,7 +28,7 @@ namespace IDAL.DO
         }
         public override string ToString()
         {
-            return $"ERROR: The number entered must be bigger than {Number}";
+            return $"DAL EXCEPTION: The number entered must be bigger than {Number}";
         }
     }
 }

@@ -63,7 +63,11 @@ namespace ConsoleUI_BL
                         #region//BaseStation addition
                         PrintFunc(7);//print to user data he needs to type in  
                         int userId;
-                        int.TryParse(Console.ReadLine(), out userId);
+                        if(!int.TryParse(Console.ReadLine(), out userId))
+                        {
+                            PrintFunc(24);
+                            break;
+                        }
                         string userName = Console.ReadLine();
                         double userLongtitude;
                         double.TryParse(Console.ReadLine(), out userLongtitude);
@@ -281,6 +285,7 @@ namespace ConsoleUI_BL
                     case display.customer:
                         PrintFunc(15);
                         int.TryParse(Console.ReadLine(), out id);
+
                         Console.WriteLine(bl.GetCustomerById(id).ToString());
                         break;
                     case display.parcel:
@@ -290,17 +295,26 @@ namespace ConsoleUI_BL
                         break;
                     default:
                         PrintFunc(24);
+                        
                         break;
                 }
             }
-            catch (IBL.BO.IdNotExsistException exception)
+            catch (Exception exception)
             {
-                Console.WriteLine("\n");
-                Console.WriteLine(exception.ToString());
-                Console.WriteLine("\n");
+                PrintException(exception);
             }
         }
         #endregion
+
+        private static void PrintException(Exception exception)
+        {
+            if (exception == null)
+            {
+                return;
+            }
+            PrintException(exception.InnerException);
+            Console.WriteLine(exception.ToString());
+        }
 
         #region//cases for display list
         public enum displaylist { basestationList = 1, droneList, customerList, parcelList, notAssigned, freeChargingStations } // enum for display list option
@@ -560,7 +574,9 @@ namespace ConsoleUI_BL
             #region// if i = 24 print invalid input
             if (i == 24) // invalid input
             {
+                Console.WriteLine("\n");
                 Console.WriteLine("INVALID INPUT");
+                Console.WriteLine("\n");
                 return;
             }
             #endregion

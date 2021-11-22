@@ -29,7 +29,7 @@ namespace IBL.BO
         }
         public override string ToString()
         {
-            return $"ERROR: There is no {Text} with this ID number: {ID}";
+            return $"BL EXCEPTION: There is no {Text} with this ID number: {ID}";
         }
     }
 }

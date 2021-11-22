@@ -32,11 +32,11 @@ namespace IBL.BO
         {
             if (ID != 0)
             {
-                return $"ERROR: The {Text} {ID} is Unaviliable ";
+                return $"BL EXCEPTION: The {Text} {ID} is Unaviliable ";
             }
             else
             {
-                return $"ERROR: there are no {Text}s aviliable ";
+                return $"BL EXCEPTION: there are no {Text}s aviliable ";
             }
         }
     }
