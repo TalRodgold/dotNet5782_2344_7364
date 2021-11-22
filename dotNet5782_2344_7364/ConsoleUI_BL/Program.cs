@@ -65,6 +65,7 @@ namespace ConsoleUI_BL
                         int userId;
                         if(!int.TryParse(Console.ReadLine(), out userId))
                         {
+                            //throw new InvalidValueException()
                             PrintFunc(24);
                             break;
                         }
@@ -84,12 +85,22 @@ namespace ConsoleUI_BL
                         #region// Drone addition
                         PrintFunc(8); // print to user data he needs to type in  
                         int userDroneId;
-                        int.TryParse(Console.ReadLine(), out userDroneId);
+                        if (!int.TryParse(Console.ReadLine(), out userDroneId))
+                        {
+                            //throw new InvalidValueException()
+                            PrintFunc(24);
+                            break;
+                        }
                         string userModel = Console.ReadLine();
                         Enums.WeightCategories userWeightCategories;
                         Enums.WeightCategories.TryParse(Console.ReadLine(), out userWeightCategories);
                         int userBaseStation;
-                        int.TryParse(Console.ReadLine(), out userBaseStation);
+                        if (!int.TryParse(Console.ReadLine(), out userBaseStation))
+                        {
+                            //throw new InvalidValueException()
+                            PrintFunc(24);
+                            break;
+                        }
                         Drone newDrone = new Drone(userDroneId, userModel, userWeightCategories);
                         bl.AddDrone(newDrone, userBaseStation);
                         break;
@@ -98,13 +109,28 @@ namespace ConsoleUI_BL
                         #region// Customer addition
                         PrintFunc(9); // print to user data he needs to type in 
                         int userCustomerId;
-                        int.TryParse(Console.ReadLine(), out userCustomerId);
+                        if (!int.TryParse(Console.ReadLine(), out userCustomerId))
+                        {
+                            //throw new InvalidValueException()
+                            PrintFunc(24);
+                            break;
+                        }
                         string userCustomerName = Console.ReadLine();
                         string userPhoneNumber = Console.ReadLine();
                         double userCustomerLongtitude;
-                        double.TryParse(Console.ReadLine(), out userCustomerLongtitude);
+                        if (!double.TryParse(Console.ReadLine(), out userCustomerLongtitude))
+                        {
+                            //throw new InvalidValueException()
+                            PrintFunc(24);
+                            break;
+                        }
                         double userCustomerLatitude;
-                        double.TryParse(Console.ReadLine(), out userCustomerLatitude);
+                        if (!double.TryParse(Console.ReadLine(), out userCustomerLatitude))
+                        {
+                            //throw new InvalidValueException()
+                            PrintFunc(24);
+                            break;
+                        }
                         Location location = new Location(userCustomerLongtitude, userCustomerLatitude);
                         Customer newCastomer = new Customer(userCustomerId, userCustomerName, userPhoneNumber, location);
                         bl.AddCustomer(newCastomer);
@@ -116,7 +142,12 @@ namespace ConsoleUI_BL
                         int userSenderId;
                         int.TryParse(Console.ReadLine(), out userSenderId);
                         int userTargetId;
-                        int.TryParse(Console.ReadLine(), out userTargetId);
+                        if (!int.TryParse(Console.ReadLine(), out userTargetId))
+                        {
+                            //throw new InvalidValueException()
+                            PrintFunc(24);
+                            break;
+                        }
                         CustomerInParcel userSenderIdd = new CustomerInParcel(userSenderId, bl.GetCustomerById(userSenderId).Name);
                         CustomerInParcel userTargetIdd = new CustomerInParcel(userTargetId, bl.GetCustomerById(userTargetId).Name);
                         Enums.WeightCategories userParcelWeightCategories;
@@ -158,7 +189,12 @@ namespace ConsoleUI_BL
                 update up;
                 PrintFunc(4);
                 int userInput;
-                int.TryParse(Console.ReadLine(), out userInput);
+
+                while(!int.TryParse(Console.ReadLine(), out userInput))
+                {
+                    //throw new InvalidValueException()
+                    PrintFunc(24);
+                }
                 up = (update)userInput;
                 switch (up)
                 {
@@ -166,7 +202,12 @@ namespace ConsoleUI_BL
                         #region//Update drone name or model or both
                         PrintFunc(11);// print to user data he needs to type in 
                         int userDroneId;
-                        int.TryParse(Console.ReadLine(), out userDroneId);
+                        if (!int.TryParse(Console.ReadLine(), out userDroneId))
+                        {
+                            //throw new InvalidValueException()
+                            PrintFunc(24);
+                            break;
+                        }
                         string userModel = Console.ReadLine();
                         bl.UpdateDroneModel(userDroneId, userModel);//function update drone model
                         break;
@@ -175,7 +216,12 @@ namespace ConsoleUI_BL
                         #region//Update Base Station name or free charge slots number or both
                         PrintFunc(12);// print to user data he needs to type in 
                         int userBasestationId;
-                        int.TryParse(Console.ReadLine(), out userBasestationId);
+                        if (!int.TryParse(Console.ReadLine(), out userBasestationId))
+                        {
+                            //throw new InvalidValueException()
+                            PrintFunc(24);
+                            break;
+                        }
                         string UserNewBaseStationName = Console.ReadLine();
                         int userNewFreeChargeSlots;
                         int.TryParse(Console.ReadLine(), out userNewFreeChargeSlots);
