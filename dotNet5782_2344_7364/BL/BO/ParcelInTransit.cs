@@ -19,7 +19,7 @@ namespace IBL
             public Location PickupLocation { set; get; }
             public Location DeliveryLocation { set; get; }
             public double Distance { set; get; }
-            public ParcelInTransit() { }
+            public ParcelInTransit() { Id = -1; }
             public ParcelInTransit(int id, bool status, Enums.Priorities priorities, Enums.WeightCategories weight, CustomerInParcel customerInParcelSender, CustomerInParcel customerInParcelReciver, Location pickupLocation, Location deliveryLocation, double distance)
             {
                 Id = id;
@@ -34,6 +34,11 @@ namespace IBL
             }
             public override string ToString()
             {
+                if (Id == -1)
+                {
+                    return $" Parcel # : \n Prioritie = {Priorities} \n Weight = {Weight} \n Customer in parcel sender = {CustomerInParcelSender} \n Customer in parcel reciver = {CustomerInParcelReciver} \n Pickup location = {PickupLocation} \n Delivery location = {DeliveryLocation} \n Distance = {Distance} ";
+
+                }
                 return $" Parcel #{Id}: \n Prioritie = {Priorities} \n Weight = {Weight} \n Customer in parcel sender = {CustomerInParcelSender} \n Customer in parcel reciver = {CustomerInParcelReciver} \n Pickup location = {PickupLocation} \n Delivery location = {DeliveryLocation} \n Distance = {Distance} ";
             }
 

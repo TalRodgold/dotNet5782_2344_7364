@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace IBL
 {
+    /// <summary>
+    /// All the calculation functions for BL
+    /// </summary>
     public partial class BL : IBl
     {
         #region//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
@@ -20,7 +23,7 @@ namespace IBL
         public double CalculateBattery(DroneToList drone = null, Drone drone1 = null,double distance = 0.0)//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
         {
             int baseStationId;
-            double distance;
+            
             double battery = 0;
             if (drone1 == null)
             {
@@ -214,9 +217,9 @@ namespace IBL
             return baseStationId;
         }
         #endregion
-        private bool CalculateWhetherTheDroneHaveEnoghBattery(double distance, Drone drone)
+        private bool CalculateWhetherTheDroneHaveEnoghBattery(double distance, DroneToList drone)
         {
-            if ((drone.Battery - CalculateBattery(null, drone)) < 0)
+            if ((drone.Battery - CalculateBattery(drone, null, distance)) < 0)
             {
                 return false;
             }

@@ -22,7 +22,7 @@ namespace IBL
         BaseStation GetBaseStationById(int id); //Get base station from data-source by id
         ParcelToList GetParcelToListById(int id); //Get parceltolist with manipulation from data source by id
         ParcelInTransit GetParcelInTransitById(int id); //Get parceltolist with manipulation from data source by id
-        double CalculateBattery(DroneToList drone = null, Drone drone1 = null); //Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
+        double CalculateBattery(DroneToList drone = null, Drone drone1 = null, double distance = 0.0); //Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
         void CalculateLocation(DroneToList drone); // calculate location of drone
         double CalculateDistance(Location x, Location y); //Calculate distance between 2 location return double
         double ConvertBatteryToDistance(DroneToList drone); //Convert battery to distance by state and weight 

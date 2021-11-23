@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace IBL
 {
+    /// <summary>
+    /// All the convertion functions for BL
+    /// </summary>
     public partial class BL : IBl
     {
         #region//Convert from dal drone to drone to list
@@ -85,7 +88,7 @@ namespace IBL
         /// </summary>
         /// <param name="blDrone"></param>
         /// <returns></returns>
-        public DroneToList ConvertDroneBlToList(Drone blDrone)
+        public DroneToList ConvertDroneBlToList(Drone blDrone)//Convert drone from bl to list
         {
             DroneToList newDrone = new DroneToList(blDrone.Id, blDrone.Model, blDrone.Weight, blDrone.Battery, blDrone.DroneStatuses, blDrone.CurrentLocation, blDrone.ParcelInTransit.Id);
             return newDrone;

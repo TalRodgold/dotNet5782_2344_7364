@@ -259,9 +259,13 @@ namespace DalObjects
             {
                 throw new IdNotExsistException("base station", stationId); // throw exception
             }
+            BaseStation newBaseStation = DataSource.BaseStationList.Find(element => element.Id == stationId);
+            if (newBaseStation.ChargeSlots == 0)
+            {
+                throw new NoFreeSpace();
+            }
             int i = DataSource.BaseStationList.FindIndex(element => element.Id == stationId);
             ConstructDroneCharge(droneId, stationId); // call construct
-            BaseStation newBaseStation = DataSource.BaseStationList.Find(element => element.Id == stationId);
             newBaseStation.ChargeSlots -= 1; // change number of free charge slots
             DataSource.BaseStationList[i] = newBaseStation;
         }

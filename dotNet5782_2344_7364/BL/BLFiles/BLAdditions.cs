@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace IBL
 {
+    /// <summary>
+    /// All the addition functions for BL
+    /// </summary>
     public partial class BL : IBl
     {
         #region//Base station addition

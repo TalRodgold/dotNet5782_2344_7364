@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace IBL
 {
+    /// <summary>
+    /// All the get object by id functions
+    /// </summary>
     public partial class BL : IBl
     {
         #region//Get customer from data-source by id

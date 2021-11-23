@@ -184,7 +184,6 @@ namespace ConsoleUI_BL
 
                 while(!int.TryParse(Console.ReadLine(), out userInput))
                 {
-                    //throw new InvalidValueException()
                     PrintFunc(24);
                 }
                 up = (update)userInput;
@@ -336,16 +335,6 @@ namespace ConsoleUI_BL
         }
         #endregion
 
-        private static void PrintException(Exception exception)
-        {
-            if (exception == null)
-            {
-                return;
-            }
-            PrintException(exception.InnerException);
-            Console.WriteLine(exception.ToString());
-        }
-
         #region//cases for display list
         public enum displaylist { basestationList = 1, droneList, customerList, parcelList, notAssigned, freeChargingStations } // enum for display list option
         private static void Displaylist()//cases for display list
@@ -376,6 +365,22 @@ namespace ConsoleUI_BL
                 default:
                     break;
             }
+        }
+        #endregion
+
+        #region// print an exception func
+        /// <summary>
+        /// print an exception
+        /// </summary>
+        /// <param name="exception"></param>
+        private static void PrintException(Exception exception)
+        {
+            if (exception == null)
+            {
+                return;
+            }
+            PrintException(exception.InnerException);
+            Console.WriteLine(exception.ToString());
         }
         #endregion
 

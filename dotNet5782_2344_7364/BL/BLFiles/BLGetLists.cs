@@ -8,6 +8,9 @@ using System.Linq;
 
 namespace IBL
 {
+    /// <summary>
+    /// All the Get Lists functions for BL
+    /// </summary>
     public partial class BL : IBl
     {
         #region//Get list of base stations
