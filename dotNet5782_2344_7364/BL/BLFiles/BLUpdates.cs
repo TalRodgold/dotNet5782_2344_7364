@@ -297,7 +297,7 @@ namespace IBL
                 {
                     throw new UnavailableExeption("drone", droneId);
                 }
-                if (GetParcelById(drone.ParcelInTransit.Id).PickupTime != DateTime.MinValue)
+                if (GetParcelById(drone.ParcelInTransit.Id).PickupTime == DateTime.MinValue)
                 {
                     throw new NotAssociatedException("drone", droneId);
                 }
@@ -308,6 +308,7 @@ namespace IBL
                 int index = ListOfDronsBL.FindIndex(element => element.Id == droneId);
                 ListOfDronsBL[index] = newDrone;
                 dal.UpdateParcleDelivery(drone.ParcelInTransit.Id);
+
             }
             catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
             {

@@ -63,7 +63,7 @@ namespace IBL
             }
             else
             {
-                switch (drone.Weight)
+                switch (drone1.Weight)
                 {
                     case Enums.WeightCategories.Light:
                         battery = (distance * ElectricityUseLightWeight) / 100;

@@ -83,7 +83,7 @@ namespace IBL
                 Customer reciverCustomer = GetCustomerById(idalParcel.ReciverId); // creat a new customer based on the reciver of the parcel
 
                 CustomerInParcel senderCustomerInParcel = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name); // creat a customer in parcel based on current customer
-                CustomerInParcel reciverCustomerInParcel = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name); // creat a customer in parcel based on current customer
+                CustomerInParcel reciverCustomerInParcel = new CustomerInParcel(reciverCustomer.Id, reciverCustomer.Name); // creat a customer in parcel based on current customer
                 DroneInParcel newDroneInParcel;
                 if (idalParcel.DroneId == -1)//if the parcel not assosiate
                 {

@@ -103,12 +103,12 @@ namespace IBL
         public Customer convertCustomerDalToBl(IDAL.DO.Customer customer)////Convert from dal customer to bl customer
         {
             List<IDAL.DO.Parcel> parcelList = dal.GetListOfParcel(element => (element.SenderId != -1)).ToList();
-            List<IDAL.DO.Parcel> parcelListEnder = parcelList.FindAll(element => element.SenderId == customer.Id);
+            List<IDAL.DO.Parcel> parcelListSender = parcelList.FindAll(element => element.SenderId == customer.Id);
             List<IDAL.DO.Parcel> parcelListReciver = parcelList.FindAll(element => element.ReciverId == customer.Id);
             if (parcelList.Count != 0)
             {
                 List<ParcelAtCustomer> parcelAtCustomersListSender = null;
-                foreach (var item in parcelListEnder)
+                foreach (var item in parcelListSender)
                 {
                     parcelAtCustomersListSender.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, StatusCalculate(dal.GetParcel(item.Id)), new CustomerInParcel(item.SenderId, GetCustomerById(item.SenderId).Name)));
                 }
