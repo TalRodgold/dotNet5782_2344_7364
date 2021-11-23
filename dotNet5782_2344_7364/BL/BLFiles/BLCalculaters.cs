@@ -17,7 +17,7 @@ namespace IBL
         /// <param name="drone"></param>
         /// <param name="drone1"></param>
         /// <returns></returns>
-        public double CalculateBattery(DroneToList drone = null, Drone drone1 = null)//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
+        public double CalculateBattery(DroneToList drone = null, Drone drone1 = null,double distance = 0.0)//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
         {
             int baseStationId;
             double distance;
@@ -60,7 +60,6 @@ namespace IBL
             }
             else
             {
-                distance = CalculateDistance(drone1.CurrentLocation, drone1.ParcelInTransit.DeliveryLocation);
                 switch (drone.Weight)
                 {
                     case Enums.WeightCategories.Light:
@@ -215,7 +214,14 @@ namespace IBL
             return baseStationId;
         }
         #endregion
-
+        private bool CalculateWhetherTheDroneHaveEnoghBattery(double distance, Drone drone)
+        {
+            if ((drone.Battery - CalculateBattery(null, drone)) < 0)
+            {
+                return false;
+            }
+            return true;
+        }
         public int ReciveParcelId(Parcel parcel)
         {
             Predicate<IDAL.DO.Parcel> predicate = element => element.SenderId == parcel.Sender.Id; // predicat to find parcel based on senders id
