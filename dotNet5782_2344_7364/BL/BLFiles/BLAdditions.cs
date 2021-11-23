@@ -63,6 +63,10 @@ namespace IBL
             {
                 throw new IdAlreadyExsistsExceptions(exception.Text, exception.ID, exception); // throw
             }
+            catch(IDAL.DO.NoFreeSpace exception)
+            {
+                throw new NoFreeSpace(exception.Text, exception);
+            }
         }
         #endregion
         #region//Customer addition

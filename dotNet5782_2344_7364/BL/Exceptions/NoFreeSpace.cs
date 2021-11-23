@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace IDAL.DO
+namespace IBL.BO
 {
     [Serializable]
     public class NoFreeSpace : Exception
@@ -18,6 +18,7 @@ namespace IDAL.DO
 
         public NoFreeSpace(string message, Exception innerException) : base(message, innerException)
         {
+            Text = message;
         }
 
         protected NoFreeSpace(SerializationInfo info, StreamingContext context) : base(info, context)
@@ -25,7 +26,7 @@ namespace IDAL.DO
         }
         public override string ToString()
         {
-            return $"DAL EXCEPTION: The {Text} are full";
+            return $"BL EXCEPTION: The {Text} are full";
         }
     }
 }

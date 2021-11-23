@@ -21,7 +21,7 @@ namespace IBL
             }
             public override string ToString()
             {
-                return $" Drone #{Id}: \n Battery = {Battery} \n Current location {CurrentLocation} \n";
+                return $" Drone #{Id}: \n Battery = {Battery * 100}% \n Current location {CurrentLocation} \n";
             }
         }
     }

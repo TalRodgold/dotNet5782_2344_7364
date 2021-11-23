@@ -213,8 +213,10 @@ namespace ConsoleUI_BL
                             PrintFunc(24);
                             break;
                         }
+                        PrintFunc(26);
                         string UserNewBaseStationName = Console.ReadLine();
                         int userNewFreeChargeSlots;
+                        PrintFunc(27);
                         int.TryParse(Console.ReadLine(), out userNewFreeChargeSlots);
                         bl.UpdateBaseStation(userBasestationId, UserNewBaseStationName, userNewFreeChargeSlots);
                         break;
@@ -493,12 +495,10 @@ namespace ConsoleUI_BL
                 return;
             }
             #endregion
-            #region// if i = 12 print update base station rename and/or charging slots
+            #region// if i = 12 print enter base station id
             if (i == 12) // print to user data he needs to type in 
             {
                 Console.WriteLine("Please enter base stationId ID: ");
-                Console.WriteLine("Please enter new base station name");
-                Console.WriteLine("Please enter new number of free charging slots ");
                 return;
             }
             #endregion
@@ -620,6 +620,20 @@ namespace ConsoleUI_BL
                 Console.WriteLine("Enter how much time the drone was charging");
                 return;
             }
+            #endregion
+            #region// if i = 26 print update base station rename 
+            if (i == 26) // print to user data he needs to type in 
+            {
+                Console.WriteLine("Please enter new base station name");                
+                return;
+            }
+            #region// if i = 27 print update base station  charging slots
+            if (i == 27) // print to user data he needs to type in 
+            {
+                Console.WriteLine("Please enter new number of free charging slots ");
+                return;
+            }
+            #endregion
             #endregion
             return;
         }

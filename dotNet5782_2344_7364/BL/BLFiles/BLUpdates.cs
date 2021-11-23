@@ -289,7 +289,7 @@ namespace IBL
                     throw new InvalidIdException("negative", droneId);
                 }
                 Drone drone = GetDroneById(droneId);
-                if (drone.DroneStatuses != Enums.DroneStatuses.Available || !drone.ParcelInTransit.Status)
+                if (drone.DroneStatuses != Enums.DroneStatuses.Delivery || !drone.ParcelInTransit.Status)
                 {
                     throw new UnavailableExeption("drone", droneId);
                 }

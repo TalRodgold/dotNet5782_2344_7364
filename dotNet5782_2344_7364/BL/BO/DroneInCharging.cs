@@ -14,7 +14,7 @@ namespace IBL
             public double Battery { set; get; }
             public override string ToString()
             {
-                return $" Drone #{Id}: \n Battery = {Battery} \n";
+                return $" Drone #{Id}: \n Battery = {Battery * 100}% \n";
             }
             public DroneInCharging() { }
             public DroneInCharging(int id,double battery)

@@ -66,13 +66,13 @@ namespace IBL
                 switch (drone.Weight)
                 {
                     case Enums.WeightCategories.Light:
-                        battery = distance * ElectricityUseLightWeight;
+                        battery = (distance * ElectricityUseLightWeight) / 100;
                         break;
                     case Enums.WeightCategories.Medium:
-                        battery = distance * ElectricityUseMediumWeight;
+                        battery = (distance * ElectricityUseMediumWeight) / 100;
                         break;
                     case Enums.WeightCategories.Heavy:
-                        battery = distance * ElectricityUseHeavyWeight;
+                        battery = (distance * ElectricityUseHeavyWeight) / 100;
                         break;
                 }
             }

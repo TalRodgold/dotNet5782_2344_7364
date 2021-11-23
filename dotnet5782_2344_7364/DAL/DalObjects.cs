@@ -262,7 +262,7 @@ namespace DalObjects
             BaseStation newBaseStation = DataSource.BaseStationList.Find(element => element.Id == stationId);
             if (newBaseStation.ChargeSlots == 0)
             {
-                throw new NoFreeSpace();
+                throw new NoFreeSpace("charging slots");
             }
             int i = DataSource.BaseStationList.FindIndex(element => element.Id == stationId);
             ConstructDroneCharge(droneId, stationId); // call construct
@@ -336,12 +336,13 @@ namespace DalObjects
             {
                 throw new IdNotExsistException("base station", id); // throw exception
             }
-            if (GetListOfDroneCharge(element => element.StationId == id).ToList().Count() > numberOfChargingSlots) // if the new number is smaller than the number of drones charging currently
+            int count = GetListOfDroneCharge(element => element.StationId == id).ToList().Count();
+            if ( count > numberOfChargingSlots) // if the new number is smaller than the number of drones charging currently
             {
-                throw new SizeProblemException("bigger", GetListOfDroneCharge(element => element.StationId == id).ToList().Count()); // throw exception
+                throw new SizeProblemException("bigger", count); // throw exception
             }
             BaseStation newBaseStation = DataSource.BaseStationList.Find(element => element.Id == id);
-            newBaseStation.ChargeSlots = numberOfChargingSlots;
+            newBaseStation.ChargeSlots = numberOfChargingSlots - count ;
             int index = DataSource.BaseStationList.FindIndex(element => element.Id == id);
             DataSource.BaseStationList[index] = newBaseStation;
         }
