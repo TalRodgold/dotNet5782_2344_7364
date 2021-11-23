@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace IBL.BO
 {
+    /// <summary>
+    /// throw exception for not associated
+    /// </summary>
     [Serializable]
     public class NotAssociatedException : Exception
     {

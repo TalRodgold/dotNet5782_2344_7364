@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace IBL.BO
 {
+    /// <summary>
+    /// Exception if 2 id's are the same
+    /// </summary>
     [Serializable]
     public class SameIdException : Exception
     {

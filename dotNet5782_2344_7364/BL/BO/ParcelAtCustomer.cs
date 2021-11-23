@@ -8,6 +8,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class for parcel at customer
+        /// </summary>
         public class ParcelAtCustomer
         {
             public int Id { set; get; }
@@ -15,7 +18,7 @@ namespace IBL
             public Enums.Priorities Prioritie { set; get; }
             public Enums.ParcelStatus ParcelStatus { set; get; }
             public CustomerInParcel CustomerInParcel { set; get; }
-            public ParcelAtCustomer( int id, Enums.WeightCategories weight, Enums.Priorities prioritie, Enums.ParcelStatus parcelStatus, CustomerInParcel customerInParcel) 
+            public ParcelAtCustomer( int id, Enums.WeightCategories weight, Enums.Priorities prioritie, Enums.ParcelStatus parcelStatus, CustomerInParcel customerInParcel) // constructor
             {
                 Id = id;
                 Weight = weight;
@@ -27,8 +30,6 @@ namespace IBL
             {
                 return $"Parcel #{Id}: \n Weight = {Weight} \n Prioritie = {Prioritie} \n Parcel status = {ParcelStatus} \n Customer in parcel =\n \t {CustomerInParcel} \n ";
             }
-
         }
-    }
-   
+    }  
 }

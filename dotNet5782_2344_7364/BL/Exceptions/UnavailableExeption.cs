@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace IBL.BO
 {
+    /// <summary>
+    /// throw exception if item is unavailble
+    /// </summary>
     [Serializable]
     public class UnavailableExeption : Exception
     {

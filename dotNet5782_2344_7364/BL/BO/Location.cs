@@ -8,15 +8,18 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class for location
+        /// </summary>
         public class Location
         {
             public double Longitude { set; get; }
             public double Latitude { set; get; }
             public override string ToString()
             {
-                return $"Longitude = {sexagesimal(Longitude, 'N')}: \n Latitude = {sexagesimal(Latitude, 'E')} \n";
+                return $" Longitude = {sexagesimal(Longitude, 'N')}: \n Latitude = {sexagesimal(Latitude, 'E')} \n";
             }
-            public Location(double longitude, double latitude)
+            public Location(double longitude, double latitude) // constructor
             {
                 Longitude = longitude;
                 Latitude = latitude;

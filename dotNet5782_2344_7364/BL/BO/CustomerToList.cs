@@ -8,6 +8,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class for customer in list
+        /// </summary>
         public class CustomerToList
         {
             public int Id { set; get; }

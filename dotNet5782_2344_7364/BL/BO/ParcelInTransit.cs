@@ -8,6 +8,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class for parcel in transit
+        /// </summary>
         public class ParcelInTransit
         {
             public int Id { set; get; }
@@ -20,7 +23,7 @@ namespace IBL
             public Location DeliveryLocation { set; get; }
             public double Distance { set; get; }
             public ParcelInTransit() { Id = -1; }
-            public ParcelInTransit(int id, bool status, Enums.Priorities priorities, Enums.WeightCategories weight, CustomerInParcel customerInParcelSender, CustomerInParcel customerInParcelReciver, Location pickupLocation, Location deliveryLocation, double distance)
+            public ParcelInTransit(int id, bool status, Enums.Priorities priorities, Enums.WeightCategories weight, CustomerInParcel customerInParcelSender, CustomerInParcel customerInParcelReciver, Location pickupLocation, Location deliveryLocation, double distance) // constructor
             {
                 Id = id;
                 Status = status;
@@ -34,7 +37,7 @@ namespace IBL
             }
             public override string ToString()
             {
-                if (Id == -1)
+                if (Id == -1) // if not inisilaized
                 {
                     return $" Parcel # : \n Prioritie = {Priorities} \n Weight = {Weight} \n Customer in parcel sender = {CustomerInParcelSender} \n Customer in parcel reciver = {CustomerInParcelReciver} \n Pickup location = {PickupLocation} \n Delivery location = {DeliveryLocation} \n Distance = {Distance} ";
 

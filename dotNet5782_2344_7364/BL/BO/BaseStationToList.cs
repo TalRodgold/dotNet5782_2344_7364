@@ -9,6 +9,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class for a base station in a list
+        /// </summary>
         public class BaseStationToList
         {
             public int Id { set; get; }

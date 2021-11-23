@@ -8,12 +8,15 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class for drone in parcel
+        /// </summary>
         public class DroneInParcel
         {
             public int Id { set; get; }
             public double Battery { set; get; }
             public Location CurrentLocation { set; get; }
-            public DroneInParcel(int id, double battery, Location location)
+            public DroneInParcel(int id, double battery, Location location) // constructor
             {
                 Id = id;
                 Battery = battery;

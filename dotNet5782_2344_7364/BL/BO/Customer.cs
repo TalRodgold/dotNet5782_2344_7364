@@ -9,6 +9,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class for customer
+        /// </summary>
         public class Customer
         {
             public int Id { set; get; }
@@ -22,15 +25,15 @@ namespace IBL
             {
                 return $"Customer #{Id}: \nName = {Name} \nPhone = {Phone} \n{Location.ToString()} \nList of Parcels From Customer: \n{printList(ParcelFromCustomer)} \nList of Parcels To Customer: \n{printList(ParcelToCustomer)}";
             }
-            public Customer() { }
-            public Customer(int id,string name,string phone,Location location)
+            public Customer() { } // default
+            public Customer(int id,string name,string phone,Location location) // constructor
             {
                 Id = id;
                 Name = name;
                 Phone = phone;
                 Location = location;
             }
-            public Customer(int id, string name, string phone, Location location, List<ParcelAtCustomer> parcelFromCustomer, List<ParcelAtCustomer> parcelToCustomer)
+            public Customer(int id, string name, string phone, Location location, List<ParcelAtCustomer> parcelFromCustomer, List<ParcelAtCustomer> parcelToCustomer) // constructor
             {
                 Id = id;
                 Name = name;
@@ -39,7 +42,7 @@ namespace IBL
                 ParcelFromCustomer = parcelFromCustomer;
                 ParcelToCustomer = parcelToCustomer;
             }
-            private string printList(List<ParcelAtCustomer> l)
+            private string printList(List<ParcelAtCustomer> l) // make a string from list of parcels at customer
             {
                 string s = "";
                 foreach (var item in l)

@@ -9,6 +9,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class for parcel
+        /// </summary>
         public class Parcel
         {
             public int Id { set; get; }
@@ -25,9 +28,9 @@ namespace IBL
             {
                 return $" Parcel #{Id}: \n Sender = \n{Sender} \n Reciver = \n{Reciver} \n weight = {Weight} \n Prioritie = {Prioritie} \n Drone in parcel = {DroneInParcel} \n Parcel creating time {ParcelCreatingTime} \n Association time = {AssociationTime} \n Pickup time = {PickupTime} \n Delivery time = {DeliveryTime} \n";
             }
-            public Parcel() { }
+            public Parcel() { } // default
            
-            public Parcel(int id, CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie, DroneInParcel droneInParcel, DateTime parcelCreatingTime, DateTime associationTime, DateTime pickupTime, DateTime deliveryTime)
+            public Parcel(int id, CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie, DroneInParcel droneInParcel, DateTime parcelCreatingTime, DateTime associationTime, DateTime pickupTime, DateTime deliveryTime) // constructor
             {
                 Id = id;
                 Sender = sender;
