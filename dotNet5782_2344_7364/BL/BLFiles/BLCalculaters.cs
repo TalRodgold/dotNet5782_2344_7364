@@ -20,7 +20,7 @@ namespace IBL
         /// <param name="drone"></param>
         /// <param name="drone1"></param>
         /// <returns></returns>
-        public double CalculateBattery(DroneToList drone = null, Drone drone1 = null,double distance = 0.0)//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
+        private double calculateBattery(DroneToList drone = null, Drone drone1 = null,double distance = 0.0)//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
         {
             int baseStationId;
             
@@ -29,9 +29,9 @@ namespace IBL
             {
                 Random rnd = new Random();
                 //double banan = ListOfDronsBL.Find(element => element.Id == id).Battery);
-                baseStationId = CalculateMinDistance(drone.CurrentLocation);
+                baseStationId = calculateMinDistance(drone.CurrentLocation);
                 IDAL.DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
-                distance = CalculateDistance(drone.CurrentLocation, new Location(newBaseStation.Longtitude, newBaseStation.Latitude));
+                distance = calculateDistance(drone.CurrentLocation, new Location(newBaseStation.Longtitude, newBaseStation.Latitude));
                 switch (drone.DroneStatuses)
                 {
                     case Enums.DroneStatuses.Available:
@@ -79,40 +79,6 @@ namespace IBL
             return battery;
         }
         #endregion
-        #region//calculate location
-        public void CalculateLocation(DroneToList drone)
-        {
-            switch (drone.DroneStatuses)
-            {
-                case Enums.DroneStatuses.Available:
-                    return;
-                case Enums.DroneStatuses.Delivery:
-
-                    double a = CalculateDistance(drone.CurrentLocation, GetBaseStationById(dal.GetDroneCharge(drone.Id).StationId).Location);
-                    double b = CalculateDistance(drone.CurrentLocation, GetCustomerById(dal.GetParcel(drone.NumberOfParcelInTransit).SenderId).Location);
-                    double c = CalculateDistance(drone.CurrentLocation, GetCustomerById(dal.GetParcel(drone.NumberOfParcelInTransit).ReciverId).Location);
-                    if (a >= b && a >= c)
-                    {
-                        ListOfDronsBL.Find(element => element.Id == drone.Id).CurrentLocation = GetBaseStationById(dal.GetDroneCharge(drone.Id).StationId).Location;
-                        return;
-                    }
-                    if (b >= a && b >= c)
-                    {
-                        ListOfDronsBL.Find(element => element.Id == drone.Id).CurrentLocation = GetCustomerById(dal.GetParcel(drone.NumberOfParcelInTransit).SenderId).Location;
-                        return;
-                    }
-                    else
-                    {
-                        ListOfDronsBL.Find(element => element.Id == drone.Id).CurrentLocation = GetCustomerById(dal.GetParcel(drone.NumberOfParcelInTransit).ReciverId).Location;
-                        return;
-                    }
-                case Enums.DroneStatuses.Maintenance:
-                    ListOfDronsBL.Find(element => element.Id == drone.Id).CurrentLocation = GetBaseStationById(dal.GetDroneCharge(drone.Id).StationId).Location;
-                    return;
-
-            }
-        }
-        #endregion
         #region//Calculate distance between 2 location return double
         /// <summary>
         /// CalculateDistance
@@ -120,7 +86,7 @@ namespace IBL
         /// <param name="x"></param>
         /// <param name="y"></param>
         /// <returns></returns>
-        public double CalculateDistance(Location x, Location y)//Calculate distance between 2 location return double
+        private double calculateDistance(Location x, Location y)//Calculate distance between 2 location return double
         {
             double ConvertToRadians(double angle)
             {
@@ -152,7 +118,7 @@ namespace IBL
         /// </summary>
         /// <param name="drone"></param>
         /// <returns></returns>
-        public double ConvertBatteryToDistance(DroneToList drone)//Convert battery to distance by state and weight 
+        private double convertBatteryToDistance(DroneToList drone)//Convert battery to distance by state and weight 
         {
             double battery = drone.Battery;
             double distance = 0;
@@ -184,7 +150,14 @@ namespace IBL
         }
         #endregion
         #region//Calculate min distance between loction y and 2 option 1.the closer station 2.the closer station and more 2 terms
-        public int CalculateMinDistance(Location y, Predicate<BaseStation> predicate = null, Predicate<BaseStation> predicate1 = null)
+        /// <summary>
+        /// Calculate min distance between loction y and 2 option 1.the closer station 2.the closer station and more 2 terms
+        /// </summary>
+        /// <param name="y"></param>
+        /// <param name="predicate"></param>
+        /// <param name="predicate1"></param>
+        /// <returns></returns>
+        private int calculateMinDistance(Location y, Predicate<BaseStation> predicate = null, Predicate<BaseStation> predicate1 = null)//Calculate min distance between loction y and 2 option 1.the closer station 2.the closer station and more 2 terms
         {
             double min = double.MaxValue;
             int baseStationId = 0;
@@ -194,7 +167,7 @@ namespace IBL
 
                 foreach (var item in dal.GetListOfBaseStation())//check which station is clothest for the sender
                 {
-                    distance = CalculateDistance(new Location(item.Latitude, item.Latitude), y);
+                    distance = calculateDistance(new Location(item.Latitude, item.Latitude), y);
                     if (distance < min)
                     {
                         baseStationId = item.Id;
@@ -206,7 +179,7 @@ namespace IBL
             {
                 foreach (var item in dal.GetListOfBaseStation())//check which station is clothest for the sender
                 {
-                    distance = CalculateDistance(new Location(item.Latitude, item.Latitude), y);
+                    distance = calculateDistance(new Location(item.Latitude, item.Latitude), y);
                     if (distance < min && (predicate != null) && (predicate1 != null))
                     {
                         baseStationId = item.Id;
@@ -217,29 +190,29 @@ namespace IBL
             return baseStationId;
         }
         #endregion
-        private bool CalculateWhetherTheDroneHaveEnoghBattery(double distance, DroneToList drone)
+        #region//Calculate whether the drone have enogh battery
+        /// <summary>
+        /// Calculate whether the drone have enogh battery
+        /// </summary>
+        /// <param name="distance"></param>
+        /// <param name="drone"></param>
+        /// <returns></returns>
+        private bool CalculateWhetherTheDroneHaveEnoghBattery(double distance, DroneToList drone)//Calculate whether the drone have enogh battery
         {
-            if ((drone.Battery - CalculateBattery(drone, null, distance)) < 0)
+            if ((drone.Battery - calculateBattery(drone, null, distance)) < 0)
             {
                 return false;
             }
             return true;
         }
-        public int ReciveParcelId(Parcel parcel)
-        {
-            Predicate<IDAL.DO.Parcel> predicate = element => element.SenderId == parcel.Sender.Id; // predicat to find parcel based on senders id
-
-            IDAL.DO.Parcel newParcel = dal.GetParcel(parcel.Sender.Id, predicate); // get parcel of dal type based on senders id
-            return newParcel.Id;
-
-        }
+        #endregion
         #region//calculate state of parcel 
         /// <summary>
         /// calculate state of parcel 
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        public Enums.ParcelStatus StatusCalculate(IDAL.DO.Parcel p)
+        private Enums.ParcelStatus statusCalculate(IDAL.DO.Parcel p)
         {
             if (p.Deliverd != DateTime.MinValue)
                 return Enums.ParcelStatus.Supplied;

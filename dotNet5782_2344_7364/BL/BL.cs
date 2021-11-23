@@ -33,7 +33,7 @@ namespace IBL
             var listOfDrones = dal.GetListOfDrone();//get the list of drone from datasource
             foreach (var item in listOfDrones)//insert the list od data source drone to list of drone to list
             {
-                ListOfDronsBL.Add(ConvertDroneDalToList(item));
+                ListOfDronsBL.Add(convertDroneDalToList(item));
             }
         }
         #endregion

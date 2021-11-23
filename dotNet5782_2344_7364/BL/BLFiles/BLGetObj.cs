@@ -38,7 +38,7 @@ namespace IBL
                 List<ParcelAtCustomer> list = new List<ParcelAtCustomer>();
                 foreach (var item in newSenderParcel)
                 {
-                    list.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, StatusCalculate(dal.GetParcel(item.Id)), new CustomerInParcel(newCustomer.Id, newCustomer.Name)));
+                    list.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, statusCalculate(dal.GetParcel(item.Id)), new CustomerInParcel(newCustomer.Id, newCustomer.Name)));
                 }
                 newCustomer.ParcelFromCustomer = list; // add to new customer the parcel from customer
 
@@ -46,7 +46,7 @@ namespace IBL
                 List<ParcelAtCustomer> list1 = new List<ParcelAtCustomer>();
                 foreach (var item in newReciveParcels)
                 {
-                    list1.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, StatusCalculate(dal.GetParcel(item.Id)), new CustomerInParcel(newCustomer.Id, newCustomer.Name)));
+                    list1.Add(new ParcelAtCustomer(item.Id, (Enums.WeightCategories)item.Weight, (Enums.Priorities)item.Priority, statusCalculate(dal.GetParcel(item.Id)), new CustomerInParcel(newCustomer.Id, newCustomer.Name)));
 
                 }
                 newCustomer.ParcelToCustomer = list1; // add to new customer the parcel from customer
@@ -233,7 +233,7 @@ namespace IBL
                 IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
                 Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
                 Customer reciverCustomer = GetCustomerById(newParcel.ReciverId); // creat a new customer based on the reciver of the parcel
-                ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, StatusCalculate(dal.GetParcel(GetParcelById(newParcel.Id, predicate).Id)));
+                ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, statusCalculate(dal.GetParcel(GetParcelById(newParcel.Id, predicate).Id)));
                 return newParcelToList;
             }
             catch (IDAL.DO.IdNotExsistException exception) // if parcel or customer id does not exsists and was thrown from dal objects
@@ -269,7 +269,7 @@ namespace IBL
                 CustomerInParcel sCustomer = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name);
                 CustomerInParcel rCustomer = new CustomerInParcel(reciverCustomer.Id, reciverCustomer.Name);
 
-                return new ParcelInTransit(id, status, (Enums.Priorities)newParcel.Priority, (Enums.WeightCategories)newParcel.Weight, sCustomer, rCustomer, senderCustomer.Location, reciverCustomer.Location, CalculateDistance(senderCustomer.Location, reciverCustomer.Location));
+                return new ParcelInTransit(id, status, (Enums.Priorities)newParcel.Priority, (Enums.WeightCategories)newParcel.Weight, sCustomer, rCustomer, senderCustomer.Location, reciverCustomer.Location, calculateDistance(senderCustomer.Location, reciverCustomer.Location));
 
             }
             catch (IDAL.DO.IdNotExsistException exception) // if customer or parcel id does not exsists and was thrown from dal objects

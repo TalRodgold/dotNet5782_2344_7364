@@ -130,14 +130,14 @@ namespace IBL
                 {
                     throw new UnavailableExeption("drone", id);
                 }
-                int stationId = CalculateMinDistance(GetDroneById(id).CurrentLocation, element => element.NumberOfFreeChargingSlots > 0, element => CalculateDistance(element.Location, newDrone.CurrentLocation) <= ConvertBatteryToDistance(newDrone));
+                int stationId = calculateMinDistance(GetDroneById(id).CurrentLocation, element => element.NumberOfFreeChargingSlots > 0, element => calculateDistance(element.Location, newDrone.CurrentLocation) <= convertBatteryToDistance(newDrone));
                 if (stationId == 0) // if there are no free base stations
                 {
                     throw new UnavailableExeption("base station", stationId);
                 }
                 dal.ConstructDroneCharge(id, stationId);
                 BaseStation station = GetBaseStationById(stationId);
-                newDrone.Battery = CalculateBattery(newDrone);
+                newDrone.Battery = calculateBattery(newDrone);
                 newDrone.CurrentLocation = station.Location;
                 newDrone.DroneStatuses = Enums.DroneStatuses.Maintenance;
                 int index = ListOfDronsBL.FindIndex(element => element.Id == id);
@@ -210,9 +210,9 @@ namespace IBL
                     {
                         Customer newSenderCustomer = GetCustomerById(item.SenderId);
                         Customer newReciverCustomer = GetCustomerById(item.ReciverId);
-                        distanceDroneToPickup = CalculateDistance(drone.CurrentLocation, newSenderCustomer.Location);// CalculateDistance(drone1.CurrentLocation, drone1.ParcelInTransit.DeliveryLocation);
-                        distancePickupToDelivery = CalculateDistance(newSenderCustomer.Location, newReciverCustomer.Location);
-                        distanceDeliveryToClothestBaseStation = CalculateDistance(newReciverCustomer.Location, GetBaseStationById(CalculateMinDistance(newReciverCustomer.Location)).Location);
+                        distanceDroneToPickup = calculateDistance(drone.CurrentLocation, newSenderCustomer.Location);// CalculateDistance(drone1.CurrentLocation, drone1.ParcelInTransit.DeliveryLocation);
+                        distancePickupToDelivery = calculateDistance(newSenderCustomer.Location, newReciverCustomer.Location);
+                        distanceDeliveryToClothestBaseStation = calculateDistance(newReciverCustomer.Location, GetBaseStationById(calculateMinDistance(newReciverCustomer.Location)).Location);
                         distance = distanceDroneToPickup + distancePickupToDelivery + distanceDeliveryToClothestBaseStation;
                         if (((Enums.WeightCategories)item.Weight <= drone.Weight) && ((Enums.Priorities)item.Priority > maxPriorities) && (distanceDroneToPickup <= minDistance) && (CalculateWhetherTheDroneHaveEnoghBattery(distance, drone)));
                         {
@@ -262,10 +262,10 @@ namespace IBL
                 {
                     throw new NotAssociatedException("drone", droneId);
                 }
-                drone.Battery = (drone.Battery * ElectricityUseAvailiblity * CalculateDistance(drone.CurrentLocation, drone.ParcelInTransit.PickupLocation)) / 100;
+                drone.Battery = (drone.Battery * ElectricityUseAvailiblity * calculateDistance(drone.CurrentLocation, drone.ParcelInTransit.PickupLocation)) / 100;
                 drone.CurrentLocation = drone.ParcelInTransit.PickupLocation;
                 drone.ParcelInTransit.Status = false;
-                DroneToList newDrone = ConvertDroneBlToList(drone);
+                DroneToList newDrone = convertDroneBlToList(drone);
                 int index = ListOfDronsBL.FindIndex(element => element.Id == droneId);
                 ListOfDronsBL[index] = newDrone;
                 dal.UpdateParclePickup(drone.ParcelInTransit.Id);
@@ -301,10 +301,10 @@ namespace IBL
                 {
                     throw new NotAssociatedException("drone", droneId);
                 }
-                drone.Battery = CalculateBattery(null, drone);
+                drone.Battery = calculateBattery(null, drone);
                 drone.CurrentLocation = drone.ParcelInTransit.DeliveryLocation;
                 drone.DroneStatuses = Enums.DroneStatuses.Available;
-                DroneToList newDrone = ConvertDroneBlToList(drone);
+                DroneToList newDrone = convertDroneBlToList(drone);
                 int index = ListOfDronsBL.FindIndex(element => element.Id == droneId);
                 ListOfDronsBL[index] = newDrone;
                 dal.UpdateParcleDelivery(drone.ParcelInTransit.Id);
