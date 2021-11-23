@@ -94,6 +94,12 @@ namespace ConsoleUI_BL
                         string userModel = Console.ReadLine();
                         Enums.WeightCategories userWeightCategories;
                         Enums.WeightCategories.TryParse(Console.ReadLine(), out userWeightCategories);
+                        if(userWeightCategories>Enums.WeightCategories.Heavy)
+                        {
+                            //throw new InvalidValueException()
+                            PrintFunc(24);
+                            break;
+                        }
                         int userBaseStation;
                         if (!int.TryParse(Console.ReadLine(), out userBaseStation))
                         {
@@ -152,8 +158,20 @@ namespace ConsoleUI_BL
                         CustomerInParcel userTargetIdd = new CustomerInParcel(userTargetId, bl.GetCustomerById(userTargetId).Name);
                         Enums.WeightCategories userParcelWeightCategories;
                         Enums.WeightCategories.TryParse(Console.ReadLine(), out userParcelWeightCategories);
+                        if (userParcelWeightCategories > Enums.WeightCategories.Heavy)
+                        {
+                            //throw new InvalidValueException()
+                            PrintFunc(24);
+                            break;
+                        }
                         Enums.Priorities userParcelPriorities;
                         Enums.Priorities.TryParse(Console.ReadLine(), out userParcelPriorities);
+                        if (userParcelPriorities > Enums.Priorities.Urgent)
+                        {
+                            //throw new InvalidValueException()
+                            PrintFunc(24);
+                            break;
+                        }
                         bl.AddParcel(userSenderIdd, userTargetIdd, userParcelWeightCategories, userParcelPriorities);
                         break;
                     #endregion
