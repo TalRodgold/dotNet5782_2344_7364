@@ -52,6 +52,10 @@ namespace IBL
         {
             try
             {
+                if (numberOfChargingSlots < 0)
+                {
+                    throw new SizeProblemException("bigger", 0);
+                }
                 if (id < 0) // if id is negative
                 {
                     throw new InvalidIdException("negative", id);
@@ -171,7 +175,7 @@ namespace IBL
             }
             else
             {
-                drone.Battery = drone.Battery * time * DroneChargingPaste;
+                drone.Battery = (drone.Battery * time * DroneChargingPaste) / 100;
             }
             drone.DroneStatuses = Enums.DroneStatuses.Available;
             IDAL.DO.DroneCharge droneCharge = dal.GetDroneCharge(id, element => element.DroneId == id);
@@ -223,7 +227,6 @@ namespace IBL
 
                     drone.DroneStatuses = Enums.DroneStatuses.Delivery;
                     drone.NumberOfParcelInTransit = properParcelID;
-                    Parcel newParcel = GetParcelById(properParcelID);
                     ListOfDronsBL[index] = drone;
                 }
                 catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
@@ -259,8 +262,9 @@ namespace IBL
                 {
                     throw new NotAssociatedException("drone", droneId);
                 }
-                drone.Battery = drone.Battery * ElectricityUseAvailiblity * CalculateDistance(drone.CurrentLocation, drone.ParcelInTransit.PickupLocation);
+                drone.Battery = (drone.Battery * ElectricityUseAvailiblity * CalculateDistance(drone.CurrentLocation, drone.ParcelInTransit.PickupLocation)) / 100;
                 drone.CurrentLocation = drone.ParcelInTransit.PickupLocation;
+                drone.ParcelInTransit.Status = false;
                 DroneToList newDrone = ConvertDroneBlToList(drone);
                 int index = ListOfDronsBL.FindIndex(element => element.Id == droneId);
                 ListOfDronsBL[index] = newDrone;
@@ -289,7 +293,7 @@ namespace IBL
                     throw new InvalidIdException("negative", droneId);
                 }
                 Drone drone = GetDroneById(droneId);
-                if (drone.DroneStatuses != Enums.DroneStatuses.Delivery || !drone.ParcelInTransit.Status)
+                if (drone.DroneStatuses != Enums.DroneStatuses.Delivery || drone.ParcelInTransit.Status)
                 {
                     throw new UnavailableExeption("drone", droneId);
                 }

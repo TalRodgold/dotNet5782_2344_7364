@@ -103,11 +103,12 @@ namespace DalObjects
             Random rnd = new Random(); // generate randome number
             Parcel newParcel = new Parcel();
             newParcel.Id = Config.ParcelId;
-            int num1 = rnd.Next(0, CustomerList.Count());
-            int num2 = rnd.Next(0, CustomerList.Count());
+            int size = CustomerList.Count();
+            int num1 = rnd.Next(0, size);
+            int num2 = rnd.Next(0, size);
             while (num1 == num2) // so we dont get same customer twice
             {
-                num2 = rnd.Next(0, CustomerList.Count());
+                num2 = rnd.Next(0, size);
             }
             newParcel.SenderId = CustomerList.ElementAt(num1).Id;
             newParcel.ReciverId = CustomerList.ElementAt(num2).Id;
