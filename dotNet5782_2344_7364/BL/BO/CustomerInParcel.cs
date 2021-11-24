@@ -8,6 +8,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class for customer in parcel
+        /// </summary>
         public class CustomerInParcel
         {
             public int Id { set; get; }
@@ -16,7 +19,7 @@ namespace IBL
             {
                 return $"Customer #{Id}: \n\t Name = {Name}";
             }
-            public CustomerInParcel(int id, string name)
+            public CustomerInParcel(int id, string name) // constructor
             {
                 Id = id;
                 Name = name;

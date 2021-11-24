@@ -9,6 +9,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class for drone
+        /// </summary>
         public class Drone
         {
             public int Id { set; get; }
@@ -23,7 +26,7 @@ namespace IBL
                 return $" Drone #{Id}: \n Model = {Model} \n Weight = {Weight} \n Battery = {Battery * 100}% \n Statuses = {DroneStatuses} \n Parcel in transit {ParcelInTransit} \n {CurrentLocation} \n";
             }
            
-            public Drone(int id, string model, Enums.WeightCategories weight, double battery, Enums.DroneStatuses droneStatuses, ParcelInTransit parcelInTransit, Location location) 
+            public Drone(int id, string model, Enums.WeightCategories weight, double battery, Enums.DroneStatuses droneStatuses, ParcelInTransit parcelInTransit, Location location) // constructor
             {
                 Id = id;
                 Model = model;
@@ -33,7 +36,7 @@ namespace IBL
                 ParcelInTransit = parcelInTransit;
                 CurrentLocation = location;
             }
-            public Drone(int id,string model, Enums.WeightCategories weight)
+            public Drone(int id,string model, Enums.WeightCategories weight) // constructor
             {
                 Random rnd = new Random(); // generate randome number
 

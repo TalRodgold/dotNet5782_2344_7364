@@ -8,6 +8,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class for parcel to list
+        /// </summary>
         public class ParcelToList
         {
             public int Id { set; get; }
@@ -17,7 +20,7 @@ namespace IBL
             public Enums.Priorities Prioritie { set; get; }
             public Enums.ParcelStatus ParcelStatus { set; get; }
 
-            public ParcelToList(int id, string sendersName, string reciversName, Enums.WeightCategories weight, Enums.Priorities prioritie, Enums.ParcelStatus parcelStatus)
+            public ParcelToList(int id, string sendersName, string reciversName, Enums.WeightCategories weight, Enums.Priorities prioritie, Enums.ParcelStatus parcelStatus) // constructor
             {
                 Id = id;
                 SendersName = sendersName;

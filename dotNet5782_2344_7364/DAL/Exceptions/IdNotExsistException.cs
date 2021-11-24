@@ -14,18 +14,15 @@ namespace IDAL.DO
         public IdNotExsistException()
         {
         }
-
         public IdNotExsistException(string message, int id) : base(message)
         {
             this.Text = message;
             this.ID = id;
         }
-
         public IdNotExsistException(string message, Exception innerException) : base(message, innerException)
         {
 
         }
-
         protected IdNotExsistException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
         }

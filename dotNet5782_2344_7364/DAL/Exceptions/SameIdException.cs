@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace IDAL.DO
 {
+    /// <summary>
+    /// 
+    /// </summary>
     [Serializable]
     public class SameIdException : Exception
     {
@@ -11,19 +14,16 @@ namespace IDAL.DO
         public SameIdException()
         {
         }
-
         public SameIdException(string message, int id) : base(message)
         {
             this.Id = id;
             this.Text = message;
         }
-
         public SameIdException(string message, int id, Exception innerException) : base(message, innerException)
         {
             this.Id = id;
             this.Text = message;
         }
-
         protected SameIdException(SerializationInfo info, StreamingContext context) : base(info, context)
         {
 

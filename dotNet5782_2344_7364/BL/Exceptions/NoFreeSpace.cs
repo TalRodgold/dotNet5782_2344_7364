@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace IBL.BO
 {
+    /// <summary>
+    /// throw exception for no free space
+    /// </summary>
     [Serializable]
     public class NoFreeSpace : Exception
     {

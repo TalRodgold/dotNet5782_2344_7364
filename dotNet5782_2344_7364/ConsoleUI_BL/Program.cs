@@ -480,7 +480,7 @@ namespace ConsoleUI_BL
             #region// if i = 7 print to user data he needs to type in to add base station
             if (i == 7) // print to user data he needs to type in  
             {
-                Console.WriteLine("Please enter following data: \n 1) Id \n 2) Name \n 3) Longtitude \n 4) Latitude \n 5) Number of charge slots ");
+                Console.WriteLine("Please enter following data: \n 1) Id \n 2) Name \n 3) Longtitude between 31.728959 - 31.806477 \n 4) Latitude between 35.206714 - 35.221416 \n 5) Number of charge slots ");
                 return;
             }
             #endregion
@@ -494,7 +494,7 @@ namespace ConsoleUI_BL
             #region// if i = 9 print to user data he needs to type in to add customer
             if (i == 9) // print to user data he needs to type in 
             {
-                Console.WriteLine("Please enter following data: \n 1) Id \n 2) Name \n 3) phone number \n 4) Longtitude \n 5) Latitude ");
+                Console.WriteLine("Please enter following data: \n 1) Id \n 2) Name \n 3) phone number \n Longtitude between 31.728959 - 31.806477 \n 4) Latitude between 35.206714 - 35.221416 ");
                 return;
             }
             #endregion

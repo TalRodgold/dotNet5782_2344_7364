@@ -8,6 +8,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class for drone in charging
+        /// </summary>
         public class DroneInCharging
         {
             public int Id { set; get; }
@@ -16,14 +19,12 @@ namespace IBL
             {
                 return $" Drone #{Id}: \n Battery = {Battery * 100}% \n";
             }
-            public DroneInCharging() { }
-            public DroneInCharging(int id,double battery)
+            public DroneInCharging() { } // default
+            public DroneInCharging(int id,double battery) // constructor
             {
                 Id = id;
                 Battery = battery;
             }
         }
-       
-    }
-    
+    } 
 }

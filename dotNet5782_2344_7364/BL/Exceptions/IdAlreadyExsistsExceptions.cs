@@ -3,6 +3,9 @@ using System.Runtime.Serialization;
 
 namespace IBL.BO
 {
+    /// <summary>
+    /// throw exception for error where id already exsists
+    /// </summary>
     [Serializable]
     public class IdAlreadyExsistsExceptions : Exception
     {

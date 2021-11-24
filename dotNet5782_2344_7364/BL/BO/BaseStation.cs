@@ -9,6 +9,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class for base station
+        /// </summary>
         public class BaseStation
         {
             public int Id { set; get; }
@@ -20,9 +23,8 @@ namespace IBL
             {
                 return $" Base station #{Id}: \n Name = {Name} \n{Location.ToString()} Number of free charging slots = {NumberOfFreeChargingSlots} \n All drones in charging: {printList(ListOfDroneInCharging)} \n ";
             }
-            public BaseStation() { ListOfDroneInCharging = new List<DroneInCharging>(); }
-
-            public BaseStation(int id, string name, Location location, int freeChargingSlots)//, List<DroneInCharging> droneInCharging) ?????????
+            public BaseStation() { ListOfDroneInCharging = new List<DroneInCharging>(); } // default
+            public BaseStation(int id, string name, Location location, int freeChargingSlots) // constructor
             {
                 Id = id;
                 Name = name;
@@ -34,9 +36,8 @@ namespace IBL
                 {
                     ListOfDroneInCharging.Add(droneInCharging);
                 }
-                // ListOfDroneInCharging = droneInCharging;
             }
-            public BaseStation(int id, string name, Location location, int freeChargingSlots, List<DroneInCharging> listOfDroneInCharging)//, List<DroneInCharging> droneInCharging) ?????????
+            public BaseStation(int id, string name, Location location, int freeChargingSlots, List<DroneInCharging> listOfDroneInCharging) // constructor
             {
                 Id = id;
                 Name = name;
@@ -44,7 +45,7 @@ namespace IBL
                 NumberOfFreeChargingSlots = freeChargingSlots;
                 ListOfDroneInCharging = listOfDroneInCharging;
             }
-            private string printList(List<DroneInCharging> l)
+            private string printList(List<DroneInCharging> l) // make a string from list of drone in charging
             {
                 string s = "";
                 foreach (var item in l)

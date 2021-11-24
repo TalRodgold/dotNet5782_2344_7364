@@ -8,6 +8,9 @@ namespace IBL
 {
     namespace BO
     {
+        /// <summary>
+        /// class for drone to list
+        /// </summary>
         public class DroneToList
         {
             public int Id { set; get; }
@@ -21,8 +24,8 @@ namespace IBL
             {
                 return $" Drone #{Id}: \n Battery = {Battery} Weight = {Weight} \n Battery = {Battery * 100}% \n Drone Status = {DroneStatuses} \n Current location = {CurrentLocation} \n Number of parcel in transit = {NumberOfParcelInTransit} \n";
             }
-            public DroneToList() { }
-            public DroneToList(int id, string model, Enums.WeightCategories weight , double battery, Enums.DroneStatuses droneStatuses, Location location, int numberOfParcels)
+            public DroneToList() { } // dedault
+            public DroneToList(int id, string model, Enums.WeightCategories weight , double battery, Enums.DroneStatuses droneStatuses, Location location, int numberOfParcels) // constructor
             {
                 Id = id;
                 Model = model;

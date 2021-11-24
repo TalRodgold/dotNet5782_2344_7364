@@ -19,10 +19,13 @@ namespace IBL
         /// </summary>
         /// <param name="b"></param>
         public void AddBaseStation(BaseStation b)//Base station addition
-        {
-           
+        { 
             try
             {
+                if (b.Location.Longitude < 31.728959 || b.Location.Longitude > 31.806477 || b.Location.Latitude > 35.221416 || b.Location.Latitude < 35.206714)
+                {
+                    throw new LocationOutOfRangeException("base station");
+                }
                 if (b.Id < 0) // if id is negative
                 {
                     throw new InvalidIdException("negative", b.Id);
@@ -78,6 +81,10 @@ namespace IBL
         {
             try
             {
+                if (c.Location.Longitude < 31.728959 || c.Location.Longitude > 31.806477 || c.Location.Latitude > 35.221416 || c.Location.Latitude < 35.206714)
+                {
+                    throw new LocationOutOfRangeException("customr");
+                }
                 if (c.Id < 0)// if id is negative
                 {
                     throw new InvalidIdException("negative", c.Id);
