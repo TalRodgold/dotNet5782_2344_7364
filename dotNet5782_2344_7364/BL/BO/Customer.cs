@@ -10,7 +10,7 @@ namespace IBL
     namespace BO
     {
         /// <summary>
-        /// class for customer
+        /// class for customeer
         /// </summary>
         public class Customer
         {
