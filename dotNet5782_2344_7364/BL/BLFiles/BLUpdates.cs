@@ -144,6 +144,8 @@ namespace IBL
                 ListOfDronsBL[index] = newDrone;
                 station.NumberOfFreeChargingSlots -= 1;
                 dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.NumberOfFreeChargingSlots);
+                DroneInCharging droneInCharging = new DroneInCharging(newDrone.Id, newDrone.Battery);
+
             }
             catch (IDAL.DO.IdNotExsistException exception) // if base station id does not exsists and was thrown from dal objects
             {

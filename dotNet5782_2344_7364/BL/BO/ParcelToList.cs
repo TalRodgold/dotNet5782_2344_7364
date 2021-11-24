@@ -29,7 +29,7 @@ namespace IBL
             public override string ToString()
             {
                 return $" Parcel #{Id}: \n Sender = {SendersName} \n Reciver = {ReciversName} \n weight = {Weight} \n Prioritie = {Prioritie} \n Parcel status = {ParcelStatus} \n";
-            }
+            } 
         }
     }
 }
