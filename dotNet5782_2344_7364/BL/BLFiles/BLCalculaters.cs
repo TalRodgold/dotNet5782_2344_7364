@@ -23,55 +23,53 @@ namespace IBL
         private double calculateBattery(DroneToList drone = null, Drone drone1 = null,double distance = 0.0)//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
         {
             int baseStationId;
-            
             double battery = 0;
-            if (drone1 == null)
+            if (drone1 == null) // for drone to list
             {
                 Random rnd = new Random();
-                //double banan = ListOfDronsBL.Find(element => element.Id == id).Battery);
                 baseStationId = calculateMinDistance(drone.CurrentLocation);
                 IDAL.DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
                 distance = calculateDistance(drone.CurrentLocation, new Location(newBaseStation.Longtitude, newBaseStation.Latitude));
                 switch (drone.DroneStatuses)
                 {
-                    case Enums.DroneStatuses.Available:
+                    case Enums.DroneStatuses.Available: // if in availble
                         battery = distance * ElectricityUseAvailiblity;
                         battery = battery / 100;
-                        battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
+                        battery = (double)rnd.Next((int)battery, 100) / 100;
                         break;
-                    case Enums.DroneStatuses.Delivery:
+                    case Enums.DroneStatuses.Delivery: // if in delivery
                         switch (drone.Weight)
                         {
-                            case Enums.WeightCategories.Light:
+                            case Enums.WeightCategories.Light: // if light
                                 battery = distance * ElectricityUseLightWeight;
-                                battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
+                                battery = (double)rnd.Next((int)battery, 100) / 100;
                                 break;
-                            case Enums.WeightCategories.Medium:
+                            case Enums.WeightCategories.Medium: // if medium
                                 battery = distance * ElectricityUseMediumWeight;
-                                battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
+                                battery = (double)rnd.Next((int)battery, 100) / 100;
                                 break;
-                            case Enums.WeightCategories.Heavy:
+                            case Enums.WeightCategories.Heavy: // if heavy
                                 battery = distance * ElectricityUseHeavyWeight;
-                                battery = (double)rnd.Next((int)battery, 100) / 100;//i think it not lottering good
+                                battery = (double)rnd.Next((int)battery, 100) / 100;
                                 break;
                         }
                         break;
-                    case Enums.DroneStatuses.Maintenance:
-                        battery = (double)rnd.Next(0, 20) / 100;//i think it not lottering good
+                    case Enums.DroneStatuses.Maintenance: // if in maintenance
+                        battery = (double)rnd.Next(0, 20) / 100;
                         break;
                 }
             }
-            else
+            else // for drone
             {
                 switch (drone1.Weight)
                 {
-                    case Enums.WeightCategories.Light:
+                    case Enums.WeightCategories.Light: // for light weight
                         battery = (distance * ElectricityUseLightWeight) / 100;
                         break;
-                    case Enums.WeightCategories.Medium:
+                    case Enums.WeightCategories.Medium: // for medium weight
                         battery = (distance * ElectricityUseMediumWeight) / 100;
                         break;
-                    case Enums.WeightCategories.Heavy:
+                    case Enums.WeightCategories.Heavy: // for heavy weight 
                         battery = (distance * ElectricityUseHeavyWeight) / 100;
                         break;
                 }
@@ -124,27 +122,23 @@ namespace IBL
             double distance = 0;
             switch (drone.DroneStatuses)
             {
-                case Enums.DroneStatuses.Available:
-
+                case Enums.DroneStatuses.Available: // if available
                     distance = (battery * 100) / ElectricityUseAvailiblity;
                     break;
-                case Enums.DroneStatuses.Delivery:
+                case Enums.DroneStatuses.Delivery: // if in delivary
                     switch (drone.Weight)
                     {
-                        case Enums.WeightCategories.Light:
+                        case Enums.WeightCategories.Light: // for light weight
                             distance = (battery * 100) / ElectricityUseLightWeight;
                             break;
-                        case Enums.WeightCategories.Medium:
+                        case Enums.WeightCategories.Medium: // for medium weight
                             distance = (battery * 100) / ElectricityUseMediumWeight;
                             break;
-                        case Enums.WeightCategories.Heavy:
+                        case Enums.WeightCategories.Heavy: // for heavy weight
                             distance = (battery * 100) / ElectricityUseHeavyWeight;
                             break;
                     }
                     break;
-                    //case Enums.DroneStatuses.Maintenance:
-                    //  distance = (battery * 100) /DroneInCharging;////
-                    //break;
             }
             return distance;
         }
@@ -164,7 +158,6 @@ namespace IBL
             double distance;
             if (predicate == null && predicate1 == null)
             {
-
                 foreach (var item in dal.GetListOfBaseStation())//check which station is clothest for the sender
                 {
                     distance = calculateDistance(new Location(item.Latitude, item.Latitude), y);
@@ -214,14 +207,13 @@ namespace IBL
         /// <returns></returns>
         private Enums.ParcelStatus statusCalculate(IDAL.DO.Parcel p)
         {
-            if (p.Deliverd != DateTime.MinValue)
+            if (p.Deliverd != DateTime.MinValue) // deliverd time
                 return Enums.ParcelStatus.Supplied;
-            if (p.PickedUp != DateTime.MinValue)
+            if (p.PickedUp != DateTime.MinValue) // pickup time
                 return Enums.ParcelStatus.Collected;
-            if (p.AssociatedTime != DateTime.MinValue)//AssociationTime
+            if (p.AssociatedTime != DateTime.MinValue) // association time
                 return Enums.ParcelStatus.Associated;
             return Enums.ParcelStatus.Defined;
-
         }
         #endregion
     }

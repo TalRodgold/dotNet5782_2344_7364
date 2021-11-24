@@ -22,7 +22,13 @@ namespace IBL
             {
                 return $" Base station #{Id}: \n Name = {Name} \n Free charging slots = {FreeChargingSlots} \n Occupied charging slots = {OccupiedChargingSlots} \n ";
             }
-
+            public BaseStationToList(int id,string name,int freeChargingSlot,int  occupiedChargingSlots)
+            {
+                Id = id;
+                Name = name;
+                FreeChargingSlots = freeChargingSlot;
+                OccupiedChargingSlots = occupiedChargingSlots;
+            }
         }
     }
   

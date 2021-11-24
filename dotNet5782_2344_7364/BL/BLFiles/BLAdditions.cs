@@ -22,7 +22,7 @@ namespace IBL
         { 
             try
             {
-                if (b.Location.Longitude < 31.728959 || b.Location.Longitude > 31.806477 || b.Location.Latitude > 35.221416 || b.Location.Latitude < 35.206714)
+                if (b.Location.Longitude < 31.728959 || b.Location.Longitude > 31.806477 || b.Location.Latitude > 35.221416 || b.Location.Latitude < 35.206714) // if out of range
                 {
                     throw new LocationOutOfRangeException("base station");
                 }
@@ -66,9 +66,9 @@ namespace IBL
             {
                 throw new IdAlreadyExsistsExceptions(exception.Text, exception.ID, exception); // throw
             }
-            catch(IDAL.DO.NoFreeSpace exception)
+            catch(IDAL.DO.NoFreeSpace exception) // if there is no free space
             {
-                throw new NoFreeSpace(exception.Text, exception);
+                throw new NoFreeSpace(exception.Text, exception); // throw
             }
         }
         #endregion
@@ -81,7 +81,7 @@ namespace IBL
         {
             try
             {
-                if (c.Location.Longitude < 31.728959 || c.Location.Longitude > 31.806477 || c.Location.Latitude > 35.221416 || c.Location.Latitude < 35.206714)
+                if (c.Location.Longitude < 31.728959 || c.Location.Longitude > 31.806477 || c.Location.Latitude > 35.221416 || c.Location.Latitude < 35.206714) // if out of range
                 {
                     throw new LocationOutOfRangeException("customr");
                 }
@@ -110,7 +110,7 @@ namespace IBL
         /// <param name="reciver"></param>
         /// <param name="weight"></param>
         /// <param name="prioritie"></param>
-        public void AddParcel(CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie)
+        public void AddParcel(CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie) // Parcel addition
         {
             try
             {
@@ -129,8 +129,7 @@ namespace IBL
             {
 
                 throw new SameIdException(exception.Text, exception.Id, exception);
-            }
-            
+            }    
         }
         #endregion
     }

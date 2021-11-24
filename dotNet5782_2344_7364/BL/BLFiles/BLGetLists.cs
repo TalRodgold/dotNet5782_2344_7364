@@ -28,6 +28,21 @@ namespace IBL
             return list;
         }
         #endregion
+        #region//Get list of base station to list
+        /// <summary>
+        /// //Get list of base station to list
+        /// </summary>
+        /// <returns></returns>
+        public List<BaseStationToList> GetListOfBaseStationsToList()//Get list of base station to list
+        {
+            List<BaseStationToList> list = new List<BaseStationToList>();
+            foreach (var item in dal.GetListOfBaseStation())
+            {
+                list.Add(convertBasestationToBasestationTolist(GetBaseStationById(item.Id)));
+            }
+            return list;
+        }
+        #endregion
         #region//Get list of drones
         /// <summary>
         /// Get list of drones
@@ -43,17 +58,62 @@ namespace IBL
             return list;
         }
         #endregion
+        #region//Get list of drone to list
+        /// <summary>
+        /// Get list of drone to list
+        /// </summary>
+        /// <returns></returns>
+        public List<DroneToList> GetListOfDronesToList()//Get list of drone to list
+        {
+            List<DroneToList> list = new List<DroneToList>();
+            foreach (var item in dal.GetListOfDrone())
+            {
+                list.Add(convertDroneBlToList(GetDroneById(item.Id)));
+            }
+            return list;
+        }
+        #endregion
         #region//Get list of customers
         /// <summary>
         /// //Get list of customers
         /// </summary>
         /// <returns></returns>
-        public List<Customer> GetListOfCustomers()////Get list of customers
+        public List<Customer> GetListOfCustomers()//Get list of customers
         {
             List<Customer> list = new List<Customer>();
             foreach (var item in dal.GetListOfCustomer())
             {
                 list.Add(GetCustomerById(item.Id));
+            }
+            return list;
+        }
+        #endregion
+        #region//Get list of customer to list
+        /// <summary>
+        /// //Get list of customers
+        /// </summary>
+        /// <returns></returns>
+        public List<CustomerToList> GetListOfCustomerToList()//Get list of customers
+        {
+            List<CustomerToList> list = new List<CustomerToList>();
+            foreach (var item in dal.GetListOfCustomer())
+            {
+                list.Add(convertCustomerToCustomerTolist(GetCustomerById(item.Id)));
+            }
+            return list;
+        }
+        #endregion
+        #region//Get list of parcel to list
+        /// <summary>
+        /// Get list of parcel to list
+        /// </summary>
+        /// <returns></returns>
+        public List<ParcelToList> GetListOfParcelToList()//Get list of parcel to list
+        {
+            List<ParcelToList> list = new List<ParcelToList>();
+            foreach (var item in dal.GetListOfParcel())
+            {
+                list.Add(convertParcelToParcelTolist(GetParcelById(item.Id)));
             }
             return list;
         }
@@ -78,15 +138,16 @@ namespace IBL
         /// Get list of assosiated drones
         /// </summary>
         /// <returns></returns>
-        public List<Parcel> GetListOfNotAssigned()//Get list of assosiated drones
+        public List<ParcelToList> GetListOfNotAssigned()//Get list of assosiated drones
         {
-            List<Parcel> list = new List<Parcel>();
+            List<ParcelToList> list = new List<ParcelToList>();
             foreach (var item in dal.GetListOfParcel())
             {
-                if (GetParcelById(item.Id, element => element.DroneId > 0) != null)
+                if (item.DroneId == -1)
                 {
-                    list.Add(GetParcelById(item.Id, element => element.DroneId > 0));
+                    list.Add(convertParcelToParcelTolist(GetParcelById(item.Id)));
                 }
+                
             }
             return list;
         }
@@ -96,14 +157,14 @@ namespace IBL
         /// Get list of free charging stations
         /// </summary>
         /// <returns></returns>
-        public List<BaseStation> GetListOfFreeChargingStations()//Get list of free charging stations
+        public List<BaseStationToList> GetListOfFreeChargingStations()//Get list of free charging stations
         {
-            List<BaseStation> list = new List<BaseStation>();
+            List<BaseStationToList> list = new List<BaseStationToList>();
             foreach (var item in dal.GetListOfBaseStation())
             {
                 if (GetBaseStationById(item.Id).NumberOfFreeChargingSlots > 0)
                 {
-                    list.Add(GetBaseStationById(item.Id));
+                    list.Add(convertBasestationToBasestationTolist(GetBaseStationById(item.Id)));
                 }
             }
             return list;

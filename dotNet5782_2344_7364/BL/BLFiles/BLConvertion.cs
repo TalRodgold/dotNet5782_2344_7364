@@ -21,17 +21,14 @@ namespace IBL
         /// <returns></returns>
         private DroneToList convertDroneDalToList(IDAL.DO.Drone idalDrone)//Convert from dal drone to drone to list
         {
-
             Random rnd = new Random();
             DroneToList newDrone = new DroneToList();
             newDrone.Id = idalDrone.Id;
             newDrone.Model = idalDrone.Model;
             newDrone.Weight = (Enums.WeightCategories)idalDrone.MaxWeight;
-
-
             var listOfParcels = dal.GetListOfParcel().ToList();
             IDAL.DO.Parcel newParcel = listOfParcels.Find(element => element.DroneId == idalDrone.Id);
-            if (newParcel.Id != 0)//(!newParcel.Equals(null))//if there have a parcel with this drone id
+            if (newParcel.Id != 0)//if there have a parcel with this drone id
             {
                 newDrone.DroneStatuses = Enums.DroneStatuses.Delivery;
                 if (newParcel.AssociatedTime <= DateTime.MinValue)//the parcel didn't pick-upp
@@ -62,7 +59,6 @@ namespace IBL
                 {
                     Predicate<IDAL.DO.Parcel> predicate1 = element => element.Deliverd > DateTime.MinValue;
                     List<IDAL.DO.Parcel> listOfDeliveredParcel = dal.GetListOfParcel(predicate1).ToList();//all the parcel that delivered
-                                                                                                          // listOfDeliveredParcel = listOfDeliveredParcel.FindAll(element => element.DroneId == newDrone.Id);
                     if (listOfDeliveredParcel.Count != 0)//if there have pacel that has been delivered
                     {
                         IDAL.DO.Parcel newParcel_ = listOfDeliveredParcel[rnd.Next(listOfDeliveredParcel.Count)];
@@ -78,7 +74,6 @@ namespace IBL
                 newDrone.NumberOfParcelInTransit = -1;
             }
             newDrone.Battery = calculateBattery(newDrone);
-
             return newDrone;
         }
         #endregion
@@ -119,7 +114,45 @@ namespace IBL
                 }
                 return new Customer(customer.Id, customer.Name, customer.Phone, new Location(customer.Longtitude, customer.Latitude), parcelAtCustomersListSender, parcelAtCustomersListReciver);
             }
-            else return null;//maybe exption
+            else return null;
+        }
+        #endregion
+        #region//Convert basestation to basestation to list
+        /// <summary>
+        /// Convert basestation to basestation to list
+        /// </summary>
+        /// <param name="station"></param>
+        /// <returns></returns>
+        private BaseStationToList convertBasestationToBasestationTolist(BaseStation station)//Convert basestation to basestation to list
+        {
+            return new BaseStationToList(station.Id, station.Name, station.NumberOfFreeChargingSlots, station.ListOfDroneInCharging.Count);
+        }
+        #endregion
+        #region//Convert customer to customer to list
+        /// <summary>
+        /// Convert customer to customer to list
+        /// </summary>
+        /// <param name="customer"></param>
+        /// <returns></returns>
+        private CustomerToList convertCustomerToCustomerTolist(Customer customer) //Convert customer to customer to list
+        {
+            int numOfArraived, numOfRecived, numOfNotArraived, numOfOnWay; // 4 types of number of parcels
+            numOfArraived = customer.ParcelFromCustomer.FindAll(element => element.ParcelStatus == Enums.ParcelStatus.Supplied).Count; // from customer and suplied
+            numOfNotArraived = customer.ParcelFromCustomer.FindAll(element => element.ParcelStatus != Enums.ParcelStatus.Supplied).Count; // from customer and not suplied
+            numOfRecived = customer.ParcelToCustomer.FindAll(element => element.ParcelStatus == Enums.ParcelStatus.Supplied).Count; // to customer and suplied
+            numOfOnWay = customer.ParcelToCustomer.FindAll(element => element.ParcelStatus != Enums.ParcelStatus.Supplied).Count; // to customer and not suplied
+            return new CustomerToList(customer.Id, customer.Name, customer.Phone, numOfArraived, numOfNotArraived, numOfRecived, numOfOnWay);
+        }
+        #endregion
+        #region//Convert parcel to parcel to list
+        /// <summary>
+        /// Convert parcel to parcel to list
+        /// </summary>
+        /// <param name="station"></param>
+        /// <returns></returns>
+        private ParcelToList convertParcelToParcelTolist(Parcel parcel) //Convert parcel to parcel to list
+        {
+            return new ParcelToList(parcel.Id, parcel.Sender.Name, parcel.Reciver.Name, parcel.Weight, parcel.Prioritie, statusCalculate(dal.GetParcel(parcel.Id)));
         }
         #endregion
     }

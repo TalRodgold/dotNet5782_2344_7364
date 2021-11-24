@@ -22,24 +22,22 @@ namespace IBL
         BaseStation GetBaseStationById(int id); //Get base station from data-source by id
         ParcelToList GetParcelToListById(int id); //Get parceltolist with manipulation from data source by id
         ParcelInTransit GetParcelInTransitById(int id); //Get parceltolist with manipulation from data source by id
-        double ConvertBatteryToDistance(DroneToList drone); //Convert battery to distance by state and weight 
-        void UpdateDroneModel(int id, string newModel);
-        void UpdateBaseStation(int id, string name = "", int numberOfChargingSlots = -1);
-        void UpdateCustomer(int id, string name = "", string phone = "");
-        void UpdateSendDroneToCharge(int id);
-        void UpdateReleseDrone(int id, double time);
-        void UpdateAssosiateDrone(int id);
-        void PickupParcelByDrone(int droneId);
-        void DeliveryParcelByDrone(int droneId);
-        DroneToList ConvertDroneDalToList(IDAL.DO.Drone idalDrone);
-        DroneToList ConvertDroneBlToList(Drone blDrone);
-        Customer convertCustomerDalToBl(IDAL.DO.Customer customer);
-        List<BaseStation> GetListOfBaseStations();
-        List<Drone> GetListOfDrones();
-        List<Customer> GetListOfCustomers();
-        List<Parcel> GetListOfParcels();
-        List<Parcel> GetListOfNotAssigned();
-        List<BaseStation> GetListOfFreeChargingStations();
-        List<Customer> GetListOfCustomerDalivered();
+        void UpdateDroneModel(int id, string newModel);//Update drone model
+        void UpdateBaseStation(int id, string name = "", int numberOfChargingSlots = -1);//Update base station name/number of charging slots
+        void UpdateCustomer(int id, string name = "", string phone = "");//Update customer name/phone
+        void UpdateSendDroneToCharge(int id);//Update-send drone to charge
+        void UpdateReleseDrone(int id, double time);//Update-relese drone from charging slot
+        void UpdateAssosiateDrone(int id); //Update-assosiate drone to parcel
+        void PickupParcelByDrone(int droneId); //Update-pick-up parcel by dron
+        void DeliveryParcelByDrone(int droneId); //Update-dilavery parcel by drone
+        List<BaseStation> GetListOfBaseStations(); //Convert from dal drone to drone to list
+        List<Drone> GetListOfDrones(); //Get list of drones
+        List<Customer> GetListOfCustomers(); //Get list of customers
+        List<Parcel> GetListOfParcels(); //Get list of parcels
+        List<ParcelToList> GetListOfNotAssigned(); //Get list of assosiated drones
+        List<BaseStationToList> GetListOfFreeChargingStations(); //Get list of free charging stations
+        List<Customer> GetListOfCustomerDalivered(); //Get list of customers that dalivered
+        List<BaseStationToList> GetListOfBaseStationsToList(); //Get list of base stations
+        List<DroneToList> GetListOfDronesToList();//Get list of drones
     }
 }

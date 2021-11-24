@@ -17,7 +17,6 @@ namespace ConsoleUI
         static void Main(string[] args)
         {
             IDal name = new DalObjects.DalObjects();
-            //DalObjects.DalObjects name = new DalObjects.DalObjects(); // call to initialize (creat an appiriance of DalObjects.DalObjects - it enabls us to reach DalObjects functions)
             PrintFunc(1); // print ascii art.
             PrintFunc(2); // print menu
             while (true) // untill user enters 5 continue running

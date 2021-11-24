@@ -39,10 +39,10 @@ namespace IBL
             {
                 if (Id == -1) // if not inisilaized
                 {
-                    return $" Parcel # : \n Prioritie = {Priorities} \n Weight = {Weight} \n Customer in parcel sender = {CustomerInParcelSender} \n Customer in parcel reciver = {CustomerInParcelReciver} \n Pickup location = {PickupLocation} \n Delivery location = {DeliveryLocation} \n Distance = {Distance} ";
+                    return $" Parcel # : \n Prioritie = {Priorities} \n Weight = {Weight} \n Customer in parcel sender = {CustomerInParcelSender} \n Customer in parcel reciver = {CustomerInParcelReciver} \n Pickup location: {PickupLocation.ToString()} \n Delivery location: {DeliveryLocation.ToString()} \n Distance = {Distance} ";
 
                 }
-                return $" Parcel #{Id}: \n Prioritie = {Priorities} \n Weight = {Weight} \n Customer in parcel sender = {CustomerInParcelSender} \n Customer in parcel reciver = {CustomerInParcelReciver} \n Pickup location = {PickupLocation} \n Delivery location = {DeliveryLocation} \n Distance = {Distance} ";
+                return $" Parcel #{Id}: \n Prioritie = {Priorities} \n Weight = {Weight} \n Customer in parcel sender = {CustomerInParcelSender} \n Customer in parcel reciver = {CustomerInParcelReciver} \n Pickup location: {PickupLocation.ToString()} \n Delivery location: {DeliveryLocation.ToString()} \n Distance = {Distance} ";
             }
 
         }

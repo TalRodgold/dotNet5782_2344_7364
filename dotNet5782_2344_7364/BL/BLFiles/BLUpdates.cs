@@ -187,6 +187,11 @@ namespace IBL
             dal.ReleaseDroneCharge(id, station.Id);
         }
         #endregion
+        #region//update and associate a drone
+        /// <summary>
+        /// update and associate a drone
+        /// </summary>
+        /// <param name="id"></param>
         public void UpdateAssosiateDrone(int id)//Update-assosiate drone to parcel
         {
             {
@@ -210,11 +215,11 @@ namespace IBL
                     double  distanceDroneToPickup, distancePickupToDelivery, distanceDeliveryToClothestBaseStation, distance = 0;
                     foreach (var item in dal.GetListOfParcel())
                     {
-                        Customer newSenderCustomer = GetCustomerById(item.SenderId);
-                        Customer newReciverCustomer = GetCustomerById(item.ReciverId);
-                        distanceDroneToPickup = calculateDistance(drone.CurrentLocation, newSenderCustomer.Location);// CalculateDistance(drone1.CurrentLocation, drone1.ParcelInTransit.DeliveryLocation);
+                        Customer newSenderCustomer = GetCustomerById(item.SenderId); // sender
+                        Customer newReciverCustomer = GetCustomerById(item.ReciverId); // reciver
+                        distanceDroneToPickup = calculateDistance(drone.CurrentLocation, newSenderCustomer.Location); // distance
                         distancePickupToDelivery = calculateDistance(newSenderCustomer.Location, newReciverCustomer.Location);
-                        distanceDeliveryToClothestBaseStation = calculateDistance(newReciverCustomer.Location, GetBaseStationById(calculateMinDistance(newReciverCustomer.Location)).Location);
+                        distanceDeliveryToClothestBaseStation = calculateDistance(newReciverCustomer.Location, GetBaseStationById(calculateMinDistance(newReciverCustomer.Location)).Location); // closest
                         distance = distanceDroneToPickup + distancePickupToDelivery + distanceDeliveryToClothestBaseStation;
                         if (((Enums.WeightCategories)item.Weight <= drone.Weight) && ((Enums.Priorities)item.Priority > maxPriorities) && (distanceDroneToPickup <= minDistance) && (CalculateWhetherTheDroneHaveEnoghBattery(distance, drone)));
                         {
@@ -225,7 +230,7 @@ namespace IBL
                             reciverCustomer = newReciverCustomer;
                         }
                     }
-                    dal.AssociateDroneToParcel(id, properParcelID);
+                    dal.AssociateDroneToParcel(id, properParcelID); // associate
 
                     drone.DroneStatuses = Enums.DroneStatuses.Delivery;
                     drone.NumberOfParcelInTransit = properParcelID;
@@ -238,7 +243,7 @@ namespace IBL
                 }
             }
         }
-        
+        #endregion
         #region//Update-pick-up parcel by drone
         /// <summary>
         /// Update-pick-up parcel by drone
@@ -246,8 +251,6 @@ namespace IBL
         /// <param name="droneId"></param>
         public void PickupParcelByDrone(int droneId)//Update-pick-up parcel by drone
         {
-            //DroneToList droneInList = ListOfDronsBL.Find(element => element.Id == droneId);
-
             try
             {
 
@@ -256,13 +259,13 @@ namespace IBL
                     throw new InvalidIdException("negative", droneId);
                 }
                 Drone drone = GetDroneById(droneId);
-                if (drone.DroneStatuses != Enums.DroneStatuses.Delivery || !drone.ParcelInTransit.Status)
+                if (drone.DroneStatuses != Enums.DroneStatuses.Delivery || !drone.ParcelInTransit.Status) // if drone is not in delivery
                 {
-                    throw new UnavailableExeption("drone", droneId);
+                    throw new UnavailableExeption("drone", droneId); // throw
                 }
-                if (drone.ParcelInTransit.Id == -1 ||  GetParcelById(drone.ParcelInTransit.Id).AssociationTime == DateTime.MinValue)
+                if (drone.ParcelInTransit.Id == -1 ||  GetParcelById(drone.ParcelInTransit.Id).AssociationTime == DateTime.MinValue) // if no parcel associated
                 {
-                    throw new NotAssociatedException("drone", droneId);
+                    throw new NotAssociatedException("drone", droneId); // throw
                 }
                 drone.Battery = (drone.Battery * ElectricityUseAvailiblity * calculateDistance(drone.CurrentLocation, drone.ParcelInTransit.PickupLocation)) / 100;
                 drone.CurrentLocation = drone.ParcelInTransit.PickupLocation;
@@ -271,7 +274,6 @@ namespace IBL
                 int index = ListOfDronsBL.FindIndex(element => element.Id == droneId);
                 ListOfDronsBL[index] = newDrone;
                 dal.UpdateParclePickup(drone.ParcelInTransit.Id);
-
             }
             catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
             {
@@ -295,13 +297,13 @@ namespace IBL
                     throw new InvalidIdException("negative", droneId);
                 }
                 Drone drone = GetDroneById(droneId);
-                if (drone.DroneStatuses != Enums.DroneStatuses.Delivery || drone.ParcelInTransit.Status)
+                if (drone.DroneStatuses != Enums.DroneStatuses.Delivery || drone.ParcelInTransit.Status) // if drone not in delivery
                 {
-                    throw new UnavailableExeption("drone", droneId);
+                    throw new UnavailableExeption("drone", droneId); // throw
                 }
-                if (GetParcelById(drone.ParcelInTransit.Id).PickupTime == DateTime.MinValue)
+                if (GetParcelById(drone.ParcelInTransit.Id).PickupTime == DateTime.MinValue) // if parcel not associated
                 {
-                    throw new NotAssociatedException("drone", droneId);
+                    throw new NotAssociatedException("drone", droneId); // throw
                 }
                 drone.Battery = calculateBattery(null, drone);
                 drone.CurrentLocation = drone.ParcelInTransit.DeliveryLocation;
@@ -310,19 +312,14 @@ namespace IBL
                 int index = ListOfDronsBL.FindIndex(element => element.Id == droneId);
                 ListOfDronsBL[index] = newDrone;
                 dal.UpdateParcleDelivery(drone.ParcelInTransit.Id);
-
             }
             catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
             {
 
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
             }
-
         }
         #endregion
     }
-
-
-
 }
 
