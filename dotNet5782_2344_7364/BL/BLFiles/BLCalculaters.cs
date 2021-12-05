@@ -207,11 +207,11 @@ namespace IBL
         /// <returns></returns>
         private Enums.ParcelStatus statusCalculate(IDAL.DO.Parcel p)
         {
-            if (p.Deliverd != DateTime.MinValue) // deliverd time
+            if (p.Deliverd != null) // deliverd time
                 return Enums.ParcelStatus.Supplied;
-            if (p.PickedUp != DateTime.MinValue) // pickup time
+            if (p.PickedUp != null) // pickup time
                 return Enums.ParcelStatus.Collected;
-            if (p.AssociatedTime != DateTime.MinValue) // association time
+            if (p.AssociatedTime != null) // association time
                 return Enums.ParcelStatus.Associated;
             return Enums.ParcelStatus.Defined;
         }

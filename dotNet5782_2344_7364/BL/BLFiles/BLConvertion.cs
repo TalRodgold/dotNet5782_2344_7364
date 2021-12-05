@@ -31,7 +31,7 @@ namespace IBL
             if (newParcel.Id != 0)//if there have a parcel with this drone id
             {
                 newDrone.DroneStatuses = Enums.DroneStatuses.Delivery;
-                if (newParcel.AssociatedTime <= DateTime.MinValue)//the parcel didn't pick-upp
+                if (newParcel.AssociatedTime == null)//the parcel didn't pick-upp
                 {
                     Location newLocation = new Location(dal.GetCustomer(newParcel.SenderId).Longtitude, dal.GetCustomer(newParcel.SenderId).Latitude);
                     int baseStationId = calculateMinDistance(newLocation);
@@ -57,7 +57,7 @@ namespace IBL
                 }
                 else//if the drone is in avilible status
                 {
-                    Predicate<IDAL.DO.Parcel> predicate1 = element => element.Deliverd > DateTime.MinValue;
+                    Predicate<IDAL.DO.Parcel> predicate1 = element => element.Deliverd != null;
                     List<IDAL.DO.Parcel> listOfDeliveredParcel = dal.GetListOfParcel(predicate1).ToList();//all the parcel that delivered
                     if (listOfDeliveredParcel.Count != 0)//if there have pacel that has been delivered
                     {

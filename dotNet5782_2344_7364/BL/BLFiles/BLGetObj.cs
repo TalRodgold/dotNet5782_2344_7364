@@ -260,7 +260,7 @@ namespace IBL
                 Predicate<IDAL.DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
                 IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
                 bool status = true;
-                if (newParcel.PickedUp != DateTime.MinValue)
+                if (newParcel.PickedUp != null)
                 {
                     status = false;
                 }

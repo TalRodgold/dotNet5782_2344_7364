@@ -201,6 +201,10 @@ namespace IBL
                     {
                         throw new InvalidIdException("negative", id);
                     }
+                    if (!dal.IfDroneExsists(id))
+                    {
+                        throw new IdNotExsistException("drone", id);
+                    }
                     DroneToList drone = ListOfDronsBL.Find(element => element.Id == id);
                     int index = ListOfDronsBL.FindIndex(element => element.Id == id);
                     if (drone.DroneStatuses != Enums.DroneStatuses.Available) // if drone is unavalible
@@ -263,7 +267,7 @@ namespace IBL
                 {
                     throw new UnavailableExeption("drone", droneId); // throw
                 }
-                if (drone.ParcelInTransit.Id == -1 ||  GetParcelById(drone.ParcelInTransit.Id).AssociationTime != null) // if no parcel associated
+                if (drone.ParcelInTransit.Id == -1 ||  GetParcelById(drone.ParcelInTransit.Id).AssociationTime == null) // if no parcel associated
                 {
                     throw new NotAssociatedException("drone", droneId); // throw
                 }

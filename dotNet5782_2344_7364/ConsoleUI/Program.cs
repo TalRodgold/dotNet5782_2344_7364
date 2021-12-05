@@ -79,7 +79,7 @@ namespace ConsoleUI
                         Priorities.TryParse(Console.ReadLine(), out userParcelPriorities);
                         DateTime userRequested;
                         DateTime.TryParse(Console.ReadLine(), out userRequested);
-                        name.ConstructParcel(userSenderId, userTargetId, userParcelWeightCategories, userParcelPriorities, userRequested, 0, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+                        name.ConstructParcel(userSenderId, userTargetId, userParcelWeightCategories, userParcelPriorities, userRequested, 0, null, null, null);
                         break;
                       #endregion
                     case ("2.1"): //Update Percel to Drone
