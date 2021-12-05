@@ -122,8 +122,8 @@ namespace IBL
                 {
                     throw new InvalidIdException("negative", reciver.Id);
                 }
-                int id = dal.ConstructParcel(sender.Id, reciver.Id, (IDAL.DO.WeightCategories)weight, (IDAL.DO.Priorities)prioritie, DateTime.Now, -1, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);//call the constructor
-                Parcel newParcel = new Parcel(id, sender, reciver, weight, prioritie, null, DateTime.Now, DateTime.MinValue, DateTime.MinValue, DateTime.MinValue);
+                int id = dal.ConstructParcel(sender.Id, reciver.Id, (IDAL.DO.WeightCategories)weight, (IDAL.DO.Priorities)prioritie, DateTime.Now, -1, null, null, null) ;//call the constructor
+                Parcel newParcel = new Parcel(id, sender, reciver, weight, prioritie, null, DateTime.Now, null, null, null);
             }
             catch (IDAL.DO.SameIdException exception)
             {

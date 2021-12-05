@@ -263,7 +263,7 @@ namespace IBL
                 {
                     throw new UnavailableExeption("drone", droneId); // throw
                 }
-                if (drone.ParcelInTransit.Id == -1 ||  GetParcelById(drone.ParcelInTransit.Id).AssociationTime == DateTime.MinValue) // if no parcel associated
+                if (drone.ParcelInTransit.Id == -1 ||  GetParcelById(drone.ParcelInTransit.Id).AssociationTime != null) // if no parcel associated
                 {
                     throw new NotAssociatedException("drone", droneId); // throw
                 }
@@ -301,7 +301,7 @@ namespace IBL
                 {
                     throw new UnavailableExeption("drone", droneId); // throw
                 }
-                if (GetParcelById(drone.ParcelInTransit.Id).PickupTime == DateTime.MinValue) // if parcel not associated
+                if (GetParcelById(drone.ParcelInTransit.Id).PickupTime == null) // if parcel not associated
                 {
                     throw new NotAssociatedException("drone", droneId); // throw
                 }

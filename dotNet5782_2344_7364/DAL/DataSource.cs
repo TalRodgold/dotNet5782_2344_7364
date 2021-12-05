@@ -117,8 +117,8 @@ namespace DalObjects
             newParcel.CreatingTime = DateTime.Now;
             newParcel.DroneId = -1;
             newParcel.AssociatedTime = DateTime.Now.AddHours(rnd.Next(1, 23));
-            newParcel.PickedUp = DateTime.MinValue;
-            newParcel.Deliverd = DateTime.MinValue;
+            newParcel.PickedUp = null;
+            newParcel.Deliverd =null;
             ParcelList.Add(newParcel); // add to list
             Config.ParcelId++; // grow runing number by 1
             #endregion
