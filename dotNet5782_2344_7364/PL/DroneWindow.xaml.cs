@@ -20,16 +20,21 @@ namespace PL
     public partial class DroneWindow : Window
     {
         public IBL.BL bl;
-        //public DroneWindow(IBL.BL bl)
-        //{
-        //    this.bl = bl;
-        //    InitializeComponent();
-        //}
         public DroneWindow(IBL.BL bl)
         {
             this.bl = bl;
             InitializeComponent();
-            DroneView.ItemsSource = ;
+        }
+        public DroneWindow(IBL.BL bl, IBL.BO.DroneToList drone)
+        {
+            this.bl = bl;
+            InitializeComponent();
+            Id.Content = drone.Id.ToString();
+            Battery.Content = drone.Battery.ToString();
+            Model.Content = drone.Model.ToString();
+            Delivery.Content = drone.NumberOfParcelInTransit;
+            Longitude.Content = drone.CurrentLocation.Longitude.ToString();
+            Latitude.Content = drone.CurrentLocation.Latitude.ToString();
 
         }
     }

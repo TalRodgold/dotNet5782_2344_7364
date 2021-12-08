@@ -5,14 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DroneWindow" Height="450" Width="800">
-    <Grid>
-        <ListView Grid.Row="0" Name="DroneView">
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
+        Title="DroneWindow" Height="640" Width="800">
+    <Grid x:Name="MainGrid">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Id:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
+        <Label Content="Battery:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
+        <Label Content="Max weight:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
+        <Label Content="Model:" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
+        <Label Content="Status:" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
+        <Label Content="Delivery:" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
+        <Label Content="Latitude:" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
+        <Label Content="Longitude:" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
+        <Label Name="Id" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91"/>
+        <Label Name="Battery" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91"/>
+        <Label Name="MaxWeight" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91"/>
+        <Label Name="Model" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91"/>
+        <Label Name="Status" Grid.Row="4" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91"/>
+        <Label Name="Delivery" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91"/>
+        <Label Name="Latitude" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Margin="0,29,0,0" VerticalAlignment="Top" BorderBrush="Black" Background="#FF29E3C5" Height="23" Width="91"/>
+        <Label Name="Longitude" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91"/>
     </Grid>
 </Window>

@@ -46,9 +46,8 @@ namespace PL
 
         private void UpdateDrone_doubleClick(object sender, MouseButtonEventArgs e)
         {
-            IBL.BO.DroneToList d;
-            d = UpdateDrone_doubleClick;
-            new DroneWindow(bl ).Show();
+            IBL.BO.DroneToList drone = (IBL.BO.DroneToList)DroneListView.SelectedItem;
+            new DroneWindow(bl, drone).Show();
         }
 
         private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
