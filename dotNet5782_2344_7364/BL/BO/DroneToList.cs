@@ -24,10 +24,10 @@ namespace IBL
             {
                 if (NumberOfParcelInTransit == -1) // if not inistialized
                 {
-                    return $" Drone #{Id}: \n Battery = {Battery} Weight = {Weight} \n Battery = {Battery * 100}% \n Drone Status = {DroneStatuses} \n Current location:  {CurrentLocation.ToString()} \n Number of parcel in transit = 0 \n";
+                    return $" Drone #{Id}: \n Weight = {Weight} \n Battery = {Battery * 100}% \n Drone Status = {DroneStatuses} \n Current location:  {CurrentLocation.ToString()} \n Number of parcel in transit = 0 \n";
 
                 }
-                return $" Drone #{Id}: \n Battery = {Battery} Weight = {Weight} \n Battery = {Battery * 100}% \n Drone Status = {DroneStatuses} \n Current location:  {CurrentLocation.ToString()} \n Number of parcel in transit = {NumberOfParcelInTransit} \n";
+                return $" Drone #{Id}: \n Weight = {Weight} \n Battery = {Battery * 100}% \n Drone Status = {DroneStatuses} \n Current location:  {CurrentLocation.ToString()} \n Number of parcel in transit = {NumberOfParcelInTransit} \n";
             }
             public DroneToList() { } // dedault
             public DroneToList(int id, string model, Enums.WeightCategories weight , double battery, Enums.DroneStatuses droneStatuses, Location location, int numberOfParcels) // constructor

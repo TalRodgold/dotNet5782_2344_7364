@@ -73,6 +73,22 @@ namespace IBL
             return list;
         }
         #endregion
+        #region//Get list of drones by predicat
+        /// <summary>
+        /// Get list of drones by predicat
+        /// </summary>
+        /// <param name="predicate"></param>
+        /// <returns></returns>
+        public List<DroneToList> GetListOfDroneToListByPredicat(Predicate<DroneToList> predicate) //Get list of drones by predicat
+        {
+            List<DroneToList> list1 = new List<DroneToList>();
+            foreach (var item in ListOfDronsBL)
+            {
+                list1.Add(convertDroneBlToList(GetDroneById(item.Id)));
+            }
+            return list1.FindAll(predicate).ToList();
+        }
+        #endregion
         #region//Get list of customers
         /// <summary>
         /// //Get list of customers
@@ -141,13 +157,11 @@ namespace IBL
         public List<ParcelToList> GetListOfNotAssigned()//Get list of assosiated drones
         {
             List<ParcelToList> list = new List<ParcelToList>();
-            foreach (var item in dal.GetListOfParcel())
+            Predicate<IDAL.DO.Parcel> predicate = element => element.DroneId == -1;
+            List<IDAL.DO.Parcel> listIdal = dal.GetListOfParcel(predicate).ToList();
+            foreach (var item in listIdal)
             {
-                if (item.DroneId == -1)
-                {
-                    list.Add(convertParcelToParcelTolist(GetParcelById(item.Id)));
-                }
-                
+                list.Add(convertParcelToParcelTolist(GetParcelById(item.Id)));  
             }
             return list;
         }
@@ -160,12 +174,11 @@ namespace IBL
         public List<BaseStationToList> GetListOfFreeChargingStations()//Get list of free charging stations
         {
             List<BaseStationToList> list = new List<BaseStationToList>();
-            foreach (var item in dal.GetListOfBaseStation())
+            Predicate<IDAL.DO.BaseStation> predicate = element => element.ChargeSlots > 0;
+            List<IDAL.DO.BaseStation> listIdal = dal.GetListOfBaseStation(predicate).ToList();
+            foreach (var item in listIdal)
             {
-                if (GetBaseStationById(item.Id).NumberOfFreeChargingSlots > 0)
-                {
-                    list.Add(convertBasestationToBasestationTolist(GetBaseStationById(item.Id)));
-                }
+                list.Add(convertBasestationToBasestationTolist(GetBaseStationById(item.Id)));
             }
             return list;
         }

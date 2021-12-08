@@ -225,7 +225,7 @@ namespace IBL
                         distancePickupToDelivery = calculateDistance(newSenderCustomer.Location, newReciverCustomer.Location);
                         distanceDeliveryToClothestBaseStation = calculateDistance(newReciverCustomer.Location, GetBaseStationById(calculateMinDistance(newReciverCustomer.Location)).Location); // closest
                         distance = distanceDroneToPickup + distancePickupToDelivery + distanceDeliveryToClothestBaseStation;
-                        if (((Enums.WeightCategories)item.Weight <= drone.Weight) && ((Enums.Priorities)item.Priority > maxPriorities) && (distanceDroneToPickup <= minDistance) && (CalculateWhetherTheDroneHaveEnoghBattery(distance, drone)));
+                        if ((Enums.WeightCategories)item.Weight <= drone.Weight && (Enums.Priorities)item.Priority > maxPriorities && distanceDroneToPickup <= minDistance && CalculateWhetherTheDroneHaveEnoghBattery(distance, drone));
                         {
                             maxPriorities = (Enums.Priorities)item.Priority;
                             minDistance = distanceDroneToPickup;
