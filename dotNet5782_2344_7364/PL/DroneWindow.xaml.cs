@@ -20,63 +20,99 @@ namespace PL
     public partial class DroneWindow : Window
     {
         public IBL.BL bl;
-        public IBL.BO.DroneToList drone;
-        public DroneWindow(IBL.BL bl)
+        public DroneListWindow droneListWindow;
+        public DroneWindow(IBL.BL bl, DroneListWindow listWindow) // constructor for adding new drone
         {
             this.bl = bl;
+            this.droneListWindow = listWindow;
             InitializeComponent();
+            AddButton.Visibility = Visibility.Visible; // make butten visible
+            // enable erelevent buttons and text boxes
+            UpdateButton.IsEnabled = false; 
+            Battery.IsEnabled = false;
+            StatusSelector.IsEnabled = false;
+            Delivery.IsEnabled = false;
+            Latitude.IsEnabled = false;
+            Longitude.IsEnabled = false;
 
-           AddGrid.Visibility = Visibility.Visible;
-        }
-        public DroneWindow(IBL.BL bl, IBL.BO.DroneToList chosenDrone)
-        {
-            this.bl = bl;
-            this.drone = chosenDrone;
-            InitializeComponent();
-            UpdateGrid.Visibility = Visibility.Visible;
             MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.Enums.WeightCategories));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.Enums.DroneStatuses));
-
-            IdL.Content = chosenDrone.Id.ToString();
-            BatteryL.Content = chosenDrone.Battery.ToString();
-            MaxWeightSelector.SelectedItem = chosenDrone.Weight;
-            ModelL.Text = chosenDrone.Model.ToString();
-            StatusSelector.SelectedItem = chosenDrone.DroneStatuses;
-            DeliveryL.Content = chosenDrone.NumberOfParcelInTransit.ToString();
-            LongitudeL.Content = chosenDrone.CurrentLocation.LongitudeInSexa();
-            LatitudeL.Content = chosenDrone.CurrentLocation.LatitudeInSexa();
+            StartingBaseStation.Visibility = Visibility.Visible;
+            BaseStationTxtBox.Visibility = Visibility.Visible;
+            CancelButton.Visibility = Visibility.Visible;
+          
+        }
+        public DroneWindow(IBL.BL bl, DroneListWindow listWindow, IBL.BO.DroneToList chosenDrone) // constructor for Drone update
+        {
+            this.bl = bl;
             
+            this.droneListWindow = listWindow;
+            InitializeComponent();
+            UpdateButton.Visibility = Visibility.Visible; // make butten visible
+            AddButton.IsEnabled = false; // enable add button
+            // enable text boxes where we dont want user to change
+            Id.IsEnabled = false;
+            Battery.IsEnabled = false;
+            MaxWeightSelector.IsEnabled = false;
+            StatusSelector.IsEnabled = false;
+            Delivery.IsEnabled = false;
+            Latitude.IsEnabled = false;
+            Longitude.IsEnabled = false;
+            // set combo boxes
+            MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.Enums.WeightCategories));
+            StatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.Enums.DroneStatuses));
+            // insert drone data to text box
+            Id.Text = chosenDrone.Id.ToString();
+            Battery.Text = chosenDrone.Battery.ToString();
+            MaxWeightSelector.SelectedItem = chosenDrone.Weight;
+            Model.Text = chosenDrone.Model.ToString();
+            StatusSelector.SelectedItem = chosenDrone.DroneStatuses;
+            Delivery.Text = chosenDrone.NumberOfParcelInTransit.ToString();
+            Longitude.Text = chosenDrone.CurrentLocation.LongitudeInSexa();
+            Latitude.Text = chosenDrone.CurrentLocation.LatitudeInSexa();     
         }
 
         private void MaxWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            
+            MaxWeightSelector.SelectedItem = (IBL.BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem;
         }
-
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            StatusSelector.SelectedItem = (IBL.BO.Enums.DroneStatuses)StatusSelector.SelectedItem;
+        }
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                IBL.BO.Drone newDrone = new IBL.BO.Drone(int.Parse(Id.Text), Model.Text, (IBL.BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem);
+                bl.AddDrone(newDrone, Convert.ToInt32(BaseStationTxtBox.Text));
+                MessageBox.Show("Drone added sucsecfully");
+                droneListWindow.Refresh();
+                this.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString());
+            }
+        }
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.UpdateDroneModel(int.Parse(Id.Text), Model.Text.ToString());
+                droneListWindow.Refresh();
+                this.Close();
+              
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString()); 
+            }
         }
 
-        private void UpdateModel(object sender, MouseButtonEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            
-            string model = ModelL.Text;
-            ModelL.Text = model;
-
-            
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            bl.UpdateDroneModel(drone.Id, ModelL.Text.ToString());
-            new DroneListWindow(bl).Show();
             this.Close();
         }
-        private void AddId(object sender, MouseButtonEventArgs e)
-        {
-
-        }
-
     }
 }

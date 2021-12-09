@@ -6,7 +6,14 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="DroneWindow" Height="640" Width="800">
-    <Grid x:Name="MainGrid">
+    <Window.Background>
+        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+            <GradientStop Color="#FF24E0AD" Offset="0.873"/>
+            <GradientStop Color="#FF13B8C1" Offset="0.703"/>
+        </LinearGradientBrush>
+    </Window.Background>
+    <Grid x:Name="MainGrid" Margin="140,84,140,136" RenderTransformOrigin="0.497,0.501">
+
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -16,42 +23,42 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
-        <Label Content="Id:" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
-        <Label Content="Battery:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
-        <Label Content="Max weight:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
-        <Label Content="Model:" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
-        <Label Content="Status:" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
-        <Label Content="Delivery:" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
-        <Label Content="Latitude:" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
-        <Label Content="Longitude:" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Left" Margin="170,0,0,0" VerticalAlignment="Center"/>
 
-        
-        <Grid x:Name="AddGrid" />
-        <TextBox Name="Id" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91" MouseLeftButtonDown="AddId"/>
-        <TextBox Name="Battery" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91"/>
-        <TextBox Name="Model" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Height="26" MouseLeftButtonDown="UpdateModel"></TextBox>
-        <TextBox Name="Delivery" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91"/>
-        <TextBox Name="Latitude" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Margin="0,29,0,0" VerticalAlignment="Top" BorderBrush="Black" Background="#FF29E3C5" Height="23" Width="91"/>
-        <TextBox Name="Longitude" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91"/>
+        <Label Content="Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="129,0,0,0" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label Content="Battery:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Margin="129,0,0,0" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label Content="Max weight:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="130,0,0,0" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label Content="Model:" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="130,0,0,0" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label Content="Status:" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Margin="130,1,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label Content="Delivery:" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Left" Margin="129,0,0,0" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label Content="Latitude:" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Left" Margin="130,2,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label Content="Longitude:" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Left" Margin="129,2,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label x:Name="StartingBaseStation" Visibility="Hidden" Content="starting base station:"  Grid.Row="8" Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Margin="84,3,0,0"/>
 
+        <TextBox Name="Id" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="Battery" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Center" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26" Width="120"/>
+        <TextBox Name="Model" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Height="26" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="Delivery" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26" Width="120"/>
+        <TextBox Name="Latitude" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="28" Width="120"/>
+        <TextBox Name="Longitude" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26" Width="120"/>
+        <TextBox x:Name="BaseStationTxtBox" Visibility="Hidden" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26"/>
+        <ComboBox Name="StatusSelector" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" Width="120" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" SelectionChanged="StatusSelector_SelectionChanged"/>
+        <ComboBox Name="MaxWeightSelector" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Width="120" SelectionChanged="MaxWeightSelector_SelectionChanged" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6"/>
+        <Grid x:Name="ButtonsGrid" Grid.Column="1" Grid.Row="8" Margin="274,101,-126,-124" >
+            <Button x:Name="UpdateButton" Content="Update"  Visibility="Hidden"  HorizontalAlignment="Center" Margin="0,18,0,0" VerticalAlignment="Top" Width="76" Height="43" Click="UpdateButton_Click" Background="#FFDD7C61" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display"/>
+            <Button x:Name="AddButton" Content="Add"  Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center" Width="76" Height="48" Click="AddButton_Click" Background="#FFDD7C61" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display"/>
+        </Grid>
+        <Grid Margin="-117,101,271,-124" Grid.Row="8">
+            <Button x:Name="CancelButton" Visibility="Hidden" Content="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center" Width="76" Height="48" Click="CancelButton_Click" Background="#FFDD7C61" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display"/>
 
-        <Grid x:Name="UpdateGrid" Visibility="Hidden"/>
-        <Label Name="IdL" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91" MouseLeftButtonDown="AddId"/>
-        <Label Name="BatteryL" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left"  VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91"/>
-        <TextBox Name="ModelL" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="120" Height="26" MouseLeftButtonDown="UpdateModel"></TextBox>
-        <Label Name="DeliveryL" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91"/>
-        <Label Name="LatitudeL" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Margin="0,29,0,0" VerticalAlignment="Top" BorderBrush="Black" Background="#FF29E3C5" Height="23" Width="91"/>
-        <Label Name="LongitudeL" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91"/>
-        <Button Content="Update" HorizontalAlignment="Left" Margin="314,13,0,0" VerticalAlignment="Top" Width="76" Height="43" Grid.Column="1" Grid.Row="7" Click="Button_Click"/>
-        <ComboBox Name="StatusSelector" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" Width="120" SelectionChanged="StatusSelector_SelectionChanged"/>
-        <ComboBox Name="MaxWeightSelector" Grid.Column="1" HorizontalAlignment="Left" Margin="0,26,0,0" Grid.Row="2" VerticalAlignment="Top" Width="120" SelectionChanged="MaxWeightSelector_SelectionChanged"/>
-        
+        </Grid>
+
     </Grid>
+
 </Window>

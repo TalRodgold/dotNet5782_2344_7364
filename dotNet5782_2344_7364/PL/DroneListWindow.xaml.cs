@@ -41,27 +41,30 @@ namespace PL
 
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(bl).Show();
+            new DroneWindow(bl, this).Show();
         }
 
         private void UpdateDrone_doubleClick(object sender, MouseButtonEventArgs e)
         {
             IBL.BO.DroneToList drone = (IBL.BO.DroneToList)DroneListView.SelectedItem;
-            new DroneWindow(bl, drone).Show();
-            this.Close();
-
+            new DroneWindow(bl, this, drone).Show();
         }
 
         private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            new DroneWindow(bl).Show();
+            new DroneWindow(bl, this).Show();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
+        public void Refresh()
+        {
+            DroneListView.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.DroneStatuses == (IBL.BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
+            DroneListView.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (IBL.BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem).ToList();
+        }
 
-     
+
     }
 }
