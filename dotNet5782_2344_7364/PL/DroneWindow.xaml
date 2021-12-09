@@ -12,9 +12,11 @@
             <GradientStop Color="#FF13B8C1" Offset="0.703"/>
         </LinearGradientBrush>
     </Window.Background>
-    <Grid x:Name="MainGrid" Margin="140,84,140,136" RenderTransformOrigin="0.497,0.501">
+    <Grid x:Name="MainGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -29,16 +31,18 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <Label Content="Id:" Grid.Column="0" HorizontalAlignment="Left" Margin="129,0,0,0" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
-        <Label Content="Battery:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Left" Margin="129,0,0,0" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
-        <Label Content="Max weight:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="Left" Margin="130,0,0,0" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
-        <Label Content="Model:" Grid.Row="3" Grid.Column="0" HorizontalAlignment="Left" Margin="130,0,0,0" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
-        <Label Content="Status:" Grid.Row="4" Grid.Column="0" HorizontalAlignment="Left" Margin="130,1,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
-        <Label Content="Delivery:" Grid.Row="5" Grid.Column="0" HorizontalAlignment="Left" Margin="129,0,0,0" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
-        <Label Content="Latitude:" Grid.Row="6" Grid.Column="0" HorizontalAlignment="Left" Margin="130,2,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
-        <Label Content="Longitude:" Grid.Row="7" Grid.Column="0" HorizontalAlignment="Left" Margin="129,2,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label Content="Id:" Grid.Column="0" HorizontalAlignment="center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label Content="Battery:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label Content="Max weight:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label Content="Model:" Grid.Row="3" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label Content="Status:" Grid.Row="4" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label Content="Delivery:" Grid.Row="5" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label Content="Latitude:" Grid.Row="6" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Label Content="Longitude:" Grid.Row="7" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"/>
         <Label x:Name="StartingBaseStation" Visibility="Hidden" Content="starting base station:"  Grid.Row="8" Grid.Column="0" HorizontalAlignment="Left"  VerticalAlignment="Top" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Margin="84,3,0,0"/>
 
         <TextBox Name="Id" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
@@ -50,14 +54,19 @@
         <TextBox x:Name="BaseStationTxtBox" Visibility="Hidden" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26"/>
         <ComboBox Name="StatusSelector" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" Width="120" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" SelectionChanged="StatusSelector_SelectionChanged"/>
         <ComboBox Name="MaxWeightSelector" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="2" VerticalAlignment="Center" Width="120" SelectionChanged="MaxWeightSelector_SelectionChanged" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6"/>
-        <Grid x:Name="ButtonsGrid" Grid.Column="1" Grid.Row="8" Margin="274,101,-126,-124" >
-            <Button x:Name="UpdateButton" Content="Update"  Visibility="Hidden"  HorizontalAlignment="Center" Margin="0,18,0,0" VerticalAlignment="Top" Width="76" Height="43" Click="UpdateButton_Click" Background="#FFDD7C61" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display"/>
-            <Button x:Name="AddButton" Content="Add"  Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center" Width="76" Height="48" Click="AddButton_Click" Background="#FFDD7C61" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display"/>
-        </Grid>
-        <Grid Margin="-117,101,271,-124" Grid.Row="8">
-            <Button x:Name="CancelButton" Visibility="Hidden" Content="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center" Width="76" Height="48" Click="CancelButton_Click" Background="#FFDD7C61" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display"/>
 
-        </Grid>
+        <Button x:Name="UpdateButton" Content="Update drone model" Visibility="Hidden" Grid.Row="3" Grid.Column="2"  HorizontalAlignment="Center"  VerticalAlignment="Center" Width="180" Height="43" Click="UpdateButton_Click" Background="#FFDD7C61" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Button x:Name="AddButton" Content="Add" Visibility="Hidden" Grid.Row="10" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="76" Height="48" Click="AddButton_Click" Background="#FFDD7C61" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display"/>
+
+        <Button x:Name="ExitButton" Grid.Row="10" Grid.Column="0" Content="EXIT" HorizontalAlignment="Center" VerticalAlignment="Center" Width="76" Height="48" Click="ExitButton_Click" Background="#FFDD7C61" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Button x:Name="CancelButton" Visibility="Hidden" Grid.Row="10" Grid.Column="0" Content="Cancel" HorizontalAlignment="Center" VerticalAlignment="Center" Width="76" Height="48" Click="CancelButton_Click" Background="#FFDD7C61" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display"/>
+        <Button x:Name="SendDroneToChargeButton" Content="Send drone to charge"  Visibility="Hidden" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Height="32" Width="144" Click="SendDroneToChargeButton_Click"/>
+        <Button x:Name="RealesDroneFromChargingButton"  Visibility="Hidden" Content="Reales drone from charging" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Height="26" Width="152" Click="RealesDroneFromChargingButton_Click"/>
+        <Button x:Name="AccociateDroneToParcelButton" Visibility="Hidden" Content="Accociat drone to parcel" Grid.Column="2" HorizontalAlignment="Center" Margin="0,13,0,0" Grid.Row="5" VerticalAlignment="Top" Height="28" Width="109" Click="AccociateDroneToParcelButton_Click"/>
+        <Button x:Name="PickUpParcelButton" Visibility="Hidden" Content="Pick up a parcel" Grid.Column="3" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="5" VerticalAlignment="Top" Height="27" Width="117" Click="PickUpParcelButton_click"/>
+        <Button x:Name="DeliverParcelButton" Visibility="Hidden" Content="Deliver Parcel" Grid.Column="2" HorizontalAlignment="Left" Margin="68,10,0,0" Grid.Row="7" VerticalAlignment="Top" Height="25" Width="86" Click="DeliverParcelButton_Click"/>
+
+
 
     </Grid>
 
