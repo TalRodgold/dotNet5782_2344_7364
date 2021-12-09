@@ -20,26 +20,63 @@ namespace PL
     public partial class DroneWindow : Window
     {
         public IBL.BL bl;
+        public IBL.BO.DroneToList drone;
         public DroneWindow(IBL.BL bl)
         {
             this.bl = bl;
             InitializeComponent();
-            AddGrid.Visibility = Visibility.Visible;
+
+           AddGrid.Visibility = Visibility.Visible;
         }
-        public DroneWindow(IBL.BL bl, IBL.BO.DroneToList drone)
+        public DroneWindow(IBL.BL bl, IBL.BO.DroneToList chosenDrone)
         {
             this.bl = bl;
+            this.drone = chosenDrone;
             InitializeComponent();
             UpdateGrid.Visibility = Visibility.Visible;
-            Id.Content = drone.Id.ToString();
-            Battery.Content = drone.Battery.ToString();
-            Model.Content = drone.Model.ToString();
-            Delivery.Content = drone.NumberOfParcelInTransit;
-            Longitude.Content = drone.CurrentLocation.Longitude.ToString();
-            Latitude.Content = drone.CurrentLocation.Latitude.ToString();
+            MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.Enums.WeightCategories));
+            StatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.Enums.DroneStatuses));
+
+            IdL.Content = chosenDrone.Id.ToString();
+            BatteryL.Content = chosenDrone.Battery.ToString();
+            MaxWeightSelector.SelectedItem = chosenDrone.Weight;
+            ModelL.Text = chosenDrone.Model.ToString();
+            StatusSelector.SelectedItem = chosenDrone.DroneStatuses;
+            DeliveryL.Content = chosenDrone.NumberOfParcelInTransit.ToString();
+            LongitudeL.Content = chosenDrone.CurrentLocation.LongitudeInSexa();
+            LatitudeL.Content = chosenDrone.CurrentLocation.LatitudeInSexa();
+            
+        }
+
+        private void MaxWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
+
+        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
         }
 
+        private void UpdateModel(object sender, MouseButtonEventArgs e)
+        {
+            
+            string model = ModelL.Text;
+            ModelL.Text = model;
+
+            
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            bl.UpdateDroneModel(drone.Id, ModelL.Text.ToString());
+            new DroneListWindow(bl).Show();
+            this.Close();
+        }
+        private void AddId(object sender, MouseButtonEventArgs e)
+        {
+
+        }
 
     }
 }

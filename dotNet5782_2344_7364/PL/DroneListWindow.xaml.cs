@@ -48,17 +48,20 @@ namespace PL
         {
             IBL.BO.DroneToList drone = (IBL.BO.DroneToList)DroneListView.SelectedItem;
             new DroneWindow(bl, drone).Show();
+            this.Close();
+
         }
 
         private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             new DroneWindow(bl).Show();
-
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
+
+     
     }
 }

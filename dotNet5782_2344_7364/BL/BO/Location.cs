@@ -43,6 +43,14 @@ namespace IBL
                 return $"{degrees}°{minutes}'{string.Format("{0:F3}", secondsWithFraction)}\"{c}"; // return string of cordinents
                 #endregion
             }
+            public string LongitudeInSexa() // return longitude in sexagesimal
+            {
+                return sexagesimal(Longitude, 'N');
+            }
+            public string LatitudeInSexa() // return latitude in sexagesimal
+            {
+                return sexagesimal(Latitude, 'E');
+            }
         }
     }
     
