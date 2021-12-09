@@ -24,11 +24,13 @@ namespace PL
         {
             this.bl = bl;
             InitializeComponent();
+            AddGrid.Visibility = Visibility.Visible;
         }
         public DroneWindow(IBL.BL bl, IBL.BO.DroneToList drone)
         {
             this.bl = bl;
             InitializeComponent();
+            UpdateGrid.Visibility = Visibility.Visible;
             Id.Content = drone.Id.ToString();
             Battery.Content = drone.Battery.ToString();
             Model.Content = drone.Model.ToString();
@@ -37,5 +39,7 @@ namespace PL
             Latitude.Content = drone.CurrentLocation.Latitude.ToString();
 
         }
+
+
     }
 }

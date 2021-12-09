@@ -16,6 +16,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -37,5 +38,12 @@
         <Label Name="Delivery" Grid.Row="5" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91"/>
         <Label Name="Latitude" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" Margin="0,29,0,0" VerticalAlignment="Top" BorderBrush="Black" Background="#FF29E3C5" Height="23" Width="91"/>
         <Label Name="Longitude" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Background="#FF29E3C5" Height="26" Width="91"/>
+        <Grid x:Name="AddGrid" >
+
+        </Grid>
+        <Grid x:Name="UpdateGrid" >
+            <Button Content="Update" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Margin="255,0,0,0" VerticalAlignment="Center" Width="76" Height="43"/>
+        </Grid>
+
     </Grid>
 </Window>
