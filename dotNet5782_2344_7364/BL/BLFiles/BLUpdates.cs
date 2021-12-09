@@ -317,7 +317,7 @@ namespace IBL
                 ListOfDronsBL[index] = newDrone;
                 dal.UpdateParcleDelivery(drone.ParcelInTransit.Id);
             }
-            catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
+            catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects.
             {
 
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
