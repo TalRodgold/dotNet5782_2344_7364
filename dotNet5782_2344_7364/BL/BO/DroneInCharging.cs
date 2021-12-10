@@ -15,15 +15,17 @@ namespace IBL
         {
             public int Id { set; get; }
             public double Battery { set; get; }
+            public DateTime? TimeOfStartCharging { set; get; }=null;
             public override string ToString()
             {
                 return $" Drone #{Id}: \n Battery = {Battery * 100}% \n";
             }
             public DroneInCharging() { } // default
-            public DroneInCharging(int id,double battery) // constructor
+            public DroneInCharging(int id,double battery,DateTime? currentTime) // constructor
             {
                 Id = id;
                 Battery = battery;
+                TimeOfStartCharging = currentTime;
             }
         }
     } 

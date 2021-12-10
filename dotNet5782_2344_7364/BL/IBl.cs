@@ -26,7 +26,7 @@ namespace IBL
         void UpdateBaseStation(int id, string name = "", int numberOfChargingSlots = -1);//Update base station name/number of charging slots
         void UpdateCustomer(int id, string name = "", string phone = "");//Update customer name/phone
         void UpdateSendDroneToCharge(int id);//Update-send drone to charge
-        void UpdateReleseDrone(int id, double time);//Update-relese drone from charging slot
+        void UpdateReleseDrone(int id);//Update-relese drone from charging slot
         void UpdateAssosiateDrone(int id); //Update-assosiate drone to parcel
         void PickupParcelByDrone(int droneId); //Update-pick-up parcel by dron
         void DeliveryParcelByDrone(int droneId); //Update-dilavery parcel by drone

@@ -30,6 +30,12 @@ namespace IBL
             ElectricityUseMediumWeight = arr[2];
             ElectricityUseHeavyWeight = arr[3];
             DroneChargingPaste = arr[4];
+            UpdateListOfDronsBL();
+        }
+        #endregion
+        #region
+        public void UpdateListOfDronsBL()
+        {
             var listOfDrones = dal.GetListOfDrone();//get the list of drone from datasource
             foreach (var item in listOfDrones)//insert the list od data source drone to list of drone to list
             {
@@ -37,8 +43,8 @@ namespace IBL
             }
         }
         #endregion
-       
-    }  
+
+    }
 }
 
 

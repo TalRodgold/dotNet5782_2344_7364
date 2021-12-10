@@ -147,9 +147,10 @@ namespace DalObjects
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="stationId"></param>
-        public void ConstructDroneCharge(int droneId, int stationId) // construct a new drone charge
+        public void ConstructDroneCharge(int droneId, int stationId,DateTime? time) // construct a new drone charge
         {      
             DroneCharge newDroneCharge = new DroneCharge();
+            newDroneCharge.TimeOfStartCharging = time;
             newDroneCharge.DroneId = droneId;
             newDroneCharge.StationId = stationId;
             DataSource.DroneChargeList.Add(newDroneCharge);       
@@ -248,7 +249,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="stationId"></param>
-        public void UpdateDroneCharge(int droneId, int stationId) // update drones charging
+        public void UpdateDroneCharge(int droneId, int stationId,DateTime? CurrentTime) // update drones charging
         {
             if (!IfDroneExsists(droneId)) // if id dosent exsist
             {
@@ -265,7 +266,7 @@ namespace DalObjects
                 throw new NoFreeSpace("charging slots");
             }
             int i = DataSource.BaseStationList.FindIndex(element => element.Id == stationId);
-            ConstructDroneCharge(droneId, stationId); // call construct
+            ConstructDroneCharge(droneId, stationId, CurrentTime); // call construct
             newBaseStation.ChargeSlots -= 1; // change number of free charge slots
             DataSource.BaseStationList[i] = newBaseStation;
         }

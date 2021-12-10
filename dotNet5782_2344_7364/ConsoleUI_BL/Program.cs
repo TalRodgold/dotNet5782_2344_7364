@@ -250,10 +250,10 @@ namespace ConsoleUI_BL
                         PrintFunc(14); // print to user data he needs to type in 
                         int userDroneId3;
                         int.TryParse(Console.ReadLine(), out userDroneId3);
-                        double time;
-                        PrintFunc(25);
-                        double.TryParse(Console.ReadLine(), out time);
-                        bl.UpdateReleseDrone(userDroneId3, time);
+                        //double time;
+                        //PrintFunc(25);
+                        //double.TryParse(Console.ReadLine(), out time);
+                        bl.UpdateReleseDrone(userDroneId3);
                         break;
                     #endregion
                     case update.Assign: // associate drone to base station
@@ -615,13 +615,13 @@ namespace ConsoleUI_BL
                 return;
             }
             #endregion
-            #region// if i = 25 print enter time
-            if (i == 25) // invalid input
-            {
-                Console.WriteLine("Enter how much time the drone was charging");
-                return;
-            }
-            #endregion
+            //#region// if i = 25 print enter time
+            //if (i == 25) // invalid input
+            //{
+            //    Console.WriteLine("Enter how much time the drone was charging");
+            //    return;
+            //}
+            //#endregion
             #region// if i = 26 print update base station rename 
             if (i == 26) // print to user data he needs to type in 
             {

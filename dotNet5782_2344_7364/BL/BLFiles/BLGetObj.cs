@@ -200,8 +200,7 @@ namespace IBL
                 {
                     if (item.StationId == idalBaseStation.Id)
                     {
-                        listToAdd.Add(new DroneInCharging(item.DroneId, ListOfDronsBL.Find(element => element.Id == item.DroneId).Battery));
-
+                        listToAdd.Add(new DroneInCharging(item.DroneId, ListOfDronsBL.Find(element => element.Id == item.DroneId).Battery, dal.GetDroneCharge(item.DroneId).TimeOfStartCharging));
                     }
                 }
                 BaseStation newBaseStation = new BaseStation(idalBaseStation.Id, idalBaseStation.Name, new Location(idalBaseStation.Longtitude, idalBaseStation.Latitude), idalBaseStation.ChargeSlots, listToAdd);

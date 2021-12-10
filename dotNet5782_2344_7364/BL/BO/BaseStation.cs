@@ -30,7 +30,7 @@ namespace IBL
                 Name = name;
                 Location = location;
                 NumberOfFreeChargingSlots = freeChargingSlots;
-                DroneInCharging droneInCharging = new DroneInCharging(-1, -1);
+                DroneInCharging droneInCharging = new DroneInCharging(-1, -1,null);
                 ListOfDroneInCharging = new List<DroneInCharging>();
                 for (int i = 0; i < NumberOfFreeChargingSlots; i++)
                 {

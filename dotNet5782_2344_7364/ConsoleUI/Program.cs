@@ -118,7 +118,7 @@ namespace ConsoleUI
                         PrintFunc(10);
                         int baseId;
                         int.TryParse(Console.ReadLine(), out baseId);
-                        name.UpdateDroneCharge(droneId2, baseId);
+                        name.UpdateDroneCharge(droneId2, baseId,DateTime.Now);
                         break;
                         #endregion
                     case ("2.5")://release DroneCharge

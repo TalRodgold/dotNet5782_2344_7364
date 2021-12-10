@@ -135,7 +135,8 @@ namespace IBL
                 {
                     throw new UnavailableExeption("base station", stationId);
                 }
-                dal.ConstructDroneCharge(id, stationId);
+                DateTime ?currentTime = DateTime.Now;
+                dal.ConstructDroneCharge(id, stationId, currentTime);
                 BaseStation station = GetBaseStationById(stationId);
                 newDrone.Battery = calculateBattery(newDrone);
                 newDrone.CurrentLocation = station.Location;
@@ -144,8 +145,7 @@ namespace IBL
                 ListOfDronsBL[index] = newDrone;
                 station.NumberOfFreeChargingSlots -= 1;
                 dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.NumberOfFreeChargingSlots);
-                DroneInCharging droneInCharging = new DroneInCharging(newDrone.Id, newDrone.Battery);
-
+                DroneInCharging droneInCharging = new DroneInCharging(newDrone.Id, newDrone.Battery, currentTime);
             }
             catch (IDAL.DO.IdNotExsistException exception) // if base station id does not exsists and was thrown from dal objects
             {
@@ -160,24 +160,27 @@ namespace IBL
         /// </summary>
         /// <param name="id"></param>
         /// <param name="time"></param>
-        public void UpdateReleseDrone(int id, double time)//Update-relese drone from charging slot
+        public void UpdateReleseDrone(int id)//Update-relese drone from charging slot
         {
             if (id < 0) // if id is negative
             {
                 throw new InvalidIdException("negative", id);
             }
             DroneToList drone = GetDroneToList(id);
+            if (dal.GetDroneCharge(drone.Id).TimeOfStartCharging == null)
+                return;
+            TimeSpan Diff=(TimeSpan)(DateTime.Now - dal.GetDroneCharge(drone.Id).TimeOfStartCharging);
             if (drone.DroneStatuses != Enums.DroneStatuses.Maintenance)
             {
                 throw new UnavailableExeption("drone", id);
             }
-            if (drone.Battery * time * DroneChargingPaste >= 1) // if charged more than 100 %
+            if ((drone.Battery * (Diff.Hours+Diff.Minutes/60+Diff.Seconds/3600)* DroneChargingPaste)>= 1) // if charged more than 100 %
             {
                 drone.Battery = 1;
             }
             else
             {
-                drone.Battery = (drone.Battery * time * DroneChargingPaste) / 100;
+                drone.Battery = (drone.Battery * (Diff.Hours + Diff.Minutes / 60 + Diff.Seconds / 3600) * DroneChargingPaste) / 100;
             }
             drone.DroneStatuses = Enums.DroneStatuses.Available;
             IDAL.DO.DroneCharge droneCharge = dal.GetDroneCharge(id, element => element.DroneId == id);

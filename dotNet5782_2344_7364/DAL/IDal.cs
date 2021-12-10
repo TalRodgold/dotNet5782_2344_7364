@@ -16,7 +16,7 @@ namespace IDAL
         void ConstructDrone(int id, string model, WeightCategories maxWeight); // construct a new drone
         int ConstructParcel(int senderId, int targetId, WeightCategories weight, Priorities priority, DateTime? request, int droneId, DateTime? schedual, DateTime? pickUp, DateTime? deliverd);// construct a new parcel
         void ConstructCustomer(int id, string name, string phone, double longtitude, double latitude); // construct a new customer
-        void ConstructDroneCharge(int droneId, int stationId); // construct a new drone charge
+        void ConstructDroneCharge(int droneId, int stationId,DateTime? cuerrentTime); // construct a new drone charge
         string ReturnDroneDataById(int id); // find drone in list and return it as string
         string ReturnBaseStationDataById(int id); // find base station in list and return it as string
         string ReturnCustomerDataById(int id); // find customer in list and return it as string
@@ -24,7 +24,7 @@ namespace IDAL
         void AssociateDroneToParcel(int droneId, int parcleId); // associate a drone to a parcel 
         void UpdateParclePickup(int id); // update parcel pickup 
         void UpdateParcleDelivery(int id); // update parcel delivery
-        void UpdateDroneCharge(int droneId, int stationId); // update drones charging
+        void UpdateDroneCharge(int droneId, int stationId,DateTime? currentTime); // update drones charging
         void UpdateDroneModel(int id, string newModel); // update drone model
         void UpdateBaseStationName(int id, string name); // update base stations name
         void UpdateChargingSlotsNumber(int id, int numberOfChargingSlots);

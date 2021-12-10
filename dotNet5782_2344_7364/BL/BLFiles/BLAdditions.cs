@@ -59,7 +59,7 @@ namespace IBL
                 }
                 d.CurrentLocation = GetBaseStationById(startingBaseStation).Location;//update the location to be like his starting base station
                 dal.ConstructDrone(d.Id, d.Model, (IDAL.DO.WeightCategories)d.Weight); // creat drone
-                dal.UpdateDroneCharge(d.Id, startingBaseStation); // connect drone to charging base station
+                dal.UpdateDroneCharge(d.Id, startingBaseStation,DateTime.Now); // connect drone to charging base station
                 ListOfDronsBL.Add(new DroneToList(d.Id, d.Model, d.Weight, d.Battery, d.DroneStatuses, d.CurrentLocation, -1));//add the drone to the local list of drones
             }
             catch (IDAL.DO.IdAlreadyExsistsExceptions exception) // if drone id already exsists and was thrown from dal objects

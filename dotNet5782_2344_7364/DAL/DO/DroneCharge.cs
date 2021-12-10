@@ -16,6 +16,7 @@ namespace IDAL
             /// </summary>
             public int DroneId{ get; set; } // id of drone
             public int StationId{ get; set; } // id of station
+            public DateTime? TimeOfStartCharging { get; set;}//time when he start charging 
         }
   
     }
