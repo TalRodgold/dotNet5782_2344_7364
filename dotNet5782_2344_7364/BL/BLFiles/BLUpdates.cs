@@ -138,7 +138,15 @@ namespace IBL
                 DateTime? currentTime = DateTime.Now;
                 dal.ConstructDroneCharge(id, stationId, currentTime);
                 BaseStation station = GetBaseStationById(stationId);
-                newDrone.Battery -= calculateBattery(newDrone, calculateDistance(newDrone.CurrentLocation, station.Location));
+                if (newDrone.Battery - calculateBattery(newDrone, calculateDistance(newDrone.CurrentLocation, station.Location)) < 0)
+                {
+                    newDrone.Battery = 0.000001;
+                }
+                else
+                {
+                    newDrone.Battery -= calculateBattery(newDrone, calculateDistance(newDrone.CurrentLocation, station.Location));
+
+                }
                 newDrone.CurrentLocation = station.Location;
                 newDrone.DroneStatuses = Enums.DroneStatuses.Maintenance;
                 int index = ListOfDronsBL.FindIndex(element => element.Id == id);
@@ -174,7 +182,7 @@ namespace IBL
             {
                 throw new UnavailableExeption("drone", id);
             }
-            if ((drone.Battery * (Diff.Hours+Diff.Minutes/60+Diff.Seconds/3600)* DroneChargingPaste)>= 1) // if charged more than 100 %
+            if ((drone.Battery * (Diff.Hours + (double)Diff.Minutes / 60 + (double)Diff.Seconds / 3600) * DroneChargingPaste >= 1)) // if charged more than 100 %
             {
                 drone.Battery = 1;
             }
