@@ -180,7 +180,7 @@ namespace IBL
             }
             else
             {
-                drone.Battery = (drone.Battery * (Diff.Hours + Diff.Minutes / 60 + Diff.Seconds / 3600) * DroneChargingPaste) / 100;
+                drone.Battery = drone.Battery * (Diff.Hours + (double)Diff.Minutes / 60 + (double)Diff.Seconds / 3600) * DroneChargingPaste / 100;
             }
             drone.DroneStatuses = Enums.DroneStatuses.Available;
             IDAL.DO.DroneCharge droneCharge = dal.GetDroneCharge(id, element => element.DroneId == id);

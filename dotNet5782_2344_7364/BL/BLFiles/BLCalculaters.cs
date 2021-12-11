@@ -64,13 +64,13 @@ namespace IBL
                 switch (drone1.Weight)
                 {
                     case Enums.WeightCategories.Light: // for light weight
-                        battery = (distance * ElectricityUseLightWeight) / 100;
+                        battery = distance * ElectricityUseLightWeight / 100;
                         break;
                     case Enums.WeightCategories.Medium: // for medium weight
-                        battery = (distance * ElectricityUseMediumWeight) / 100;
+                        battery = distance * ElectricityUseMediumWeight / 100;
                         break;
                     case Enums.WeightCategories.Heavy: // for heavy weight 
-                        battery = (distance * ElectricityUseHeavyWeight) / 100;
+                        battery = distance * ElectricityUseHeavyWeight / 100;
                         break;
                 }
             }
@@ -88,7 +88,7 @@ namespace IBL
         {
             double ConvertToRadians(double angle)
             {
-                return (Math.PI / 180) * angle;
+                return Math.PI / 180 * angle;
             }
             int R = 6371;
 
@@ -123,19 +123,19 @@ namespace IBL
             switch (drone.DroneStatuses)
             {
                 case Enums.DroneStatuses.Available: // if available
-                    distance = (battery * 100) / ElectricityUseAvailiblity;
+                    distance = battery * 100 / ElectricityUseAvailiblity;
                     break;
                 case Enums.DroneStatuses.Delivery: // if in delivary
                     switch (drone.Weight)
                     {
                         case Enums.WeightCategories.Light: // for light weight
-                            distance = (battery * 100) / ElectricityUseLightWeight;
+                            distance = battery * 100 / ElectricityUseLightWeight;
                             break;
                         case Enums.WeightCategories.Medium: // for medium weight
-                            distance = (battery * 100) / ElectricityUseMediumWeight;
+                            distance = battery * 100 / ElectricityUseMediumWeight;
                             break;
                         case Enums.WeightCategories.Heavy: // for heavy weight
-                            distance = (battery * 100) / ElectricityUseHeavyWeight;
+                            distance = battery * 100 / ElectricityUseHeavyWeight;
                             break;
                     }
                     break;
