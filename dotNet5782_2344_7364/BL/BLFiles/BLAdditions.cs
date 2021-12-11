@@ -45,7 +45,7 @@ namespace IBL
         /// </summary>
         /// <param name="d"></param>
         /// <param name="startingBaseStation"></param>
-        public void AddDrone(Drone d, int startingBaseStation)//Drone addition
+        public void AddDrone(Drone d, int? startingBaseStation)//Drone addition
         {
             try
             {
@@ -122,7 +122,7 @@ namespace IBL
                 {
                     throw new InvalidIdException("negative", reciver.Id);
                 }
-                int id = dal.ConstructParcel(sender.Id, reciver.Id, (IDAL.DO.WeightCategories)weight, (IDAL.DO.Priorities)prioritie, DateTime.Now, -1, null, null, null) ;//call the constructor
+                int? id = dal.ConstructParcel(sender.Id, reciver.Id, (IDAL.DO.WeightCategories)weight, (IDAL.DO.Priorities)prioritie, DateTime.Now, -1, null, null, null) ;//call the constructor
                 Parcel newParcel = new Parcel(id, sender, reciver, weight, prioritie, null, DateTime.Now, null, null, null);
             }
             catch (IDAL.DO.SameIdException exception)

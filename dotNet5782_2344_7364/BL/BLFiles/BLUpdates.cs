@@ -24,7 +24,7 @@ namespace IBL
         {
             try
             {
-                if (id < 0)// if id is negative
+                if (id < 0 || id == null)// if id is negative
                 {
                     throw new InvalidIdException("negative", id);
                 }
@@ -87,11 +87,11 @@ namespace IBL
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="phone"></param>
-        public void UpdateCustomer(int id, string name = "", string phone = "")//Update customer name/phone
+        public void UpdateCustomer(int? id, string name = "", string phone = "")//Update customer name/phone
         {
             try
             {
-                if (id < 0) // if id is negative
+                if (id < 0 || id == null) // if id is negative
                 {
                     throw new InvalidIdException("negative", id);
                 }
@@ -116,11 +116,11 @@ namespace IBL
         /// Update-send drone to charge
         /// </summary>
         /// <param name="id"></param>
-        public void UpdateSendDroneToCharge(int id)//Update-send drone to charge
+        public void UpdateSendDroneToCharge(int? id)//Update-send drone to charge
         {
             try
             {
-                if (id < 0) // if id is negative
+                if (id < 0 || id == null) // if id is negative
                 {
                     throw new InvalidIdException("negative", id);
                 }
@@ -162,7 +162,7 @@ namespace IBL
         /// <param name="time"></param>
         public void UpdateReleseDrone(int? id)//Update-relese drone from charging slot
         {
-            if (id < 0) // if id is negative
+            if (id < 0 || id == null) // if id is negative
             {
                 throw new InvalidIdException("negative", id);
             }
@@ -200,7 +200,7 @@ namespace IBL
             {
                 try
                 {
-                    if (id < 0) // if id is negative
+                    if (id < 0 || id == null) // if id is negative
                     {
                         throw new InvalidIdException("negative", id);
                     }
@@ -261,7 +261,7 @@ namespace IBL
             try
             {
 
-                if (droneId < 0) // if id is negative
+                if (droneId < 0 || droneId == null) // if id is negative
                 {
                     throw new InvalidIdException("negative", droneId);
                 }
@@ -299,7 +299,7 @@ namespace IBL
 
             try
             {
-                if (droneId < 0) // if id is negative
+                if (droneId < 0 || droneId == null) // if id is negative
                 {
                     throw new InvalidIdException("negative", droneId);
                 }

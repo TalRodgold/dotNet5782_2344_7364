@@ -23,7 +23,7 @@ namespace IBL
         {
             try
             {
-                if (id < 0 && id == null) // if id is negative
+                if (id < 0 || id == null) // if id is negative
                 {
                     throw new InvalidIdException("negative", id);
                 }
@@ -70,22 +70,22 @@ namespace IBL
         {
             try
             {
-                if (id<0 && id ==null) // if id is negative
+                if (id < 0) // if id is negative
                 {
                     throw new InvalidIdException("negative", id);
                 }
-                IDAL.DO.Parcel idalParcel = dal.GetParcel(id, predicate);//Get parcel by id or by predicate
-                if (idalParcel.Id <= 0)//if the parcel is empty
+                if (id == null)
                 {
-                    return null;
+                    throw new IdNotExsistException("parcel", id); // throw
                 }
+                IDAL.DO.Parcel idalParcel = dal.GetParcel(id, predicate);//Get parcel by id or by predicate
                 Customer senderCustomer = GetCustomerById(idalParcel.SenderId); // creat a new customer based on the sender of the parcel
                 Customer reciverCustomer = GetCustomerById(idalParcel.ReciverId); // creat a new customer based on the reciver of the parcel
 
                 CustomerInParcel senderCustomerInParcel = new CustomerInParcel(senderCustomer.Id, senderCustomer.Name); // creat a customer in parcel based on current customer
                 CustomerInParcel reciverCustomerInParcel = new CustomerInParcel(reciverCustomer.Id, reciverCustomer.Name); // creat a customer in parcel based on current customer
                 DroneInParcel newDroneInParcel;
-                if (idalParcel.DroneId == -1)//if the parcel not assosiate
+                if (idalParcel.DroneId == null)//if the parcel not assosiate
                 {
                     newDroneInParcel = null;
                 }
@@ -117,7 +117,7 @@ namespace IBL
         {
             try
             {
-                if (id < 0 && id == null)// if id is negative
+                if (id < 0)// if id is negative
                 {
                     throw new InvalidIdException("negative", id);
                 }
@@ -127,7 +127,7 @@ namespace IBL
                 }
                 Predicate<IDAL.DO.Parcel> predicate = element => element.DroneId == id;
                 ParcelInTransit newParcelInTransit;
-                if (GetDroneToList(id).NumberOfParcelInTransit == -1)
+                if (GetDroneToList(id).NumberOfParcelInTransit == null)
                 {
                     newParcelInTransit = new ParcelInTransit();
                 }
@@ -156,9 +156,13 @@ namespace IBL
         {
             try
             {
-                if (id < 0 && id == null) // if id is negative
+                if (id < 0) // if id is negative
                 {
                     throw new InvalidIdException("negative", id);
+                }
+                if (id == null)
+                {
+                    throw new IdNotExsistException("drone", id); // throw
                 }
                 if (!dal.IfDroneExsists(id))
                 {
@@ -184,9 +188,13 @@ namespace IBL
         {
             try
             {
-                if (id < 0&& id==null) // if id is negative
+                if (id < 0) // if id is negative
                 {
                     throw new InvalidIdException("negative", id);
+                }
+                if (id == null)
+                {
+                    throw new IdNotExsistException("base station", id); // throw
                 }
                 if (!dal.IfBaseStationExsists(id))
                 {
@@ -223,13 +231,17 @@ namespace IBL
         {
             try
             {
-                if (id < 0 && id==null)// if id is negative
+                if (id < 0)// if id is negative
                 {
                     throw new InvalidIdException("negative", id);
                 }
+                if (id == null)
+                {
+                    throw new IdNotExsistException("parcel", id); // throw
+                }
                 Predicate<IDAL.DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
 
-                IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
+                IDAL.DO.Parcel newParcel = dal.GetParcel(null, predicate);
                 Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
                 Customer reciverCustomer = GetCustomerById(newParcel.ReciverId); // creat a new customer based on the reciver of the parcel
                 ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, statusCalculate(dal.GetParcel(GetParcelById(newParcel.Id, predicate).Id)));
@@ -252,9 +264,13 @@ namespace IBL
         {
             try
             {
-                if (id < 0 && id==null)// if id is negative
+                if (id < 0)// if id is negative
                 {
                     throw new InvalidIdException("negative", id);
+                }
+                if (id == null)
+                {
+                    throw new IdNotExsistException("parcel", id); // throw
                 }
                 Predicate<IDAL.DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
                 IDAL.DO.Parcel newParcel = dal.GetParcel(0, predicate);
