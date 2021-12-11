@@ -19,11 +19,11 @@ namespace IBL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Customer GetCustomerById(int id)//Get customer from data-source by id
+        public Customer GetCustomerById(int? id)//Get customer from data-source by id
         {
             try
             {
-                if (id < 0) // if id is negative
+                if (id < 0 && id == null) // if id is negative
                 {
                     throw new InvalidIdException("negative", id);
                 }
@@ -70,7 +70,7 @@ namespace IBL
         {
             try
             {
-                if (id ==null) // if id is negative
+                if (id<0 && id ==null) // if id is negative
                 {
                     throw new InvalidIdException("negative", id);
                 }
@@ -113,15 +113,15 @@ namespace IBL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public Drone GetDroneById(int id)//Get drone from data-source by id
+        public Drone GetDroneById(int? id)//Get drone from data-source by id
         {
             try
             {
-                if (id < 0)// if id is negative
+                if (id < 0 && id == null)// if id is negative
                 {
                     throw new InvalidIdException("negative", id);
                 }
-                if (id == -1)
+                if (id == null)
                 {
                     throw new IdNotExsistException("drone", id); // throw
                 }
@@ -152,11 +152,11 @@ namespace IBL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public DroneToList GetDroneToList(int id)//Get drone from list that is held here by id
+        public DroneToList GetDroneToList(int? id)//Get drone from list that is held here by id
         {
             try
             {
-                if (id < 0) // if id is negative
+                if (id < 0 && id == null) // if id is negative
                 {
                     throw new InvalidIdException("negative", id);
                 }
@@ -180,11 +180,11 @@ namespace IBL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public BaseStation GetBaseStationById(int id)//Get base station from data-source by id
+        public BaseStation GetBaseStationById(int? id)//Get base station from data-source by id
         {
             try
             {
-                if (id < 0) // if id is negative
+                if (id < 0&& id==null) // if id is negative
                 {
                     throw new InvalidIdException("negative", id);
                 }
@@ -219,11 +219,11 @@ namespace IBL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ParcelToList GetParcelToListById(int id)//Get parceltolist with manipulation from data source by id
+        public ParcelToList GetParcelToListById(int? id)//Get parceltolist with manipulation from data source by id
         {
             try
             {
-                if (id < 0)// if id is negative
+                if (id < 0 && id==null)// if id is negative
                 {
                     throw new InvalidIdException("negative", id);
                 }
@@ -248,11 +248,11 @@ namespace IBL
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public ParcelInTransit GetParcelInTransitById(int id)//Get parceltolist with manipulation from data source by id
+        public ParcelInTransit GetParcelInTransitById(int? id)//Get parceltolist with manipulation from data source by id
         {
             try
             {
-                if (id < 0)// if id is negative
+                if (id < 0 && id==null)// if id is negative
                 {
                     throw new InvalidIdException("negative", id);
                 }
