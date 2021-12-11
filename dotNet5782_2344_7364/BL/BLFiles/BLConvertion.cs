@@ -28,7 +28,7 @@ namespace IBL
             newDrone.Weight = (Enums.WeightCategories)idalDrone.MaxWeight;
             var listOfParcels = dal.GetListOfParcel().ToList();
             IDAL.DO.Parcel newParcel = listOfParcels.Find(element => element.DroneId == idalDrone.Id);
-            if (newParcel.Id != 0)//if there have a parcel with this drone id
+            if (newParcel.Id != null)//if there have a parcel with this drone id
             {
                 newDrone.DroneStatuses = Enums.DroneStatuses.Delivery;
                 if (newParcel.AssociatedTime == null)//the parcel didn't pick-upp

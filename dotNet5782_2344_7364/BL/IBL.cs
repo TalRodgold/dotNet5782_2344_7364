@@ -12,7 +12,7 @@ namespace IBL
     public interface IBl
     {
         void AddBaseStation(BaseStation b); //Base station addition
-        public void AddDrone(Drone d, int startingBaseStation); //Drone addition
+        void AddDrone(Drone d, int? startingBaseStation); //Drone addition
         void AddCustomer(Customer c); //Customer addition
         void AddParcel(CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie); // parcel addition
         Customer GetCustomerById(int? id); //Get customer from data-source by id
