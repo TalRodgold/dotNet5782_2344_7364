@@ -17,8 +17,8 @@ namespace IDAL
             /// and Deliverd time
             /// </summary>
             public int? Id { get; set; }  // Id number for each parcel
-            public int SenderId { get; set; } // Senders Id
-            public int ReciverId { get; set; } // Targets Id
+            public int? SenderId { get; set; } // Senders Id
+            public int? ReciverId { get; set; } // Targets Id
             public WeightCategories Weight { get; set; } // The weight of the parcel
             public Priorities Priority { get; set; } // parcels priority
             public DateTime? CreatingTime { get; set; } //requested time

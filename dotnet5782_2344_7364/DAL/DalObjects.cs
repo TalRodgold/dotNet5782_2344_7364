@@ -92,7 +92,7 @@ namespace DalObjects
         /// <param name="schedual"></param>
         /// <param name="pickUp"></param>
         /// <param name="deliverd"></param>
-        public int ConstructParcel(int? senderId, int targetId, WeightCategories weight, Priorities priority, DateTime? request, int? droneId, DateTime? schedual, DateTime? pickUp, DateTime? deliverd) // construct a new parcel
+        public int? ConstructParcel(int? senderId, int? targetId, WeightCategories weight, Priorities priority, DateTime? request, int? droneId, DateTime? schedual, DateTime? pickUp, DateTime? deliverd) // construct a new parcel
         {
             if (senderId == targetId)
             {
@@ -231,7 +231,7 @@ namespace DalObjects
         /// update parcel delivery
         /// </summary>
         /// <param name="id"></param>
-        public void UpdateParcleDelivery(int id) // update parcel delivery
+        public void UpdateParcleDelivery(int? id) // update parcel delivery
         {
             if (!IfParcelExsists(id)) // if id dosent exsist
             {
