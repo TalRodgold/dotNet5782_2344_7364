@@ -598,7 +598,7 @@ namespace DalObjects
         /// <returns></returns>
         public Parcel GetParcel(int? id, Predicate<Parcel> predicate = null) // find a Parcel by id and return all his data as Parcel class
         {
-            if ((!IfParcelExsists(id)) || (id != null)) // if id doesnt exsist
+            if (!IfParcelExsists(id)) // if id doesnt exsist
             {
                 throw new IdNotExsistException("parcel", id); // throw exception
             }

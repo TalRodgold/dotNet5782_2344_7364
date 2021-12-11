@@ -60,7 +60,7 @@ namespace IBL
                 d.CurrentLocation = GetBaseStationById(startingBaseStation).Location;//update the location to be like his starting base station
                 dal.ConstructDrone(d.Id, d.Model, (IDAL.DO.WeightCategories)d.Weight); // creat drone
                 dal.UpdateDroneCharge(d.Id, startingBaseStation,DateTime.Now); // connect drone to charging base station
-                ListOfDronsBL.Add(new DroneToList(d.Id, d.Model, d.Weight, d.Battery, d.DroneStatuses, d.CurrentLocation, -1));//add the drone to the local list of drones
+                ListOfDronsBL.Add(new DroneToList(d.Id, d.Model, d.Weight, d.Battery, d.DroneStatuses, d.CurrentLocation, null));//add the drone to the local list of drones
             }
             catch (IDAL.DO.IdAlreadyExsistsExceptions exception) // if drone id already exsists and was thrown from dal objects
             {
@@ -122,7 +122,7 @@ namespace IBL
                 {
                     throw new InvalidIdException("negative", reciver.Id);
                 }
-                int? id = dal.ConstructParcel(sender.Id, reciver.Id, (IDAL.DO.WeightCategories)weight, (IDAL.DO.Priorities)prioritie, DateTime.Now, -1, null, null, null) ;//call the constructor
+                int? id = dal.ConstructParcel(sender.Id, reciver.Id, (IDAL.DO.WeightCategories)weight, (IDAL.DO.Priorities)prioritie, DateTime.Now, null, null, null, null) ;//call the constructor
                 Parcel newParcel = new Parcel(id, sender, reciver, weight, prioritie, null, DateTime.Now, null, null, null);
             }
             catch (IDAL.DO.SameIdException exception)

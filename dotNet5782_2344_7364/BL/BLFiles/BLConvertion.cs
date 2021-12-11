@@ -71,7 +71,7 @@ namespace IBL
                         newDrone.CurrentLocation = baseTationList[rnd.Next(0, baseTationList.Count)].Location;
                     }
                 }
-                newDrone.NumberOfParcelInTransit = -1;
+                newDrone.NumberOfParcelInTransit = null;
             }
             newDrone.Battery = calculateBattery(newDrone);
             return newDrone;
@@ -97,7 +97,7 @@ namespace IBL
         /// <returns></returns>
         private Customer convertCustomerDalToBl(IDAL.DO.Customer customer)////Convert from dal customer to bl customer
         {
-            List<IDAL.DO.Parcel> parcelList = dal.GetListOfParcel(element => (element.SenderId != -1)).ToList();
+            List<IDAL.DO.Parcel> parcelList = dal.GetListOfParcel(element => (element.SenderId != null)).ToList();
             List<IDAL.DO.Parcel> parcelListSender = parcelList.FindAll(element => element.SenderId == customer.Id);
             List<IDAL.DO.Parcel> parcelListReciver = parcelList.FindAll(element => element.ReciverId == customer.Id);
             if (parcelList.Count != 0)

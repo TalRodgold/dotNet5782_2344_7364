@@ -23,7 +23,7 @@ namespace IBL
         ParcelToList GetParcelToListById(int? id); //Get parceltolist with manipulation from data source by id
         ParcelInTransit GetParcelInTransitById(int? id); //Get parceltolist with manipulation from data source by id
         void UpdateDroneModel(int? id, string newModel);//Update drone model
-        void UpdateBaseStation(int? id, string name = "", int numberOfChargingSlots = -1);//Update base station name/number of charging slots
+        void UpdateBaseStation(int? id, string name = "", int numberOfChargingSlots = 0);//Update base station name/number of charging slots
         void UpdateCustomer(int? id, string name = "", string phone = "");//Update customer name/phone
         void UpdateSendDroneToCharge(int? id);//Update-send drone to charge
         void UpdateReleseDrone(int? id);//Update-relese drone from charging slot

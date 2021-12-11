@@ -157,7 +157,7 @@ namespace IBL
         public List<ParcelToList> GetListOfNotAssigned()//Get list of assosiated drones
         {
             List<ParcelToList> list = new List<ParcelToList>();
-            Predicate<IDAL.DO.Parcel> predicate = element => element.DroneId == -1;
+            Predicate<IDAL.DO.Parcel> predicate = element => element.DroneId == null;
             List<IDAL.DO.Parcel> listIdal = dal.GetListOfParcel(predicate).ToList();
             foreach (var item in listIdal)
             {
