@@ -10,7 +10,7 @@ namespace IDAL
         /// <summary>
         /// contains enums
         /// </summary>
-        public enum WeightCategories // 3 types of weight categories
+        public enum WeightCategories // 3 types of weight categories/
         { Light, Medium, Heavy }
         public enum Priorities  // 3 types of proirities
         { Regular,Express,Urgent }
