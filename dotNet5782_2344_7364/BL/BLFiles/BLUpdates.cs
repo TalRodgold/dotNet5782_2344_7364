@@ -228,7 +228,7 @@ namespace IBL
                         distancePickupToDelivery = calculateDistance(newSenderCustomer.Location, newReciverCustomer.Location);
                         distanceDeliveryToClothestBaseStation = calculateDistance(newReciverCustomer.Location, GetBaseStationById(calculateMinDistance(newReciverCustomer.Location)).Location); // closest
                         distance = distanceDroneToPickup + distancePickupToDelivery + distanceDeliveryToClothestBaseStation;
-                        if (item.Deliverd==null &&(Enums.WeightCategories)item.Weight <= drone.Weight && (Enums.Priorities)item.Priority >= maxPriorities && distanceDroneToPickup <= minDistance && CalculateWhetherTheDroneHaveEnoghBattery(distance, drone)&& item.AssociatedTime!= null)//-----------------------
+                        if (item.Deliverd==null && (Enums.WeightCategories)item.Weight <= drone.Weight && (Enums.Priorities)item.Priority >= maxPriorities && distanceDroneToPickup <= minDistance && CalculateWhetherTheDroneHaveEnoghBattery(distance, drone) && item.AssociatedTime != null)//-----------------------
                         {
                             maxPriorities = (Enums.Priorities)item.Priority;
                             minDistance = distanceDroneToPickup;
@@ -236,6 +236,10 @@ namespace IBL
                             senderCustomer = newSenderCustomer;
                             reciverCustomer = newReciverCustomer;
                         }
+                    }
+                    if (properParcelID == null)
+                    {
+                        throw new NotAssociatedException("drone", id);
                     }
                     dal.AssociateDroneToParcel(id, properParcelID); // associate
 
