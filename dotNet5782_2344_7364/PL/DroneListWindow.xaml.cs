@@ -20,7 +20,7 @@ namespace PL
     public partial class DroneListWindow : Window
     {
         public IBL.BL bl;
-        public DroneListWindow(IBL.BL bl)
+        public DroneListWindow(IBL.BL bl) // constructor
         {
             this.bl = bl;
             InitializeComponent();
@@ -39,29 +39,29 @@ namespace PL
             DroneListView.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.DroneStatuses == (IBL.BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
         }
 
-        private void AddDrone_Click(object sender, RoutedEventArgs e)
+        private void AddDrone_Click(object sender, RoutedEventArgs e) // add a drone
         {
             new DroneWindow(bl, this).Show();
         }
 
-        private void UpdateDrone_doubleClick(object sender, MouseButtonEventArgs e)
+        private void UpdateDrone_doubleClick(object sender, MouseButtonEventArgs e) // ypdate drone
         {
             IBL.BO.DroneToList drone = (IBL.BO.DroneToList)DroneListView.SelectedItem;
             new DroneWindow(bl, this, drone).Show();
         }
 
-        private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e) // open drone window
         {
             new DroneWindow(bl, this).Show();
         }
 
-        private void Exit_Click(object sender, RoutedEventArgs e)
+        private void Exit_Click(object sender, RoutedEventArgs e) // exit
         {
             Close();
         }
-        public void Refresh()
+        public void Refresh() // refresh
         {
-            if (StatusSelector.SelectedItem == null && MaxWeightSelector.SelectedItem == null) // if no changes where selected
+            if (StatusSelector.SelectedIndex == -1 || MaxWeightSelector.SelectedIndex == -1) // if no changes where selected
             {
                 DroneListView.ItemsSource = bl.GetListOfDronesToList().ToList();
             }
@@ -70,10 +70,6 @@ namespace PL
                 DroneListView.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.DroneStatuses == (IBL.BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
                 DroneListView.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (IBL.BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem).ToList();
             }
-            DroneListView.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.DroneStatuses == (IBL.BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
-            DroneListView.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (IBL.BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem).ToList();
         }
-
-
     }
 }

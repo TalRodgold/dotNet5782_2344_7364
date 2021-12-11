@@ -138,7 +138,7 @@ namespace IBL
                 DateTime? currentTime = DateTime.Now;
                 dal.ConstructDroneCharge(id, stationId, currentTime);
                 BaseStation station = GetBaseStationById(stationId);
-                newDrone.Battery = calculateBattery(newDrone);
+                newDrone.Battery -= calculateBattery(newDrone, calculateDistance(newDrone.CurrentLocation, station.Location));
                 newDrone.CurrentLocation = station.Location;
                 newDrone.DroneStatuses = Enums.DroneStatuses.Maintenance;
                 int index = ListOfDronsBL.FindIndex(element => element.Id == id);
@@ -184,7 +184,7 @@ namespace IBL
             }
             drone.DroneStatuses = Enums.DroneStatuses.Available;
             IDAL.DO.DroneCharge droneCharge = dal.GetDroneCharge(id, element => element.DroneId == id);
-            IDAL.DO.BaseStation station = dal.getBaseStationByDroneId(droneCharge.DroneId);//
+            IDAL.DO.BaseStation station = dal.getBaseStationByDroneId(droneCharge.DroneId);
             station.ChargeSlots -= 1;
             dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.ChargeSlots);
             dal.ReleaseDroneCharge(id, station.Id);

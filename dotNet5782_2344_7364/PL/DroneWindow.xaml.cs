@@ -91,15 +91,15 @@ namespace PL
             Latitude.Text = chosenDrone.CurrentLocation.LatitudeInSexa();     
         }
 
-        private void MaxWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void MaxWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) // combo box for max weghit
         {
             MaxWeightSelector.SelectedItem = (IBL.BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem;
         }
-        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) // combo box for status
         {
             StatusSelector.SelectedItem = (IBL.BO.Enums.DroneStatuses)StatusSelector.SelectedItem;
         }
-        private void AddButton_Click(object sender, RoutedEventArgs e)
+        private void AddButton_Click(object sender, RoutedEventArgs e) // add a drone button
         {
             try
             {
@@ -114,7 +114,7 @@ namespace PL
                 MessageBox.Show(exception.ToString());
             }
         }
-        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        private void UpdateButton_Click(object sender, RoutedEventArgs e) // update drone model button
         {
             try
             {
@@ -127,17 +127,17 @@ namespace PL
             }
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void CancelButton_Click(object sender, RoutedEventArgs e) // cancel button
         {
             this.Close();
         }
 
-        private void ExitButton_Click(object sender, RoutedEventArgs e)
+        private void ExitButton_Click(object sender, RoutedEventArgs e) // exit button
         {
             droneListWindow.Refresh();
             this.Close();
         }
-        private void SendDroneToChargeButton_Click(object sender, RoutedEventArgs e)
+        private void SendDroneToChargeButton_Click(object sender, RoutedEventArgs e) // send drone to charge button
         {
             try
             {
@@ -150,7 +150,7 @@ namespace PL
             }
         }
 
-        private void RealesDroneFromChargingButton_Click(object sender, RoutedEventArgs e)
+        private void RealesDroneFromChargingButton_Click(object sender, RoutedEventArgs e) // releas drone from charging button
         {
             try
             {
@@ -165,7 +165,7 @@ namespace PL
             }
         }
 
-        private void AccociateDroneToParcelButton_Click(object sender, RoutedEventArgs e)
+        private void AccociateDroneToParcelButton_Click(object sender, RoutedEventArgs e) // accocate drone to parcel button
         {
             try
             {
@@ -178,7 +178,7 @@ namespace PL
             }
         }
 
-        private void PickUpParcelButton_click(object sender, RoutedEventArgs e)
+        private void PickUpParcelButton_click(object sender, RoutedEventArgs e) // pivk up parcel button
         {
             try
             {
@@ -191,7 +191,7 @@ namespace PL
             }
         }
 
-        private void DeliverParcelButton_Click(object sender, RoutedEventArgs e)
+        private void DeliverParcelButton_Click(object sender, RoutedEventArgs e) // deliver parcel button
         {
             try
             {
@@ -203,9 +203,8 @@ namespace PL
                 MessageBox.Show(exception.ToString());
             }
         }
-        private void Refresh()
+        private void Refresh() // refresh
         {
-            //bl.UpdateListOfDronsBL();
             drone = bl.GetDroneToList(drone.Id);
             Battery.Text = drone.Battery.ToString();
             Model.Text = drone.Model.ToString();
