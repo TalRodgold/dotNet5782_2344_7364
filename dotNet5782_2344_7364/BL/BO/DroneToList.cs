@@ -19,17 +19,17 @@ namespace IBL
             public double Battery { set; get; }
             public Enums.DroneStatuses DroneStatuses { set; get; }
             public Location CurrentLocation { set; get; }
-            public int NumberOfParcelInTransit { set; get; }
+            public int? NumberOfParcelInTransit { set; get; }
             public override string ToString()
             {
-                if (NumberOfParcelInTransit == -1) // if not inistialized
+                if (NumberOfParcelInTransit == null) // if not inistialized
                 {
                     return $" Drone #{Id}: \n Weight = {Weight} \n Battery = {Battery * 100}% \n Drone Status = {DroneStatuses} \n Current location:  {CurrentLocation.ToString()} \n Number of parcel in transit = 0 \n";
 
                 }
                 return $" Drone #{Id}: \n Weight = {Weight} \n Battery = {Battery * 100}% \n Drone Status = {DroneStatuses} \n Current location:  {CurrentLocation.ToString()} \n Number of parcel in transit = {NumberOfParcelInTransit} \n";
             }
-            public DroneToList() { } // dedault
+            public DroneToList() { NumberOfParcelInTransit = null; } // dedault
             public DroneToList(int id, string model, Enums.WeightCategories weight , double battery, Enums.DroneStatuses droneStatuses, Location location, int numberOfParcels) // constructor
             {
                 Id = id;

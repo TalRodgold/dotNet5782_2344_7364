@@ -15,7 +15,7 @@ namespace IDAL
             /// Id number for each base station, base station name, Number of free charging satstions,
             /// Longitude and Latitude 
             /// </summary>
-            public int Id { get; set; } // Id number for each base station 
+            public int? Id { get; set; } // Id number for each base station 
             public string Name { get; set; } // base station name
             public int ChargeSlots { get; set; } // Number of free charging satstions
             public double Longtitude { get; set; } // Longitude 

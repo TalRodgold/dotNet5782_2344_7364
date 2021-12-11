@@ -10,12 +10,12 @@ namespace IBL.BO
     public class InvalidIdException : Exception
     {
         public string Text;
-        public int Id;
+        public int? Id;
         public InvalidIdException()
         {
         }
 
-        public InvalidIdException(string message, int id) : base(message)
+        public InvalidIdException(string message, int? id) : base(message)
         {
             Text = message;
             Id = id;

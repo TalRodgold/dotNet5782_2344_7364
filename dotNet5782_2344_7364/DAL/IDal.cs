@@ -22,13 +22,13 @@ namespace IDAL
         string ReturnCustomerDataById(int id); // find customer in list and return it as string
         string ReturnParcelDataById(int id); // find parcel in list and return it as string
         void AssociateDroneToParcel(int droneId, int parcleId); // associate a drone to a parcel 
-        void UpdateParclePickup(int id); // update parcel pickup 
-        void UpdateParcleDelivery(int id); // update parcel delivery
-        void UpdateDroneCharge(int droneId, int stationId,DateTime? currentTime); // update drones charging
-        void UpdateDroneModel(int id, string newModel); // update drone model
-        void UpdateBaseStationName(int id, string name); // update base stations name
+        void UpdateParclePickup(int? id); // update parcel pickup 
+        void UpdateParcleDelivery(int? id); // update parcel delivery
+        void UpdateDroneCharge(int? droneId, int? stationId,DateTime? currentTime); // update drones charging
+        void UpdateDroneModel(int? id, string newModel); // update drone model
+        void UpdateBaseStationName(int? id, string name); // update base stations name
         void UpdateChargingSlotsNumber(int id, int numberOfChargingSlots);
-        void UpdateCustomerName(int id, string name); // update customers name
+        void UpdateCustomerName(int? id, string name); // update customers name
         void UpdateCustomerPhone(int id, string phone); //update customers phone number
         void UpdateBaseStationNumOfFreeDroneCharges(int id, int newnum); // update base stations number of free charging slots
         void ReleaseDroneCharge(int droneId, int stationId); // releas drone from charging 

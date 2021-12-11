@@ -10,18 +10,18 @@ namespace IBL.BO
     public class UnavailableExeption : Exception
     {
         public string Text;
-        public int ID;
+        public int? ID;
         public UnavailableExeption()
         {
         }
 
-        public UnavailableExeption(string message,int id) : base(message)
+        public UnavailableExeption(string message,int? id) : base(message)
         {
             this.Text = message;
             this.ID = id;
         }
 
-        public UnavailableExeption(string message, int id, Exception innerException) : base(message, innerException)
+        public UnavailableExeption(string message, int? id, Exception innerException) : base(message, innerException)
         {
 
             this.Text = message;

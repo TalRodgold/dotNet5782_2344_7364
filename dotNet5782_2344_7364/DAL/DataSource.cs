@@ -117,7 +117,7 @@ namespace DalObjects
             newParcel.CreatingTime = DateTime.Now;
             num1 = rnd.Next(0, DroneList.Count());
             newParcel.DroneId = DroneList[num1].Id;
-            newParcel.DroneId = -1;                    
+            newParcel.DroneId = null;                    
             newParcel.AssociatedTime = DateTime.Now.AddHours(rnd.Next(1, 23));
             newParcel.PickedUp = null;
             newParcel.Deliverd =null;

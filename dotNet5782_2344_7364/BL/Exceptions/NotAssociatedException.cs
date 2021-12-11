@@ -10,7 +10,7 @@ namespace IBL.BO
     public class NotAssociatedException : Exception
     {
         public string Text;
-        public int Id;
+        public int? Id;
 
         public NotAssociatedException()
         {
@@ -20,7 +20,7 @@ namespace IBL.BO
         {
         }
 
-        public NotAssociatedException(string v, int droneId)
+        public NotAssociatedException(string v, int? droneId)
         {
             this.Text = v;
             this.Id = droneId;

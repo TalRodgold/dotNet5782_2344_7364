@@ -14,7 +14,7 @@ namespace IBL
         /// </summary>
         public class Parcel
         {
-            public int Id { set; get; }
+            public int? Id { set; get; }=null;
             public CustomerInParcel Sender { set; get; }
             public CustomerInParcel Reciver { set; get; }
             public Enums.WeightCategories Weight { set; get; }
@@ -30,7 +30,7 @@ namespace IBL
             }
             public Parcel() { } // default
            
-            public Parcel(int id, CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie, DroneInParcel droneInParcel, DateTime? parcelCreatingTime, DateTime? associationTime, DateTime? pickupTime, DateTime ?deliveryTime) // constructor
+            public Parcel(int? id, CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie, DroneInParcel droneInParcel, DateTime? parcelCreatingTime, DateTime? associationTime, DateTime? pickupTime, DateTime ?deliveryTime) // constructor
             {
                 Id = id;
                 Sender = sender;

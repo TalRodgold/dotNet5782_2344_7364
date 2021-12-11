@@ -10,14 +10,14 @@ namespace IDAL.DO
     public class IdAlreadyExsistsExceptions : Exception
     {
         public string Text;
-        public int ID;
+        public int? ID;
         public IdAlreadyExsistsExceptions()
         {
         }
         public IdAlreadyExsistsExceptions(string message) : base(message)
         {
         }
-        public IdAlreadyExsistsExceptions(string message, int id) : base(message)
+        public IdAlreadyExsistsExceptions(string message, int? id) : base(message)
         {
             this.Text = message;
             this.ID = id;

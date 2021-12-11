@@ -10,7 +10,7 @@ namespace IBL.BO
     public class IdAlreadyExsistsExceptions : Exception
     {
         private string Text;
-        private int ID;
+        private int? ID;
 
         public IdAlreadyExsistsExceptions()
         {
@@ -20,13 +20,13 @@ namespace IBL.BO
         {
         }
 
-        public IdAlreadyExsistsExceptions(string message, int id) : base(message)
+        public IdAlreadyExsistsExceptions(string message, int? id) : base(message)
         {
             this.Text = message;
             this.ID = id;
         }
 
-        public IdAlreadyExsistsExceptions(string message, int id, Exception innerException) : base(message, innerException)
+        public IdAlreadyExsistsExceptions(string message, int? id, Exception innerException) : base(message, innerException)
         {
             this.Text = message;
             this.ID = id;

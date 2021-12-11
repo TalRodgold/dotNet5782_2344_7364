@@ -66,11 +66,11 @@ namespace IBL
         /// <param name="id"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public Parcel GetParcelById(int id, Predicate<IDAL.DO.Parcel> predicate = null)//from data-source by id
+        public Parcel GetParcelById(int? id, Predicate<IDAL.DO.Parcel> predicate = null)//from data-source by id
         {
             try
             {
-                if (id < 0) // if id is negative
+                if (id ==null) // if id is negative
                 {
                     throw new InvalidIdException("negative", id);
                 }
@@ -91,7 +91,7 @@ namespace IBL
                 }
                 else//if the parcel is assosiate
                 {
-                    Drone newDrone = GetDroneById(idalParcel.DroneId);//get drone by drone id
+                    Drone newDrone = GetDroneById((int)idalParcel.DroneId);//get drone by drone id
                     newDroneInParcel = new DroneInParcel(newDrone.Id, newDrone.Battery, newDrone.CurrentLocation);//creat new drone in parcel 
 
                 }
@@ -133,7 +133,7 @@ namespace IBL
                 }
                 else
                 {
-                    newParcelInTransit = GetParcelInTransitById(GetDroneToList(id).NumberOfParcelInTransit);
+                    newParcelInTransit = GetParcelInTransitById((int)GetDroneToList(id).NumberOfParcelInTransit);
                 }
                 DroneToList droneToList = GetDroneToList(id);
                 Drone newDrone = new Drone(droneToList.Id, droneToList.Model, droneToList.Weight, droneToList.Battery, droneToList.DroneStatuses, newParcelInTransit, droneToList.CurrentLocation);

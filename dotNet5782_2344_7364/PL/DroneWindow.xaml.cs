@@ -61,11 +61,11 @@ namespace PL
             {
                 RealesDroneFromChargingButton.Visibility = Visibility.Visible;
             }
-            if (chosenDrone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Delivery && bl.GetParcelInTransitById(chosenDrone.NumberOfParcelInTransit).Status )
+            if (chosenDrone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Delivery && bl.GetParcelInTransitById((int)chosenDrone.NumberOfParcelInTransit).Status )
             {
                 PickUpParcelButton.Visibility = Visibility.Visible;
             }
-            if (chosenDrone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Delivery && bl.GetParcelById(chosenDrone.NumberOfParcelInTransit).PickupTime != null && bl.GetParcelInTransitById(chosenDrone.NumberOfParcelInTransit).Status)
+            if (chosenDrone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Delivery && bl.GetParcelById((int)chosenDrone.NumberOfParcelInTransit).PickupTime != null && bl.GetParcelInTransitById((int)chosenDrone.NumberOfParcelInTransit).Status)
             {
                 DeliverParcelButton.Visibility = Visibility.Visible;
             }
@@ -180,7 +180,12 @@ namespace PL
             }
             if (drone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Delivery )
             {
-                if(bl.GetParcelById(drone.NumberOfParcelInTransit).PickupTime != null && !bl.GetParcelInTransitById(drone.NumberOfParcelInTransit).Status)//true until pickup
+                if (bl.GetParcelById((int)drone.NumberOfParcelInTransit).DeliveryTime != null && !bl.GetParcelInTransitById((int)drone.NumberOfParcelInTransit).Status)
+                {
+                    DeliverParcelButton.Visibility = Visibility.Hidden;
+                    PickUpParcelButton.Visibility = Visibility.Visible;
+                }
+                else if (!bl.GetParcelInTransitById((int)drone.NumberOfParcelInTransit).Status)//true until pickup //bl.GetParcelById((int)drone.NumberOfParcelInTransit).PickupTime != null &&
                 {
                     DeliverParcelButton.Visibility = Visibility.Visible;
                     PickUpParcelButton.Visibility = Visibility.Hidden;
@@ -215,7 +220,7 @@ namespace PL
             try
             {
 
-                bl.UpdateReleseDrone(drone.Id);//_______________________________need to change time (100 is not good)________________________________
+                bl.UpdateReleseDrone(drone.Id);
                 Refresh();
             }
             catch (Exception exception)

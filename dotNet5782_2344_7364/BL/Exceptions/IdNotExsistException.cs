@@ -10,18 +10,18 @@ namespace IBL.BO
     public class IdNotExsistException : Exception
     {
         public string Text;
-        public int ID;
+        public int? ID;
         public IdNotExsistException()
         {
         }
 
-        public IdNotExsistException(string message, int id) : base(message)
+        public IdNotExsistException(string message, int? id) : base(message)
         {
             this.Text = message;
             this.ID = id;
         }
 
-        public IdNotExsistException(string message, int id, Exception innerException) : base(message, innerException)
+        public IdNotExsistException(string message, int? id, Exception innerException) : base(message, innerException)
         {
             this.Text = message;
             this.ID = id;

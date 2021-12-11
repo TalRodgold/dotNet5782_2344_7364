@@ -13,7 +13,7 @@ namespace IBL
         /// </summary>
         public class ParcelInTransit
         {
-            public int Id { set; get; }
+            public int? Id { set; get; } = null;
             public bool Status { set; get; } // true = waiting for pickup | false = on transit to location
             public Enums.Priorities Priorities { set; get; }
             public Enums.WeightCategories Weight { set; get; }
@@ -22,8 +22,8 @@ namespace IBL
             public Location PickupLocation { set; get; }
             public Location DeliveryLocation { set; get; }
             public double Distance { set; get; }
-            public ParcelInTransit() { Id = -1; }
-            public ParcelInTransit(int id, bool status, Enums.Priorities priorities, Enums.WeightCategories weight, CustomerInParcel customerInParcelSender, CustomerInParcel customerInParcelReciver, Location pickupLocation, Location deliveryLocation, double distance) // constructor
+            public ParcelInTransit() { Id = null; }
+            public ParcelInTransit(int? id, bool status, Enums.Priorities priorities, Enums.WeightCategories weight, CustomerInParcel customerInParcelSender, CustomerInParcel customerInParcelReciver, Location pickupLocation, Location deliveryLocation, double distance) // constructor
             {
                 Id = id;
                 Status = status;
@@ -37,7 +37,7 @@ namespace IBL
             }
             public override string ToString()
             {
-                if (Id == -1) // if not inisilaized
+                if (Id == null) // if not inisilaized
                 {
                     return $" Parcel # : \n Prioritie = {Priorities} \n Weight = {Weight} \n Customer in parcel sender = {CustomerInParcelSender} \n Customer in parcel reciver = {CustomerInParcelReciver} \n Pickup location: {PickupLocation.ToString()} \n Delivery location: {DeliveryLocation.ToString()} \n Distance = {Distance} ";
 

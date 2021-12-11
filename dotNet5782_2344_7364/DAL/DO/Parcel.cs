@@ -16,13 +16,13 @@ namespace IDAL
             /// parcels priority, requested time, Drones Id, Scheduled time, PickedUp time
             /// and Deliverd time
             /// </summary>
-            public int Id { get; set; } // Id number for each parcel
+            public int? Id { get; set; }  // Id number for each parcel
             public int SenderId { get; set; } // Senders Id
             public int ReciverId { get; set; } // Targets Id
             public WeightCategories Weight { get; set; } // The weight of the parcel
             public Priorities Priority { get; set; } // parcels priority
             public DateTime? CreatingTime { get; set; } //requested time
-            public int DroneId { get; set; } // Drones Id
+            public int? DroneId { get; set; } // Drones Id
             public DateTime? AssociatedTime { get; set; } // Scheduled time
             public DateTime? PickedUp { get; set; }  // PickedUp time
             public DateTime? Deliverd { get; set; } // Deliverd time

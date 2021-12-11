@@ -14,7 +14,7 @@ namespace IDAL
             /// This struct contains data for a drone including:
             /// drone id, drone model, maximum weight drone can carry,
             /// </summary>
-            public int Id{ get; set; } // drone id
+            public int? Id{ get; set; } // drone id
             public string Model{ get; set; } // drone model
             public WeightCategories MaxWeight{ get; set; } // maximum weight drone can carry
             public override string ToString() // return string with all the data

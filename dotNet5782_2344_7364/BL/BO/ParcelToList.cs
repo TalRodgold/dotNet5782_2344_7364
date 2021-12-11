@@ -13,14 +13,14 @@ namespace IBL
         /// </summary>
         public class ParcelToList
         {
-            public int Id { set; get; }
+            public int? Id { set; get; } = null;
             public string SendersName { set; get; }
             public string ReciversName { set; get; }
             public Enums.WeightCategories Weight { set; get; }
             public Enums.Priorities Prioritie { set; get; }
             public Enums.ParcelStatus ParcelStatus { set; get; }
 
-            public ParcelToList(int id, string sendersName, string reciversName, Enums.WeightCategories weight, Enums.Priorities prioritie, Enums.ParcelStatus parcelStatus) // constructor
+            public ParcelToList(int? id, string sendersName, string reciversName, Enums.WeightCategories weight, Enums.Priorities prioritie, Enums.ParcelStatus parcelStatus) // constructor
             {
                 Id = id;
                 SendersName = sendersName;
