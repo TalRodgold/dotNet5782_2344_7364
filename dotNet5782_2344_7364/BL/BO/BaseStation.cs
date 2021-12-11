@@ -14,7 +14,7 @@ namespace IBL
         /// </summary>
         public class BaseStation
         {
-            public int Id { set; get; }
+            public int? Id { set; get; } = null;
             public string Name { set; get; }
             public Location Location { set; get; }
             public int NumberOfFreeChargingSlots { set; get; }
@@ -24,7 +24,7 @@ namespace IBL
                 return $" Base station #{Id}: \n Name = {Name} \n{Location.ToString()} Number of free charging slots = {NumberOfFreeChargingSlots} \n All drones in charging: {printList(ListOfDroneInCharging)} \n ";
             }
             public BaseStation() { ListOfDroneInCharging = new List<DroneInCharging>(); } // default
-            public BaseStation(int id, string name, Location location, int freeChargingSlots) // constructor
+            public BaseStation(int? id, string name, Location location, int freeChargingSlots) // constructor
             {
                 Id = id;
                 Name = name;
@@ -37,7 +37,7 @@ namespace IBL
                     ListOfDroneInCharging.Add(droneInCharging);
                 }
             }
-            public BaseStation(int id, string name, Location location, int freeChargingSlots, List<DroneInCharging> listOfDroneInCharging) // constructor
+            public BaseStation(int? id, string name, Location location, int freeChargingSlots, List<DroneInCharging> listOfDroneInCharging) // constructor
             {
                 Id = id;
                 Name = name;

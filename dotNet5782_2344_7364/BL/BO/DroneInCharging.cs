@@ -13,7 +13,7 @@ namespace IBL
         /// </summary>
         public class DroneInCharging
         {
-            public int Id { set; get; }
+            public int? Id { set; get; } = null;
             public double Battery { set; get; }
             public DateTime? TimeOfStartCharging { set; get; }=null;
             public override string ToString()
@@ -21,7 +21,7 @@ namespace IBL
                 return $" Drone #{Id}: \n Battery = {Battery * 100}% \n";
             }
             public DroneInCharging() { } // default
-            public DroneInCharging(int id,double battery,DateTime? currentTime) // constructor
+            public DroneInCharging(int? id,double battery,DateTime? currentTime) // constructor
             {
                 Id = id;
                 Battery = battery;

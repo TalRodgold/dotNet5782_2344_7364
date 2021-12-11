@@ -13,7 +13,7 @@ namespace IBL
         /// </summary>
         public class DroneToList
         {
-            public int Id { set; get; }
+            public int? Id { set; get; } = null;
             public string Model { set; get; }
             public Enums.WeightCategories Weight { set; get; }
             public double Battery { set; get; }
@@ -30,7 +30,7 @@ namespace IBL
                 return $" Drone #{Id}: \n Weight = {Weight} \n Battery = {Battery * 100}% \n Drone Status = {DroneStatuses} \n Current location:  {CurrentLocation.ToString()} \n Number of parcel in transit = {NumberOfParcelInTransit} \n";
             }
             public DroneToList() { NumberOfParcelInTransit = null; } // dedault
-            public DroneToList(int id, string model, Enums.WeightCategories weight , double battery, Enums.DroneStatuses droneStatuses, Location location, int numberOfParcels) // constructor
+            public DroneToList(int? id, string model, Enums.WeightCategories weight , double battery, Enums.DroneStatuses droneStatuses, Location location, int numberOfParcels) // constructor
             {
                 Id = id;
                 Model = model;

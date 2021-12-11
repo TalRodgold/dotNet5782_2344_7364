@@ -6,15 +6,15 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="640" Width="800">
-    <Grid>
+    <Grid Margin="0,0,0,-6">
         <Grid.Background>
-            <ImageBrush ImageSource="/The_Burning_Sky.jpg"/>
+            <ImageBrush ImageSource="/Images/getty_637413968_200013492000928043_356086.jpg"/>
         </Grid.Background>
-        <Button x:Name="GoToDroneList" Content="Press here to start" HorizontalAlignment="Center" VerticalAlignment="Center" Click="ShowDronesButton_Click" Height="51" Width="243" Foreground="#FF292455" FontFamily="Stencil" FontSize="20" FontWeight="Normal">
+        <Button x:Name="GoToDroneList" Content="Press here to start" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ShowDronesButton_Click" Height="62" Width="230" Foreground="#FF130D4A" FontFamily="Stencil" FontSize="20" FontWeight="Normal" Margin="513,241,0,0">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                    <GradientStop Color="Black" Offset="1"/>
-                    <GradientStop Color="#FF1BD8CE" Offset="0.507"/>
+                    <GradientStop Color="#FFD2F0EF" Offset="0.894"/>
+                    <GradientStop Color="#FF39E5DC" Offset="0.446"/>
                 </LinearGradientBrush>
             </Button.Background>
         </Button>

@@ -7,7 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="The_Burning_Sky.jpg" />
+    <None Remove="34869502.jpg" />
+    <None Remove="89bea3490ace4746a3c51cee4eaf8657.jpg" />
+    <None Remove="electronic.jpg" />
+    <None Remove="flyingDrone.jpg" />
+    <None Remove="getty_637413968_200013492000928043_356086.jpg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -15,7 +19,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="The_Burning_Sky.jpg" />
+    <Resource Include="Images\34869502.jpg" />
+    <Resource Include="Images\89bea3490ace4746a3c51cee4eaf8657.jpg" />
+    <Resource Include="Images\getty_637413968_200013492000928043_356086.jpg" />
+    <Resource Include="Images\electronic.jpg" />
+    <Resource Include="Images\flyingDrone.jpg" />
   </ItemGroup>
 
 </Project>

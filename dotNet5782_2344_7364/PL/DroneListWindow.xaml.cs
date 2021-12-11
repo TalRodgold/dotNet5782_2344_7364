@@ -61,6 +61,15 @@ namespace PL
         }
         public void Refresh()
         {
+            if (StatusSelector.SelectedItem == null && MaxWeightSelector.SelectedItem == null) // if no changes where selected
+            {
+                DroneListView.ItemsSource = bl.GetListOfDronesToList().ToList();
+            }
+            else
+            {
+                DroneListView.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.DroneStatuses == (IBL.BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
+                DroneListView.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (IBL.BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem).ToList();
+            }
             DroneListView.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.DroneStatuses == (IBL.BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
             DroneListView.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (IBL.BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem).ToList();
         }

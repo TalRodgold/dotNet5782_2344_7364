@@ -13,12 +13,12 @@ namespace IBL
         /// </summary>
         public class ParcelAtCustomer
         {
-            public int Id { set; get; }
+            public int? Id { set; get; } = null;
             public Enums.WeightCategories Weight { set; get; }
             public Enums.Priorities Prioritie { set; get; }
             public Enums.ParcelStatus ParcelStatus { set; get; }
             public CustomerInParcel CustomerInParcel { set; get; }
-            public ParcelAtCustomer( int id, Enums.WeightCategories weight, Enums.Priorities prioritie, Enums.ParcelStatus parcelStatus, CustomerInParcel customerInParcel) // constructor
+            public ParcelAtCustomer( int? id, Enums.WeightCategories weight, Enums.Priorities prioritie, Enums.ParcelStatus parcelStatus, CustomerInParcel customerInParcel) // constructor
             {
                 Id = id;
                 Weight = weight;

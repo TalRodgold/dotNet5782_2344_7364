@@ -13,10 +13,10 @@ namespace IBL
         /// </summary>
         public class DroneInParcel
         {
-            public int Id { set; get; }
+            public int? Id { set; get; } = null;
             public double Battery { set; get; }
             public Location CurrentLocation { set; get; }
-            public DroneInParcel(int id, double battery, Location location) // constructor
+            public DroneInParcel(int? id, double battery, Location location) // constructor
             {
                 Id = id;
                 Battery = battery;
