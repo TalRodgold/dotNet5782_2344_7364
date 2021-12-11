@@ -91,7 +91,7 @@ namespace IBL
                 }
                 else//if the parcel is assosiate
                 {
-                    Drone newDrone = GetDroneById((int)idalParcel.DroneId);//get drone by drone id
+                    Drone newDrone = GetDroneById(idalParcel.DroneId);//get drone by drone id
                     newDroneInParcel = new DroneInParcel(newDrone.Id, newDrone.Battery, newDrone.CurrentLocation);//creat new drone in parcel 
 
                 }
@@ -133,7 +133,7 @@ namespace IBL
                 }
                 else
                 {
-                    newParcelInTransit = GetParcelInTransitById((int)GetDroneToList(id).NumberOfParcelInTransit);
+                    newParcelInTransit = GetParcelInTransitById(GetDroneToList(id).NumberOfParcelInTransit);
                 }
                 DroneToList droneToList = GetDroneToList(id);
                 Drone newDrone = new Drone(droneToList.Id, droneToList.Model, droneToList.Weight, droneToList.Battery, droneToList.DroneStatuses, newParcelInTransit, droneToList.CurrentLocation);

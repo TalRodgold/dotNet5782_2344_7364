@@ -149,71 +149,6 @@ namespace PL
                 MessageBox.Show(exception.ToString());
             }
         }
-        private void Refresh()
-        {
-            //bl.UpdateListOfDronsBL();
-            drone = bl.GetDroneToList(drone.Id);
-            Battery.Text = drone.Battery.ToString();
-            Model.Text = drone.Model.ToString();
-            StatusSelector.SelectedItem = drone.DroneStatuses;
-            Delivery.Text = drone.NumberOfParcelInTransit.ToString();
-            Longitude.Text = drone.CurrentLocation.LongitudeInSexa();
-            Latitude.Text = drone.CurrentLocation.LatitudeInSexa();
-
-            if (drone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Available)
-            {
-                SendDroneToChargeButton.Visibility = Visibility.Visible;
-                AccociateDroneToParcelButton.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                SendDroneToChargeButton.Visibility = Visibility.Hidden;
-                AccociateDroneToParcelButton.Visibility = Visibility.Hidden;
-            }
-            if (drone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Maintenance)
-            {
-                RealesDroneFromChargingButton.Visibility = Visibility.Visible;
-            }
-            else
-            {
-                RealesDroneFromChargingButton.Visibility = Visibility.Hidden;
-            }
-            if (drone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Delivery )
-            {
-                if (bl.GetParcelById((int)drone.NumberOfParcelInTransit).DeliveryTime != null && !bl.GetParcelInTransitById((int)drone.NumberOfParcelInTransit).Status)
-                {
-                    DeliverParcelButton.Visibility = Visibility.Hidden;
-                    PickUpParcelButton.Visibility = Visibility.Visible;
-                }
-                else if (!bl.GetParcelInTransitById((int)drone.NumberOfParcelInTransit).Status)//true until pickup //bl.GetParcelById((int)drone.NumberOfParcelInTransit).PickupTime != null &&
-                {
-                    DeliverParcelButton.Visibility = Visibility.Visible;
-                    PickUpParcelButton.Visibility = Visibility.Hidden;
-                }
-                else
-                {
-                    DeliverParcelButton.Visibility = Visibility.Hidden;
-                    PickUpParcelButton.Visibility = Visibility.Visible;
-                }
-            }
-            else
-            {
-                PickUpParcelButton.Visibility = Visibility.Hidden;
-                DeliverParcelButton.Visibility = Visibility.Hidden;
-            }
-            //if (drone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Delivery && bl.GetParcelById(drone.NumberOfParcelInTransit).PickupTime != null && bl.GetParcelInTransitById(drone.NumberOfParcelInTransit).Status)
-            //{
-            //    DeliverParcelButton.Visibility = Visibility.Visible;
-            //}
-            //else
-            //{
-            //    DeliverParcelButton.Visibility = Visibility.Hidden;
-
-            //}
-
-
-
-        }
 
         private void RealesDroneFromChargingButton_Click(object sender, RoutedEventArgs e)
         {
@@ -266,6 +201,59 @@ namespace PL
             catch (Exception exception)
             {
                 MessageBox.Show(exception.ToString());
+            }
+        }
+        private void Refresh()
+        {
+            //bl.UpdateListOfDronsBL();
+            drone = bl.GetDroneToList(drone.Id);
+            Battery.Text = drone.Battery.ToString();
+            Model.Text = drone.Model.ToString();
+            StatusSelector.SelectedItem = drone.DroneStatuses;
+            Delivery.Text = drone.NumberOfParcelInTransit.ToString();
+            Longitude.Text = drone.CurrentLocation.LongitudeInSexa();
+            Latitude.Text = drone.CurrentLocation.LatitudeInSexa();
+
+            if (drone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Available)
+            {
+                SendDroneToChargeButton.Visibility = Visibility.Visible;
+                AccociateDroneToParcelButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                SendDroneToChargeButton.Visibility = Visibility.Hidden;
+                AccociateDroneToParcelButton.Visibility = Visibility.Hidden;
+            }
+            if (drone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Maintenance)
+            {
+                RealesDroneFromChargingButton.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                RealesDroneFromChargingButton.Visibility = Visibility.Hidden;
+            }
+            if (drone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Delivery)
+            {
+                if (bl.GetParcelById(drone.NumberOfParcelInTransit).DeliveryTime != null && !bl.GetParcelInTransitById(drone.NumberOfParcelInTransit).Status)//(bl.GetParcelById(drone.NumberOfParcelInTransit).DeliveryTime != null && !bl.GetParcelInTransitById(drone.NumberOfParcelInTransit).Status)
+                {
+                    DeliverParcelButton.Visibility = Visibility.Hidden;
+                    PickUpParcelButton.Visibility = Visibility.Visible;
+                }
+                else if (bl.GetParcelById((int)drone.NumberOfParcelInTransit).PickupTime != null && !bl.GetParcelInTransitById(drone.NumberOfParcelInTransit).Status)//true until pickup
+                {
+                    DeliverParcelButton.Visibility = Visibility.Visible;
+                    PickUpParcelButton.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    DeliverParcelButton.Visibility = Visibility.Hidden;
+                    PickUpParcelButton.Visibility = Visibility.Visible;
+                }
+            }
+            else
+            {
+                PickUpParcelButton.Visibility = Visibility.Hidden;
+                DeliverParcelButton.Visibility = Visibility.Hidden;
             }
         }
     }
