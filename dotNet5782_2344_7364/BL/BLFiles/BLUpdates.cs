@@ -20,7 +20,7 @@ namespace IBL
         /// </summary>
         /// <param name="id"></param>
         /// <param name="newModel"></param>
-        public void UpdateDroneModel(int id, string newModel)//Update drone model
+        public void UpdateDroneModel(int? id, string newModel)//Update drone model
         {
             try
             {
@@ -48,7 +48,7 @@ namespace IBL
         /// <param name="id"></param>
         /// <param name="name"></param>
         /// <param name="numberOfChargingSlots"></param>
-        public void UpdateBaseStation(int id, string name = "", int numberOfChargingSlots = 0)//Update base station name/number of charging slots
+        public void UpdateBaseStation(int? id, string name = "", int numberOfChargingSlots = 0)//Update base station name/number of charging slots
         {
             try
             {
@@ -130,12 +130,12 @@ namespace IBL
                 {
                     throw new UnavailableExeption("drone", id);
                 }
-                int stationId = calculateMinDistance(GetDroneById(id).CurrentLocation, element => element.NumberOfFreeChargingSlots > 0, element => calculateDistance(element.Location, newDrone.CurrentLocation) <= convertBatteryToDistance(newDrone));
-                if (stationId == 0) // if there are no free base stations
+                int? stationId = calculateMinDistance(GetDroneById(id).CurrentLocation, element => element.NumberOfFreeChargingSlots > 0, element => calculateDistance(element.Location, newDrone.CurrentLocation) <= convertBatteryToDistance(newDrone));
+                if (stationId == null) // if there are no free base stations
                 {
                     throw new UnavailableExeption("base station", stationId);
                 }
-                DateTime ?currentTime = DateTime.Now;
+                DateTime? currentTime = DateTime.Now;
                 dal.ConstructDroneCharge(id, stationId, currentTime);
                 BaseStation station = GetBaseStationById(stationId);
                 newDrone.Battery = calculateBattery(newDrone);
@@ -160,7 +160,7 @@ namespace IBL
         /// </summary>
         /// <param name="id"></param>
         /// <param name="time"></param>
-        public void UpdateReleseDrone(int id)//Update-relese drone from charging slot
+        public void UpdateReleseDrone(int? id)//Update-relese drone from charging slot
         {
             if (id < 0) // if id is negative
             {
@@ -195,7 +195,7 @@ namespace IBL
         /// update and associate a drone
         /// </summary>
         /// <param name="id"></param>
-        public void UpdateAssosiateDrone(int id)//Update-assosiate drone to parcel
+        public void UpdateAssosiateDrone(int? id)//Update-assosiate drone to parcel
         {
             {
                 try
@@ -256,7 +256,7 @@ namespace IBL
         /// Update-pick-up parcel by drone
         /// </summary>
         /// <param name="droneId"></param>
-        public void PickupParcelByDrone(int droneId)//Update-pick-up parcel by drone
+        public void PickupParcelByDrone(int? droneId)//Update-pick-up parcel by drone
         {
             try
             {
@@ -294,7 +294,7 @@ namespace IBL
         /// Update-dilavery parcel by drone
         /// </summary>
         /// <param name="droneId"></param>
-        public void DeliveryParcelByDrone(int droneId)//Update-dilavery parcel by drone
+        public void DeliveryParcelByDrone(int? droneId)//Update-dilavery parcel by drone
         {
 
             try

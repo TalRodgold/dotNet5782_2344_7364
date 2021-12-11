@@ -34,7 +34,7 @@ namespace IBL
                 if (newParcel.AssociatedTime == null)//the parcel didn't pick-upp
                 {
                     Location newLocation = new Location(dal.GetCustomer(newParcel.SenderId).Longtitude, dal.GetCustomer(newParcel.SenderId).Latitude);
-                    int baseStationId = calculateMinDistance(newLocation);
+                    int? baseStationId = calculateMinDistance(newLocation);
                     IDAL.DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
                     newDrone.CurrentLocation = new Location(newBaseStation.Longtitude, newBaseStation.Latitude);
                 }

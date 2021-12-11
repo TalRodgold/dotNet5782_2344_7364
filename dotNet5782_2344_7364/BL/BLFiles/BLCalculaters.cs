@@ -22,7 +22,7 @@ namespace IBL
         /// <returns></returns>
         private double calculateBattery(DroneToList drone = null, Drone drone1 = null,double distance = 0.0)//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
         {
-            int baseStationId;
+            int? baseStationId;
             double battery = 0;
             if (drone1 == null) // for drone to list
             {
@@ -151,10 +151,10 @@ namespace IBL
         /// <param name="predicate"></param>
         /// <param name="predicate1"></param>
         /// <returns></returns>
-        private int calculateMinDistance(Location y, Predicate<BaseStation> predicate = null, Predicate<BaseStation> predicate1 = null)//Calculate min distance between loction y and 2 option 1.the closer station 2.the closer station and more 2 terms
+        private int? calculateMinDistance(Location y, Predicate<BaseStation> predicate = null, Predicate<BaseStation> predicate1 = null)//Calculate min distance between loction y and 2 option 1.the closer station 2.the closer station and more 2 terms
         {
             double min = double.MaxValue;
-            int baseStationId = 0;
+            int? baseStationId = null;
             double distance;
             if (predicate == null && predicate1 == null)
             {
