@@ -20,59 +20,60 @@ namespace IBL
         /// <param name="drone"></param>
         /// <param name="drone1"></param>
         /// <returns></returns>
-        private double calculateBattery(DroneToList drone = null, Drone drone1 = null,double distance = 0.0)//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
+        private double calculateBattery(DroneToList drone = null,double distance = 0.0)//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
         {
             int? baseStationId;
-            double battery = 0;
-            if (drone1 == null) // for drone to list
+            double battery = drone.Battery;
+            Random rnd = new Random();
+            baseStationId = calculateMinDistance(drone.CurrentLocation);
+            IDAL.DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
+            distance = calculateDistance(drone.CurrentLocation, new Location(newBaseStation.Longtitude, newBaseStation.Latitude));
+            switch (drone.DroneStatuses)
             {
-                Random rnd = new Random();
-                baseStationId = calculateMinDistance(drone.CurrentLocation);
-                IDAL.DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
-                distance = calculateDistance(drone.CurrentLocation, new Location(newBaseStation.Longtitude, newBaseStation.Latitude));
-                switch (drone.DroneStatuses)
-                {
-                    case Enums.DroneStatuses.Available: // if in availble
-                        battery = distance * ElectricityUseAvailiblity;
-                        battery = battery / 100;
-                        battery = (double)rnd.Next((int)battery, 100) / 100;
-                        break;
-                    case Enums.DroneStatuses.Delivery: // if in delivery
-                        switch (drone.Weight)
-                        {
-                            case Enums.WeightCategories.Light: // if light
-                                battery = distance * ElectricityUseLightWeight;
-                                battery = (double)rnd.Next((int)battery, 100) / 100;
-                                break;
-                            case Enums.WeightCategories.Medium: // if medium
-                                battery = distance * ElectricityUseMediumWeight;
-                                battery = (double)rnd.Next((int)battery, 100) / 100;
-                                break;
-                            case Enums.WeightCategories.Heavy: // if heavy
-                                battery = distance * ElectricityUseHeavyWeight;
-                                battery = (double)rnd.Next((int)battery, 100) / 100;
-                                break;
-                        }
-                        break;
-                    case Enums.DroneStatuses.Maintenance: // if in maintenance
-                        battery = (double)rnd.Next(0, 20) / 100;
-                        break;
-                }
+                case Enums.DroneStatuses.Available: // if in availble
+                    battery = distance * ElectricityUseAvailiblity;
+                    battery = battery / 100;
+                    battery = (double)rnd.Next((int)battery, 100) / 100;
+                    break;
+                case Enums.DroneStatuses.Delivery: // if in delivery
+                    switch (drone.Weight)
+                    {
+                        case Enums.WeightCategories.Light: // if light
+                            battery = distance * ElectricityUseLightWeight;
+                            battery = (double)rnd.Next((int)battery, 100) / 100;
+                            break;
+                        case Enums.WeightCategories.Medium: // if medium
+                            battery = distance * ElectricityUseMediumWeight;
+                            battery = (double)rnd.Next((int)battery, 100) / 100;
+                            break;
+                        case Enums.WeightCategories.Heavy: // if heavy
+                            battery = distance * ElectricityUseHeavyWeight;
+                            battery = (double)rnd.Next((int)battery, 100) / 100;
+                            break;
+                    }
+                    break;
+                case Enums.DroneStatuses.Maintenance: // if in maintenance
+                    battery = (double)rnd.Next(0, 20) / 100;
+                    break;
             }
-            else // for drone
+            return battery;
+        }
+        #endregion
+        #region //Calculate battery(distance*electricty by state) 
+        private double calculateBattery( Drone drone = null, double distance = 0.0)//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
+        {
+            double battery = drone.Battery;
+            switch (drone.Weight)
             {
-                switch (drone1.Weight)
-                {
-                    case Enums.WeightCategories.Light: // for light weight
-                        battery = distance * ElectricityUseLightWeight / 100;
-                        break;
-                    case Enums.WeightCategories.Medium: // for medium weight
-                        battery = distance * ElectricityUseMediumWeight / 100;
-                        break;
-                    case Enums.WeightCategories.Heavy: // for heavy weight 
-                        battery = distance * ElectricityUseHeavyWeight / 100;
-                        break;
-                }
+                case Enums.WeightCategories.Light: // for light weight
+                    battery = distance * ElectricityUseLightWeight / 100;
+                    break;
+                case Enums.WeightCategories.Medium: // for medium weight
+                    battery = distance * ElectricityUseMediumWeight / 100;
+                    break;
+                case Enums.WeightCategories.Heavy: // for heavy weight 
+                    battery = distance * ElectricityUseHeavyWeight / 100;
+                    break;
             }
             return battery;
         }
@@ -192,7 +193,7 @@ namespace IBL
         /// <returns></returns>
         private bool CalculateWhetherTheDroneHaveEnoghBattery(double distance, DroneToList drone)//Calculate whether the drone have enogh battery
         {
-            if ((drone.Battery - calculateBattery(drone, null, distance)) < 0)
+            if ((drone.Battery - calculateBattery(drone, distance)) < 0)
             {
                 return false;
             }

@@ -316,7 +316,7 @@ namespace IBL
                 {
                     throw new NotAssociatedException("drone", droneId); // throw
                 }
-                drone.Battery = calculateBattery(null, drone);
+                drone.Battery = calculateBattery( drone);
                 drone.CurrentLocation = drone.ParcelInTransit.DeliveryLocation;
                 drone.DroneStatuses = Enums.DroneStatuses.Available;
                 DroneToList newDrone = convertDroneBlToList(drone);
