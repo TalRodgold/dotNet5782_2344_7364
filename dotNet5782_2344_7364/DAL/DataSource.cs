@@ -72,7 +72,7 @@ namespace DalObjects
             BaseStation newBaseStation = new BaseStation();
             newBaseStation.Id = (Byte)DateTime.Now.Ticks + 1;
             newBaseStation.Name = Convert.ToString((RandomBases)rnd.Next(1, 11));
-            newBaseStation.ChargeSlots= rnd.Next(0, 10);
+            newBaseStation.ChargeSlots= rnd.Next(5, 10);
             newBaseStation.Longtitude = rnd.NextDouble() + 31.728959;
             newBaseStation.Latitude = rnd.NextDouble() + 35.206714;
             BaseStationList.Add(newBaseStation); // add to list

@@ -39,6 +39,6 @@ namespace IBL
         List<Customer> GetListOfCustomerDalivered(); //Get list of customers that dalivered
         List<BaseStationToList> GetListOfBaseStationsToList(); //Get list of base stations
         List<DroneToList> GetListOfDronesToList();//Get list of drones
-        List<DroneToList> GetListOfDroneToListByPredicat(Predicate<DroneToList> predicate); //Get list of drones by predicat
+        List<DroneToList> GetListOfDroneToListByPredicat(Predicate<DroneToList> predicate, Predicate<DroneToList> predicate1); //Get list of drones by predicat
     }
 }

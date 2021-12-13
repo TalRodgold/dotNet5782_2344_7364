@@ -79,14 +79,21 @@ namespace IBL
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public List<DroneToList> GetListOfDroneToListByPredicat(Predicate<DroneToList> predicate) //Get list of drones by predicat
-        {
+        public List<DroneToList> GetListOfDroneToListByPredicat(Predicate<DroneToList> predicate , Predicate<DroneToList> predicate1=null) //Get list of drones by predicat
+        { 
             List<DroneToList> list1 = new List<DroneToList>();
             foreach (var item in ListOfDronsBL)
             {
                 list1.Add(convertDroneBlToList(GetDroneById(item.Id)));
             }
-            return list1.FindAll(predicate).ToList();
+            if (predicate1 == null)
+            {
+                return list1.FindAll(predicate).ToList();
+            }
+            else
+            {
+                return list1.FindAll(predicate).FindAll(predicate1).ToList();
+            }
         }
         #endregion
         #region//Get list of customers
