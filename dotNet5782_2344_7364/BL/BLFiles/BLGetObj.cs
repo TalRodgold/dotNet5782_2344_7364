@@ -272,7 +272,6 @@ namespace IBL
                 {
                     throw new IdNotExsistException("parcel", id); // throw
                 }
-                //Predicate<IDAL.DO.Parcel> predicate = element => element.SenderId == id; // predicat to find parcel based on senders id
                 IDAL.DO.Parcel newParcel = dal.GetParcel(id);
                 bool status = true;
                 if (newParcel.PickedUp != null)
