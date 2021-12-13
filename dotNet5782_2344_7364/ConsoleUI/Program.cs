@@ -18,7 +18,7 @@ namespace ConsoleUI
         {
             IDal name = new DalObjects.DalObjects();
             PrintFunc(1); // print ascii art.
-            PrintFunc(2); // print menu
+            PrintFunc(2); // print menu.
             while (true) // untill user enters 5 continue running
             {
                 PrintFunc(3);// print choice request
