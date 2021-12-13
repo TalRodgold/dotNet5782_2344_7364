@@ -24,7 +24,7 @@ namespace IBL
         public BL()//BL constructor 
         { 
             dal = new DalObjects.DalObjects();//call to constructor.
-            double[] arr = dal.Electricity();//retun arrey from config contain electrisity data
+            double[] arr = dal.Electricity();//retun arrey from config contain electrisity data.
             ElectricityUseAvailiblity = arr[0];
             ElectricityUseLightWeight = arr[1];
             ElectricityUseMediumWeight = arr[2];
