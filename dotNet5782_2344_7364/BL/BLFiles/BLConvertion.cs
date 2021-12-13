@@ -55,7 +55,7 @@ namespace IBL
                     int index = rnd.Next(baseStationsList.Count);
                     dal.UpdateDroneCharge(newDrone.Id, baseStationsList[index].Id, DateTime.Now);
                     newDrone.CurrentLocation = new Location(baseStationsList[index].Longtitude, baseStationsList[index].Latitude);
-                    
+                    //newDrone.NumberOfParcelInTransit = null;
                     //newDrone.Battery = calculateBattery(newDrone);
                 }
                 else//if the drone is in avilible status
@@ -73,10 +73,10 @@ namespace IBL
                         List<BaseStation> baseTationList = GetListOfBaseStations();
                         newDrone.CurrentLocation = baseTationList[rnd.Next(0, baseTationList.Count)].Location;
                         newDrone.Battery = calculateBattery(newDrone);
-                        if(newDrone.Battery<0.1)
-                        {
-                            UpdateSendDroneToCharge(newDrone.Id);
-                        }
+                        //if(newDrone.Battery<0.1)
+                        //{
+                        //    UpdateSendDroneToCharge(newDrone.Id);
+                        //}
                         newDrone.NumberOfParcelInTransit = null;
                         return newDrone;
                     }
