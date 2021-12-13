@@ -138,14 +138,10 @@ namespace IBL
                 DateTime? currentTime = DateTime.Now;
                 dal.ConstructDroneCharge(id, stationId, currentTime);
                 BaseStation station = GetBaseStationById(stationId);
-                if (newDrone.Battery - calculateBattery(newDrone, calculateDistance(newDrone.CurrentLocation, station.Location)) < 0)
+                double distance = calculateDistance(newDrone.CurrentLocation, station.Location);
+                if(distance!=0)
                 {
-                    newDrone.Battery = 0.000001;
-                }
-                else
-                {
-                    newDrone.Battery -= calculateBattery(newDrone, calculateDistance(newDrone.CurrentLocation, station.Location));
-
+                    newDrone.Battery -= calculateBattery(newDrone,distance);
                 }
                 newDrone.CurrentLocation = station.Location;
                 newDrone.DroneStatuses = Enums.DroneStatuses.Maintenance;
@@ -182,13 +178,13 @@ namespace IBL
             {
                 throw new UnavailableExeption("drone", id);
             }
-            if ((drone.Battery * (Diff.Hours + (double)Diff.Minutes / 60 + (double)Diff.Seconds / 3600) * DroneChargingPaste >= 1)) // if charged more than 100 %
+            if ((drone.Battery +(Diff.Hours + (double)Diff.Minutes / 60 + (double)Diff.Seconds / 3600) * DroneChargingPaste >= 1)) // if charged more than 100 %
             {
                 drone.Battery = 1;
             }
             else
             {
-                drone.Battery = drone.Battery * (Diff.Hours + (double)Diff.Minutes / 60 + (double)Diff.Seconds / 3600) * DroneChargingPaste / 100;
+                drone.Battery = drone.Battery + (Diff.Hours + (double)Diff.Minutes / 60 + (double)Diff.Seconds / 3600) * DroneChargingPaste / 100;
             }
             drone.DroneStatuses = Enums.DroneStatuses.Available;
             IDAL.DO.DroneCharge droneCharge = dal.GetDroneCharge(id, element => element.DroneId == id);
@@ -286,7 +282,7 @@ namespace IBL
                 {
                     throw new NotAssociatedException("drone", droneId); // throw
                 }
-                drone.Battery = (drone.Battery * ElectricityUseAvailiblity * calculateDistance(drone.CurrentLocation, drone.ParcelInTransit.PickupLocation)) / 100;
+                drone.Battery -= calculateBattery(drone, calculateDistance(drone.CurrentLocation, drone.ParcelInTransit.PickupLocation));//(drone.Battery * ElectricityUseAvailiblity * calculateDistance(drone.CurrentLocation, drone.ParcelInTransit.PickupLocation)) / 100;
                 drone.CurrentLocation = drone.ParcelInTransit.PickupLocation;
                 drone.ParcelInTransit.Status = false;
                 DroneToList newDrone = convertDroneBlToList(drone);
@@ -320,18 +316,24 @@ namespace IBL
                 {
                     throw new UnavailableExeption("drone", droneId); // throw
                 }
-                if (GetParcelById(drone.ParcelInTransit.Id).PickupTime == null) // if parcel not associated
+                Parcel newParcel = GetParcelById(drone.ParcelInTransit.Id);
+                if (newParcel.PickupTime == null) // if parcel not associated
                 {
                     throw new NotAssociatedException("drone", droneId); // throw
                 }
-                drone.Battery = calculateBattery( drone);
-                drone.CurrentLocation = drone.ParcelInTransit.DeliveryLocation;
+                int? station =calculateMinDistance(drone.CurrentLocation);
+                drone.Battery -= calculateBattery(drone,calculateDistance(drone.CurrentLocation, GetBaseStationById(station).Location));//(drone.CurrentLocation, drone.ParcelInTransit.DeliveryLocation));
+                drone.CurrentLocation = GetBaseStationById(station).Location;//drone.ParcelInTransit.DeliveryLocation;
                 drone.DroneStatuses = Enums.DroneStatuses.Available;
                 DroneToList newDrone = convertDroneBlToList(drone);
                 newDrone.NumberOfParcelInTransit = null;
                 int index = ListOfDronsBL.FindIndex(element => element.Id == droneId);
                 ListOfDronsBL[index] = newDrone;
                 dal.UpdateParcleDelivery(drone.ParcelInTransit.Id);
+                if(drone.Battery<0.2)
+                {
+                    UpdateSendDroneToCharge(drone.Id);
+                }
             }
             catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects.
             {

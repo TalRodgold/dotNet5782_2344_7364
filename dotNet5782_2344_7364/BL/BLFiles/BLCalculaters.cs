@@ -27,35 +27,64 @@ namespace IBL
             Random rnd = new Random();
             baseStationId = calculateMinDistance(drone.CurrentLocation);
             IDAL.DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
-            distance = calculateDistance(drone.CurrentLocation, new Location(newBaseStation.Longtitude, newBaseStation.Latitude));
-            switch (drone.DroneStatuses)
+           
+            if(distance==0.0)
             {
-                case Enums.DroneStatuses.Available: // if in availble
-                    battery = distance * ElectricityUseAvailiblity;
-                    battery = battery / 100;
-                    battery = (double)rnd.Next((int)battery, 100) / 100;
-                    break;
-                case Enums.DroneStatuses.Delivery: // if in delivery
-                    switch (drone.Weight)
-                    {
-                        case Enums.WeightCategories.Light: // if light
-                            battery = distance * ElectricityUseLightWeight;
-                            battery = (double)rnd.Next((int)battery, 100) / 100;
-                            break;
-                        case Enums.WeightCategories.Medium: // if medium
-                            battery = distance * ElectricityUseMediumWeight;
-                            battery = (double)rnd.Next((int)battery, 100) / 100;
-                            break;
-                        case Enums.WeightCategories.Heavy: // if heavy
-                            battery = distance * ElectricityUseHeavyWeight;
-                            battery = (double)rnd.Next((int)battery, 100) / 100;
-                            break;
-                    }
-                    break;
-                case Enums.DroneStatuses.Maintenance: // if in maintenance
-                    battery = (double)rnd.Next(0, 20) / 100;
-                    break;
+                distance = calculateDistance(drone.CurrentLocation, new Location(newBaseStation.Longtitude, newBaseStation.Latitude));
+                
+                switch (drone.DroneStatuses)
+                {
+                    case Enums.DroneStatuses.Available: // if in availble
+                        if (distance != 0)
+                            battery = distance * ElectricityUseAvailiblity;
+                        battery = battery / 100;
+                        battery = (double)rnd.Next((int)battery, 100) / 100;
+                        break;
+                    case Enums.DroneStatuses.Delivery: // if in delivery
+                        switch (drone.Weight)
+                        {
+                            case Enums.WeightCategories.Light: // if light
+                                if (distance != 0)
+                                    battery = distance * ElectricityUseLightWeight;
+                                battery = (double)rnd.Next((int)battery, 100) / 100;
+                                break;
+                            case Enums.WeightCategories.Medium: // if medium
+                                if (distance != 0)
+                                    battery = distance * ElectricityUseMediumWeight;
+                                battery = (double)rnd.Next((int)battery, 100) / 100;
+                                break;
+                            case Enums.WeightCategories.Heavy: // if heavy
+                                if (distance != 0)
+                                    battery = distance * ElectricityUseHeavyWeight;
+                                battery = (double)rnd.Next((int)battery, 100) / 100;
+                                break;
+                        }
+                        break;
+                    case Enums.DroneStatuses.Maintenance: // if in maintenance
+                        battery = (double)rnd.Next(0, 20) / 100;
+                        break;
+                }
             }
+            else
+            {
+                //if(distance==0)
+                //{
+                //    return battery;
+                //}
+                    switch (drone.Weight)
+                {
+                    case Enums.WeightCategories.Light: // if light
+                        battery -= (distance * ElectricityUseLightWeight)/100;
+                        break;
+                    case Enums.WeightCategories.Medium: // if medium
+                        battery -= (distance * ElectricityUseMediumWeight)/100;
+                        break;
+                    case Enums.WeightCategories.Heavy: // if heavy
+                        battery -= (distance * ElectricityUseHeavyWeight)/100;
+                        break;
+                }
+            }
+           
             return battery;
         }
         #endregion
@@ -66,13 +95,13 @@ namespace IBL
             switch (drone.Weight)
             {
                 case Enums.WeightCategories.Light: // for light weight
-                    battery = distance * ElectricityUseLightWeight / 100;
+                    battery = (distance * ElectricityUseLightWeight )/ 100;
                     break;
                 case Enums.WeightCategories.Medium: // for medium weight
-                    battery = distance * ElectricityUseMediumWeight / 100;
+                    battery =( distance * ElectricityUseMediumWeight) / 100;
                     break;
                 case Enums.WeightCategories.Heavy: // for heavy weight 
-                    battery = distance * ElectricityUseHeavyWeight / 100;
+                    battery = (distance * ElectricityUseHeavyWeight / 100);
                     break;
             }
             return battery;
@@ -193,7 +222,8 @@ namespace IBL
         /// <returns></returns>
         private bool CalculateWhetherTheDroneHaveEnoghBattery(double distance, DroneToList drone)//Calculate whether the drone have enogh battery
         {
-            if ((drone.Battery - calculateBattery(drone, distance)) < 0)
+            double battery= calculateBattery(drone, distance);
+            if ((drone.Battery - battery) < 0 || (battery<0))
             {
                 return false;
             }

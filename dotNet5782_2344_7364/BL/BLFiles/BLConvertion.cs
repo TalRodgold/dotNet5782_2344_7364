@@ -26,8 +26,9 @@ namespace IBL
             newDrone.Id = idalDrone.Id;
             newDrone.Model = idalDrone.Model;
             newDrone.Weight = (Enums.WeightCategories)idalDrone.MaxWeight;
-            var listOfParcels = dal.GetListOfParcel().ToList();
-            IDAL.DO.Parcel newParcel = listOfParcels.Find(element => element.DroneId == idalDrone.Id);
+            var listOfParcels = dal.GetListOfParcel().ToList();//----------------------------------
+            IDAL.DO.Parcel newParcel = listOfParcels.Find(element => element.DroneId == idalDrone.Id);//----------------------------------------------
+            // IDAL.DO.Parcel newParcel = dal.GetParcel(1,element => element.DroneId == idalDrone.Id);//.ToList().Find(element => element.DroneId == idalDrone.Id);
             if (newParcel.Id != null)//if there have a parcel with this drone id
             {
                 newDrone.DroneStatuses = Enums.DroneStatuses.Delivery;
@@ -47,13 +48,15 @@ namespace IBL
             else //if there no have parcel with this drone id
             {
                 var myValues = new int[] { 0, 2 }; // Will work with array or list
-                newDrone.DroneStatuses = (Enums.DroneStatuses)myValues[rnd.Next(0, 1)];
+                newDrone.DroneStatuses = (Enums.DroneStatuses)myValues[rnd.Next(0, 2)];
                 if (newDrone.DroneStatuses == Enums.DroneStatuses.Maintenance)//if the drone in maintence status
                 {
                     List<IDAL.DO.BaseStation> baseStationsList = dal.GetListOfBaseStation().ToList();
                     int index = rnd.Next(baseStationsList.Count);
+                    dal.UpdateDroneCharge(newDrone.Id, baseStationsList[index].Id, DateTime.Now);
                     newDrone.CurrentLocation = new Location(baseStationsList[index].Longtitude, baseStationsList[index].Latitude);
-                    newDrone.Battery = calculateBattery(newDrone);
+                    
+                    //newDrone.Battery = calculateBattery(newDrone);
                 }
                 else//if the drone is in avilible status
                 {
@@ -69,6 +72,11 @@ namespace IBL
                     {
                         List<BaseStation> baseTationList = GetListOfBaseStations();
                         newDrone.CurrentLocation = baseTationList[rnd.Next(0, baseTationList.Count)].Location;
+                        newDrone.Battery = calculateBattery(newDrone);
+                        if (newDrone.Battery < 0.1)
+                            UpdateSendDroneToCharge(newDrone.Id);
+                        newDrone.NumberOfParcelInTransit = null;
+                        return newDrone;
                     }
                 }
                 newDrone.NumberOfParcelInTransit = null;
