@@ -15,9 +15,8 @@ namespace BlApi
         double ElectricityUseMediumWeight;
         double ElectricityUseHeavyWeight;
         double DroneChargingPaste;
-        BL bl;
         IDal dal;
-        private static readonly IBl instance = new BL();
+        private static readonly Lazy<BL> instance = new Lazy<BL>(() => new BL());// using lazy to improve performance and avoid wasteful computation, and reduce program memory requirements.  
         static BL() { }
         #region//BL constructor 
         /// <summary>
@@ -36,7 +35,7 @@ namespace BlApi
         }
         #endregion
         #region
-        public static IBl Instance { get => instance; } // The public Instance property to use
+        public static IBl Instance { get => instance.Value; } // The public Instance property to use
         public void UpdateListOfDronsBL()
         {
             var listOfDrones = dal.GetListOfDrone();//get the list of drone from datasource

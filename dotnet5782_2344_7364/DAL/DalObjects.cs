@@ -11,8 +11,8 @@ namespace DalObjects
     /// This is the data layer
     /// </summary>
     internal sealed class DalObjects : IDal
-    {   
-        private static readonly IDal instance = new DalObjects();  
+    {
+        private static readonly Lazy<DalObjects> instance = new Lazy<DalObjects>(() => new DalObjects());// using lazy to improve performance and avoid wasteful computation, and reduce program memory requirements.  
         static DalObjects() { }// Explicit static constructor to ensure instance initialization
                                // is done just before first usage
         DalObjects() // constructor.
@@ -24,7 +24,7 @@ namespace DalObjects
             DataSource.DroneChargeList = new List<DroneCharge>();
             DataSource.Initialize();
         }
-        public static IDal Instance { get => instance; } // The public Instance property to use
+        public static IDal Instance { get => instance.Value; } // The public Instance property to use
 
         /// <summary>
         /// contains functions that allow to acsses and change the data in DataSource and pass it on to BL

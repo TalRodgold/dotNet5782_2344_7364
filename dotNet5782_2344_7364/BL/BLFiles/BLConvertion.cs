@@ -70,10 +70,6 @@ namespace BlApi
                         List<BaseStation> baseTationList = GetListOfBaseStations();
                         newDrone.CurrentLocation = baseTationList[rnd.Next(0, baseTationList.Count)].Location;
                         newDrone.Battery = calculateBattery(newDrone);
-                        if(newDrone.Battery<0.1)
-                        {
-                            UpdateSendDroneToCharge(newDrone.Id);
-                        }
                         newDrone.NumberOfParcelInTransit = null;
                         return newDrone;
                     }
