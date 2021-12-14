@@ -17,7 +17,7 @@ namespace BlApi
         double DroneChargingPaste;
         BL bl;
         IDal dal;
-        static readonly IBl instance = new BL();
+        private static readonly IBl instance = new BL();
         static BL() { }
         #region//BL constructor 
         /// <summary>

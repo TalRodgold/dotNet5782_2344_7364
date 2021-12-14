@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using DalApi.DO;
+using DO;
 using DalApi;
 
 namespace ConsoleUI
@@ -16,7 +16,7 @@ namespace ConsoleUI
         /// <param name="args"></param>
         static void Main(string[] args)
         {
-            IDal name = new DalObjects.DalObjects();
+            IDal dal = DalFactory.GetDal("DalObject");//call to constructor.
             PrintFunc(1); // print ascii art.
             PrintFunc(2); // print menu.
             while (true) // untill user enters 5 continue running
@@ -37,7 +37,7 @@ namespace ConsoleUI
                         double.TryParse(Console.ReadLine(), out userLongtitude);
                         double userLatitude;
                         double.TryParse(Console.ReadLine(), out userLatitude);
-                        name.ConstructBaseStation(userId, userName, userChargeSlots, userLongtitude, userLatitude);
+                        dal.ConstructBaseStation(userId, userName, userChargeSlots, userLongtitude, userLatitude);
                         break;
                         #endregion
                     case ("1.2")://Drone addition
@@ -48,7 +48,7 @@ namespace ConsoleUI
                         string userModel = Console.ReadLine();
                         WeightCategories userWeightCategories;
                         WeightCategories.TryParse(Console.ReadLine(), out userWeightCategories);
-                        name.ConstructDrone(userDroneId, userModel, userWeightCategories);
+                        dal.ConstructDrone(userDroneId, userModel, userWeightCategories);
                         break;
                     #endregion
                     case ("1.3")://Customer addition
@@ -62,7 +62,7 @@ namespace ConsoleUI
                         double.TryParse(Console.ReadLine(), out userCustomerLongtitude);
                         double userCustomerLatitude;
                         double.TryParse(Console.ReadLine(), out userCustomerLatitude);
-                        name.ConstructCustomer(userCustomerId, userCustomerName, userPhoneNumber, userCustomerLatitude, userCustomerLatitude);
+                        dal.ConstructCustomer(userCustomerId, userCustomerName, userPhoneNumber, userCustomerLatitude, userCustomerLatitude);
                         break;
                         #endregion
                     case ("1.4")://Parcel addition
@@ -79,7 +79,7 @@ namespace ConsoleUI
                         Priorities.TryParse(Console.ReadLine(), out userParcelPriorities);
                         DateTime userRequested;
                         DateTime.TryParse(Console.ReadLine(), out userRequested);
-                        name.ConstructParcel(userSenderId, userTargetId, userParcelWeightCategories, userParcelPriorities, userRequested, 0, null, null, null);
+                        dal.ConstructParcel(userSenderId, userTargetId, userParcelWeightCategories, userParcelPriorities, userRequested, 0, null, null, null);
                         break;
                       #endregion
                     case ("2.1"): //Update Percel to Drone
@@ -90,7 +90,7 @@ namespace ConsoleUI
                         PrintFunc(11);
                         int droneId;
                         int.TryParse(Console.ReadLine(), out droneId);
-                        name.AssociateDroneToParcel( droneId, parcelId);
+                        dal.AssociateDroneToParcel( droneId, parcelId);
                         break;
                         #endregion
                     case ("2.2")://Update Parcle pickup
@@ -98,7 +98,7 @@ namespace ConsoleUI
                         PrintFunc(9);//print
                         int parcelId1;
                         int.TryParse(Console.ReadLine(), out parcelId1);
-                        name.UpdateParclePickup(parcelId1);
+                        dal.UpdateParclePickup(parcelId1);
                         break;
                         #endregion
                     case ("2.3")://Update Parcle delivery
@@ -106,19 +106,19 @@ namespace ConsoleUI
                         PrintFunc(9);//print
                         int parcelId2;
                         int.TryParse(Console.ReadLine(), out parcelId2);
-                        name.UpdateParcleDelivery(parcelId2);
+                        dal.UpdateParcleDelivery(parcelId2);
                         break;
                         #endregion
                     case ("2.4")://Print free BaseStation
                         #region//Print free BaseStation
-                        Console.Write(name.BaseStationfreeToString());
+                        Console.Write(dal.BaseStationfreeToString());
                         PrintFunc(11);
                         int droneId2;
                         int.TryParse(Console.ReadLine(), out droneId2);
                         PrintFunc(10);
                         int baseId;
                         int.TryParse(Console.ReadLine(), out baseId);
-                        name.UpdateDroneCharge(droneId2, baseId,DateTime.Now);
+                        dal.UpdateDroneCharge(droneId2, baseId,DateTime.Now);
                         break;
                         #endregion
                     case ("2.5")://release DroneCharge
@@ -129,7 +129,7 @@ namespace ConsoleUI
                         PrintFunc(10);//print
                         int baseId1;
                         int.TryParse(Console.ReadLine(), out baseId1);
-                        name.ReleaseDroneCharge(droneId1, baseId1);
+                        dal.ReleaseDroneCharge(droneId1, baseId1);
                         break;
                         #endregion
                     case ("3.1")://Print BaseStation
@@ -137,7 +137,7 @@ namespace ConsoleUI
                         PrintFunc(10);//print
                         int baseId2;
                         int.TryParse(Console.ReadLine(), out baseId2);
-                        Console.WriteLine(name.ReturnBaseStationDataById(baseId2));
+                        Console.WriteLine(dal.ReturnBaseStationDataById(baseId2));
                         break;
                         #endregion
                     case ("3.2")://Print Drone
@@ -145,7 +145,7 @@ namespace ConsoleUI
                         PrintFunc(11);//print
                         int droneId3;
                         int.TryParse(Console.ReadLine(), out droneId3);
-                        Console.WriteLine(name.ReturnDroneDataById(droneId3));
+                        Console.WriteLine(dal.ReturnDroneDataById(droneId3));
                         break;
                         #endregion
                     case ("3.3")://Print Customer
@@ -153,7 +153,7 @@ namespace ConsoleUI
                         PrintFunc(12);//print
                         int customerId;
                         int.TryParse(Console.ReadLine(), out customerId);
-                        Console.WriteLine(name.ReturnCustomerDataById(customerId));                       
+                        Console.WriteLine(dal.ReturnCustomerDataById(customerId));                       
                         break;
                         #endregion
                     case ("3.4")://Print Parcel
@@ -161,46 +161,46 @@ namespace ConsoleUI
                         PrintFunc(9);//print
                         int parcelId3;
                         int.TryParse(Console.ReadLine(), out parcelId3);
-                        Console.WriteLine(name.ReturnParcelDataById(parcelId3));
+                        Console.WriteLine(dal.ReturnParcelDataById(parcelId3));
                         break;
                         #endregion
                     case ("4.1")://Display list of base stations
                         #region//Display list of base stations
-                        Console.Write(name.BaseStationListToString());
+                        Console.Write(dal.BaseStationListToString());
                         break;
                         #endregion
                     case ("4.2")://Display list of drones
                         #region//Display list of drones
-                        for (int i = 0; i < name.GetCountOfDroneList(); i++)
+                        for (int i = 0; i < dal.GetCountOfDroneList(); i++)
                         {
-                            Console.WriteLine(name.DroneListToString());
+                            Console.WriteLine(dal.DroneListToString());
                         }
                         break;
                         #endregion
                     case ("4.3")://Display list of customers
                         #region//Display list of customers
-                        for (int i = 0; i < name.GetCountOfCustomerList(); i++)
+                        for (int i = 0; i < dal.GetCountOfCustomerList(); i++)
                         {
-                            Console.WriteLine(name.CustomerListToString());
+                            Console.WriteLine(dal.CustomerListToString());
                         }
                         break;
                         #endregion
                     case ("4.4")://Display list of parcels
                         #region//Display list of parcels
-                        for (int i = 0; i < name.GetCountOfParcelList(); i++)
+                        for (int i = 0; i < dal.GetCountOfParcelList(); i++)
                         {
-                            Console.WriteLine(name.ParcelListToString());
+                            Console.WriteLine(dal.ParcelListToString());
                         }
                         break;
                         #endregion
                     case ("4.5")://Display list of parcels who are not associated to a drone
                         #region//Display list of parcels who are not associated to a drone
-                        Console.Write(name.ParcelsNotAssociatedToString());
+                        Console.Write(dal.ParcelsNotAssociatedToString());
                         break;
                         #endregion
                     case ("4.6")://Display list of base stations with free charging stations
                         #region//Display list of base stations with free charging stations
-                        Console.Write(name.BaseStationfreeToString());
+                        Console.Write(dal.BaseStationfreeToString());
                         break;
                         #endregion
                     case ("5")://exit

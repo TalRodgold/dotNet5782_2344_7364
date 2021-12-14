@@ -29,7 +29,7 @@ namespace PL
         }
         private void ShowDronesButton_Click(object sender, RoutedEventArgs e) // start program
         {
-            new DroneListWindow.Show();
+            new DroneListWindow().Show();
         }
 
     }

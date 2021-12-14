@@ -12,7 +12,7 @@ namespace DalObjects
     /// </summary>
     internal sealed class DalObjects : IDal
     {   
-        static readonly IDal instance = new DalObjects();  
+        private static readonly IDal instance = new DalObjects();  
         static DalObjects() { }// Explicit static constructor to ensure instance initialization
                                // is done just before first usage
         DalObjects() // constructor.
