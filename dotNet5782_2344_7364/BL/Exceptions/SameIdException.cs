@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace IBL.BO
+namespace BO
 {
     /// <summary>
     /// Exception if 2 id's are the same

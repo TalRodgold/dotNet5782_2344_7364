@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace IDAL.DO
+namespace DO
 {
     /// <summary>
     /// throw exception for error where there is a size problem

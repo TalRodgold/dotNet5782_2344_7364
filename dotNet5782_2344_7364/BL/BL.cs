@@ -1,13 +1,13 @@
 ﻿using System;
-using IDAL;
-using IBL.BO;
+using DalApi;
+using BO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
 using System.Linq;
-namespace IBL
+namespace BlApi
 {
-    public partial class BL : IBl
+    internal sealed partial class BL : IBl
     {
         public List<DroneToList> ListOfDronsBL = new List<DroneToList>();
         double ElectricityUseAvailiblity;
@@ -17,13 +17,15 @@ namespace IBL
         double DroneChargingPaste;
         BL bl;
         IDal dal;
+        static readonly IBl instance = new BL();
+        static BL() { }
         #region//BL constructor 
         /// <summary>
         /// BL constructor 
         /// </summary>
         public BL()//BL constructor 
         { 
-            dal = new DalObjects.DalObjects();//call to constructor.
+            dal =  DalFactory.GetDal("DalObject");//call to constructor.
             double[] arr = dal.Electricity();//retun arrey from config contain electrisity data.
             ElectricityUseAvailiblity = arr[0];
             ElectricityUseLightWeight = arr[1];
@@ -34,6 +36,7 @@ namespace IBL
         }
         #endregion
         #region
+        public static IBl Instance { get => instance; } // The public Instance property to use
         public void UpdateListOfDronsBL()
         {
             var listOfDrones = dal.GetListOfDrone();//get the list of drone from datasource

@@ -1,11 +1,11 @@
 ﻿using System;
-using IBL;
-using IBL.BO;
+using BlApi;
+using BlApi.BO;
 namespace ConsoleUI_BL
 {
     class Program
     {
-        static IBL.BL bl = new BL(); // call constructor
+        static BlApi.BL bl = new BL(); // call constructor
         public enum Option { Addop = 1, Updateop, DisplayByIdop, ListDisplayop, Exit } // enum for option menu
         /// <summary>
         /// main program

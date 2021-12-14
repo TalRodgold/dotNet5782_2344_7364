@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace IBL.BO
+namespace BO
 {
     /// <summary>
     /// throw exception for error where id already exsists

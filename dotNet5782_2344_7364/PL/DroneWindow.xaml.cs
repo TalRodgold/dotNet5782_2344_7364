@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using BlApi;
 namespace PL
 {
     /// <summary>
@@ -19,12 +19,11 @@ namespace PL
     /// </summary>
     public partial class DroneWindow : Window
     {
-        public IBL.BL bl;
-        public IBL.BO.DroneToList drone;
+        private IBl bl = BlFactory.GetBl("BL");
+        public BO.DroneToList drone;
         public DroneListWindow droneListWindow;
-        public DroneWindow(IBL.BL bl, DroneListWindow listWindow) // constructor for adding new drone
+        public DroneWindow( DroneListWindow listWindow) // constructor for adding new drone
         {
-            this.bl = bl;
             this.droneListWindow = listWindow;
             InitializeComponent();
             AddButton.Visibility = Visibility.Visible; // make butten visible
@@ -37,35 +36,34 @@ namespace PL
             Latitude.IsEnabled = false;
             Longitude.IsEnabled = false;
 
-            MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.Enums.WeightCategories));
-            StatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.Enums.DroneStatuses));
+            MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
+            StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             StartingBaseStation.Visibility = Visibility.Visible;
             BaseStationTxtBox.Visibility = Visibility.Visible;
             CancelButton.Visibility = Visibility.Visible;
           
         }
-        public DroneWindow(IBL.BL bl, DroneListWindow listWindow, IBL.BO.DroneToList chosenDrone) // constructor for Drone update
+        public DroneWindow(DroneListWindow listWindow, BO.DroneToList chosenDrone) // constructor for Drone update
         {
-            this.bl = bl;
             this.drone = chosenDrone;
             this.droneListWindow = listWindow;
             InitializeComponent();
             UpdateButton.Visibility = Visibility.Visible; // make butten visible
             AddButton.IsEnabled = false; // enable add button
-            if (chosenDrone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Available)
+            if (chosenDrone.DroneStatuses ==BO.Enums.DroneStatuses.Available)
             {
                 SendDroneToChargeButton.Visibility = Visibility.Visible;
                 AccociateDroneToParcelButton.Visibility = Visibility.Visible;
             }
-            if (chosenDrone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Maintenance)
+            if (chosenDrone.DroneStatuses == BO.Enums.DroneStatuses.Maintenance)
             {
                 RealesDroneFromChargingButton.Visibility = Visibility.Visible;
             }
-            if (chosenDrone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Delivery && bl.GetParcelInTransitById((int)chosenDrone.NumberOfParcelInTransit).Status )
+            if (chosenDrone.DroneStatuses == BO.Enums.DroneStatuses.Delivery && bl.GetParcelInTransitById((int)chosenDrone.NumberOfParcelInTransit).Status )
             {
                 PickUpParcelButton.Visibility = Visibility.Visible;
             }
-            if (chosenDrone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Delivery && bl.GetParcelById((int)chosenDrone.NumberOfParcelInTransit).PickupTime != null && bl.GetParcelInTransitById((int)chosenDrone.NumberOfParcelInTransit).Status)
+            if (chosenDrone.DroneStatuses == BO.Enums.DroneStatuses.Delivery && bl.GetParcelById((int)chosenDrone.NumberOfParcelInTransit).PickupTime != null && bl.GetParcelInTransitById((int)chosenDrone.NumberOfParcelInTransit).Status)
             {
                 DeliverParcelButton.Visibility = Visibility.Visible;
             }
@@ -78,8 +76,8 @@ namespace PL
             Latitude.IsEnabled = false;
             Longitude.IsEnabled = false;
             // set combo boxes
-            MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.Enums.WeightCategories));
-            StatusSelector.ItemsSource = Enum.GetValues(typeof(IBL.BO.Enums.DroneStatuses));
+            MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
+            StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             // insert drone data to text box
             Id.Text = chosenDrone.Id.ToString();
             Battery.Text = chosenDrone.Battery.ToString();
@@ -93,17 +91,17 @@ namespace PL
 
         private void MaxWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) // combo box for max weghit
         {
-            MaxWeightSelector.SelectedItem = (IBL.BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem;
+            MaxWeightSelector.SelectedItem = (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem;
         }
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) // combo box for status
         {
-            StatusSelector.SelectedItem = (IBL.BO.Enums.DroneStatuses)StatusSelector.SelectedItem;
+            StatusSelector.SelectedItem = (BO.Enums.DroneStatuses)StatusSelector.SelectedItem;
         }
         private void AddButton_Click(object sender, RoutedEventArgs e) // add a drone button
         {
             try
             {
-                IBL.BO.Drone newDrone = new IBL.BO.Drone(int.Parse(Id.Text), Model.Text, (IBL.BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem);
+                BO.Drone newDrone = new BO.Drone(int.Parse(Id.Text), Model.Text, (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem);
                 bl.AddDrone(newDrone, Convert.ToInt32(BaseStationTxtBox.Text));
                 MessageBox.Show("Drone added sucsecfully");
                 droneListWindow.Refresh();
@@ -213,7 +211,7 @@ namespace PL
             Longitude.Text = drone.CurrentLocation.LongitudeInSexa();
             Latitude.Text = drone.CurrentLocation.LatitudeInSexa();
 
-            if (drone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Available)
+            if (drone.DroneStatuses == BO.Enums.DroneStatuses.Available)
             {
                 SendDroneToChargeButton.Visibility = Visibility.Visible;
                 AccociateDroneToParcelButton.Visibility = Visibility.Visible;
@@ -223,7 +221,7 @@ namespace PL
                 SendDroneToChargeButton.Visibility = Visibility.Hidden;
                 AccociateDroneToParcelButton.Visibility = Visibility.Hidden;
             }
-            if (drone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Maintenance)
+            if (drone.DroneStatuses ==BO.Enums.DroneStatuses.Maintenance)
             {
                 RealesDroneFromChargingButton.Visibility = Visibility.Visible;
             }
@@ -231,7 +229,7 @@ namespace PL
             {
                 RealesDroneFromChargingButton.Visibility = Visibility.Hidden;
             }
-            if (drone.DroneStatuses == IBL.BO.Enums.DroneStatuses.Delivery)
+            if (drone.DroneStatuses == BO.Enums.DroneStatuses.Delivery)
             {
                 if (bl.GetParcelById(drone.NumberOfParcelInTransit).DeliveryTime != null && !bl.GetParcelInTransitById(drone.NumberOfParcelInTransit).Status)//(bl.GetParcelById(drone.NumberOfParcelInTransit).DeliveryTime != null && !bl.GetParcelInTransitById(drone.NumberOfParcelInTransit).Status)
                 {

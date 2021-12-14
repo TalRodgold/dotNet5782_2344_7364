@@ -1,17 +1,17 @@
 ﻿using System;
-using IDAL;
-using IBL.BO;
+using DalApi;
+using BO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
 using System.Linq;
 
-namespace IBL
+namespace BlApi
 {
     /// <summary>
     /// All the calculation functions for BL
     /// </summary>
-    public partial class BL : IBl
+    internal sealed partial class BL : IBl
     {
         #region//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
         /// <summary>
@@ -26,7 +26,7 @@ namespace IBL
             double battery = drone.Battery;
             Random rnd = new Random();
             baseStationId = calculateMinDistance(drone.CurrentLocation);
-            IDAL.DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
+            DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
            
             if(distance==0.0)
             {
@@ -236,7 +236,7 @@ namespace IBL
         /// </summary>
         /// <param name="p"></param>
         /// <returns></returns>
-        private Enums.ParcelStatus statusCalculate(IDAL.DO.Parcel p)
+        private Enums.ParcelStatus statusCalculate(DO.Parcel p)
         {
             if (p.Deliverd != null) // deliverd time
                 return Enums.ParcelStatus.Supplied;

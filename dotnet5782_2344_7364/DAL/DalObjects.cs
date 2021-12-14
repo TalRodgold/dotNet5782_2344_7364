@@ -3,28 +3,33 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL.DO;
-using IDAL;
-
+using DO;
+using DalApi;
 namespace DalObjects 
 {
     /// <summary>
     /// This is the data layer
     /// </summary>
-    public class DalObjects : IDal
-    {
-        /// <summary>
-        /// contains functions that allow to acsses and change the data in DataSource and pass it on to BL
-        /// </summary>
-        public DalObjects() // constructor.
+    internal sealed class DalObjects : IDal
+    {   
+        static readonly IDal instance = new DalObjects();  
+        static DalObjects() { }// Explicit static constructor to ensure instance initialization
+                               // is done just before first usage
+        DalObjects() // constructor.
         {
-            DataSource.DroneList = new List<Drone>(); 
-            DataSource.BaseStationList = new List<BaseStation>(); 
-            DataSource.CustomerList = new List<Customer>(); 
-            DataSource.ParcelList = new List<Parcel>(); 
+            DataSource.DroneList = new List<Drone>();
+            DataSource.BaseStationList = new List<BaseStation>();
+            DataSource.CustomerList = new List<Customer>();
+            DataSource.ParcelList = new List<Parcel>();
             DataSource.DroneChargeList = new List<DroneCharge>();
             DataSource.Initialize();
         }
+        public static IDal Instance { get => instance; } // The public Instance property to use
+
+        /// <summary>
+        /// contains functions that allow to acsses and change the data in DataSource and pass it on to BL
+        /// </summary>
+
         #region//All the construct functions
 
         #region//construct a new base station

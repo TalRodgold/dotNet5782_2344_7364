@@ -12,7 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-
+using BlApi;
 namespace PL
 {
     /// <summary>
@@ -22,18 +22,14 @@ namespace PL
   
     public partial class MainWindow : Window
     {
-        public IBL.BL bl;
+        private IBl bl =BlFactory.GetBl("BL");
         public MainWindow()
         {
             InitializeComponent();
-            bl = new IBL.BL();
-            this.bl = bl;
-
-
         }
         private void ShowDronesButton_Click(object sender, RoutedEventArgs e) // start program
         {
-            new DroneListWindow(bl).Show();
+            new DroneListWindow.Show();
         }
 
     }

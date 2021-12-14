@@ -1,17 +1,17 @@
 ﻿using System;
-using IDAL;
-using IBL.BO;
+using DalApi;
+using BO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
 using System.Linq;
 
-namespace IBL
+namespace BlApi
 {
     /// <summary>
     /// All the get object by id functions
     /// </summary>
-    public partial class BL : IBl
+    internal sealed partial class BL : IBl
     {
         #region//Get customer from data-source by id
         /// <summary>
@@ -27,14 +27,14 @@ namespace IBL
                 {
                     throw new InvalidIdException("negative", id);
                 }
-                IDAL.DO.Customer idalCustomer = dal.GetCustomer(id); // get a customer of dal type
+                DO.Customer idalCustomer = dal.GetCustomer(id); // get a customer of dal type
                 Customer newCustomer = new Customer(idalCustomer.Id, idalCustomer.Name, idalCustomer.Phone, new Location(idalCustomer.Longtitude, idalCustomer.Latitude)); // creat and add to a customer of bl type
 
 
-                Predicate<IDAL.DO.Parcel> predicate = element => element.SenderId == id; // predicat to find parcel based on senders id
-                Predicate<IDAL.DO.Parcel> predicate1 = element => element.ReciverId == id; // predicat to find parcel based on targets id
+                Predicate<DO.Parcel> predicate = element => element.SenderId == id; // predicat to find parcel based on senders id
+                Predicate<DO.Parcel> predicate1 = element => element.ReciverId == id; // predicat to find parcel based on targets id
 
-                List<IDAL.DO.Parcel> newSenderParcel = dal.GetListOfParcel(predicate).ToList(); // get parcel of dal type based on senders id
+                List<DO.Parcel> newSenderParcel = dal.GetListOfParcel(predicate).ToList(); // get parcel of dal type based on senders id
                 List<ParcelAtCustomer> list = new List<ParcelAtCustomer>();
                 foreach (var item in newSenderParcel)
                 {
@@ -42,7 +42,7 @@ namespace IBL
                 }
                 newCustomer.ParcelFromCustomer = list; // add to new customer the parcel from customer
 
-                List<IDAL.DO.Parcel> newReciveParcels = dal.GetListOfParcel(predicate1).ToList(); // get parcel of dal type based on reciver id
+                List<DO.Parcel> newReciveParcels = dal.GetListOfParcel(predicate1).ToList(); // get parcel of dal type based on reciver id
                 List<ParcelAtCustomer> list1 = new List<ParcelAtCustomer>();
                 foreach (var item in newReciveParcels)
                 {
@@ -52,7 +52,7 @@ namespace IBL
                 newCustomer.ParcelToCustomer = list1; // add to new customer the parcel from customer
                 return newCustomer;
             }
-            catch (IDAL.DO.IdNotExsistException exception) // if customer id does not exsists and was thrown from dal objects
+            catch (DO.IdNotExsistException exception) // if customer id does not exsists and was thrown from dal objects
             {
 
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
@@ -66,7 +66,7 @@ namespace IBL
         /// <param name="id"></param>
         /// <param name="predicate"></param>
         /// <returns></returns>
-        public Parcel GetParcelById(int? id, Predicate<IDAL.DO.Parcel> predicate = null)//from data-source by id
+        public Parcel GetParcelById(int? id, Predicate<DO.Parcel> predicate = null)//from data-source by id
         {
             try
             {
@@ -78,7 +78,7 @@ namespace IBL
                 {
                     throw new IdNotExsistException("parcel", id); // throw
                 }
-                IDAL.DO.Parcel idalParcel = dal.GetParcel(id, predicate);//Get parcel by id or by predicate
+                DO.Parcel idalParcel = dal.GetParcel(id, predicate);//Get parcel by id or by predicate
                 Customer senderCustomer = GetCustomerById(idalParcel.SenderId); // creat a new customer based on the sender of the parcel
                 Customer reciverCustomer = GetCustomerById(idalParcel.ReciverId); // creat a new customer based on the reciver of the parcel
 
@@ -100,7 +100,7 @@ namespace IBL
                 Parcel newParcel = new Parcel(idalParcel.Id, senderCustomerInParcel, reciverCustomerInParcel, (Enums.WeightCategories)idalParcel.Weight, (Enums.Priorities)idalParcel.Priority, newDroneInParcel, idalParcel.CreatingTime, idalParcel.AssociatedTime, idalParcel.PickedUp, idalParcel.Deliverd);//creat new parcel
                 return newParcel;
             }
-            catch (IDAL.DO.IdNotExsistException exception) // if parcel id does not exsists and was thrown from dal objects
+            catch (DO.IdNotExsistException exception) // if parcel id does not exsists and was thrown from dal objects
             {
 
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
@@ -125,7 +125,7 @@ namespace IBL
                 {
                     throw new IdNotExsistException("drone", id); // throw
                 }
-                Predicate<IDAL.DO.Parcel> predicate = element => element.DroneId == id;
+                Predicate<DO.Parcel> predicate = element => element.DroneId == id;
                 ParcelInTransit newParcelInTransit;
                 if (GetDroneToList(id).NumberOfParcelInTransit == null)
                 {
@@ -139,7 +139,7 @@ namespace IBL
                 Drone newDrone = new Drone(droneToList.Id, droneToList.Model, droneToList.Weight, droneToList.Battery, droneToList.DroneStatuses, newParcelInTransit, droneToList.CurrentLocation);
                 return newDrone;
             }
-            catch (IDAL.DO.IdNotExsistException exception) // if drone id does not exsists and was thrown from dal objects
+            catch (DO.IdNotExsistException exception) // if drone id does not exsists and was thrown from dal objects
             {
 
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
@@ -166,12 +166,12 @@ namespace IBL
                 }
                 if (!dal.IfDroneExsists(id))
                 {
-                    throw new IdNotExsistException("drone", id, new IDAL.DO.IdNotExsistException("drone", id));
+                    throw new IdNotExsistException("drone", id, new DO.IdNotExsistException("drone", id));
                 }
                 return ListOfDronsBL.Find(element => element.Id == id);
 
             }
-            catch (IDAL.DO.IdNotExsistException exception) // if base station id does not exsists and was thrown from dal objects
+            catch (DO.IdNotExsistException exception) // if base station id does not exsists and was thrown from dal objects
             {
 
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
@@ -198,11 +198,11 @@ namespace IBL
                 }
                 if (!dal.IfBaseStationExsists(id))
                 {
-                    throw new IdNotExsistException("base station", id, new IDAL.DO.IdNotExsistException("base station", id));
+                    throw new IdNotExsistException("base station", id, new DO.IdNotExsistException("base station", id));
                 }
-                IDAL.DO.BaseStation idalBaseStation = dal.GetBaseStation(id);
+                DO.BaseStation idalBaseStation = dal.GetBaseStation(id);
 
-                IEnumerable<IDAL.DO.DroneCharge> listOfDronesCharging = dal.GetListOfDroneCharge();
+                IEnumerable<DO.DroneCharge> listOfDronesCharging = dal.GetListOfDroneCharge();
                 List<DroneInCharging> listToAdd = new List<DroneInCharging>();
                 foreach (var item in listOfDronesCharging)
                 {
@@ -214,7 +214,7 @@ namespace IBL
                 BaseStation newBaseStation = new BaseStation(idalBaseStation.Id, idalBaseStation.Name, new Location(idalBaseStation.Longtitude, idalBaseStation.Latitude), idalBaseStation.ChargeSlots, listToAdd);
                 return newBaseStation;
             }
-            catch (IDAL.DO.IdNotExsistException exception) // if base station id does not exsists and was thrown from dal objects
+            catch (DO.IdNotExsistException exception) // if base station id does not exsists and was thrown from dal objects
             {
 
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
@@ -239,15 +239,15 @@ namespace IBL
                 {
                     throw new IdNotExsistException("parcel", id); // throw
                 }
-                Predicate<IDAL.DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
+                Predicate<DO.Parcel> predicate = element => element.Id == id; // predicat to find parcel based on senders id
 
-                IDAL.DO.Parcel newParcel = dal.GetParcel(null, predicate);
+                DO.Parcel newParcel = dal.GetParcel(null, predicate);
                 Customer senderCustomer = GetCustomerById(newParcel.SenderId); // creat a new customer based on the sender of the parcel
                 Customer reciverCustomer = GetCustomerById(newParcel.ReciverId); // creat a new customer based on the reciver of the parcel
                 ParcelToList newParcelToList = new ParcelToList(newParcel.Id, senderCustomer.Name, reciverCustomer.Name, (Enums.WeightCategories)newParcel.Weight, (Enums.Priorities)newParcel.Priority, statusCalculate(dal.GetParcel(GetParcelById(newParcel.Id, predicate).Id)));
                 return newParcelToList;
             }
-            catch (IDAL.DO.IdNotExsistException exception) // if parcel or customer id does not exsists and was thrown from dal objects
+            catch (DO.IdNotExsistException exception) // if parcel or customer id does not exsists and was thrown from dal objects
             {
 
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
@@ -272,7 +272,7 @@ namespace IBL
                 {
                     throw new IdNotExsistException("parcel", id); // throw
                 }
-                IDAL.DO.Parcel newParcel = dal.GetParcel(id);
+                DO.Parcel newParcel = dal.GetParcel(id);
                 bool status = true;
                 if (newParcel.PickedUp != null)
                 {
@@ -286,7 +286,7 @@ namespace IBL
                 return new ParcelInTransit(id, status, (Enums.Priorities)newParcel.Priority, (Enums.WeightCategories)newParcel.Weight, sCustomer, rCustomer, senderCustomer.Location, reciverCustomer.Location, calculateDistance(senderCustomer.Location, reciverCustomer.Location));
 
             }
-            catch (IDAL.DO.IdNotExsistException exception) // if customer or parcel id does not exsists and was thrown from dal objects
+            catch (DO.IdNotExsistException exception) // if customer or parcel id does not exsists and was thrown from dal objects
             {
 
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw

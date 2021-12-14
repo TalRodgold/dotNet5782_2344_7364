@@ -1,18 +1,18 @@
 ﻿using System;
-using IDAL;
-using IBL.BO;
+using DalApi;
+using BlApi.BO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
 using System.Linq;
 using System.Runtime.Serialization;
 
-namespace IBL
+namespace BlApi
 {
     /// <summary>
     /// All the updates functions for BL
     /// </summary>
-    public partial class BL : IBl
+    internal sealed partial class BL : IBl
     {
         #region//Update drone model
         /// <summary>
@@ -34,7 +34,7 @@ namespace IBL
                 ListOfDronsBL[index] = newDroneToList;
                 dal.UpdateDroneModel(id, newModel);
             }
-            catch (IDAL.DO.IdNotExsistException exception)
+            catch (DalApi.DO.IdNotExsistException exception)
             {
 
                 throw new IdNotExsistException(exception.Text, exception.ID, exception);
@@ -69,12 +69,12 @@ namespace IBL
                     dal.UpdateChargingSlotsNumber(id, numberOfChargingSlots);
                 }
             }
-            catch (IDAL.DO.IdNotExsistException exception)
+            catch (DalApi.DO.IdNotExsistException exception)
             {
 
                 throw new IdNotExsistException(exception.Text, exception.ID, exception);
             }
-            catch (IDAL.DO.SizeProblemException exception)
+            catch (DalApi.DO.SizeProblemException exception)
             {
                 throw new SizeProblemException(exception.Text, exception.Number, exception);
             }
@@ -104,7 +104,7 @@ namespace IBL
                     dal.UpdateCustomerPhone(id, phone);
                 }
             }
-            catch (IDAL.DO.IdNotExsistException exception)
+            catch (DalApi.DO.IdNotExsistException exception)
             {
 
                 throw new IdNotExsistException(exception.Text, exception.ID, exception);
@@ -151,7 +151,7 @@ namespace IBL
                 dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.NumberOfFreeChargingSlots);
                 DroneInCharging droneInCharging = new DroneInCharging(newDrone.Id, newDrone.Battery, currentTime);
             }
-            catch (IDAL.DO.IdNotExsistException exception) // if base station id does not exsists and was thrown from dal objects
+            catch (DalApi.DO.IdNotExsistException exception) // if base station id does not exsists and was thrown from dal objects
             {
 
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
@@ -187,8 +187,8 @@ namespace IBL
                 drone.Battery = drone.Battery + (Diff.Hours + (double)Diff.Minutes / 60 + (double)Diff.Seconds / 3600) * DroneChargingPaste / 100;
             }
             drone.DroneStatuses = Enums.DroneStatuses.Available;
-            IDAL.DO.DroneCharge droneCharge = dal.GetDroneCharge(id, element => element.DroneId == id);
-            IDAL.DO.BaseStation station = dal.getBaseStationByDroneId(droneCharge.DroneId);
+            DalApi.DO.DroneCharge droneCharge = dal.GetDroneCharge(id, element => element.DroneId == id);
+            DalApi.DO.BaseStation station = dal.getBaseStationByDroneId(droneCharge.DroneId);
             station.ChargeSlots -= 1;
             dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.ChargeSlots);
             dal.ReleaseDroneCharge(id, station.Id);
@@ -251,7 +251,7 @@ namespace IBL
                     drone.NumberOfParcelInTransit = properParcelID;
                     ListOfDronsBL[index] = drone;
                 }
-                catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
+                catch (DalApi.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
                 {
 
                     throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
@@ -290,7 +290,7 @@ namespace IBL
                 ListOfDronsBL[index] = newDrone;
                 dal.UpdateParclePickup(drone.ParcelInTransit.Id);
             }
-            catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
+            catch (DalApi.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
             {
 
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
@@ -335,7 +335,7 @@ namespace IBL
                 //    UpdateSendDroneToCharge(drone.Id);
                 //}
             }
-            catch (IDAL.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects.
+            catch (DalApi.DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects.
             {
 
                 throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw

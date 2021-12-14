@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IBL.BO;
-namespace IBL
+using BO;
+namespace BlApi
 {
     /// <summary>
     /// Interface with all the functions of BL
@@ -16,7 +16,7 @@ namespace IBL
         void AddCustomer(Customer c); //Customer addition
         void AddParcel(CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie); // parcel addition
         Customer GetCustomerById(int? id); //Get customer from data-source by id
-        Parcel GetParcelById(int? id, Predicate<IDAL.DO.Parcel> predicate = null); //from data-source by id
+        Parcel GetParcelById(int? id, Predicate<DO.Parcel> predicate = null); //from data-source by id
         Drone GetDroneById(int? id); //Get drone from data-source by id
         DroneToList GetDroneToList(int? id); //Get drone from list that is held here by id
         BaseStation GetBaseStationById(int? id); //Get base station from data-source by id
@@ -39,6 +39,6 @@ namespace IBL
         List<Customer> GetListOfCustomerDalivered(); //Get list of customers that dalivered
         List<BaseStationToList> GetListOfBaseStationsToList(); //Get list of base stations
         List<DroneToList> GetListOfDronesToList();//Get list of drones
-        List<DroneToList> GetListOfDroneToListByPredicat(Predicate<DroneToList> predicate, Predicate<DroneToList> predicate1); //Get list of drones by predicat
+        List<DroneToList> GetListOfDroneToListByPredicat(Predicate<DroneToList> predicate, Predicate<DroneToList> predicate1=null); //Get list of drones by predicat
     }
 }

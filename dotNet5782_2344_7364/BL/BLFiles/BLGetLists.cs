@@ -1,17 +1,17 @@
 ﻿using System;
-using IDAL;
-using IBL.BO;
+using DalApi;
+using BO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
 using System.Linq;
 
-namespace IBL
+namespace BlApi
 {
     /// <summary>
     /// All the Get Lists functions for BL
     /// </summary>
-    public partial class BL : IBl
+    internal sealed partial class BL : IBl
     {
         #region//Get list of base stations
         /// <summary>
@@ -164,8 +164,8 @@ namespace IBL
         public List<ParcelToList> GetListOfNotAssigned()//Get list of assosiated drones
         {
             List<ParcelToList> list = new List<ParcelToList>();
-            Predicate<IDAL.DO.Parcel> predicate = element => element.DroneId == null;
-            List<IDAL.DO.Parcel> listIdal = dal.GetListOfParcel(predicate).ToList();
+            Predicate<DO.Parcel> predicate = element => element.DroneId == null;
+            List<DO.Parcel> listIdal = dal.GetListOfParcel(predicate).ToList();
             foreach (var item in listIdal)
             {
                 list.Add(convertParcelToParcelTolist(GetParcelById(item.Id)));  
@@ -181,8 +181,8 @@ namespace IBL
         public List<BaseStationToList> GetListOfFreeChargingStations()//Get list of free charging stations
         {
             List<BaseStationToList> list = new List<BaseStationToList>();
-            Predicate<IDAL.DO.BaseStation> predicate = element => element.ChargeSlots > 0;
-            List<IDAL.DO.BaseStation> listIdal = dal.GetListOfBaseStation(predicate).ToList();
+            Predicate<DO.BaseStation> predicate = element => element.ChargeSlots > 0;
+            List<DO.BaseStation> listIdal = dal.GetListOfBaseStation(predicate).ToList();
             foreach (var item in listIdal)
             {
                 list.Add(convertBasestationToBasestationTolist(GetBaseStationById(item.Id)));

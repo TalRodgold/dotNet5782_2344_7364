@@ -1,17 +1,17 @@
 ﻿using System;
-using IDAL;
-using IBL.BO;
+using DalApi;
+using BO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
 using System.Linq;
 
-namespace IBL
+namespace BlApi
 {
     /// <summary>
     /// All the convertion functions for BL
     /// </summary>
-    public partial class BL : IBl
+    internal sealed partial class BL : IBl
     {
         #region//Convert from dal drone to drone to list
         /// <summary>
@@ -19,7 +19,7 @@ namespace IBL
         /// </summary>
         /// <param name="idalDrone"></param>
         /// <returns></returns>
-        private DroneToList convertDroneDalToList(IDAL.DO.Drone idalDrone)//Convert from dal drone to drone to list
+        private DroneToList convertDroneDalToList(DO.Drone idalDrone)//Convert from dal drone to drone to list
         {
             Random rnd = new Random();
             DroneToList newDrone = new DroneToList();
@@ -27,7 +27,7 @@ namespace IBL
             newDrone.Model = idalDrone.Model;
             newDrone.Weight = (Enums.WeightCategories)idalDrone.MaxWeight;
             var listOfParcels = dal.GetListOfParcel().ToList();
-            IDAL.DO.Parcel newParcel = listOfParcels.Find(element => element.DroneId == idalDrone.Id);
+            DO.Parcel newParcel = listOfParcels.Find(element => element.DroneId == idalDrone.Id);
             if (newParcel.Id != null)//if there have a parcel with this drone id
             {
                 newDrone.DroneStatuses = Enums.DroneStatuses.Delivery;
@@ -35,7 +35,7 @@ namespace IBL
                 {
                     Location newLocation = new Location(dal.GetCustomer(newParcel.SenderId).Longtitude, dal.GetCustomer(newParcel.SenderId).Latitude);
                     int? baseStationId = calculateMinDistance(newLocation);
-                    IDAL.DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
+                    DO.BaseStation newBaseStation = dal.GetBaseStation(baseStationId);
                     newDrone.CurrentLocation = new Location(newBaseStation.Longtitude, newBaseStation.Latitude);
                 }
                 else//the parcel was pick-upp
@@ -50,19 +50,19 @@ namespace IBL
                 newDrone.DroneStatuses = (Enums.DroneStatuses)myValues[rnd.Next(0, 2)];
                 if (newDrone.DroneStatuses == Enums.DroneStatuses.Maintenance)//if the drone in maintence status
                 {
-                    List<IDAL.DO.BaseStation> baseStationsList = dal.GetListOfBaseStation().ToList();
+                    List<DO.BaseStation> baseStationsList = dal.GetListOfBaseStation().ToList();
                     int index = rnd.Next(baseStationsList.Count);
                     dal.UpdateDroneCharge(newDrone.Id, baseStationsList[index].Id, DateTime.Now);
                     newDrone.CurrentLocation = new Location(baseStationsList[index].Longtitude, baseStationsList[index].Latitude);                    
                 }
                 else//if the drone is in avilible status
                 {
-                    Predicate<IDAL.DO.Parcel> predicate1 = element => element.Deliverd != null;
-                    List<IDAL.DO.Parcel> listOfDeliveredParcel = dal.GetListOfParcel(predicate1).ToList();//all the parcel that delivered
+                    Predicate<DO.Parcel> predicate1 = element => element.Deliverd != null;
+                    List<DO.Parcel> listOfDeliveredParcel = dal.GetListOfParcel(predicate1).ToList();//all the parcel that delivered
                     if (listOfDeliveredParcel.Count != 0)//if there have pacel that has been delivered
                     {
-                        IDAL.DO.Parcel newParcel_ = listOfDeliveredParcel[rnd.Next(listOfDeliveredParcel.Count)];
-                        IDAL.DO.Customer newCustomer = dal.GetCustomer(newParcel_.ReciverId);
+                        DO.Parcel newParcel_ = listOfDeliveredParcel[rnd.Next(listOfDeliveredParcel.Count)];
+                        DO.Customer newCustomer = dal.GetCustomer(newParcel_.ReciverId);
                         newDrone.CurrentLocation = new Location(newCustomer.Longtitude, newCustomer.Latitude);
                     }
                     else//if there no have delivered parcel 
@@ -102,11 +102,11 @@ namespace IBL
         /// </summary>
         /// <param name="customer"></param>
         /// <returns></returns>
-        private Customer convertCustomerDalToBl(IDAL.DO.Customer customer)////Convert from dal customer to bl customer
+        private Customer convertCustomerDalToBl(DO.Customer customer)////Convert from dal customer to bl customer
         {
-            List<IDAL.DO.Parcel> parcelList = dal.GetListOfParcel(element => (element.SenderId != null)).ToList();
-            List<IDAL.DO.Parcel> parcelListSender = parcelList.FindAll(element => element.SenderId == customer.Id);
-            List<IDAL.DO.Parcel> parcelListReciver = parcelList.FindAll(element => element.ReciverId == customer.Id);
+            List<DO.Parcel> parcelList = dal.GetListOfParcel(element => (element.SenderId != null)).ToList();
+            List<DO.Parcel> parcelListSender = parcelList.FindAll(element => element.SenderId == customer.Id);
+            List<DO.Parcel> parcelListReciver = parcelList.FindAll(element => element.ReciverId == customer.Id);
             if (parcelList.Count != 0)
             {
                 List<ParcelAtCustomer> parcelAtCustomersListSender = null;

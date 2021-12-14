@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using IDAL.DO;
+using DO;
 
-namespace IDAL
+namespace DalApi
 {
     /// <summary>
     /// Interface with all the functions of DalObjects
