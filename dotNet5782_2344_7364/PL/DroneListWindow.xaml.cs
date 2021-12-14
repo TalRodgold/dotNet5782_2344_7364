@@ -55,18 +55,24 @@ namespace PL
 
         private void AddDrone_Click(object sender, RoutedEventArgs e) // add a drone
         {
-            new DroneWindow(this).Show();
+            DroneWindow droneWindow = new DroneWindow();
+            droneWindow.Closed += CloseWindow;
+            droneWindow.Show();
+
         }
 
         private void UpdateDrone_doubleClick(object sender, MouseButtonEventArgs e) // ypdate drone
         {
+
             BO.DroneToList drone = (BO.DroneToList)DroneListView.SelectedItem;
-            new DroneWindow(this, drone).Show();
+            DroneWindow droneWindow = new DroneWindow(drone);
+            droneWindow.Closed += CloseWindow;
+            droneWindow.Show();
         }
 
         private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e) // open drone window
         {
-            new DroneWindow(this).Show();
+            new DroneWindow().Show();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e) // exit
@@ -89,8 +95,13 @@ namespace PL
             }
             else 
             {
-                List<BO.DroneToList> list = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
+                DroneListView.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
             }
+        }
+
+        private void CloseWindow(object sender, EventArgs e)
+        {
+            Refresh();
         }
     }
 }

@@ -5,7 +5,7 @@ namespace ConsoleUI_BL
 {
     class Program
     {
-        private IBl bl = BlFactory.GetBl("BL"); // call constructor
+        static IBl bl = BlFactory.GetBl("BL"); // call constructor
         public enum Option { Addop = 1, Updateop, DisplayByIdop, ListDisplayop, Exit } // enum for option menu
         /// <summary>
         /// main program

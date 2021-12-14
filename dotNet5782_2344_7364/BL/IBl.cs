@@ -33,7 +33,9 @@ namespace BlApi
         List<BaseStation> GetListOfBaseStations(); //Convert from dal drone to drone to list
         List<Drone> GetListOfDrones(); //Get list of drones
         List<Customer> GetListOfCustomers(); //Get list of customers
+        List<CustomerToList> GetListOfCustomerToList(); //Get list of customers
         List<Parcel> GetListOfParcels(); //Get list of parcels
+        List<ParcelToList> GetListOfParcelToList();//Get list of parcel to list
         List<ParcelToList> GetListOfNotAssigned(); //Get list of assosiated drones
         List<BaseStationToList> GetListOfFreeChargingStations(); //Get list of free charging stations
         List<Customer> GetListOfCustomerDalivered(); //Get list of customers that dalivered

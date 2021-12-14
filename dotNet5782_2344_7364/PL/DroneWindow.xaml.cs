@@ -21,10 +21,8 @@ namespace PL
     {
         private IBl bl = BlFactory.GetBl("BL");
         public BO.DroneToList drone;
-        public DroneListWindow droneListWindow;
-        public DroneWindow( DroneListWindow listWindow) // constructor for adding new drone
+        public DroneWindow() // constructor for adding new drone
         {
-            this.droneListWindow = listWindow;
             InitializeComponent();
             AddButton.Visibility = Visibility.Visible; // make butten visible
             ExitButton.Visibility = Visibility.Hidden;
@@ -43,10 +41,9 @@ namespace PL
             CancelButton.Visibility = Visibility.Visible;
           
         }
-        public DroneWindow(DroneListWindow listWindow, BO.DroneToList chosenDrone) // constructor for Drone update
+        public DroneWindow(BO.DroneToList chosenDrone) // constructor for Drone update
         {
             this.drone = chosenDrone;
-            this.droneListWindow = listWindow;
             InitializeComponent();
             UpdateButton.Visibility = Visibility.Visible; // make butten visible
             AddButton.IsEnabled = false; // enable add button
@@ -104,7 +101,6 @@ namespace PL
                 BO.Drone newDrone = new BO.Drone(int.Parse(Id.Text), Model.Text, (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem);
                 bl.AddDrone(newDrone, Convert.ToInt32(BaseStationTxtBox.Text));
                 MessageBox.Show("Drone added sucsecfully");
-                droneListWindow.Refresh();
                 this.Close();
             }
             catch (Exception exception)
@@ -131,8 +127,7 @@ namespace PL
         }
 
         private void ExitButton_Click(object sender, RoutedEventArgs e) // exit button
-        {
-            droneListWindow.Refresh();
+        {            
             this.Close();
         }
         private void SendDroneToChargeButton_Click(object sender, RoutedEventArgs e) // send drone to charge button
