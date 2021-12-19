@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Title="DroneWindow" Height="640" Width="800">
     <Window.Background>
-        <ImageBrush ImageSource="/Images/34869502.jpg"/>
+        <ImageBrush ImageSource="/Images/Drone.jpg"/>
     </Window.Background>
     <Grid x:Name="MainGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 

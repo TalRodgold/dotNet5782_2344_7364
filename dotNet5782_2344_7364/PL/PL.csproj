@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="20976291.jpg" />
+    <None Remove="21717572.jpg" />
+    <None Remove="24616702.jpg" />
     <None Remove="34869502.jpg" />
     <None Remove="89bea3490ace4746a3c51cee4eaf8657.jpg" />
     <None Remove="electronic.jpg" />
@@ -19,10 +22,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Images\34869502.jpg" />
-    <Resource Include="Images\89bea3490ace4746a3c51cee4eaf8657.jpg" />
-    <Resource Include="Images\getty_637413968_200013492000928043_356086.jpg" />
-    <Resource Include="Images\electronic.jpg" />
+    <Resource Include="Images\Parcel.jpg" />
+    <Resource Include="Images\Customer.jpg" />
+    <Resource Include="Images\BaseStation.jpg" />
+    <Resource Include="Images\Drone.jpg" />
+    <Resource Include="Images\ConectingDots.jpg" />
+    <Resource Include="Images\DroneMainWindow.jpg" />
     <Resource Include="Images\flyingDrone.jpg" />
   </ItemGroup>
 

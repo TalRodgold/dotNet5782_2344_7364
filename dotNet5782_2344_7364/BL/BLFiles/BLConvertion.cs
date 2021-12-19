@@ -19,7 +19,7 @@ namespace BlApi
         /// </summary>
         /// <param name="idalDrone"></param>
         /// <returns></returns>
-        private DroneToList convertDroneDalToList(DO.Drone idalDrone)//Convert from dal drone to drone to list
+        private DroneToList convertDroneDalToList(DO.Drone idalDrone)//Convert from dal drone to drone to list.
         {
             Random rnd = new Random();
             DroneToList newDrone = new DroneToList();

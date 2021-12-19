@@ -103,5 +103,15 @@ namespace PL
         {
             Refresh();
         }
+
+        private void refreshButton_click(object sender, RoutedEventArgs e)
+        {
+            Refresh();
+        }
+
+        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

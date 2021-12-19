@@ -26,17 +26,29 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions >
-                <ComboBox Name="StatusSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="1"  Width="120" SelectionChanged="StatusSelector_SelectionChanged" FontSize="18"/>
-                <Label Content="Drone status:" Grid.Column="0" FontSize="24" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
-                <ComboBox Name="MaxWeightSelector" HorizontalAlignment= "Stretch" VerticalAlignment="Stretch" Grid.Column="3" Width="120" SelectionChanged="MaxWeightSelector_SelectionChanged" FontSize="18"/>
-                <Label Content="Drone max weight:" Grid.Column="2" FontSize="24" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White" VerticalContentAlignment="Center" />
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <ComboBox Name="StatusSelector" HorizontalAlignment= "Stretch" Grid.Row="1" VerticalAlignment="Stretch" Grid.Column="1"  Width="120" SelectionChanged="StatusSelector_SelectionChanged" FontSize="18"/>
+                <Label Content="Drone status:" Grid.Column="0" FontSize="24" Grid.Row="1"  FontWeight="Bold" FontFamily="Sitka Display" Foreground="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+                <ComboBox Name="MaxWeightSelector" HorizontalAlignment= "Stretch" Grid.Row="1"  VerticalAlignment="Stretch" Grid.Column="3" Width="120" SelectionChanged="MaxWeightSelector_SelectionChanged" FontSize="18"/>
+                <Label Content="Drone max weight:" Grid.Column="2" FontSize="24" Grid.Row="1"  FontWeight="Bold" FontFamily="Sitka Display" Foreground="White" VerticalContentAlignment="Center" />
+                <TabControl SelectionChanged="TabControl_SelectionChanged">
+                    <TabItem Header="TabItem">
+                        <Grid Background="#FFE5E5E5"/>
+                    </TabItem>
+                    <TabItem Header="TabItem">
+                        <Grid Background="#FFE5E5E5" Margin="204,4,-204,-3"/>
+                    </TabItem>
+                </TabControl>
 
             </Grid>
         </Grid>
         <Grid Name="LowwerGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="1" VerticalAlignment="Stretch" Width="auto">
             <ListView Name="DroneListView" MouseDoubleClick="UpdateDrone_doubleClick" Foreground="#FFCF3A55" FontSize="14">
                 <ListView.Background>
-                    <ImageBrush ImageSource="/Images/89bea3490ace4746a3c51cee4eaf8657.jpg"/>
+                    <ImageBrush ImageSource="/Images/ConectingDots.jpg"/>
                 </ListView.Background>
                 <ListView.View>
                     <GridView>
@@ -44,7 +56,7 @@
                     </GridView>
                 </ListView.View>
             </ListView>
-            <Button x:Name="AddDrone" Content="Add a drone" HorizontalAlignment="Left" Margin="656,33,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="AddDrone_Click">
+            <Button x:Name="AddDrone" Content="Add a drone" HorizontalAlignment="Left" Margin="656,124,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="AddDrone_Click">
                 <Button.Background>
                     <RadialGradientBrush>
                         <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
@@ -59,6 +71,14 @@
                         <GradientStop Color="#FFF70A0A" Offset="1"/>
                     </RadialGradientBrush>
                 </Button.Background>
+            </Button>
+            <Button Content="Refresh" HorizontalAlignment="Left" Margin="656,36,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="Sitka Display"  FontWeight="Bold" Height="52" Width="106" >
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
+                    <GradientStop Color="#FF00F73F" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
             </Button>
 
         </Grid>
