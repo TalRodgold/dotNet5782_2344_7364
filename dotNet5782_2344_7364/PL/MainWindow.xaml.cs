@@ -30,29 +30,40 @@ namespace PL
             InitializeComponent();
             EnteringComboBox.ItemsSource = Enum.GetValues(typeof(enteringOptions));
         }
-        private void ShowDronesButton_Click(object sender, RoutedEventArgs e) // start program
-        {
-            new DroneListWindow().Show();
-        }
 
         private void EnteringOptions_comboBox(object sender, ContextMenuEventArgs e)
         {
             EnteringComboBox.SelectedItem = (enteringOptions)EnteringComboBox.SelectedItem;
         }
-
         private void enterinOption_change(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (EnteringComboBox.SelectedIndex == 0)
             {
-
+                DroneListWindow droneListWindow = new DroneListWindow();
             }
             else if (EnteringComboBox.SelectedIndex == 1)
             {
-
+               CustomerWindow customerWindow = new CustomerWindow(int.Parse(CustomerId.SelectedText));
             }
             else if (EnteringComboBox.SelectedIndex == 2)
             {
+               CustomerWindow customerWindow = new CustomerWindow();
+            }
+        }
 
+        private void StartButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (EnteringComboBox.SelectedIndex == 0)
+            {
+                new DroneListWindow().Show();
+            }
+            else if (EnteringComboBox.SelectedIndex == 1)
+            {
+                new CustomerWindow(Int32.Parse(CustomerId.Text)).Show();
+            }
+            else if (EnteringComboBox.SelectedIndex == 2)
+            {
+                new CustomerWindow().Show();
             }
         }
     }

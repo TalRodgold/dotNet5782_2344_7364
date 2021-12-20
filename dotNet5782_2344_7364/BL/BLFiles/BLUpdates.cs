@@ -102,6 +102,24 @@ namespace BlApi
             }
         }
         #endregion
+        #region//Delete parcel
+        public void DeleteParcel(int? id)
+        {
+            try
+            {
+                if (id < 0 || id == null)// if id is negative
+                {
+                    throw new InvalidIdException("negative", id);
+                }
+                dal.DeleteParcel(id);
+            }
+            catch (DO.IdNotExsistException exception)
+            {
+
+                throw new IdNotExsistException(exception.Text, exception.ID, exception);
+            }
+        }
+        #endregion  
         #region//Update customer name/phone
         /// <summary>
         /// Update customer name/phone

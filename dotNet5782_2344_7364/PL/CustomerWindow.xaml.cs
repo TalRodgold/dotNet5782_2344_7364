@@ -27,7 +27,7 @@ namespace PL
         {
             InitializeComponent();
         }
-        public CustomerWindow(int id)
+        public CustomerWindow(int? id)
         {
             InitializeComponent();
             customer = bl.GetCustomerToListById(id);

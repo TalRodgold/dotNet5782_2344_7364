@@ -26,6 +26,7 @@ namespace BlApi
         void UpdateDroneModel(int? id, string newModel);//Update drone model
         void UpdateBaseStation(int? id, string name = "", int numberOfChargingSlots = 0);//Update base station name/number of charging slots
         void DeleteBaseStation(int? id); // delete base station 
+        public void DeleteParcel(int? id);//Delete Parcel
         void UpdateCustomer(int? id, string name = "", string phone = "");//Update customer name/phone
         void UpdateSendDroneToCharge(int? id);//Update-send drone to charge
         void UpdateReleseDrone(int? id);//Update-relese drone from charging slot

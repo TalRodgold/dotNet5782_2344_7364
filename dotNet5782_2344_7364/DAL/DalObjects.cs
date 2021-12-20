@@ -327,6 +327,20 @@ namespace DalObjects
             DataSource.BaseStationList.Remove(GetBaseStation(id));
         }
         #endregion
+        #region//delete Parcel
+        /// <summary>
+        /// delete Parcel
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteParcel(int? id) //delete Parcel
+        {
+            if (!IfParcelExsists(id))
+            {
+                throw new IdNotExsistException("Parcel", id);
+            }
+            DataSource.ParcelList.Remove(GetParcel(id));
+        }
+        #endregion
         #region// update base stations number of free charging slots
         /// <summary>
         /// update base stations number of free charging slots

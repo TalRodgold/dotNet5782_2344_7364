@@ -6,12 +6,12 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="MainWindow" Height="640" Width="800">
-    
+
     <Grid Margin="0,0,0,-6">
         <Grid.Background>
             <ImageBrush ImageSource="/Images/DroneMainWindow.jpg"/>
         </Grid.Background>
-        <Button x:Name="GoToDroneList" Content="Press here to start" HorizontalAlignment="Left" VerticalAlignment="Top" Click="ShowDronesButton_Click" Height="62" Width="230" Foreground="#FF130D4A" FontFamily="Stencil" FontSize="20" FontWeight="Normal" Margin="349,443,0,0">
+        <Button x:Name="GoToDroneList" Content="Press here to start" HorizontalAlignment="Left" VerticalAlignment="Top" Click="StartButton_Click" Height="62" Width="230" Foreground="#FF130D4A" FontFamily="Stencil" FontSize="20" FontWeight="Normal" Margin="349,443,0,0">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFD2F0EF" Offset="0.894"/>
@@ -21,7 +21,9 @@
         </Button>
         <ComboBox Name="EnteringComboBox" HorizontalAlignment="Left" Margin="628,205,0,0" VerticalAlignment="Top" Width="120" ContextMenuClosing="EnteringOptions_comboBox" DataContextChanged="enterinOption_change"/>
         <Label Content="Choose entering option:" HorizontalAlignment="Left" FontFamily="Stencil" FontSize="20" Margin="349,200,0,0" VerticalAlignment="Top" Height="41" Width="279"/>
-        
+        <TextBox Name="CustomerId" HorizontalAlignment="Left" Margin="628,232,0,0" Text="TextBox" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+        <Label Content="Enter your Id" HorizontalAlignment="Left" FontFamily="Stencil" FontSize="20" Margin="349,227,0,0"  VerticalAlignment="Top" Width="274"/>
+
     </Grid>
-    
+
 </Window>

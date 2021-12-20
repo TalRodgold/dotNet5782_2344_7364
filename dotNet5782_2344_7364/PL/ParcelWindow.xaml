@@ -10,11 +10,113 @@
         <ImageBrush ImageSource="/Images/Parcel.jpg"/>
     </Window.Background>
     <Grid>
-      
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="127*"/>
-            <ColumnDefinition Width="73*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
+        <Label Content="Id:" Grid.Column="0" HorizontalAlignment="center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
+        <Label Content="Sender:" Grid.Row="1" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"  Foreground="White"/>
+        <Label Content="Reciver:" Grid.Row="2" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
+        <Label Content="Weight:" Grid.Row="3" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"  Foreground="White"/>
+        <Label Content="Prioritie:" Grid.Row="4" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"  Foreground="White"/>
+        <Label Content="Drone:" Grid.Row="5" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
+        <Label Content="Creating time:" Grid.Row="6" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"  Foreground="White"/>
+        <Label Content="Association time:" Grid.Row="7" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"  Foreground="White"/>
+        <Label Content="Pickup time:" Grid.Row="8" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"  Foreground="White"/>
+        <Label Content="Delivery time:" Grid.Row="9" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"  Foreground="White"/>
+
+
+        <TextBox Name="Id" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="CreatingTime" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26" Width="120"/>
+        <TextBox Name="AssociationTime" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26" Width="120"/>
+        <TextBox Name="PickupTime" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26" Width="120"/>
+        <TextBox x:Name="DeliveryTime"  Grid.Row="9" Grid.Column="1" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26"/>
+        <ComboBox Name="WeightSelector" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Width="120" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" SelectionChanged="WeightSelector_SelectionChanged"/>
+        <ComboBox Name="PrioritieSelector" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" Width="120" SelectionChanged="PrioritieSelector_SelectionChanged" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6"/>
+        <Button  x:Name="Sender"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="-0.534,-1.623" Height="26" Width="120" Margin="0,5,0,0" Click="Sender_Click" />
+        <Button  x:Name="Reciver" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,4,0,0"  VerticalAlignment="Top" Height="26" Width="120" Click="Reciver_Click"/>
+        <Button x:Name="Drone" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left"  VerticalAlignment="Center" Height="25" Width="120" Click="Drone_Click"/>
+        <!--<Button x:Name="AddButton" Content="Add" Visibility="Hidden" Grid.Row="10" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="76" Height="48" Click="AddButton_Click" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Margin="114,0,0,0">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
+                    <GradientStop Color="#FF00F73F" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>-->
+        <Button x:Name="DeleteButton" Grid.Row="10" Grid.Column="2" Content="Delete parcel" HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" Height="33" Click="DeleteButton_Click" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFD78383" Offset="0.601"/>
+                    <GradientStop Color="#FFF70A0A" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="ExitButton" Grid.Row="10" Grid.Column="0" Content="EXIT" HorizontalAlignment="Left" VerticalAlignment="Center" Width="76" Height="48" Click="ExitButton_Click" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Margin="10,0,0,0">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFD78383" Offset="0.601"/>
+                    <GradientStop Color="#FFF70A0A" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <!--<Button x:Name="SendDroneToChargeButton" Visibility="Hidden" Content="Send drone to charge"   Grid.Column="2" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Height="35" Width="200" FontSize="15" FontWeight="Bold" FontFamily="Sitka Display" Click="SendDroneToChargeButton_Click">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
+                    <GradientStop Color="#FF00F73F" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="RealesDroneFromChargingButton" Visibility="Hidden"  Content="Reales drone from charging" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Height="36" Width="200" FontSize="15" FontWeight="Bold" FontFamily="Sitka Display" Click="RealesDroneFromChargingButton_Click">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
+                    <GradientStop Color="#FF00F73F" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="AccociateDroneToParcelButton" Visibility="Hidden" Content="Accociat drone to parcel" Grid.Column="2" HorizontalAlignment="Center" Margin="0,13,0,0" Grid.Row="4" VerticalAlignment="Top" Height="35" Width="200" FontSize="15" FontWeight="Bold" FontFamily="Sitka Display" Click="AccociateDroneToParcelButton_Click">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
+                    <GradientStop Color="#FF00F73F" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="PickUpParcelButton" Visibility="Hidden" Content="Pick up a parcel" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Top" Height="32" Width="200" FontSize="15" FontWeight="Bold" FontFamily="Sitka Display" Click="PickUpParcelButton_click" Margin="0,14,0,0">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
+                    <GradientStop Color="#FF00F73F" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="DeliverParcelButton" Visibility="Hidden" Content="Deliver Parcel" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="5" VerticalAlignment="Center" Height="33" Width="200" FontSize="15" FontWeight="Bold" FontFamily="Sitka Display" Click="DeliverParcelButton_Click">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
+                    <GradientStop Color="#FF00F73F" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>-->
+       
     </Grid>
 </Window>

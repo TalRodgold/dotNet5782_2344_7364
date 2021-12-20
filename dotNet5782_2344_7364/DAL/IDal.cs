@@ -28,6 +28,7 @@ namespace DalApi
         void UpdateDroneModel(int? id, string newModel); // update drone model
         void UpdateBaseStationName(int? id, string name); // update base stations name
         void DeleteBaseStation(int? id); // delete base station
+        void DeleteParcel(int? id);//Delete Parcel
         void UpdateChargingSlotsNumber(int? id, int numberOfChargingSlots);
         void UpdateCustomerName(int? id, string name); // update customers name
         void UpdateCustomerPhone(int? id, string phone); //update customers phone number
