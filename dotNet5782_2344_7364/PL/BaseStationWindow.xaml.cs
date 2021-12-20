@@ -20,29 +20,56 @@ namespace PL
     public partial class BaseStationWindow : Window
     {
         private IBl bl = BlFactory.GetBl("BL");
-
-        public BaseStationWindow()
+        public BO.BaseStationToList baseStation;
+        public BaseStationWindow(BO.BaseStationToList b)
         {
             InitializeComponent();
-            BaseStationListView.ItemsSource = bl.GetListOfBaseStationsToList().ToList();
-            for (int i = 0; i < 10; i++)
+            baseStation = b;
+            Id.Text = baseStation.Id.ToString();
+            Name.Text = baseStation.Name;
+            FreeChargingSlots.Text = baseStation.FreeChargingSlots.ToString();
+            OccupiedChargingSlots.Text = baseStation.OccupiedChargingSlots.ToString();
+
+        }
+
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            string newName = "";
+            int newChargingSlots = 0;
+            if (baseStation.Name != Name.Text)
             {
-                NumOfFreeBSSelector.Items.Add(i);
+                newName = Name.Text;
             }
+            if (baseStation.FreeChargingSlots != int.Parse(FreeChargingSlots.Text))
+            {
+                newChargingSlots = int.Parse(FreeChargingSlots.Text);
+            }
+            bl.UpdateBaseStation(baseStation.Id, newName, newChargingSlots);
+            baseStation.FreeChargingSlots = bl.GetBaseStationById(baseStation.Id).NumberOfFreeChargingSlots;
+            baseStation.Name = bl.GetBaseStationById(baseStation.Id).Name;
 
         }
 
-        private void refreshButton_click(object sender, RoutedEventArgs e)
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            Refresh();
+            try
+            {
+                if (baseStation.OccupiedChargingSlots > 0)
+                {
+                    throw new InvalidOperationException("Base station not empty, there are drones charging at this base station.");
+                }
+                bl.DeleteBaseStation(baseStation.Id);
+            }
+            catch (Exception exception)
+            {
+
+                MessageBox.Show(exception.ToString());
+            }
         }
 
-        private void NumOfFreeBSSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
-
-        }
-        public void Refresh() // refresh
-        {
+            Close();
         }
     }
 }

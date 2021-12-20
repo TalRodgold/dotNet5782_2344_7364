@@ -10,31 +10,50 @@
         <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
     </Window.Background>
     <Grid>
-        <ListView Name="BaseStationListView" Foreground="#FFCF3A55" FontSize="14">
-            <ListView.Background>
-                <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
-            </ListView.Background>
-            <ListView.View>
-                <GridView>
-                    <GridViewColumn/>
-                </GridView>
-            </ListView.View>
-        </ListView>
-        <Grid Name="UpGrid" Height="auto" Grid.Row="0" Width="auto" Margin="0,0,0,363">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions >
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-            <Label Content="Display base stations with free charging slots" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Width="200" Foreground="White" Height="35"/>
-            <Label Content="choose number of free charging slots" Grid.Column="2" HorizontalAlignment="Center" Margin="0,10,0,0" Grid.Row="1" VerticalAlignment="Top" Width="200" Foreground="White"/>
-            <ComboBox Grid.Column="1" HorizontalAlignment="Center" Margin="0,4,0,0" Grid.Row="1" VerticalAlignment="Top" Width="120"/>
-            <ComboBox x:Name="NumOfFreeBSSelector" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" SelectionChanged="NumOfFreeBSSelector_SelectionChanged" Width="120"/>
-        </Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Id:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
+        <Label Content="Name:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
+        <Label Content="Number of free charging slots:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
+        <Label Content="Number of occupied charging slots:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
+        <TextBox Name="Id" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="Name" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="FreeChargingSlots" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="OccupiedChargingSlots" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <Button x:Name="UpdateButton" Content="Update" Grid.Row="4" Grid.Column="3"  HorizontalAlignment="Center"  VerticalAlignment="Center" Width="200" Height="33" Click="UpdateButton_Click" FontSize="15" FontWeight="Bold" FontFamily="Sitka Display">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
+                    <GradientStop Color="#FF00F73F" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="ExitButton" Grid.Row="5" Grid.Column="0" Content="EXIT" HorizontalAlignment="Left" VerticalAlignment="Center" Width="76" Height="48" Click="ExitButton_Click" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Margin="10,0,0,0">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFD78383" Offset="0.601"/>
+                    <GradientStop Color="#FFF70A0A" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button x:Name="DeleteButton" Grid.Row="5" Grid.Column="2" Content="Delete base station" HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" Height="33" Click="DeleteButton_Click" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFD78383" Offset="0.601"/>
+                    <GradientStop Color="#FFF70A0A" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
     </Grid>
 </Window>

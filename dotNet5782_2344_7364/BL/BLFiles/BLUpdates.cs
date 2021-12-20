@@ -80,6 +80,28 @@ namespace BlApi
             }
         }
         #endregion
+        #region//Delete base station
+        /// <summary>
+        /// Delete base station
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteBaseStation(int? id) // delete base station 
+        {
+            try
+            {
+                if (id < 0 || id == null)// if id is negative
+                {
+                    throw new InvalidIdException("negative", id);
+                }
+                dal.DeleteBaseStation(id);
+            }
+            catch (DO.IdNotExsistException exception)
+            {
+
+                throw new IdNotExsistException(exception.Text, exception.ID, exception);
+            }
+        }
+        #endregion
         #region//Update customer name/phone
         /// <summary>
         /// Update customer name/phone

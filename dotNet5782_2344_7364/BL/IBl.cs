@@ -16,6 +16,7 @@ namespace BlApi
         void AddCustomer(Customer c); //Customer addition
         void AddParcel(CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie); // parcel addition
         Customer GetCustomerById(int? id); //Get customer from data-source by id
+        CustomerToList GetCustomerToListById(int? id); //Get Customer to list by id
         Parcel GetParcelById(int? id, Predicate<DO.Parcel> predicate = null); //from data-source by id
         Drone GetDroneById(int? id); //Get drone from data-source by id
         DroneToList GetDroneToList(int? id); //Get drone from list that is held here by id
@@ -24,6 +25,7 @@ namespace BlApi
         ParcelInTransit GetParcelInTransitById(int? id); //Get parceltolist with manipulation from data source by id
         void UpdateDroneModel(int? id, string newModel);//Update drone model
         void UpdateBaseStation(int? id, string name = "", int numberOfChargingSlots = 0);//Update base station name/number of charging slots
+        void DeleteBaseStation(int? id); // delete base station 
         void UpdateCustomer(int? id, string name = "", string phone = "");//Update customer name/phone
         void UpdateSendDroneToCharge(int? id);//Update-send drone to charge
         void UpdateReleseDrone(int? id);//Update-relese drone from charging slot

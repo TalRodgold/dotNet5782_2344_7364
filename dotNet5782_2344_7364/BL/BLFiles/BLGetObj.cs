@@ -59,6 +59,28 @@ namespace BlApi
             }
         }
         #endregion
+        #region//Get Customer to list by id
+        /// <summary>
+        /// Get Customer to list by id
+        /// </summary>
+        /// <returns></returns>
+        public CustomerToList GetCustomerToListById(int? id)//Get Customer to list by id
+        {
+            try
+            {
+                if (id < 0 || id == null) // if id is negative
+                {
+                    throw new InvalidIdException("negative", id);
+                }
+                return convertCustomerToCustomerTolist(GetCustomerById(id));
+            }
+            catch (DO.IdNotExsistException exception) // if customer id does not exsists and was thrown from dal objects
+            {
+
+                throw new IdNotExsistException(exception.Text, exception.ID, exception); // throw
+            }
+        }
+        #endregion
         #region //Get parcel from data-source by id
         /// <summary>
         /// from data-source by id

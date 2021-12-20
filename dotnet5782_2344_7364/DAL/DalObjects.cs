@@ -313,6 +313,20 @@ namespace DalObjects
             DataSource.BaseStationList[index] = newBaseStation;
         }
         #endregion
+        #region//delete base station
+        /// <summary>
+        /// Delete base station
+        /// </summary>
+        /// <param name="id"></param>
+        public void DeleteBaseStation(int? id) // delete base station
+        {
+            if (!IfBaseStationExsists(id))
+            {
+                throw new IdNotExsistException("base station", id);
+            }
+            DataSource.BaseStationList.Remove(GetBaseStation(id));
+        }
+        #endregion
         #region// update base stations number of free charging slots
         /// <summary>
         /// update base stations number of free charging slots
