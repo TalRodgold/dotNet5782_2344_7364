@@ -21,6 +21,10 @@ namespace PL
     {
         private IBl bl = BlFactory.GetBl("BL");
         public BO.BaseStationToList baseStation;
+        public BaseStationWindow()
+        {
+            InitializeComponent();
+        }
         public BaseStationWindow(BO.BaseStationToList b)
         {
             InitializeComponent();

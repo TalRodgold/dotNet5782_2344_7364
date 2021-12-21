@@ -21,6 +21,7 @@ namespace PL
     public partial class DroneListWindow : Window
     {
         private IBl bl = BlFactory.GetBl("BL");
+
         public DroneListWindow() // constructor
         {
             InitializeComponent();
@@ -109,9 +110,21 @@ namespace PL
             Refresh();
         }
 
-        private void TabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
+      
 
+        private void GoToCustomerListPage_Click(object sender, RoutedEventArgs e)
+        {
+            CurrWindow.Content = new CustomerListPage();
+        }
+
+        private void GoToParcelListPage_Click(object sender, RoutedEventArgs e)
+        {
+            CurrWindow.Content = new ParcelListPage();
+        }
+
+        private void GoToBaseStationListPage_Click(object sender, RoutedEventArgs e)
+        {
+            CurrWindow.Content = new BaseStationListPage();
         }
     }
 }

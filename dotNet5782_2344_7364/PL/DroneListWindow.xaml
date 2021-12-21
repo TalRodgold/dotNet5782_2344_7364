@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
-        Title="DroneListWindow" Height="640" Width="800" Closed="CloseWindow">
+        Title="DroneListWindow" Height="640" Width="800" Closed="CloseWindow"
+        x:Name="CurrWindow">
     <Grid Name="MainGrid">
         <Grid.RowDefinitions>
             <RowDefinition Height="50*"/>
@@ -34,19 +35,19 @@
                 <Label Content="Drone status:" Grid.Column="0" FontSize="24" Grid.Row="1"  FontWeight="Bold" FontFamily="Sitka Display" Foreground="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
                 <ComboBox Name="MaxWeightSelector" HorizontalAlignment= "Stretch" Grid.Row="1"  VerticalAlignment="Stretch" Grid.Column="3" Width="120" SelectionChanged="MaxWeightSelector_SelectionChanged" FontSize="18"/>
                 <Label Content="Drone max weight:" Grid.Column="2" FontSize="24" Grid.Row="1"  FontWeight="Bold" FontFamily="Sitka Display" Foreground="White" VerticalContentAlignment="Center" />
-                <TabControl SelectionChanged="TabControl_SelectionChanged">
-                    <TabItem Header="TabItem">
-                        <Grid Background="#FFE5E5E5"/>
-                    </TabItem>
-                    <TabItem Header="TabItem">
-                        <Grid Background="#FFE5E5E5" Margin="204,4,-204,-3"/>
-                    </TabItem>
-                </TabControl>
+                <Button x:Name="GoToBaseStationListPage" Content="Base station" Margin="5,1,195,33" Grid.RowSpan="2" Click="GoToBaseStationListPage_Click" Grid.ColumnSpan="2" />
+                <Button x:Name="GoToCustomerListPage" Content="Customer" Grid.ColumnSpan="2" Grid.Column="2" Margin="15,1,185,34" Grid.RowSpan="2" Click="GoToCustomerListPage_Click" />
+                <Button x:Name="GoToParcelListPage" Content="Parcel" Grid.ColumnSpan="2" Grid.Column="1" Margin="10,0,190,34" Grid.RowSpan="2" Click="GoToParcelListPage_Click" />
+
+
+
+
 
             </Grid>
         </Grid>
-        <Grid Name="LowwerGrid" HorizontalAlignment="Stretch" Height="auto" Grid.Row="1" VerticalAlignment="Stretch" Width="auto">
-            <ListView Name="DroneListView" MouseDoubleClick="UpdateDrone_doubleClick" Foreground="#FFCF3A55" FontSize="14">
+        <Grid Name="LowwerGrid" Height="auto" Width="auto" Margin="0,69,0,0" Grid.RowSpan="2">
+
+            <ListView Name="DroneListView" MouseDoubleClick="UpdateDrone_doubleClick" Foreground="#FFCF3A55" FontSize="14" Margin="0,-2,0,0">
                 <ListView.Background>
                     <ImageBrush ImageSource="/Images/ConectingDots.jpg"/>
                 </ListView.Background>
@@ -73,12 +74,12 @@
                 </Button.Background>
             </Button>
             <Button Content="Refresh" HorizontalAlignment="Left" Margin="656,36,0,0" VerticalAlignment="Top" FontSize="20" FontFamily="Sitka Display"  FontWeight="Bold" Height="52" Width="106" >
-            <Button.Background>
-                <RadialGradientBrush>
-                    <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
-                    <GradientStop Color="#FF00F73F" Offset="1"/>
-                </RadialGradientBrush>
-            </Button.Background>
+                <Button.Background>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
+                        <GradientStop Color="#FF00F73F" Offset="1"/>
+                    </RadialGradientBrush>
+                </Button.Background>
             </Button>
 
         </Grid>
