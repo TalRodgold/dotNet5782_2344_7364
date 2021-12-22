@@ -124,7 +124,7 @@ namespace PL
 
         private void GoToBaseStationListPage_Click(object sender, RoutedEventArgs e)
         {
-            CurrWindow.Content = new BaseStationListPage();
+            new Window1().Show();
         }
     }
 }
