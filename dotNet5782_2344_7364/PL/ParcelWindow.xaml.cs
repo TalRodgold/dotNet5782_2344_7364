@@ -25,12 +25,23 @@ namespace PL
         {
             InitializeComponent();
             AddButton.Visibility = Visibility.Visible; // make butten visible
+            CancelButton.Visibility = Visibility.Visible;
+
             //ExitButton.Visibility = Visibility.Hidden;
             // enable erelevent buttons and text boxes
             //UpdateButton.IsEnabled = false;
-            Id.IsEnabled = false;
+
+            Id.IsEnabled = true;
+            SenderB.Visibility = Visibility.Hidden;//button
+            ReciverB.Visibility = Visibility.Hidden;//button
+            senderT.Visibility = Visibility.Visible;
+            reciverT.Visibility = Visibility.Visible;
+            SenderB.IsEnabled = false;
+            ReciverB.IsEnabled = false;
+            senderT.IsEnabled = true;
+            reciverT.IsEnabled = true;
             WeightSelector.IsEnabled = true;
-            PrioritieSelector.IsEnabled = false;
+            PrioritieSelector.IsEnabled = true;
             CreatingTime.IsEnabled = false;//disable the textbox to change
             AssociationTime.IsEnabled = false;//disable the textbox to change
             PickupTime.IsEnabled = false;//disable the textbox to change
@@ -58,8 +69,8 @@ namespace PL
             WeightSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
             PrioritieSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Priorities));
             Id.Text = chosenParcel.Id.ToString();
-            Sender.Content = chosenParcel.Sender.ToString();
-            Reciver.Content = chosenParcel.Reciver.ToString();
+            SenderB.Content = chosenParcel.Sender.ToString();
+            ReciverB.Content = chosenParcel.Reciver.ToString();
             WeightSelector.SelectedItem = chosenParcel.Weight;
             PrioritieSelector.SelectedItem = chosenParcel.Prioritie;
             Drone.Content = chosenParcel.DroneInParcel.ToString();
@@ -94,12 +105,12 @@ namespace PL
 
         private void WeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            WeightSelector.SelectedItem = (BO.Enums.WeightCategories)WeightSelector.SelectedItem;
         }
 
         private void PrioritieSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-
+            PrioritieSelector.SelectedItem = (BO.Enums.Priorities)PrioritieSelector.SelectedItem;
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
@@ -123,6 +134,25 @@ namespace PL
         private void ExitButton_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                bl.AddParcel(new BO.CustomerInParcel(int.Parse(senderT.Text), bl.GetCustomerById(int.Parse(senderT.Text)).Name), new BO.CustomerInParcel(int.Parse(reciverT.Text), bl.GetCustomerById(int.Parse(reciverT.Text)).Name), (BO.Enums.WeightCategories)WeightSelector.SelectedItem, (BO.Enums.Priorities)PrioritieSelector.SelectedItem);
+                MessageBox.Show("Drone added sucsecfully");
+                this.Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString());
+            }
         }
     }
 }
