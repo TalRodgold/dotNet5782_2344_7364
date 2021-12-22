@@ -53,14 +53,14 @@
         <Button  x:Name="Sender"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="-0.534,-1.623" Height="26" Width="120" Margin="0,5,0,0" Click="Sender_Click" />
         <Button  x:Name="Reciver" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,4,0,0"  VerticalAlignment="Top" Height="26" Width="120" Click="Reciver_Click"/>
         <Button x:Name="Drone" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left"  VerticalAlignment="Center" Height="25" Width="120" Click="Drone_Click"/>
-        <!--<Button x:Name="AddButton" Content="Add" Visibility="Hidden" Grid.Row="10" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="76" Height="48" Click="AddButton_Click" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Margin="114,0,0,0">
+        <Button x:Name="AddButton" Content="Add" Visibility="Hidden" Grid.Row="10" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="76" Height="48" Click="AddButton_Click" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Margin="114,0,0,0">
             <Button.Background>
                 <RadialGradientBrush>
                     <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
                     <GradientStop Color="#FF00F73F" Offset="1"/>
                 </RadialGradientBrush>
             </Button.Background>
-        </Button>-->
+        </Button>
         <Button x:Name="DeleteButton" Grid.Row="10" Grid.Column="2" Content="Delete parcel" HorizontalAlignment="Center" VerticalAlignment="Center" Width="180" Height="33" Click="DeleteButton_Click" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display">
             <Button.Background>
                 <RadialGradientBrush>

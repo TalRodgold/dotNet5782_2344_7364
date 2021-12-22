@@ -22,10 +22,14 @@ namespace PL
     {
         public BaseStationListPage()
         {
+            
             InitializeComponent();
-          
+            w = new DroneListWindow();
         }
-        
 
+        private void TabItem_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 }

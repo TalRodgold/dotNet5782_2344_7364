@@ -24,12 +24,12 @@ namespace PL
         public ParcelWindow() // constructor for adding new drone
         {
             InitializeComponent();
-            //AddButton.Visibility = Visibility.Visible; // make butten visible
+            AddButton.Visibility = Visibility.Visible; // make butten visible
             //ExitButton.Visibility = Visibility.Hidden;
             // enable erelevent buttons and text boxes
             //UpdateButton.IsEnabled = false;
             Id.IsEnabled = false;
-            WeightSelector.IsEnabled = false;
+            WeightSelector.IsEnabled = true;
             PrioritieSelector.IsEnabled = false;
             CreatingTime.IsEnabled = false;//disable the textbox to change
             AssociationTime.IsEnabled = false;//disable the textbox to change
