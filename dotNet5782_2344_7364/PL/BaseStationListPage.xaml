@@ -9,18 +9,15 @@
       Title="BaseStationListPage">
 
     <Grid>
-      
+        <TabControl x:Name="control"  SelectionChanged="control_SelectionChanged">
+                <TabItem x:Name ="FirstTab">
                 
-            
-            <TabControl>
-                <TabItem Header="FirstTab">
-                    <local:CustomerListPage/>
                 </TabItem>
                 <TabItem Header="SecondTab">
-                    <local:ParcelListPage/>
+                    
                 </TabItem>
                 <TabItem Header="ThirdTab">
-                    <local:CustomerListPage/>
+                   
                 </TabItem>
             </TabControl>
 
