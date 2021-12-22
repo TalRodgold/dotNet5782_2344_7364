@@ -1,0 +1,93 @@
+﻿<Window x:Class="PL.ListWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PL"
+        mc:Ignorable="d"
+        Title="ListWindow" Height="450" Width="800">
+    <Grid>
+        <TabControl>
+            <TabItem Header="Base station" HorizontalAlignment="Left" Margin="-2,-2,0,0" Width="80">
+                <Grid>
+
+                    <ListView x:Name="ListBaseStation" Foreground="Snow">
+                        <ListView.Background>
+                            <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
+                        </ListView.Background>
+                    </ListView>
+                    <Button x:Name="AddBaseStation" Content="Add a base station" HorizontalAlignment="Left" Margin="656,124,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="AddBaseStation_Click">
+                        <Button.Background>
+                            <RadialGradientBrush>
+                                <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
+                                <GradientStop Color="#FF00F73F" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Parcel">
+                <Grid>
+                    <ListView x:Name="ListParcel" Foreground="Snow">
+                        <ListView.Background>
+                            <ImageBrush ImageSource="/Images/Parcel.jpg"/>
+                        </ListView.Background>
+                    </ListView>
+                    <Button x:Name="AddParcel" Content="Add a Parcel" HorizontalAlignment="Left" Margin="656,124,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="AddParcel_Click">
+                        <Button.Background>
+                            <RadialGradientBrush>
+                                <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
+                                <GradientStop Color="#FF00F73F" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Drone">
+
+                <Grid>
+                    <ListView x:Name="ListDrone" Foreground="Snow">
+                        <ListView.Background>
+                            <ImageBrush ImageSource="/Images/Drone.jpg"/>
+                        </ListView.Background>
+                    </ListView>
+                    <Button x:Name="AddDrone" Content="Add a drone" HorizontalAlignment="Left" Margin="656,124,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="AddDrone_Click">
+                        <Button.Background>
+                            <RadialGradientBrush>
+                                <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
+                                <GradientStop Color="#FF00F73F" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+
+            </TabItem>
+            <TabItem Header="Customer">
+                <Grid>
+                    <ListView x:Name="ListCustomer" Foreground="Snow">
+                        <ListView.Background>
+                            <ImageBrush ImageSource="/Images/Customer.jpg"/>
+                        </ListView.Background>
+                    </ListView>
+                    <Button x:Name="AddCustomer" Content="Add a drone" HorizontalAlignment="Left" Margin="656,124,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="AddCustomer_Click">
+                        <Button.Background>
+                            <RadialGradientBrush>
+                                <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
+                                <GradientStop Color="#FF00F73F" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Button.Background>
+                    </Button>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Button x:Name="Exit" Content="Exit" HorizontalAlignment="Left" Margin="701,365,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="40" RenderTransformOrigin="-0.166,8.035" Width="68" Click="Exit_Click">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFD78383" Offset="0.601"/>
+                    <GradientStop Color="#FFF70A0A" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+
+    </Grid>
+</Window>

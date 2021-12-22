@@ -15,12 +15,12 @@ using BlApi;
 namespace PL
 {
     /// <summary>
-    /// Interaction logic for Window1.xaml
+    /// Interaction logic for ListWindow.xaml
     /// </summary>
-    public partial class Window1 : Window
+    public partial class ListWindow : Window
     {
         private IBl bl = BlFactory.GetBl("BL");
-        public Window1()
+        public ListWindow()
         {
             InitializeComponent();
             ListBaseStation.ItemsSource = bl.GetListOfBaseStationsToList().ToList();
@@ -29,14 +29,30 @@ namespace PL
             ListDrone.ItemsSource = bl.GetListOfDronesToList().ToList();
         }
 
-        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
+        private void AddDrone_Click(object sender, RoutedEventArgs e)
+        {
+            new DroneWindow().Show();
         }
 
-        private void MaxWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void Exit_Click(object sender, RoutedEventArgs e)
         {
+            Close();
+        }
 
+        private void AddBaseStation_Click(object sender, RoutedEventArgs e)
+        {
+            new BaseStationWindow().Show();
+        }
+
+        private void AddParcel_Click(object sender, RoutedEventArgs e)
+        {
+            new ParcelWindow().Show();
+        }
+
+        private void AddCustomer_Click(object sender, RoutedEventArgs e)
+        {
+            new CustomerWindow().Show();
         }
     }
 }

@@ -35,10 +35,7 @@
                 <Label Content="Drone status:" Grid.Column="0" FontSize="24" Grid.Row="1"  FontWeight="Bold" FontFamily="Sitka Display" Foreground="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
                 <ComboBox Name="MaxWeightSelector" HorizontalAlignment= "Stretch" Grid.Row="1"  VerticalAlignment="Stretch" Grid.Column="3" Width="120" SelectionChanged="MaxWeightSelector_SelectionChanged" FontSize="18"/>
                 <Label Content="Drone max weight:" Grid.Column="2" FontSize="24" Grid.Row="1"  FontWeight="Bold" FontFamily="Sitka Display" Foreground="White" VerticalContentAlignment="Center" />
-                <Button x:Name="GoToBaseStationListPage" Content="Base station" Margin="5,1,195,33" Grid.RowSpan="2" Click="GoToBaseStationListPage_Click" Grid.ColumnSpan="2" />
-                <Button x:Name="GoToCustomerListPage" Content="Customer" Grid.ColumnSpan="2" Grid.Column="2" Margin="15,1,185,34" Grid.RowSpan="2" Click="GoToCustomerListPage_Click" />
-                <Button x:Name="GoToParcelListPage" Content="Parcel" Grid.ColumnSpan="2" Grid.Column="1" Margin="10,0,190,34" Grid.RowSpan="2" Click="GoToParcelListPage_Click" />
-
+                
 
 
 

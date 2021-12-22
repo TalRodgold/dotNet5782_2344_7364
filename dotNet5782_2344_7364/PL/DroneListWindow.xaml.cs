@@ -112,19 +112,6 @@ namespace PL
 
       
 
-        private void GoToCustomerListPage_Click(object sender, RoutedEventArgs e)
-        {
-            CurrWindow.Content = new CustomerListPage();
-        }
-
-        private void GoToParcelListPage_Click(object sender, RoutedEventArgs e)
-        {
-            CurrWindow.Content = new ParcelListPage();
-        }
-
-        private void GoToBaseStationListPage_Click(object sender, RoutedEventArgs e)
-        {
-            new Window1().Show();
-        }
+      
     }
 }
