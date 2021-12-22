@@ -55,7 +55,7 @@ namespace PL
         {
             if (EnteringComboBox.SelectedIndex == 0)
             {
-                new DroneListWindow().Show();
+                new ListWindow().Show();
             }
             else if (EnteringComboBox.SelectedIndex == 1)
             {
