@@ -53,17 +53,28 @@ namespace PL
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
-            if (EnteringComboBox.SelectedIndex == 0)
+            try
             {
-                new ListWindow().Show();
+                if (EnteringComboBox.SelectedIndex == 0)
+                {
+                    new ListWindow().Show();
+                }
+                else if (EnteringComboBox.SelectedIndex == 1)
+                {
+                    if(CustomerId.Text.Length==0)
+                    {
+
+                    }
+                    new CustomerWindow(Int32.Parse(CustomerId.Text)).Show();
+                }
+                else if (EnteringComboBox.SelectedIndex == 2)
+                {
+                    new CustomerWindow().Show();
+                }
             }
-            else if (EnteringComboBox.SelectedIndex == 1)
+            catch(Exception exception)
             {
-                new CustomerWindow(Int32.Parse(CustomerId.Text)).Show();
-            }
-            else if (EnteringComboBox.SelectedIndex == 2)
-            {
-                new CustomerWindow().Show();
+
             }
         }
     }

@@ -461,7 +461,7 @@ namespace DalObjects
             int i = DataSource.ParcelList.FindIndex(element => element.Id == parcleId);
             Parcel newParcel = DataSource.ParcelList.Find(element => element.Id == parcleId);
             newParcel.DroneId = droneId;
-            newParcel.CreatingTime = DateTime.Now;
+            newParcel.AssociatedTime = DateTime.Now;
             DataSource.ParcelList[i] = newParcel;
         }
         #endregion

@@ -9,6 +9,10 @@
     <Window.Background>
         <ImageBrush ImageSource="/Images/Drone.jpg"/>
     </Window.Background>
+    <!--<Window.Resources>
+        <local:BatteryToConverter x:Key="batteryToColorConverter"/>
+        <local:BatteryToProgressBar x:Key="batteryToProgressBarConverter"/>
+    </Window.Resources>-->
     <Grid x:Name="MainGrid" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
 
         <Grid.RowDefinitions>
@@ -123,6 +127,19 @@
                 </RadialGradientBrush>
             </Button.Background>
         </Button>
+        <!--<ListView>
+        <GridView>
+            <GridViewColumn x:Name="DroneBatteryColumn" Width="80" Header="Battery">
+                <GridViewColumn.CellTemplate>
+                    <DataTemplate>
+                        <Grid>
+                            <ProgressBar Name="BatteryProgressBar" Margin="-6,-1" Value="{Binding Battery,Mode=OneWay,Converter={StaticReasource batteryToProgressBarConverter}}" Width="75" Foreground="{Binding Battery, Converter={batteryToColorConverter}}"/>
+                        </Grid>
+                    </DataTemplate>
+                </GridViewColumn.CellTemplate>
+            </GridViewColumn>
+        </GridView>
+        </ListView>-->
     </Grid>
 
 </Window>

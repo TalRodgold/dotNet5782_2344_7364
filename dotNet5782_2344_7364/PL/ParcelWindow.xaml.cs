@@ -80,6 +80,7 @@ namespace PL
             CreatingTime.Text = parcel.ParcelCreatingTime.ToString();
             AssociationTime.Text = parcel.AssociationTime.ToString();
             PickupTime.Text = parcel.PickupTime.ToString();
+            DeliveryTime.Text = parcel.DeliveryTime.ToString();
         }
 
         private void Sender_Click(object sender, RoutedEventArgs e)
@@ -120,7 +121,7 @@ namespace PL
         {
             try
             {
-                if (parcel.AssociationTime != null || parcel.DeliveryTime == null)
+                if (parcel.AssociationTime != null && parcel.DeliveryTime == null)
                 {
                     throw new InvalidOperationException("The parcel in delivery proces");
                 }
