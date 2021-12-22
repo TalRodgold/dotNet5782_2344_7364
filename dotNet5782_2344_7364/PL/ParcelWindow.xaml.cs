@@ -41,6 +41,7 @@ namespace PL
         }
         public ParcelWindow(BO.Parcel chosenParcel)
         {
+            
             this.parcel = chosenParcel;
             InitializeComponent();
            // UpdateButton.Visibility = Visibility.Visible; // make butten visible
