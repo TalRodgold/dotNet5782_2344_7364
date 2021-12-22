@@ -50,9 +50,44 @@ namespace PL
             new ParcelWindow().Show();
         }
 
-        private void AddCustomer_Click(object sender, RoutedEventArgs e)
+        private void AddCustomer_Click(object sender, RoutedEventArgs e) //
         {
             new CustomerWindow().Show();
+        }
+
+        private void BaseStation_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+            BO.BaseStationToList baseStation = (BO.BaseStationToList)ListBaseStation.SelectedItem;
+            BaseStationWindow baseStationWindow = new BaseStationWindow(baseStation);
+            //droneWindow.Closed += CloseWindow;
+            baseStationWindow.Show();
+        }
+
+        private void Parcel_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+            BO.ParcelToList parcel = (BO.ParcelToList)ListParcel.SelectedItem;
+            ParcelWindow parcelWindow = new ParcelWindow(parcel);
+            //droneWindow.Closed += CloseWindow;
+            parcelWindow.Show();
+        }
+
+        private void Drone_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            BO.DroneToList drone = (BO.DroneToList)ListDrone.SelectedItem;
+            DroneWindow droneWindow = new DroneWindow(drone);
+            //droneWindow.Closed += CloseWindow;
+            droneWindow.Show();
+        }
+
+        private void Customer_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+
+            BO.CustomerToList customer = (BO.CustomerToList)ListCustomer.SelectedItem;
+            CustomerWindow customerWindow = new CustomerWindow(customer.Id);
+            //droneWindow.Closed += CloseWindow;
+            customerWindow.Show();
         }
     }
 }

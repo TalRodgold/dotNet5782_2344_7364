@@ -11,7 +11,7 @@
             <TabItem Header="Base station" HorizontalAlignment="Left" Margin="-2,-2,0,0" Width="80">
                 <Grid>
 
-                    <ListView x:Name="ListBaseStation" Foreground="Snow">
+                    <ListView x:Name="ListBaseStation" Foreground="Snow" MouseDoubleClick="BaseStation_DoubleClick">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
                         </ListView.Background>
@@ -28,7 +28,7 @@
             </TabItem>
             <TabItem Header="Parcel">
                 <Grid>
-                    <ListView x:Name="ListParcel" Foreground="Snow">
+                    <ListView x:Name="ListParcel" Foreground="Snow" MouseDoubleClick="Parcel_DoubleClick">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/Parcel.jpg"/>
                         </ListView.Background>
@@ -46,7 +46,7 @@
             <TabItem Header="Drone">
 
                 <Grid>
-                    <ListView x:Name="ListDrone" Foreground="Snow">
+                    <ListView x:Name="ListDrone" Foreground="Snow" MouseDoubleClick="Drone_DoubleClick">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/Drone.jpg"/>
                         </ListView.Background>
@@ -64,7 +64,7 @@
             </TabItem>
             <TabItem Header="Customer">
                 <Grid>
-                    <ListView x:Name="ListCustomer" Foreground="Snow">
+                    <ListView x:Name="ListCustomer" Foreground="Snow" MouseDoubleClick="Customer_DoubleClick">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/Customer.jpg"/>
                         </ListView.Background>

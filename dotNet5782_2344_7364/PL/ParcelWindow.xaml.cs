@@ -50,10 +50,10 @@ namespace PL
             PrioritieSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Priorities));
 
         }
-        public ParcelWindow(BO.Parcel chosenParcel)
+        public ParcelWindow(BO.ParcelToList chosenParcel)
         {
             
-            this.parcel = chosenParcel;
+            this.parcel = bl.GetParcelById(chosenParcel.Id);
             InitializeComponent();
            // UpdateButton.Visibility = Visibility.Visible; // make butten visible
             //AddButton.IsEnabled = false; // enable add button
@@ -69,37 +69,40 @@ namespace PL
             WeightSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
             PrioritieSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Priorities));
             Id.Text = chosenParcel.Id.ToString();
-            SenderB.Content = chosenParcel.Sender.ToString();
-            ReciverB.Content = chosenParcel.Reciver.ToString();
+            SenderB.Content = parcel.Sender.Id;
+            ReciverB.Content = parcel.Reciver.Id;
             WeightSelector.SelectedItem = chosenParcel.Weight;
             PrioritieSelector.SelectedItem = chosenParcel.Prioritie;
-            Drone.Content = chosenParcel.DroneInParcel.ToString();
-            CreatingTime.Text = chosenParcel.ParcelCreatingTime.ToString();
-            AssociationTime.Text = chosenParcel.AssociationTime.ToString();
-            PickupTime.Text = chosenParcel.PickupTime.ToString();
+            if(parcel.DroneInParcel!=null)
+            {
+                Drone.Content = parcel.DroneInParcel.Id;
+            }
+            CreatingTime.Text = parcel.ParcelCreatingTime.ToString();
+            AssociationTime.Text = parcel.AssociationTime.ToString();
+            PickupTime.Text = parcel.PickupTime.ToString();
         }
 
         private void Sender_Click(object sender, RoutedEventArgs e)
         {
-            if ((AssociationTime != null) && (DeliveryTime == null))
+            if ((AssociationTime != null) && (DeliveryTime.Text.Length == 0))
             {
-                new CustomerWindow(parcel.Sender.Id);
+                new CustomerWindow(parcel.Sender.Id).Show();
             }
         }
 
         private void Reciver_Click(object sender, RoutedEventArgs e)
         {
-            if ((AssociationTime != null) && (DeliveryTime == null))
+            if ((AssociationTime != null) && (DeliveryTime.Text.Length == 0))
             {
-                new CustomerWindow(parcel.Reciver.Id);
+                new CustomerWindow(parcel.Reciver.Id).Show();
             }
         }
 
         private void Drone_Click(object sender, RoutedEventArgs e)
         {
-            if ((AssociationTime != null) && (DeliveryTime == null))
+            if ((AssociationTime != null) && (DeliveryTime.Text.Length == 0))
             {
-                new DroneWindow(bl.GetDroneToList(parcel.DroneInParcel.Id));
+                new DroneWindow(bl.GetDroneToList(parcel.DroneInParcel.Id)).Show();
             }
         }
 
