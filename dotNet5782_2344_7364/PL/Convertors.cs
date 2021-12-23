@@ -48,8 +48,7 @@ namespace PL
     {
         public object Convert(object value, Type targetType, object parrameter, CultureInfo culture)
         {
-            System.Windows.Controls.ComboBox choice = (System.Windows.Controls.ComboBox)value;
-            if (choice.SelectedIndex == 1)
+            if (value.Equals(1))
             {
                 return Visibility.Visible;
             }
