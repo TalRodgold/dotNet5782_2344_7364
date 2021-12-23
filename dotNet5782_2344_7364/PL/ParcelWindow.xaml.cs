@@ -50,10 +50,10 @@ namespace PL
             PrioritieSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Priorities));
 
         }
-        public ParcelWindow(BO.ParcelToList chosenParcel)
+        public ParcelWindow(int? chosenParcel)
         {
             
-            this.parcel = bl.GetParcelById(chosenParcel.Id);
+            this.parcel = bl.GetParcelById(chosenParcel);
             InitializeComponent();
            // UpdateButton.Visibility = Visibility.Visible; // make butten visible
             //AddButton.IsEnabled = false; // enable add button
@@ -68,11 +68,11 @@ namespace PL
 
             WeightSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
             PrioritieSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Priorities));
-            Id.Text = chosenParcel.Id.ToString();
+            Id.Text = parcel.Id.ToString();
             SenderB.Content = parcel.Sender.Id;
             ReciverB.Content = parcel.Reciver.Id;
-            WeightSelector.SelectedItem = chosenParcel.Weight;
-            PrioritieSelector.SelectedItem = chosenParcel.Prioritie;
+            WeightSelector.SelectedItem = parcel.Weight;
+            PrioritieSelector.SelectedItem = parcel.Prioritie;
             if(parcel.DroneInParcel!=null)
             {
                 Drone.Content = parcel.DroneInParcel.Id;
@@ -103,7 +103,7 @@ namespace PL
         {
             if ((AssociationTime != null) && (DeliveryTime.Text.Length == 0))
             {
-                new DroneWindow(bl.GetDroneToList(parcel.DroneInParcel.Id)).Show();
+                new DroneWindow(bl.GetDroneById(parcel.DroneInParcel.Id).Id).Show();
             }
         }
 

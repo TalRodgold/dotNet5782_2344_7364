@@ -29,6 +29,10 @@ namespace PL
             ListDrone.ItemsSource = bl.GetListOfDronesToList().ToList();
             DisplayChargingSlots.Items.Add("All");
             DisplayChargingSlots.Items.Add("Only free charging slots");
+            SenderOrReciver.Items.Add("sender");
+            SenderOrReciver.Items.Add("reciver");
+            Filter1.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
+            Filter2.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
             for (int i = 0; i < 11; i++)
             {
                 NumOfFreeChargingSlots.Items.Add(i);
@@ -57,7 +61,7 @@ namespace PL
             new ParcelWindow().Show();
         }
 
-        private void AddCustomer_Click(object sender, RoutedEventArgs e) //
+        private void AddCustomer_Click(object sender, RoutedEventArgs e) //aa
         {
             new CustomerWindow().Show();
         }
@@ -75,7 +79,7 @@ namespace PL
         {
 
             BO.ParcelToList parcel = (BO.ParcelToList)ListParcel.SelectedItem;
-            ParcelWindow parcelWindow = new ParcelWindow(parcel);
+            ParcelWindow parcelWindow = new ParcelWindow(parcel.Id);
             //droneWindow.Closed += CloseWindow;
             parcelWindow.Show();
         }
@@ -83,7 +87,7 @@ namespace PL
         private void Drone_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             BO.DroneToList drone = (BO.DroneToList)ListDrone.SelectedItem;
-            DroneWindow droneWindow = new DroneWindow(drone);
+            DroneWindow droneWindow = new DroneWindow(drone.Id); //---------------------------------------
             //droneWindow.Closed += CloseWindow;
             droneWindow.Show();
         }

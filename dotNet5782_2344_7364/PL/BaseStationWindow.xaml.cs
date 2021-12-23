@@ -84,5 +84,15 @@ namespace PL
         {
             Close();
         }
+
+        private void OpenDroneWindow(object sender, MouseButtonEventArgs e)
+        {
+            int id = (int)DronesInCharging.SelectedItem;
+            DroneWindow droneWindow = new DroneWindow(id);
+            //droneWindow.Closed += CloseWindow;
+            droneWindow.Show();
+
+
+        }
     }
 }

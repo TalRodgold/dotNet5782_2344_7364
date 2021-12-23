@@ -19,7 +19,8 @@ namespace PL
         }
         public object ConvertBack(object value, Type targetType, object parrameter, CultureInfo culture)
         {
-            throw new Exception();
+            return (double)value / 100;
+
         }
     }
     internal class BatteryToConverter : IValueConverter

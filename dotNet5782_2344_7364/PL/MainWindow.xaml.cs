@@ -22,19 +22,16 @@ namespace PL
   
     public partial class MainWindow : Window
     {
-        private enum enteringOptions // 
-        { Manager, Exsisting_client, new_client }
+        
+       
         private IBl bl =BlFactory.GetBl("BL");
         public MainWindow()
         {
             InitializeComponent();
-            EnteringComboBox.ItemsSource = Enum.GetValues(typeof(enteringOptions));
+            EnteringComboBox.Items.Add("Manager");
+            EnteringComboBox.Items.Add("Exsisting customer");
+            EnteringComboBox.Items.Add("New customer");
             EnteringComboBox.SelectedIndex = 0;
-        }
-        private void EnteringOptions_comboBox(object sender, ContextMenuEventArgs e)
-        {
-            EnteringComboBox.SelectedItem = (enteringOptions)EnteringComboBox.SelectedItem;
-            
         }
         private void enterinOption_change(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -82,6 +79,11 @@ namespace PL
         private void EnterIdLabel_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
 
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

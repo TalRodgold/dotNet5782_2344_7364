@@ -29,17 +29,17 @@
         <Label Content="Id:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
         <Label Content="Name:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
         <Label Content="Phone number:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
-        <Label Content="Parcels that where sent and arrived:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
-        <Label Content="Parcels that where sent yet not arrived:" Grid.Column="0" Grid.Row="4" HorizontalAlignment="center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
+        <Label Content="Longtitude:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
+        <Label Content="Latitude:" Grid.Column="0" Grid.Row="4" HorizontalAlignment="center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
         <Label Content="Parcels recived:" Grid.Column="0" Grid.Row="5" HorizontalAlignment="center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
         <Label Content="Parcels on way to client:" Grid.Column="0" Grid.Row="6" HorizontalAlignment="center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
         <TextBox Name="Id" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
         <TextBox Name="Name" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
         <TextBox Name="PhoneNumber" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
-        <TextBox Name="ParcelsThatWhereSentAndArrived" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
-        <TextBox Name="ParcelsThatWhereSentYetNotArrived" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
-        <TextBox Name="ParcelsRecived" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
-        <TextBox Name="ParcelsOnWayToClient" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="Longtitude" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="Latitude" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <ListView Name="ParcelFromCustomer" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <ListView Name="ParcelToCustomer" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
 
     </Grid>
 </Window>

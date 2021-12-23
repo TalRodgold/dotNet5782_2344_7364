@@ -9,11 +9,11 @@
     <Window.Resources>
         <local:ConvertComboBoxToVisability x:Key="ConvertComboBoxToVisability" />
     </Window.Resources>
-    <Grid Margin="0,0,0,-6">
+    <Grid Margin="0,0,0,0">
         <Grid.Background>
             <ImageBrush ImageSource="/Images/DroneMainWindow.jpg"/>
         </Grid.Background>
-        <Button x:Name="GoToDroneList" Content="Press here to start" HorizontalAlignment="Left" VerticalAlignment="Top" Click="StartButton_Click" Height="62" Width="230" Foreground="#FF130D4A" FontFamily="Stencil" FontSize="20" FontWeight="Normal" Margin="349,443,0,0">
+        <Button x:Name="GoToDroneList" Content="Press here to start" HorizontalAlignment="Left" VerticalAlignment="Top" Click="StartButton_Click" Height="62" Width="230" Foreground="#FF130D4A" FontFamily="Stencil" FontSize="20" FontWeight="Normal" Margin="458,351,0,0">
             <Button.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FFD2F0EF" Offset="0.894"/>
@@ -21,11 +21,18 @@
                 </LinearGradientBrush>
             </Button.Background>
         </Button>
-        <ComboBox Name="EnteringComboBox" HorizontalAlignment="Left" Margin="628,205,0,0" VerticalAlignment="Top" Width="120" ContextMenuClosing="EnteringOptions_comboBox" DataContextChanged="enterinOption_change"/>
+        <ComboBox Name="EnteringComboBox" HorizontalAlignment="Left" Margin="628,205,0,0" VerticalAlignment="Top" Width="120"/>
         <Label Content="Choose entering option:" HorizontalAlignment="Left" FontFamily="Stencil" FontSize="20" Margin="349,200,0,0" VerticalAlignment="Top" Height="41" Width="279"/>
         <TextBox Name="CustomerId" Visibility="{Binding ElementName=EnteringComboBox,Path=SelectedIndex,Converter={StaticResource ConvertComboBoxToVisability} }" HorizontalAlignment="Left" Margin="628,232,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
         <Label x:Name="EnterIdLabel" Content="Enter your Id" Visibility="{Binding ElementName=EnteringComboBox,Path=SelectedIndex,Converter={StaticResource ConvertComboBoxToVisability} }" HorizontalAlignment="Left" FontFamily="Stencil" FontSize="20" Margin="349,227,0,0"  VerticalAlignment="Top" Width="274"/>
-
+        <Button x:Name="Exit" Content="Exit" HorizontalAlignment="Left" Margin="23,564,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="40" RenderTransformOrigin="-0.166,8.035" Width="68" Click="Exit_Click">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFD78383" Offset="0.601"/>
+                    <GradientStop Color="#FFF70A0A" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
     </Grid>
 
 </Window>

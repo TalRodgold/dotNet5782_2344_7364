@@ -22,7 +22,7 @@ namespace PL
     public partial class CustomerWindow : Window
     {
         private IBl bl = BlFactory.GetBl("BL");
-        public BO.CustomerToList customer;
+        public BO.Customer customer;
         public CustomerWindow()
         {
             InitializeComponent();
@@ -30,14 +30,24 @@ namespace PL
         public CustomerWindow(int? id)
         {
             InitializeComponent();
-            customer = bl.GetCustomerToListById(id);
+            customer = bl.GetCustomerById(id);
             Id.Text = customer.Id.ToString();
             Name.Text = customer.Name;
             PhoneNumber.Text = customer.Phone.ToString();
-            ParcelsThatWhereSentAndArrived.Text = customer.NumberOfParcelsThatSentAndArrived.ToString();
-            ParcelsThatWhereSentYetNotArrived.Text = customer.ParcelsThatSentYetNotArrived.ToString();
-            ParcelsRecived.Text = customer.ParcelsRecived.ToString();
-            ParcelsOnWayToClient.Text = customer.ParcelsOnWayToClient.ToString();
+            Longtitude.Text = customer.Location.LongitudeInSexa();
+            Latitude.Text = customer.Location.LatitudeInSexa();
+            List<int?> l = new List<int?>();
+            foreach (var item in customer.ParcelFromCustomer)
+            {
+                l.Add(item.Id);
+            }
+            ParcelFromCustomer.ItemsSource = l;
+            l.Clear();
+            foreach (var item in customer.ParcelToCustomer)
+            {
+                l.Add(item.Id);
+            }
+            ParcelToCustomer.ItemsSource = l;
         }
     }
 }

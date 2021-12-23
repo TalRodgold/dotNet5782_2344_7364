@@ -20,7 +20,7 @@ namespace PL
     public partial class DroneWindow : Window
     {
         private IBl bl = BlFactory.GetBl("BL");
-        public BO.DroneToList drone;
+        public BO.Drone drone;
         public DroneWindow() // constructor for adding new drone
         {
             InitializeComponent();
@@ -30,7 +30,7 @@ namespace PL
             UpdateButton.IsEnabled = false; 
             Battery.IsEnabled = false;
             StatusSelector.IsEnabled = false;
-            Delivery.IsEnabled = false;
+            ParcelInTransit.IsEnabled = false;
             Latitude.IsEnabled = false;
             Longitude.IsEnabled = false;
 
@@ -41,29 +41,29 @@ namespace PL
             CancelButton.Visibility = Visibility.Visible;
           
         }
-        public DroneWindow(BO.DroneToList chosenDrone) // constructor for Drone update
+        public DroneWindow(int? id) // constructor for Drone update
         {
-            this.drone = chosenDrone;
+            this.drone = bl.GetDroneById(id);
             InitializeComponent();
 
-            MainGrid.DataContext = chosenDrone;
+            MainGrid.DataContext = drone;
 
             UpdateButton.Visibility = Visibility.Visible; // make butten visible
             AddButton.IsEnabled = false; // enable add button
-            if (chosenDrone.DroneStatuses ==BO.Enums.DroneStatuses.Available)
+            if (drone.DroneStatuses ==BO.Enums.DroneStatuses.Available)
             {
                 SendDroneToChargeButton.Visibility = Visibility.Visible;
                 AccociateDroneToParcelButton.Visibility = Visibility.Visible;
             }
-            if (chosenDrone.DroneStatuses == BO.Enums.DroneStatuses.Maintenance)
+            if (drone.DroneStatuses == BO.Enums.DroneStatuses.Maintenance)
             {
                 RealesDroneFromChargingButton.Visibility = Visibility.Visible;
             }
-            if (chosenDrone.DroneStatuses == BO.Enums.DroneStatuses.Delivery && bl.GetParcelInTransitById((int)chosenDrone.NumberOfParcelInTransit).Status )
+            if (drone.DroneStatuses == BO.Enums.DroneStatuses.Delivery && drone.ParcelInTransit.Status )
             {
                 PickUpParcelButton.Visibility = Visibility.Visible;
             }
-            if (chosenDrone.DroneStatuses == BO.Enums.DroneStatuses.Delivery && bl.GetParcelById((int)chosenDrone.NumberOfParcelInTransit).PickupTime != null && bl.GetParcelInTransitById((int)chosenDrone.NumberOfParcelInTransit).Status)
+            if (drone.DroneStatuses == BO.Enums.DroneStatuses.Delivery && bl.GetParcelById((int)drone.ParcelInTransit.Id).PickupTime != null && drone.ParcelInTransit.Status)
             {
                 DeliverParcelButton.Visibility = Visibility.Visible;
             }
@@ -72,7 +72,7 @@ namespace PL
             Battery.IsEnabled = false;
             MaxWeightSelector.IsEnabled = false;
             StatusSelector.IsEnabled = false;
-            Delivery.IsEnabled = false;
+            ParcelInTransit.IsEnabled = false;
             Latitude.IsEnabled = false;
             Longitude.IsEnabled = false;
             // set combo boxes
@@ -80,13 +80,13 @@ namespace PL
             StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             // insert drone data to text box
             //Id.Text = chosenDrone.Id.ToString();
-            Battery.Value = chosenDrone.Battery;
-            MaxWeightSelector.SelectedItem = chosenDrone.Weight;
+            Battery.Value = drone.Battery;
+            MaxWeightSelector.SelectedItem = drone.Weight;
             //Model.Text = chosenDrone.Model.ToString();
-            StatusSelector.SelectedItem = chosenDrone.DroneStatuses;
-            Delivery.Text = chosenDrone.NumberOfParcelInTransit.ToString();
-            Longitude.Text = chosenDrone.CurrentLocation.LongitudeInSexa();
-            Latitude.Text = chosenDrone.CurrentLocation.LatitudeInSexa();     
+            StatusSelector.SelectedItem = drone.DroneStatuses;
+            ParcelInTransit.Text = drone.ParcelInTransit.Id.ToString();
+            Longitude.Text = drone.CurrentLocation.LongitudeInSexa();
+            Latitude.Text = drone.CurrentLocation.LatitudeInSexa();     
         }
 
         private void MaxWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) // combo box for max weghit
@@ -201,11 +201,11 @@ namespace PL
         }
         private void Refresh() // refresh
         {
-            drone = bl.GetDroneToList(drone.Id);
-            Battery.Value = drone.Battery;
-            Model.Text = drone.Model.ToString();
+            drone = bl.GetDroneById(drone.Id);
+            //Battery.Value = drone.Battery;
+            //Model.Text = drone.Model.ToString();
             StatusSelector.SelectedItem = drone.DroneStatuses;
-            Delivery.Text = drone.NumberOfParcelInTransit.ToString();
+            ParcelInTransit.Text = drone.ParcelInTransit.Id.ToString();
             Longitude.Text = drone.CurrentLocation.LongitudeInSexa();
             Latitude.Text = drone.CurrentLocation.LatitudeInSexa();
 
@@ -229,12 +229,12 @@ namespace PL
             }
             if (drone.DroneStatuses == BO.Enums.DroneStatuses.Delivery)
             {
-                if (bl.GetParcelById(drone.NumberOfParcelInTransit).DeliveryTime != null && !bl.GetParcelInTransitById(drone.NumberOfParcelInTransit).Status)//(bl.GetParcelById(drone.NumberOfParcelInTransit).DeliveryTime != null && !bl.GetParcelInTransitById(drone.NumberOfParcelInTransit).Status)
+                if (bl.GetParcelById(drone.ParcelInTransit.Id).DeliveryTime != null && !drone.ParcelInTransit.Status)//(bl.GetParcelById(drone.NumberOfParcelInTransit).DeliveryTime != null && !bl.GetParcelInTransitById(drone.NumberOfParcelInTransit).Status)
                 {
                     DeliverParcelButton.Visibility = Visibility.Hidden;
                     PickUpParcelButton.Visibility = Visibility.Visible;
                 }
-                else if (bl.GetParcelById((int)drone.NumberOfParcelInTransit).PickupTime != null && !bl.GetParcelInTransitById(drone.NumberOfParcelInTransit).Status)//true until pickup
+                else if (bl.GetParcelById((int)drone.ParcelInTransit.Id).PickupTime != null && !drone.ParcelInTransit.Status)//true until pickup
                 {
                     DeliverParcelButton.Visibility = Visibility.Visible;
                     PickUpParcelButton.Visibility = Visibility.Hidden;

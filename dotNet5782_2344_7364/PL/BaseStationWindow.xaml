@@ -62,6 +62,6 @@
                 </RadialGradientBrush>
             </Button.Background>
         </Button>
-        <ListView x:Name="DronesInCharging" Grid.Column="1" Grid.Row="5" Background="#FF7EC6E6" Margin="0,19,80,19"/>
+        <ListView x:Name="DronesInCharging" Grid.Column="1" Grid.Row="5" Background="#FF7EC6E6" Margin="0,19,80,19" MouseDoubleClick="OpenDroneWindow"/>
     </Grid>
 </Window>

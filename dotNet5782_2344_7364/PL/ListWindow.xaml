@@ -24,8 +24,15 @@
                             <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
                         </ListView.Background>
                     </ListView>
-
-                    <Button x:Name="AddBaseStation" Content="Add a base station" HorizontalAlignment="Left" Margin="656,124,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="AddBaseStation_Click">
+                    <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Margin="656,124,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="AddBaseStation_Click">
+                        <Button.Background>
+                            <RadialGradientBrush>
+                                <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
+                                <GradientStop Color="#FF00F73F" Offset="1"/>
+                            </RadialGradientBrush>
+                        </Button.Background>
+                    </Button>
+                    <Button x:Name="AddBaseStation" Content="Add a base station" HorizontalAlignment="Left" Margin="656,202,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="AddBaseStation_Click">
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
@@ -48,7 +55,16 @@
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid>
-                    <ListView x:Name="ListParcel" Foreground="Snow" MouseDoubleClick="Parcel_DoubleClick">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/Images/Parcel.jpg"/>
+                    </Grid.Background>
+                    <Label Content="Display sender / reciver:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="168" Foreground="White"/>
+                    <Label Content=" Filtering options:" HorizontalAlignment="Left" Margin="330,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                    <ComboBox x:Name="SenderOrReciver" HorizontalAlignment="Left" Margin="168,2,0,0" VerticalAlignment="Top" Width="157" Height="28"/>
+                    <ComboBox x:Name="Filter1" HorizontalAlignment="Left" Margin="638,-2,0,0" VerticalAlignment="Top" Width="156" Height="29"/>
+                    <ComboBox x:Name="Filter2" HorizontalAlignment="Left" Margin="477,2,0,0" VerticalAlignment="Top" Width="156" Height="29"/>
+
+                    <ListView x:Name="ListParcel" Foreground="Snow" MouseDoubleClick="Parcel_DoubleClick" Margin="0,38,0,0">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/Parcel.jpg"/>
                         </ListView.Background>

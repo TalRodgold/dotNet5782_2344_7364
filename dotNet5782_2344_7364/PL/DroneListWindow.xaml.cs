@@ -66,7 +66,7 @@ namespace PL
         {
 
             BO.DroneToList drone = (BO.DroneToList)DroneListView.SelectedItem;
-            DroneWindow droneWindow = new DroneWindow(drone);
+            DroneWindow droneWindow = new DroneWindow(drone.Id);
             droneWindow.Closed += CloseWindow;
             droneWindow.Show();
         }
