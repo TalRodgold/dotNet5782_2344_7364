@@ -22,13 +22,14 @@ namespace PL
   
     public partial class MainWindow : Window
     {
-        private enum enteringOptions // 3 types of weight categories
+        private enum enteringOptions // 
         { Manager, Exsisting_client, new_client }
         private IBl bl =BlFactory.GetBl("BL");
         public MainWindow()
         {
             InitializeComponent();
             EnteringComboBox.ItemsSource = Enum.GetValues(typeof(enteringOptions));
+            EnteringComboBox.SelectedIndex = 0;
         }
         private void EnteringOptions_comboBox(object sender, ContextMenuEventArgs e)
         {

@@ -27,6 +27,13 @@ namespace PL
             ListParcel.ItemsSource = bl.GetListOfParcelToList().ToList();
             ListCustomer.ItemsSource = bl.GetListOfCustomerToList().ToList();
             ListDrone.ItemsSource = bl.GetListOfDronesToList().ToList();
+            DisplayChargingSlots.Items.Add("All");
+            DisplayChargingSlots.Items.Add("Only free charging slots");
+            for (int i = 0; i < 11; i++)
+            {
+                NumOfFreeChargingSlots.Items.Add(i);
+            }
+
         }
 
 
@@ -59,7 +66,7 @@ namespace PL
         {
 
             BO.BaseStationToList baseStation = (BO.BaseStationToList)ListBaseStation.SelectedItem;
-            BaseStationWindow baseStationWindow = new BaseStationWindow(baseStation);
+            BaseStationWindow baseStationWindow = new BaseStationWindow(baseStation.Id, baseStation.OccupiedChargingSlots);
             //droneWindow.Closed += CloseWindow;
             baseStationWindow.Show();
         }

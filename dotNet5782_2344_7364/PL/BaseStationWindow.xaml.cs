@@ -20,19 +20,28 @@ namespace PL
     public partial class BaseStationWindow : Window
     {
         private IBl bl = BlFactory.GetBl("BL");
-        public BO.BaseStationToList baseStation;
+        public BO.BaseStation baseStation;
+        public int occupied;
         public BaseStationWindow()
         {
             InitializeComponent();
         }
-        public BaseStationWindow(BO.BaseStationToList b)
+        public BaseStationWindow(int? id, int oc)
         {
             InitializeComponent();
-            baseStation = b;
+            occupied = oc;
+            baseStation = bl.GetBaseStationById(id);
             Id.Text = baseStation.Id.ToString();
             Name.Text = baseStation.Name;
-            FreeChargingSlots.Text = baseStation.FreeChargingSlots.ToString();
-            OccupiedChargingSlots.Text = baseStation.OccupiedChargingSlots.ToString();
+            FreeChargingSlots.Text = baseStation.NumberOfFreeChargingSlots.ToString();
+            Longtitude.Text = baseStation.Location.LongitudeInSexa();
+            Latitude.Text = baseStation.Location.LatitudeInSexa();
+            List<int?> l = new List<int?>();
+            foreach (var item in baseStation.ListOfDroneInCharging)
+            {
+                l.Add(item.Id);
+            }
+            DronesInCharging.ItemsSource = l;
 
         }
 
@@ -44,12 +53,12 @@ namespace PL
             {
                 newName = Name.Text;
             }
-            if (baseStation.FreeChargingSlots != int.Parse(FreeChargingSlots.Text))
+            if (baseStation.NumberOfFreeChargingSlots != int.Parse(FreeChargingSlots.Text))
             {
                 newChargingSlots = int.Parse(FreeChargingSlots.Text);
             }
             bl.UpdateBaseStation(baseStation.Id, newName, newChargingSlots);
-            baseStation.FreeChargingSlots = bl.GetBaseStationById(baseStation.Id).NumberOfFreeChargingSlots;
+            baseStation.NumberOfFreeChargingSlots = bl.GetBaseStationById(baseStation.Id).NumberOfFreeChargingSlots;
             baseStation.Name = bl.GetBaseStationById(baseStation.Id).Name;
 
         }
@@ -58,7 +67,7 @@ namespace PL
         {
             try
             {
-                if (baseStation.OccupiedChargingSlots > 0)
+                if (occupied > 0)
                 {
                     throw new InvalidOperationException("Base station not empty, there are drones charging at this base station.");
                 }

@@ -8,14 +8,23 @@
         Title="ListWindow" Height="450" Width="800">
     <Grid>
         <TabControl>
-            <TabItem Header="Base station" HorizontalAlignment="Left" Margin="-2,-2,0,0" Width="80">
+            <TabItem Header="Base station" HorizontalAlignment="Left" Margin="-2,-2,0,0" Width="95" FontWeight="Bold" FontSize="14">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FF1F61A8" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid>
-
-                    <ListView x:Name="ListBaseStation" Foreground="Snow" MouseDoubleClick="BaseStation_DoubleClick">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
+                    </Grid.Background>
+                    <ListView x:Name="ListBaseStation" Foreground="Snow" MouseDoubleClick="BaseStation_DoubleClick" Margin="0,28,0,0">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
                         </ListView.Background>
                     </ListView>
+
                     <Button x:Name="AddBaseStation" Content="Add a base station" HorizontalAlignment="Left" Margin="656,124,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="AddBaseStation_Click">
                         <Button.Background>
                             <RadialGradientBrush>
@@ -24,9 +33,20 @@
                             </RadialGradientBrush>
                         </Button.Background>
                     </Button>
+                    <Label Content="Display Charging slots:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="168" Foreground="White"/>
+                    <Label Content="Number of free charging slots:" HorizontalAlignment="Left" Margin="406,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                    <ComboBox x:Name="DisplayChargingSlots" HorizontalAlignment="Left" Margin="168,2,0,0" VerticalAlignment="Top" Width="157" Height="28"/>
+
+                    <ComboBox x:Name="NumOfFreeChargingSlots" HorizontalAlignment="Left" Margin="638,-2,0,0" VerticalAlignment="Top" Width="156" Height="29"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Parcel">
+            <TabItem Header="Parcel" FontWeight="Bold" FontSize="14">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FF1F61A8" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid>
                     <ListView x:Name="ListParcel" Foreground="Snow" MouseDoubleClick="Parcel_DoubleClick">
                         <ListView.Background>
@@ -43,8 +63,13 @@
                     </Button>
                 </Grid>
             </TabItem>
-            <TabItem Header="Drone">
-
+            <TabItem Header="Drone" FontWeight="Bold" FontSize="14">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FF1F61A8" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid>
                     <ListView x:Name="ListDrone" Foreground="Snow" MouseDoubleClick="Drone_DoubleClick">
                         <ListView.Background>
@@ -62,14 +87,24 @@
                 </Grid>
 
             </TabItem>
-            <TabItem Header="Customer">
+            <TabItem Header="Customer" FontWeight="Bold" FontSize="14">
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FF1F61A8" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
                 <Grid>
-                    <ListView x:Name="ListCustomer" Foreground="Snow" MouseDoubleClick="Customer_DoubleClick">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="86*"/>
+                        <ColumnDefinition Width="311*"/>
+                    </Grid.ColumnDefinitions>
+                    <ListView x:Name="ListCustomer" Foreground="Snow" MouseDoubleClick="Customer_DoubleClick" Grid.ColumnSpan="2">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/Customer.jpg"/>
                         </ListView.Background>
                     </ListView>
-                    <Button x:Name="AddCustomer" Content="Add a drone" HorizontalAlignment="Left" Margin="656,124,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="AddCustomer_Click">
+                    <Button x:Name="AddCustomer" Content="Add a drone" HorizontalAlignment="Left" Margin="484,124,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="AddCustomer_Click" Grid.Column="1">
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
