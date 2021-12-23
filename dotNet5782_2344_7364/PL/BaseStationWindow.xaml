@@ -6,10 +6,14 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="BaseStationWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:ConvertLatitudeToSexa x:Key="ConvertLatitudeToSexa" />
+        <local:ConvertLongitudeToSexa x:Key="ConvertLongitudeToSexa" />
+    </Window.Resources>
     <Window.Background>
         <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
     </Window.Background>
-    <Grid>
+    <Grid x:Name="MainGrid" DataContext="{Binding}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -32,11 +36,11 @@
         <Label Content="Longitude:" Grid.Row="3" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"  Foreground="White"/>
         <Label Content="Drones in charging:" Grid.Row="5" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"  Foreground="White"/>
 
-        <TextBox Name="Id" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
-        <TextBox Name="Name" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
-        <TextBox Name="FreeChargingSlots" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
-        <TextBox Name="Longtitude" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
-        <TextBox Name="Latitude" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="Id" Text="{Binding Path=Id}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="Name" Text="{Binding Path=Name}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="FreeChargingSlots" Text="{Binding Path=NumberOfFreeChargingSlots}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="Longtitude" Text="{Binding Path=Location, Converter={StaticResource ConvertLongitudeToSexa}}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="Latitude" Text="{Binding Path=Location, Converter={StaticResource ConvertLatitudeToSexa} }" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
 
         <Button x:Name="UpdateButton" Content="Update" Grid.Row="4" Grid.Column="3"  HorizontalAlignment="Center"  VerticalAlignment="Center" Width="200" Height="33" Click="UpdateButton_Click" FontSize="15" FontWeight="Bold" FontFamily="Sitka Display">
             <Button.Background>

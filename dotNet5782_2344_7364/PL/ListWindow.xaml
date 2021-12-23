@@ -87,7 +87,17 @@
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid>
-                    <ListView x:Name="ListDrone" Foreground="Snow" MouseDoubleClick="Drone_DoubleClick">
+                    <Grid.Background>
+                        <ImageBrush ImageSource="/Images/Parcel.jpg"/>
+                    </Grid.Background>
+                    <Label Content="Drone max weight:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="168" Foreground="White"/>
+                    <Label Content="Drone status:" HorizontalAlignment="Left" Margin="330,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                    <ComboBox x:Name="StatusSelector" SelectionChanged="StatusSelector_SelectionChanged" HorizontalAlignment="Left" Margin="168,2,0,0" VerticalAlignment="Top" Width="157" Height="28"/>
+                    <ComboBox x:Name="MaxWeightSelector" SelectionChanged="MaxWeightSelector_SelectionChanged" HorizontalAlignment="Left" Margin="592,1,0,0" VerticalAlignment="Top" Width="156" Height="29"/>
+
+   
+
+                    <ListView x:Name="ListDrone" Foreground="Snow" MouseDoubleClick="Drone_DoubleClick" Margin="0,28,0,0">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/Drone.jpg"/>
                         </ListView.Background>

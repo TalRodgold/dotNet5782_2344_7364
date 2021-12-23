@@ -31,11 +31,13 @@ namespace PL
         {
             InitializeComponent();
             customer = bl.GetCustomerById(id);
-            Id.Text = customer.Id.ToString();
-            Name.Text = customer.Name;
-            PhoneNumber.Text = customer.Phone.ToString();
-            Longtitude.Text = customer.Location.LongitudeInSexa();
-            Latitude.Text = customer.Location.LatitudeInSexa();
+            MainGrid.DataContext = customer;
+
+            //Id.Text = customer.Id.ToString();
+            //Name.Text = customer.Name;
+            //PhoneNumber.Text = customer.Phone.ToString();
+            //Longtitude.Text = customer.Location.LongitudeInSexa();
+            //Latitude.Text = customer.Location.LatitudeInSexa();
             List<int?> l = new List<int?>();
             foreach (var item in customer.ParcelFromCustomer)
             {

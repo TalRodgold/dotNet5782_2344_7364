@@ -25,17 +25,20 @@ namespace PL
         public BaseStationWindow()
         {
             InitializeComponent();
+           // MainGrid.DataContext = baseStation;
         }
         public BaseStationWindow(int? id, int oc)
         {
             InitializeComponent();
             occupied = oc;
             baseStation = bl.GetBaseStationById(id);
-            Id.Text = baseStation.Id.ToString();
-            Name.Text = baseStation.Name;
-            FreeChargingSlots.Text = baseStation.NumberOfFreeChargingSlots.ToString();
-            Longtitude.Text = baseStation.Location.LongitudeInSexa();
-            Latitude.Text = baseStation.Location.LatitudeInSexa();
+            MainGrid.DataContext = baseStation;
+
+            //Id.Text = baseStation.Id.ToString();
+            //Name.Text = baseStation.Name;
+            //FreeChargingSlots.Text = baseStation.NumberOfFreeChargingSlots.ToString();
+            //Longtitude.Text = baseStation.Location.LongitudeInSexa();
+            //Latitude.Text = baseStation.Location.LatitudeInSexa();
             List<int?> l = new List<int?>();
             foreach (var item in baseStation.ListOfDroneInCharging)
             {

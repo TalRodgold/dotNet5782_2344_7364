@@ -33,6 +33,8 @@ namespace PL
             SenderOrReciver.Items.Add("reciver");
             Filter1.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             Filter2.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
+            StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
+            MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
             for (int i = 0; i < 11; i++)
             {
                 NumOfFreeChargingSlots.Items.Add(i);
@@ -40,7 +42,29 @@ namespace PL
 
         }
 
+        private void MaxWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) // combo box to select by weight categories
+        {
+            if (StatusSelector.SelectedIndex == -1)
+            {
+                ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem).ToList();
+            }
+            else
+            {
+                ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
+            }
+        }
 
+        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) // combo box to select by status
+        {
+            if (MaxWeightSelector.SelectedIndex == -1)
+            {
+                ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
+            }
+            else
+            {
+                ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
+            }
+        }
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow().Show();

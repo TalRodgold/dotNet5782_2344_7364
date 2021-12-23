@@ -60,5 +60,26 @@ namespace PL
             throw new Exception();
         }
     }
-
+    internal class ConvertLatitudeToSexa : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parrameter, CultureInfo culture)
+        {
+            return ((BO.Location)value).LatitudeInSexa();
+        }
+        public object ConvertBack(object value, Type targetType, object parrameter, CultureInfo culture)
+        {
+            throw new Exception();
+        }
+    }
+    internal class ConvertLongitudeToSexa : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parrameter, CultureInfo culture)
+        {
+            return ((BO.Location)value).LongitudeInSexa();
+        }
+        public object ConvertBack(object value, Type targetType, object parrameter, CultureInfo culture)
+        {
+            throw new Exception();
+        }
+    }
 }

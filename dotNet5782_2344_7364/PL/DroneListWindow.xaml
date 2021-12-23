@@ -35,10 +35,7 @@
                 <Label Content="Drone status:" Grid.Column="0" FontSize="24" Grid.Row="1"  FontWeight="Bold" FontFamily="Sitka Display" Foreground="White" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
                 <ComboBox Name="MaxWeightSelector" HorizontalAlignment= "Stretch" Grid.Row="1"  VerticalAlignment="Stretch" Grid.Column="3" Width="120" SelectionChanged="MaxWeightSelector_SelectionChanged" FontSize="18"/>
                 <Label Content="Drone max weight:" Grid.Column="2" FontSize="24" Grid.Row="1"  FontWeight="Bold" FontFamily="Sitka Display" Foreground="White" VerticalContentAlignment="Center" />
-                
-
-
-
+             
 
             </Grid>
         </Grid>
