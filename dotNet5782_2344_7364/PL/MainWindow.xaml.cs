@@ -30,10 +30,10 @@ namespace PL
             InitializeComponent();
             EnteringComboBox.ItemsSource = Enum.GetValues(typeof(enteringOptions));
         }
-
         private void EnteringOptions_comboBox(object sender, ContextMenuEventArgs e)
         {
             EnteringComboBox.SelectedItem = (enteringOptions)EnteringComboBox.SelectedItem;
+            
         }
         private void enterinOption_change(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -76,6 +76,11 @@ namespace PL
             {
 
             }
+        }
+
+        private void EnterIdLabel_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+
         }
     }
 }
