@@ -55,6 +55,7 @@ namespace PL
             
             this.parcel = bl.GetParcelById(chosenParcel);
             InitializeComponent();
+            MainGrid.DataContext = parcel;
            // UpdateButton.Visibility = Visibility.Visible; // make butten visible
             //AddButton.IsEnabled = false; // enable add button
             // enable text boxes where we dont want user to change
@@ -68,19 +69,19 @@ namespace PL
 
             WeightSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
             PrioritieSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Priorities));
-            Id.Text = parcel.Id.ToString();
-            SenderB.Content = parcel.Sender.Id;
-            ReciverB.Content = parcel.Reciver.Id;
-            WeightSelector.SelectedItem = parcel.Weight;
-            PrioritieSelector.SelectedItem = parcel.Prioritie;
-            if(parcel.DroneInParcel!=null)
-            {
-                Drone.Content = parcel.DroneInParcel.Id;
-            }
-            CreatingTime.Text = parcel.ParcelCreatingTime.ToString();
-            AssociationTime.Text = parcel.AssociationTime.ToString();
-            PickupTime.Text = parcel.PickupTime.ToString();
-            DeliveryTime.Text = parcel.DeliveryTime.ToString();
+            //Id.Text = parcel.Id.ToString();
+            //SenderB.Content = parcel.Sender.Id;
+            //ReciverB.Content = parcel.Reciver.Id;
+            //WeightSelector.SelectedItem = parcel.Weight;
+            //PrioritieSelector.SelectedItem = parcel.Prioritie;
+            //if(parcel.DroneInParcel!=null)
+            //{
+            //    Drone.Content = parcel.DroneInParcel.Id;
+            //}
+            //CreatingTime.Text = parcel.ParcelCreatingTime.ToString();
+            //AssociationTime.Text = parcel.AssociationTime.ToString();
+            //PickupTime.Text = parcel.PickupTime.ToString();
+            //DeliveryTime.Text = parcel.DeliveryTime.ToString();
         }
 
         private void Sender_Click(object sender, RoutedEventArgs e)

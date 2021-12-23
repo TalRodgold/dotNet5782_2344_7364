@@ -30,7 +30,7 @@ namespace PL
             UpdateButton.IsEnabled = false; 
             Battery.IsEnabled = false;
             StatusSelector.IsEnabled = false;
-            ParcelInTransit.IsEnabled = false;
+          //  ParcelInTransit.IsEnabled = false;
             Latitude.IsEnabled = false;
             Longitude.IsEnabled = false;
 
@@ -80,13 +80,13 @@ namespace PL
             StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             // insert drone data to text box
             //Id.Text = chosenDrone.Id.ToString();
-            Battery.Value = drone.Battery;
-            MaxWeightSelector.SelectedItem = drone.Weight;
+            //Battery.Value = drone.Battery;
+           // MaxWeightSelector.SelectedItem = drone.Weight;
             //Model.Text = chosenDrone.Model.ToString();
-            StatusSelector.SelectedItem = drone.DroneStatuses;
-            ParcelInTransit.Text = drone.ParcelInTransit.Id.ToString();
-            Longitude.Text = drone.CurrentLocation.LongitudeInSexa();
-            Latitude.Text = drone.CurrentLocation.LatitudeInSexa();     
+            //StatusSelector.SelectedItem = drone.DroneStatuses;
+            //ParcelInTransit.Text = drone.ParcelInTransit.Id.ToString();
+            //Longitude.Text = drone.CurrentLocation.LongitudeInSexa();
+            //Latitude.Text = drone.CurrentLocation.LatitudeInSexa();     
         }
 
         private void MaxWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) // combo box for max weghit

@@ -9,7 +9,7 @@
     <Window.Background>
         <ImageBrush ImageSource="/Images/Parcel.jpg"/>
     </Window.Background>
-    <Grid>
+    <Grid x:Name="MainGrid" DataContext="{Binding}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
@@ -43,18 +43,18 @@
         <Label Content="Delivery time:" Grid.Row="9" Grid.Column="0" HorizontalAlignment="center"  VerticalAlignment="Center" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display"  Foreground="White"/>
 
 
-        <TextBox Name="Id" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
-        <TextBox Name="senderT" Visibility="Hidden" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
-        <TextBox Name="reciverT" Visibility="Hidden" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
-        <TextBox Name="CreatingTime" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26" Width="120"/>
-        <TextBox Name="AssociationTime" Grid.Row="7" Grid.Column="1" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26" Width="120"/>
-        <TextBox Name="PickupTime" Grid.Row="8" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26" Width="120"/>
-        <TextBox x:Name="DeliveryTime"  Grid.Row="9" Grid.Column="1" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26"/>
-        <ComboBox Name="WeightSelector" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="3" VerticalAlignment="Center" Width="120" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" SelectionChanged="WeightSelector_SelectionChanged"/>
-        <ComboBox Name="PrioritieSelector" Grid.Column="1" HorizontalAlignment="Left" Grid.Row="4" VerticalAlignment="Center" Width="120" SelectionChanged="PrioritieSelector_SelectionChanged" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6"/>
-        <Button  x:Name="SenderB"  Grid.Column="1" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="-0.534,-1.623" Height="26" Width="120" Margin="0,5,0,0" Click="Sender_Click" />
-        <Button  x:Name="ReciverB" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" Margin="0,4,0,0"  VerticalAlignment="Top" Height="26" Width="120" Click="Reciver_Click"/>
-        <Button x:Name="Drone" Grid.Column="1" Grid.Row="5" HorizontalAlignment="Left"  VerticalAlignment="Center" Height="25" Width="120" Click="Drone_Click"/>
+        <TextBox Name="Id" Grid.Column="1" Text="{Binding Path=Id}" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="senderT" Grid.Row="1" Grid.Column="1" Text="{Binding  Path=Sender.Id}" HorizontalAlignment="Left" Visibility="Hidden" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="reciverT" Grid.Row="2" Grid.Column="1" Text="{Binding ElementName=Reciver, Path=Id}" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
+        <TextBox Name="CreatingTime" Grid.Row="6" Grid.Column="1" Text="{Binding Path=ParcelCreatingTime}" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26" Width="120"/>
+        <TextBox Name="AssociationTime" Grid.Row="7" Grid.Column="1" Text="{Binding Path=AssociationTime}" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26" Width="120"/>
+        <TextBox Name="PickupTime" Grid.Row="8" Grid.Column="1" Text="{Binding Path=PickupTime}" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26" Width="120"/>
+        <TextBox x:Name="DeliveryTime"  Grid.Row="9" Grid.Column="1" Text="{Binding Path=DeliveryTime}" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Center" Width="120" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" Height="26"/>
+        <ComboBox Name="WeightSelector" Grid.Column="1" Grid.Row="3"  SelectedItem="{Binding Path=Weight}" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="120" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6" SelectionChanged="WeightSelector_SelectionChanged"/>
+        <ComboBox Name="PrioritieSelector" Grid.Column="1" Grid.Row="4" SelectedItem="{Binding Path=Prioritie}" HorizontalAlignment="Left"  VerticalAlignment="Center" Width="120" SelectionChanged="PrioritieSelector_SelectionChanged" BorderBrush="Black" FontSize="14" Background="#FF7EC6E6"/>
+        <Button  x:Name="SenderB"  Grid.Column="1" Grid.Row="1" Content="{Binding Path=Sender.Id}"  HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="-0.534,-1.623" Height="26" Width="120" Margin="0,5,0,0" Click="Sender_Click" />
+        <Button  x:Name="ReciverB" Grid.Column="1" Grid.Row="2" Content="{Binding Path=Reciver.Id}"  HorizontalAlignment="Left" Margin="0,4,0,0"  VerticalAlignment="Top" Height="26" Width="120" Click="Reciver_Click"/>
+        <Button x:Name="Drone" Grid.Column="1" Grid.Row="5" Content="{Binding Path=DroneInParcel.Id}"  HorizontalAlignment="Left"  VerticalAlignment="Center" Height="25" Width="120" Click="Drone_Click"/>
         <Button x:Name="CancelButton" Visibility="Hidden" Grid.Row="10" Grid.Column="1" Content="Cancel" HorizontalAlignment="Left" VerticalAlignment="Center" Width="76" Height="48" Click="CancelButton_Click" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Margin="10,0,0,0">
             <Button.Background>
                 <RadialGradientBrush>
