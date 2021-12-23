@@ -45,6 +45,9 @@ namespace PL
         {
             this.drone = chosenDrone;
             InitializeComponent();
+
+            MainGrid.DataContext = chosenDrone;
+
             UpdateButton.Visibility = Visibility.Visible; // make butten visible
             AddButton.IsEnabled = false; // enable add button
             if (chosenDrone.DroneStatuses ==BO.Enums.DroneStatuses.Available)
@@ -76,10 +79,10 @@ namespace PL
             MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             // insert drone data to text box
-            Id.Text = chosenDrone.Id.ToString();
-            Battery.Text = chosenDrone.Battery.ToString();
+            //Id.Text = chosenDrone.Id.ToString();
+            Battery.Value = chosenDrone.Battery;
             MaxWeightSelector.SelectedItem = chosenDrone.Weight;
-            Model.Text = chosenDrone.Model.ToString();
+            //Model.Text = chosenDrone.Model.ToString();
             StatusSelector.SelectedItem = chosenDrone.DroneStatuses;
             Delivery.Text = chosenDrone.NumberOfParcelInTransit.ToString();
             Longitude.Text = chosenDrone.CurrentLocation.LongitudeInSexa();
@@ -199,7 +202,7 @@ namespace PL
         private void Refresh() // refresh
         {
             drone = bl.GetDroneToList(drone.Id);
-            Battery.Text = drone.Battery.ToString();
+            Battery.Value = drone.Battery;
             Model.Text = drone.Model.ToString();
             StatusSelector.SelectedItem = drone.DroneStatuses;
             Delivery.Text = drone.NumberOfParcelInTransit.ToString();
