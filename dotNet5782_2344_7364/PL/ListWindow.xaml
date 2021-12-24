@@ -42,9 +42,9 @@
                     </Button>
                     <Label Content="Display Charging slots:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="168" Foreground="White"/>
                     <Label Content="Number of free charging slots:" HorizontalAlignment="Left" Margin="406,0,0,0" VerticalAlignment="Top" Foreground="White"/>
-                    <ComboBox x:Name="DisplayChargingSlots" HorizontalAlignment="Left" Margin="168,2,0,0" VerticalAlignment="Top" Width="157" Height="28"/>
+                    <ComboBox x:Name="DisplayChargingSlots" HorizontalAlignment="Left" Margin="168,2,0,0" VerticalAlignment="Top" Width="157" Height="28" SelectionChanged="DisplayChargingSlots_SelectionChange"/>
 
-                    <ComboBox x:Name="NumOfFreeChargingSlots" HorizontalAlignment="Left" Margin="638,-2,0,0" VerticalAlignment="Top" Width="156" Height="29"/>
+                    <ComboBox x:Name="NumOfFreeChargingSlots" HorizontalAlignment="Left" Margin="638,-2,0,0" VerticalAlignment="Top" Width="156" Height="29" SelectionChanged="NumOfFreeChargingSlots_SelectionChange"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Parcel" FontWeight="Bold" FontSize="14">

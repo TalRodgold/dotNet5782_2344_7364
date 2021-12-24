@@ -13,40 +13,21 @@ using BlApi;
 namespace PL
 {
 
-     public class Refresh : INotifyPropertyChanged
+    public class Refresh : INotifyPropertyChanged
     {
-        private string _user;
-        public string User
+        public string Name
         {
-            get
-            {
-                return _user;
-            }
-            set
-            {
-                _user = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("User"));
-                }
-            }
-        }
-        private string _password;
-        public string Password
-        {
-            get
-            {
-                return _password;
-            }
-            set
-            {
-                _password = value;
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged(this, new PropertyChangedEventArgs("Password"));
-                }
-            }
+            get { return Name; }
+            set { Name = value; }
         }
         public event PropertyChangedEventHandler PropertyChanged;
+        public void funcPropertyChanged(string PropertyName)
+        {
+            if (PropertyChanged != null)
+            {
+                PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
+            }
+        }
+     
     }
 }

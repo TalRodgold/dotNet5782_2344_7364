@@ -29,6 +29,7 @@ namespace PL
             ListDrone.ItemsSource = bl.GetListOfDronesToList().ToList();
             DisplayChargingSlots.Items.Add("All");
             DisplayChargingSlots.Items.Add("Only free charging slots");
+            DisplayChargingSlots.SelectedIndex = 0;
             SenderOrReciver.Items.Add("sender");
             SenderOrReciver.Items.Add("reciver");
             Filter1.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
@@ -42,29 +43,7 @@ namespace PL
 
         }
 
-        private void MaxWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) // combo box to select by weight categories
-        {
-            if (StatusSelector.SelectedIndex == -1)
-            {
-                ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem).ToList();
-            }
-            else
-            {
-                ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
-            }
-        }
-
-        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) // combo box to select by status
-        {
-            if (MaxWeightSelector.SelectedIndex == -1)
-            {
-                ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
-            }
-            else
-            {
-                ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
-            }
-        }
+      
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
             new DroneWindow().Show();
@@ -123,6 +102,51 @@ namespace PL
             CustomerWindow customerWindow = new CustomerWindow(customer.Id);
             //droneWindow.Closed += CloseWindow;
             customerWindow.Show();
+        }
+        private void MaxWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) // combo box to select by weight categories
+        {
+            if (StatusSelector.SelectedIndex == -1)
+            {
+                ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem).ToList();
+            }
+            else
+            {
+                ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
+            }
+        }
+
+        private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) // combo box to select by status
+        {
+            if (MaxWeightSelector.SelectedIndex == -1)
+            {
+                ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
+            }
+            else
+            {
+                ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
+            }
+        }
+
+        private void DisplayChargingSlots_SelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+            if (NumOfFreeChargingSlots.SelectedIndex == -1)
+            {
+                if (DisplayChargingSlots.SelectedIndex == 0)
+                {
+                    ListBaseStation.ItemsSource = bl.GetListOfBaseStationsToList();
+
+                }
+                else if(DisplayChargingSlots.SelectedIndex == 1)
+                {
+                    ListBaseStation.ItemsSource = bl.GetListOfFreeChargingStations();
+
+                }
+            }
+        }
+
+        private void NumOfFreeChargingSlots_SelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }
