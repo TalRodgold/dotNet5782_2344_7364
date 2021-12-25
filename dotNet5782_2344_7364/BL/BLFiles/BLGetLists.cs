@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
 using System.Linq;
-
+using System.Collections.ObjectModel;
 namespace BlApi
 {
     /// <summary>
@@ -33,9 +33,9 @@ namespace BlApi
         /// //Get list of base station to list
         /// </summary>
         /// <returns></returns>
-        public List<BaseStationToList> GetListOfBaseStationsToList()//Get list of base station to list
+        public ObservableCollection<BaseStationToList> GetListOfBaseStationsToList()//Get list of base station to list
         {
-            List<BaseStationToList> list = new List<BaseStationToList>();
+            ObservableCollection<BaseStationToList> list = new ObservableCollection<BaseStationToList>();
             foreach (var item in dal.GetListOfBaseStation())
             {
                 list.Add(convertBasestationToBasestationTolist(GetBaseStationById(item.Id)));
@@ -63,9 +63,9 @@ namespace BlApi
         /// Get list of drone to list
         /// </summary>
         /// <returns></returns>
-        public List<DroneToList> GetListOfDronesToList()//Get list of drone to list
+        public ObservableCollection<DroneToList> GetListOfDronesToList()//Get list of drone to list
         {
-            List<DroneToList> list = new List<DroneToList>();
+            ObservableCollection<DroneToList> list = new ObservableCollection<DroneToList>();
             foreach (var item in dal.GetListOfDrone())
             {
                 list.Add(convertDroneBlToList(GetDroneById(item.Id)));
@@ -116,9 +116,9 @@ namespace BlApi
         /// //Get list of customers
         /// </summary>
         /// <returns></returns>
-        public List<CustomerToList> GetListOfCustomerToList()//Get list of customers
+        public ObservableCollection<CustomerToList> GetListOfCustomerToList()//Get list of customers
         {
-            List<CustomerToList> list = new List<CustomerToList>();
+            ObservableCollection<CustomerToList> list = new ObservableCollection<CustomerToList>();
             foreach (var item in dal.GetListOfCustomer())
             {
                 list.Add(convertCustomerToCustomerTolist(GetCustomerById(item.Id)));
@@ -131,9 +131,9 @@ namespace BlApi
         /// Get list of parcel to list
         /// </summary>
         /// <returns></returns>
-        public List<ParcelToList> GetListOfParcelToList()//Get list of parcel to list
+        public ObservableCollection<ParcelToList> GetListOfParcelToList()//Get list of parcel to list
         {
-            List<ParcelToList> list = new List<ParcelToList>();
+            ObservableCollection<ParcelToList> list = new ObservableCollection<ParcelToList>();
             foreach (var item in dal.GetListOfParcel())
             {
                 list.Add(convertParcelToParcelTolist(GetParcelById(item.Id)));

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using BO;
+using System.Collections.ObjectModel;
 namespace BlApi
 {
     /// <summary>
@@ -36,14 +37,14 @@ namespace BlApi
         List<BaseStation> GetListOfBaseStations(); //Convert from dal drone to drone to list
         List<Drone> GetListOfDrones(); //Get list of drones
         List<Customer> GetListOfCustomers(); //Get list of customers
-        List<CustomerToList> GetListOfCustomerToList(); //Get list of customers
+        ObservableCollection<CustomerToList> GetListOfCustomerToList(); //Get list of customers
         List<Parcel> GetListOfParcels(); //Get list of parcels
-        List<ParcelToList> GetListOfParcelToList();//Get list of parcel to list
+        ObservableCollection<ParcelToList> GetListOfParcelToList();//Get list of parcel to list
         List<ParcelToList> GetListOfNotAssigned(); //Get list of assosiated drones
         List<BaseStationToList> GetListOfFreeChargingStations(int num = 0); //Get list of free charging stations
         List<Customer> GetListOfCustomerDalivered(); //Get list of customers that dalivered
-        List<BaseStationToList> GetListOfBaseStationsToList(); //Get list of base stations
-        List<DroneToList> GetListOfDronesToList();//Get list of drones
+        ObservableCollection<BaseStationToList> GetListOfBaseStationsToList(); //Get list of base stations
+        ObservableCollection<DroneToList> GetListOfDronesToList();//Get list of drones
         List<DroneToList> GetListOfDroneToListByPredicat(Predicate<DroneToList> predicate, Predicate<DroneToList> predicate1=null); //Get list of drones by predicat
     }
 }

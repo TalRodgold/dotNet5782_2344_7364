@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
+using System.Collections.ObjectModel;
 namespace PL
 {
     /// <summary>
@@ -20,13 +21,21 @@ namespace PL
     public partial class ListWindow : Window
     {
         private IBl bl = BlFactory.GetBl("BL");
+        private ObservableCollection<BO.BaseStationToList> BsCollection= new ObservableCollection<BO.BaseStationToList>();
+        private ObservableCollection<BO.ParcelToList> PCollection = new ObservableCollection<BO.ParcelToList>();
+        private ObservableCollection<BO.CustomerToList> CCollection = new ObservableCollection<BO.CustomerToList>();
+        private ObservableCollection<BO.DroneToList> DCollection = new ObservableCollection<BO.DroneToList>();
         public ListWindow()
         {
             InitializeComponent();
-            ListBaseStation.ItemsSource = bl.GetListOfBaseStationsToList().ToList();
-            ListParcel.ItemsSource = bl.GetListOfParcelToList().ToList();
-            ListCustomer.ItemsSource = bl.GetListOfCustomerToList().ToList();
-            ListDrone.ItemsSource = bl.GetListOfDronesToList().ToList();
+            //ListBaseStation.ItemsSource = bl.GetListOfBaseStationsToList().ToList();
+            //ListParcel.ItemsSource = bl.GetListOfParcelToList().ToList();
+            //ListCustomer.ItemsSource = bl.GetListOfCustomerToList().ToList();
+            //ListDrone.ItemsSource = bl.GetListOfDronesToList().ToList();
+            Base_station.DataContext = BsCollection = bl.GetListOfBaseStationsToList();
+            Parcel_Item.DataContext = PCollection = bl.GetListOfParcelToList();
+            Customer_Item.DataContext = CCollection = bl.GetListOfCustomerToList();
+            Drone_Item.DataContext = DCollection = bl.GetListOfDronesToList();
             DisplayChargingSlots.Items.Add("All");
             DisplayChargingSlots.Items.Add("Only free charging slots");
             DisplayChargingSlots.SelectedIndex = 0;
