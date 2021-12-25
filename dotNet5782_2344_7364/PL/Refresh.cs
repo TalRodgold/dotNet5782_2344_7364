@@ -15,10 +15,11 @@ namespace PL
 
     public class Refresh : INotifyPropertyChanged
     {
-        public string Name
+        private IBl bl = BlFactory.GetBl("BL");
+        public BO.CustomerToList CustomerUpdate
         {
-            get { return Name; }
-            set { Name = value; }
+            get { return CustomerUpdate; }
+            set { CustomerUpdate = value; }
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void funcPropertyChanged(string PropertyName)

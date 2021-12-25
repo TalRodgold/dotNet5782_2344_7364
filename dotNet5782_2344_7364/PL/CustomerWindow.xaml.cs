@@ -51,5 +51,10 @@ namespace PL
             }
             ParcelToCustomer.ItemsSource = l;
         }
+
+        private void UpdateButton_Click(object sender, RoutedEventArgs e)
+        {
+            bl.UpdateCustomer(customer.Id,Name.Text, PhoneNumber.Text);
+        }
     }
 }
