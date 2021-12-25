@@ -40,7 +40,7 @@ namespace BlApi
         List<Parcel> GetListOfParcels(); //Get list of parcels
         List<ParcelToList> GetListOfParcelToList();//Get list of parcel to list
         List<ParcelToList> GetListOfNotAssigned(); //Get list of assosiated drones
-        List<BaseStationToList> GetListOfFreeChargingStations(); //Get list of free charging stations
+        List<BaseStationToList> GetListOfFreeChargingStations(int num = 0); //Get list of free charging stations
         List<Customer> GetListOfCustomerDalivered(); //Get list of customers that dalivered
         List<BaseStationToList> GetListOfBaseStationsToList(); //Get list of base stations
         List<DroneToList> GetListOfDronesToList();//Get list of drones

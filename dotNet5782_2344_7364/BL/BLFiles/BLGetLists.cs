@@ -178,10 +178,20 @@ namespace BlApi
         /// Get list of free charging stations
         /// </summary>
         /// <returns></returns>
-        public List<BaseStationToList> GetListOfFreeChargingStations()//Get list of free charging stations
+        public List<BaseStationToList> GetListOfFreeChargingStations(int num = 0)//Get list of free charging stations
         {
             List<BaseStationToList> list = new List<BaseStationToList>();
-            Predicate<DO.BaseStation> predicate = element => element.ChargeSlots > 0;
+            Predicate<DO.BaseStation> predicate;
+            if (num == 0)
+            {
+                predicate = element => element.ChargeSlots > num;
+
+            }
+            else
+            {
+                predicate = element => element.ChargeSlots == num;
+
+            }
             List<DO.BaseStation> listIdal = dal.GetListOfBaseStation(predicate).ToList();
             foreach (var item in listIdal)
             {

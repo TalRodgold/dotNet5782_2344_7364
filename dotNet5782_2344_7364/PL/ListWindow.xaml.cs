@@ -36,7 +36,7 @@ namespace PL
             Filter2.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
             StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
-            for (int i = 0; i < 11; i++)
+            for (int i = 1; i < 11; i++)
             {
                 NumOfFreeChargingSlots.Items.Add(i);
             }
@@ -129,8 +129,6 @@ namespace PL
 
         private void DisplayChargingSlots_SelectionChange(object sender, SelectionChangedEventArgs e)
         {
-            if (NumOfFreeChargingSlots.SelectedIndex == -1)
-            {
                 if (DisplayChargingSlots.SelectedIndex == 0)
                 {
                     ListBaseStation.ItemsSource = bl.GetListOfBaseStationsToList();
@@ -141,12 +139,12 @@ namespace PL
                     ListBaseStation.ItemsSource = bl.GetListOfFreeChargingStations();
 
                 }
-            }
+
         }
 
         private void NumOfFreeChargingSlots_SelectionChange(object sender, SelectionChangedEventArgs e)
         {
-
+                ListBaseStation.ItemsSource = bl.GetListOfFreeChargingStations(NumOfFreeChargingSlots.SelectedIndex + 1);
         }
     }
 }
