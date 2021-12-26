@@ -46,5 +46,6 @@ namespace BlApi
         ObservableCollection<BaseStationToList> GetListOfBaseStationsToList(); //Get list of base stations
         ObservableCollection<DroneToList> GetListOfDronesToList();//Get list of drones
         List<DroneToList> GetListOfDroneToListByPredicat(Predicate<DroneToList> predicate, Predicate<DroneToList> predicate1=null); //Get list of drones by predicat
+        DroneToList convertDroneBlToList(Drone blDrone); //Convert drone from bl to list
     }
 }

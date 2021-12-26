@@ -9,17 +9,17 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using BlApi;
+using System.Collections.ObjectModel;
 
 namespace PL
 {
-
     public class Refresh : INotifyPropertyChanged
     {
         private IBl bl = BlFactory.GetBl("BL");
-        public BO.CustomerToList CustomerUpdate
+        public ObservableCollection<BO.CustomerToList> CustomerUpdate
         {
             get { return CustomerUpdate; }
-            set { CustomerUpdate = value; }
+            set { CustomerUpdate = bl.GetListOfCustomerToList(); }
         }
         public event PropertyChangedEventHandler PropertyChanged;
         public void funcPropertyChanged(string PropertyName)
@@ -29,6 +29,7 @@ namespace PL
                 PropertyChanged(this, new PropertyChangedEventArgs(PropertyName));
             }
         }
-     
+
     }
+
 }

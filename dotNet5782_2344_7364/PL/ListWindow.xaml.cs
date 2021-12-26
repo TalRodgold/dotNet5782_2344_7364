@@ -55,7 +55,7 @@ namespace PL
       
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow().Show();
+            new DroneWindow(ref DCollection).Show();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)

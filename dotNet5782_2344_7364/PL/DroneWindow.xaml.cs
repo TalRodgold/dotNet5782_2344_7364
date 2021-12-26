@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
 using BlApi;
 namespace PL
 {
@@ -21,9 +22,11 @@ namespace PL
     {
         private IBl bl = BlFactory.GetBl("BL");
         public BO.Drone drone;
-        public DroneWindow() // constructor for adding new drone
+        ObservableCollection<BO.DroneToList> drones = new ObservableCollection<BO.DroneToList>();
+        public DroneWindow(ref ObservableCollection<BO.DroneToList> droneToLists) // constructor for adding new drone
         {
             InitializeComponent();
+            drones = droneToLists;
             AddButton.Visibility = Visibility.Visible; // make butten visible
             ExitButton.Visibility = Visibility.Hidden;
             // enable erelevent buttons and text boxes
@@ -103,6 +106,7 @@ namespace PL
             {
                 BO.Drone newDrone = new BO.Drone(int.Parse(Id.Text), Model.Text, (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem);
                 bl.AddDrone(newDrone, Convert.ToInt32(BaseStationTxtBox.Text));
+                drones.Add(bl.convertDroneBlToList(newDrone));
                 MessageBox.Show("Drone added sucsecfully");
                 this.Close();
             }

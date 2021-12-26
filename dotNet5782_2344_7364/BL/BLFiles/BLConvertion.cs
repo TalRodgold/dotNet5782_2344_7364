@@ -86,10 +86,18 @@ namespace BlApi
         /// </summary>
         /// <param name="blDrone"></param>
         /// <returns></returns>
-        private DroneToList convertDroneBlToList(Drone blDrone)//Convert drone from bl to list
+        public DroneToList convertDroneBlToList(Drone blDrone)//Convert drone from bl to list
         {
-            DroneToList newDrone = new DroneToList(blDrone.Id, blDrone.Model, blDrone.Weight, blDrone.Battery, blDrone.DroneStatuses, blDrone.CurrentLocation, blDrone.ParcelInTransit.Id);
-            return newDrone;
+            if (blDrone.ParcelInTransit == null)
+            {
+                DroneToList newDrone = new DroneToList(blDrone.Id, blDrone.Model, blDrone.Weight, blDrone.Battery, blDrone.DroneStatuses, blDrone.CurrentLocation, null);
+                return newDrone;
+            }
+            else
+            {
+                DroneToList newDrone = new DroneToList(blDrone.Id, blDrone.Model, blDrone.Weight, blDrone.Battery, blDrone.DroneStatuses, blDrone.CurrentLocation, blDrone.ParcelInTransit.Id);
+                return newDrone;
+            }
         }
         #endregion
         #region//Convert from dal customer to bl customer

@@ -56,9 +56,9 @@ namespace PL
 
         private void AddDrone_Click(object sender, RoutedEventArgs e) // add a drone
         {
-            DroneWindow droneWindow = new DroneWindow();
-            droneWindow.Closed += CloseWindow;
-            droneWindow.Show();
+            ///DroneWindow droneWindow = new DroneWindow();
+            //droneWindow.Closed += CloseWindow;
+            //droneWindow.Show();
 
         }
 
@@ -73,7 +73,7 @@ namespace PL
 
         private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e) // open drone window
         {
-            new DroneWindow().Show();
+           // new DroneWindow().Show();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e) // exit
