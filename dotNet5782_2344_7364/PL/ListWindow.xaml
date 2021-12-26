@@ -98,7 +98,7 @@
 
 
 
-                    <ListView x:Name="ListDrone" ItemsSource="{Binding}" Foreground="Snow" MouseDoubleClick="Drone_DoubleClick" Margin="0,28,0,0">
+                    <ListView x:Name="ListDrone" ItemsSource="{Binding Mode=OneWay}" Foreground="Snow" MouseDoubleClick="Drone_DoubleClick" Margin="0,28,0,0">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/Drone.jpg"/>
                         </ListView.Background>

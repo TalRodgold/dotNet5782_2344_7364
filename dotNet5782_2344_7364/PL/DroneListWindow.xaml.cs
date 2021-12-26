@@ -56,9 +56,9 @@ namespace PL
 
         private void AddDrone_Click(object sender, RoutedEventArgs e) // add a drone
         {
-            DroneWindow droneWindow = new DroneWindow();
-            droneWindow.Closed += CloseWindow;
-            droneWindow.Show();
+            //DroneWindow droneWindow = new DroneWindow();
+            //droneWindow.Closed += CloseWindow;
+            //droneWindow.Show();
 
         }
 
@@ -67,13 +67,13 @@ namespace PL
 
             BO.DroneToList drone = (BO.DroneToList)DroneListView.SelectedItem;
             DroneWindow droneWindow = new DroneWindow(drone.Id);
-            droneWindow.Closed += CloseWindow;
+            //droneWindow.Closed += CloseWindow;
             droneWindow.Show();
         }
 
         private void DroneListView_SelectionChanged(object sender, SelectionChangedEventArgs e) // open drone window
         {
-            new DroneWindow().Show();
+           // new DroneWindow().Show();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e) // exit
@@ -102,7 +102,7 @@ namespace PL
 
         private void CloseWindow(object sender, EventArgs e)
         {
-            Refresh();
+           // Refresh();
         }
 
         private void refreshButton_click(object sender, RoutedEventArgs e)

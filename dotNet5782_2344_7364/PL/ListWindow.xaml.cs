@@ -24,7 +24,8 @@ namespace PL
         private ObservableCollection<BO.BaseStationToList> BsCollection= new ObservableCollection<BO.BaseStationToList>();
         private ObservableCollection<BO.ParcelToList> PCollection = new ObservableCollection<BO.ParcelToList>();
         private ObservableCollection<BO.CustomerToList> CCollection = new ObservableCollection<BO.CustomerToList>();
-        private ObservableCollection<BO.DroneToList> DCollection = new ObservableCollection<BO.DroneToList>();
+        public ObservableCollection<BO.DroneToList> DCollection = new ObservableCollection<BO.DroneToList>();
+        
         public ListWindow()
         {
             InitializeComponent();
@@ -55,7 +56,7 @@ namespace PL
       
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow().Show();
+            new DroneWindow(ref DCollection).Show();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
