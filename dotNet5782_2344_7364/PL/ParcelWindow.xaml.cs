@@ -107,7 +107,7 @@ namespace PL
 
         private void Drone_Click(object sender, RoutedEventArgs e)
         {
-            if ((AssociationTime != null) && (DeliveryTime.Text.Length == 0))
+            if ((AssociationTime != null) && (DeliveryTime.Text.Length == 0)&&(parcel.DroneInParcel!=null))
             {
                 new DroneWindow(bl.GetDroneById(parcel.DroneInParcel.Id).Id).Show();
             }

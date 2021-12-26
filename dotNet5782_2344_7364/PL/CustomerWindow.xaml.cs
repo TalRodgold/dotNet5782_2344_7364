@@ -27,14 +27,23 @@ namespace PL
         public BO.Customer customer;
         ObservableCollection<BO.CustomerToList> customerCollection = new ObservableCollection<BO.CustomerToList>();
 
+
+        public CustomerWindow()
+        {
+            InitializeComponent();
+            UpdateButton.Visibility = Visibility.Hidden;
+            
+        }
         public CustomerWindow(ref ObservableCollection<BO.CustomerToList> customerToList)
         {
             InitializeComponent();
+            AddButton.Visibility = Visibility.Hidden;
             customerCollection = customerToList;
         }
         public CustomerWindow(int? id)
         {
             InitializeComponent();
+            AddButton.Visibility = Visibility.Hidden;
             customer = bl.GetCustomerById(id);
             MainGrid.DataContext = customer;
 
@@ -65,6 +74,16 @@ namespace PL
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Close();
+        }
+
+        private void AddButton_Click(object sender, RoutedEventArgs e)
+        {
+            customer.Id = int.Parse(Id.Text);
+            customer.Name = Name.Text;
+            customer.Phone = PhoneNumber.Text;
+            customer.Location=new BO.Location((double)Longtitude.Text,double.Parse(latitude.Text))
+
+            bl.AddCustomer()
         }
     }
 }

@@ -128,7 +128,7 @@
                         <ColumnDefinition Width="86*"/>
                         <ColumnDefinition Width="311*"/>
                     </Grid.ColumnDefinitions>
-                    <ListView x:Name="ListCustomer" ItemsSource="{Binding Path=RefreshFunc, Mode=TwoWay}" Foreground="Snow" MouseDoubleClick="Customer_DoubleClick" Grid.ColumnSpan="2">
+                    <ListView x:Name="ListCustomer" ItemsSource="{Binding Mode=OneWay}" Foreground="Snow" MouseDoubleClick="Customer_DoubleClick" Grid.ColumnSpan="2">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/Customer.jpg"/>
                         </ListView.Background>

@@ -67,7 +67,7 @@ namespace PL
                 }
                 else if (EnteringComboBox.SelectedIndex == 2)
                 {
-                    new CustomerWindow().Show();
+                    new CustomerWindow(null).Show();
                 }
             }
             catch(Exception exception)
