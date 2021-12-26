@@ -41,7 +41,14 @@
         <TextBox Name="FreeChargingSlots" Text="{Binding Path=NumberOfFreeChargingSlots}" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
         <TextBox Name="Longtitude" Text="{Binding Path=Location, Converter={StaticResource ConvertLongitudeToSexa}}" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
         <TextBox Name="Latitude" Text="{Binding Path=Location, Converter={StaticResource ConvertLatitudeToSexa} }" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Center" BorderBrush="Black" Height="26" Width="120" FontSize="14" Background="#FF7EC6E6"/>
-
+        <Button x:Name="AddButton" Content="Add" Grid.Row="10" Grid.Column="3" HorizontalAlignment="Left" VerticalAlignment="Center" Width="76" Height="48" Click="AddButton_Click" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Margin="114,0,0,0">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
+                    <GradientStop Color="#FF00F73F" Offset="1"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
         <Button x:Name="UpdateButton" Content="Update" Grid.Row="4" Grid.Column="3"  HorizontalAlignment="Center"  VerticalAlignment="Center" Width="200" Height="33" Click="UpdateButton_Click" FontSize="15" FontWeight="Bold" FontFamily="Sitka Display">
             <Button.Background>
                 <RadialGradientBrush>

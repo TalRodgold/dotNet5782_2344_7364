@@ -32,12 +32,15 @@ namespace PL
         {
             InitializeComponent();
             UpdateButton.Visibility = Visibility.Hidden;
-            
+            ParcelFromCustomer.IsEnabled = false;
+            ParcelToCustomer.IsEnabled = false;
         }
         public CustomerWindow(ref ObservableCollection<BO.CustomerToList> customerToList)
         {
             InitializeComponent();
-            AddButton.Visibility = Visibility.Hidden;
+            UpdateButton.Visibility = Visibility.Hidden;
+            ParcelFromCustomer.IsEnabled = false;
+            ParcelToCustomer.IsEnabled = false;
             customerCollection = customerToList;
         }
         public CustomerWindow(int? id)
@@ -69,6 +72,7 @@ namespace PL
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             bl.UpdateCustomer(customer.Id,Name.Text, PhoneNumber.Text);
+            Close();
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -78,12 +82,20 @@ namespace PL
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
-            customer.Id = int.Parse(Id.Text);
-            customer.Name = Name.Text;
-            customer.Phone = PhoneNumber.Text;
-            customer.Location=new BO.Location((double)Longtitude.Text,double.Parse(latitude.Text))
+            try
+            {
+                int? nullableID = int.Parse(Id.Text);
+                BO.Location newLocation = new BO.Location(Convert.ToDouble(Longtitude.Text), Convert.ToDouble(Latitude.Text));
+                customer = new BO.Customer(nullableID, Name.Text, PhoneNumber.Text, newLocation);
+                bl.AddCustomer(customer);
+                Close();
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show(exception.ToString());
 
-            bl.AddCustomer()
+            }
+           
         }
     }
 }

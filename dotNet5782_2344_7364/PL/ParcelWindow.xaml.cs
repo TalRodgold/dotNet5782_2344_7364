@@ -31,7 +31,14 @@ namespace PL
             parcelCollection = parcelToList;
             AddButton.Visibility = Visibility.Visible; // make butten visible
             CancelButton.Visibility = Visibility.Visible;
-
+            DeleteButton.Visibility = Visibility.Hidden;
+            ExitButton.Visibility = Visibility.Hidden;
+            Id.IsEnabled = false;
+            Drone.IsEnabled = false;
+            CreatingTime.IsEnabled = false;
+            AssociationTime.IsEnabled = false;
+            PickupTime.IsEnabled = false;
+            DeliveryTime.IsEnabled = false;
             //ExitButton.Visibility = Visibility.Hidden;
             // enable erelevent buttons and text boxes
             //UpdateButton.IsEnabled = false;
@@ -132,6 +139,8 @@ namespace PL
                     throw new InvalidOperationException("The parcel in delivery proces");
                 }
                 bl.DeleteParcel(parcel.Id);
+                MessageBox.Show("Parcel deleted sucsecfully");
+                Close();
             }
             catch (Exception exception)
             {
@@ -156,8 +165,8 @@ namespace PL
             try
             {
                 bl.AddParcel(new BO.CustomerInParcel(int.Parse(senderT.Text), bl.GetCustomerById(int.Parse(senderT.Text)).Name), new BO.CustomerInParcel(int.Parse(reciverT.Text), bl.GetCustomerById(int.Parse(reciverT.Text)).Name), (BO.Enums.WeightCategories)WeightSelector.SelectedItem, (BO.Enums.Priorities)PrioritieSelector.SelectedItem);
-                MessageBox.Show("Drone added sucsecfully");
-                this.Close();
+                MessageBox.Show("Parcel added sucsecfully");
+                Close();
             }
             catch (Exception exception)
             {

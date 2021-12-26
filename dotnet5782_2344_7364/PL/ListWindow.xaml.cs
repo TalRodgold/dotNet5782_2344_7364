@@ -175,5 +175,10 @@ namespace PL
         {
 
         }
+
+        private void refreshBaseStation_button(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

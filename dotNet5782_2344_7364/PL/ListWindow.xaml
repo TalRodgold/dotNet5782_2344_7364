@@ -27,7 +27,7 @@
                             <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
                         </ListView.Background>
                     </ListView>
-                    <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Margin="656,124,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="AddBaseStation_Click">
+                    <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Margin="656,124,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="refreshBaseStation_button">
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFB3ECC2" Offset="0.499"/>

@@ -33,21 +33,21 @@ namespace PL
             EnteringComboBox.Items.Add("New customer");
             EnteringComboBox.SelectedIndex = 0;
         }
-        private void enterinOption_change(object sender, DependencyPropertyChangedEventArgs e)
-        {
-            if (EnteringComboBox.SelectedIndex == 0)
-            {
-                DroneListWindow droneListWindow = new DroneListWindow();
-            }
-            else if (EnteringComboBox.SelectedIndex == 1)
-            {
-               CustomerWindow customerWindow = new CustomerWindow(int.Parse(CustomerId.SelectedText));
-            }
-            else if (EnteringComboBox.SelectedIndex == 2)
-            {
-               CustomerWindow customerWindow = new CustomerWindow();
-            }
-        }
+        //private void enterinOption_change(object sender, DependencyPropertyChangedEventArgs e)
+        //{
+        //    if (EnteringComboBox.SelectedIndex == 0)
+        //    {
+        //        DroneListWindow droneListWindow = new DroneListWindow();
+        //    }
+        //    else if (EnteringComboBox.SelectedIndex == 1)
+        //    {
+        //       CustomerWindow customerWindow = new CustomerWindow(int.Parse(CustomerId.SelectedText));
+        //    }
+        //    else if (EnteringComboBox.SelectedIndex == 2)
+        //    {
+        //       CustomerWindow customerWindow = new CustomerWindow();
+        //    }
+        //}
 
         private void StartButton_Click(object sender, RoutedEventArgs e)
         {
@@ -61,17 +61,18 @@ namespace PL
                 {
                     if(CustomerId.Text.Length==0)
                     {
-
+                        throw new ArgumentException("NO ID ENTERED");
                     }
                     new CustomerWindow(Int32.Parse(CustomerId.Text)).Show();
                 }
                 else if (EnteringComboBox.SelectedIndex == 2)
                 {
-                    new CustomerWindow(null).Show();
+                    new CustomerWindow().Show();
                 }
             }
             catch(Exception exception)
             {
+                MessageBox.Show(exception.ToString());
 
             }
         }
