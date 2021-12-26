@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
+
 using BlApi;
 
 namespace PL
@@ -23,9 +25,12 @@ namespace PL
     {
         private IBl bl = BlFactory.GetBl("BL");
         public BO.Customer customer;
-        public CustomerWindow()
+        ObservableCollection<BO.CustomerToList> customerCollection = new ObservableCollection<BO.CustomerToList>();
+
+        public CustomerWindow(ref ObservableCollection<BO.CustomerToList> customerToList)
         {
             InitializeComponent();
+            customerCollection = customerToList;
         }
         public CustomerWindow(int? id)
         {
@@ -55,6 +60,11 @@ namespace PL
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
             bl.UpdateCustomer(customer.Id,Name.Text, PhoneNumber.Text);
+        }
+
+        private void Exit_Click(object sender, RoutedEventArgs e)
+        {
+            Close();
         }
     }
 }

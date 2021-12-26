@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using BlApi;
+using System.Collections.ObjectModel;
+
 namespace PL
 {
     /// <summary>
@@ -21,9 +23,12 @@ namespace PL
     {
         private IBl bl = BlFactory.GetBl("BL");
         public BO.Parcel parcel;
-        public ParcelWindow() // constructor for adding new drone
+        ObservableCollection<BO.ParcelToList> parcelCollection = new ObservableCollection<BO.ParcelToList>();
+
+        public ParcelWindow(ref ObservableCollection<BO.ParcelToList> parcelToList) // constructor for adding new drone
         {
             InitializeComponent();
+            parcelCollection = parcelToList;
             AddButton.Visibility = Visibility.Visible; // make butten visible
             CancelButton.Visibility = Visibility.Visible;
 

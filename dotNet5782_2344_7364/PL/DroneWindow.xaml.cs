@@ -13,7 +13,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using BlApi;
-using System.Collections.ObjectModel;
 namespace PL
 {
     /// <summary>

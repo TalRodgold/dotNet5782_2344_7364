@@ -21,9 +21,9 @@ namespace PL
     public partial class ListWindow : Window
     {
         private IBl bl = BlFactory.GetBl("BL");
-        private ObservableCollection<BO.BaseStationToList> BsCollection= new ObservableCollection<BO.BaseStationToList>();
-        private ObservableCollection<BO.ParcelToList> PCollection = new ObservableCollection<BO.ParcelToList>();
-        private ObservableCollection<BO.CustomerToList> CCollection = new ObservableCollection<BO.CustomerToList>();
+        public ObservableCollection<BO.BaseStationToList> BsCollection= new ObservableCollection<BO.BaseStationToList>();
+        public ObservableCollection<BO.ParcelToList> PCollection = new ObservableCollection<BO.ParcelToList>();
+        public ObservableCollection<BO.CustomerToList> CCollection = new ObservableCollection<BO.CustomerToList>();
         public ObservableCollection<BO.DroneToList> DCollection = new ObservableCollection<BO.DroneToList>();
         
         public ListWindow()
@@ -66,17 +66,17 @@ namespace PL
 
         private void AddBaseStation_Click(object sender, RoutedEventArgs e)
         {
-            new BaseStationWindow().Show();
+            new BaseStationWindow(ref BsCollection).Show();
         }
 
         private void AddParcel_Click(object sender, RoutedEventArgs e)
         {
-            new ParcelWindow().Show();
+            new ParcelWindow(ref PCollection).Show();
         }
 
         private void AddCustomer_Click(object sender, RoutedEventArgs e) //aa
         {
-            new CustomerWindow().Show();
+            new CustomerWindow(ref CCollection).Show();
         }
 
         private void BaseStation_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -155,6 +155,24 @@ namespace PL
         private void NumOfFreeChargingSlots_SelectionChange(object sender, SelectionChangedEventArgs e)
         {
                 ListBaseStation.ItemsSource = bl.GetListOfFreeChargingStations(NumOfFreeChargingSlots.SelectedIndex + 1);
+        }
+
+        private void SenderOrReciver_SelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+            if (SenderOrReciver.SelectedIndex == 0)
+            {
+                //ListParcel.ItemsSource = bl.GetListOfParcelToList()
+            }
+        }
+
+        private void Filter2_SelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Filter1_SelectionChange(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

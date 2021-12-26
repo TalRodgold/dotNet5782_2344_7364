@@ -11,6 +11,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Collections.ObjectModel;
+
 using BlApi;
 namespace PL
 {
@@ -20,12 +22,13 @@ namespace PL
     public partial class BaseStationWindow : Window
     {
         private IBl bl = BlFactory.GetBl("BL");
+        ObservableCollection<BO.BaseStationToList> baseStationCollection = new ObservableCollection<BO.BaseStationToList>();
         public BO.BaseStation baseStation;
         public int occupied;
-        public BaseStationWindow()
+        public BaseStationWindow(ref ObservableCollection<BO.BaseStationToList> baseStationToList)
         {
             InitializeComponent();
-           // MainGrid.DataContext = baseStation;
+            baseStationCollection = baseStationToList;
         }
         public BaseStationWindow(int? id, int oc)
         {
