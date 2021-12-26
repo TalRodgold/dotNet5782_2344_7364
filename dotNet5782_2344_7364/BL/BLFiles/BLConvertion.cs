@@ -98,6 +98,7 @@ namespace BlApi
                 DroneToList newDrone = new DroneToList(blDrone.Id, blDrone.Model, blDrone.Weight, blDrone.Battery, blDrone.DroneStatuses, blDrone.CurrentLocation, blDrone.ParcelInTransit.Id);
                 return newDrone;
             }
+            
         }
         #endregion
         #region//Convert from dal customer to bl customer

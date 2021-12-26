@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using BlApi;
+using System.Collections.ObjectModel;
 namespace PL
 {
     /// <summary>
@@ -23,7 +24,7 @@ namespace PL
         private IBl bl = BlFactory.GetBl("BL");
         public BO.Drone drone;
         ObservableCollection<BO.DroneToList> drones = new ObservableCollection<BO.DroneToList>();
-        public DroneWindow(ref ObservableCollection<BO.DroneToList> droneToLists) // constructor for adding new drone
+        public DroneWindow(ref ObservableCollection<BO.DroneToList>droneToLists ) // constructor for adding new drone
         {
             InitializeComponent();
             drones = droneToLists;
@@ -106,7 +107,6 @@ namespace PL
             {
                 BO.Drone newDrone = new BO.Drone(int.Parse(Id.Text), Model.Text, (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem);
                 bl.AddDrone(newDrone, Convert.ToInt32(BaseStationTxtBox.Text));
-                drones.Add(bl.convertDroneBlToList(newDrone));
                 MessageBox.Show("Drone added sucsecfully");
                 this.Close();
             }
