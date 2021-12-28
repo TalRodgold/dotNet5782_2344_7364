@@ -14,7 +14,7 @@ namespace BO
         public int? Id { set; get; } = null;
         public string Name { set; get; }
         public int FreeChargingSlots { set; get; }
-        public int OccupiedChargingSlots { set; get; }
+        public int OccupiedChargingSlots { set; get; }//
         public override string ToString()
         {
             return $" Base station #{Id}: \n Name = {Name} \n Free charging slots = {FreeChargingSlots} \n Occupied charging slots = {OccupiedChargingSlots} \n ";
