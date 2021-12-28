@@ -33,10 +33,7 @@ namespace PL
             DisplayChargingSlots.Items.Add("All");
             DisplayChargingSlots.Items.Add("Only free charging slots");
             DisplayChargingSlots.SelectedIndex = 0;
-            SenderOrReciver.Items.Add("sender");
-            SenderOrReciver.Items.Add("reciver");
-            Filter1.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
-            Filter2.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
+          
             StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
             MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
             for (int i = 1; i < 11; i++)
@@ -74,39 +71,38 @@ namespace PL
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
             DroneWindow droneWindow = new DroneWindow();
-            droneWindow.AddButton.Click += updateDroneList;
+            droneWindow.AddButton.Click += updateDrones;
             droneWindow.Show();
             
         }
-        private void updateDroneList (object sender, EventArgs e)
+        private void AddBaseStation_Click(object sender, RoutedEventArgs e)
         {
-            DCollection.Clear();
-            foreach (var item in bl.GetListOfDronesToList())
-            {
-                DCollection.Add(item);
-            } 
-            
+            BaseStationWindow baseStationWindow = new BaseStationWindow();
+            baseStationWindow.AddButton.Click += updateStation;
+            baseStationWindow.Show();
         }
+
+        private void AddParcel_Click(object sender, RoutedEventArgs e)
+        {
+            ParcelWindow parcelWindow = new ParcelWindow();
+            parcelWindow.AddButton.Click += updateParcel;
+            parcelWindow.Show();
+        }
+
+        private void AddCustomer_Click(object sender, RoutedEventArgs e) //aa
+        {
+            CustomerWindow customerWindow = new CustomerWindow();
+            customerWindow.AddButton.Click += updateCustomer;
+            customerWindow.Show();
+        }
+  
 
         private void Exit_Click(object sender, RoutedEventArgs e)
         {
             Close();
         }
 
-        private void AddBaseStation_Click(object sender, RoutedEventArgs e)
-        {
-            new BaseStationWindow().Show();
-        }
-
-        private void AddParcel_Click(object sender, RoutedEventArgs e)
-        {
-            new ParcelWindow().Show();
-        }
-
-        private void AddCustomer_Click(object sender, RoutedEventArgs e) //aa
-        {
-            new CustomerWindow().Show();
-        }
+       
 
         private void BaseStation_DoubleClick(object sender, MouseButtonEventArgs e)
         {
@@ -117,15 +113,6 @@ namespace PL
             baseStationWindow.Show();
 
         }
-        private void updateStation(object sender, EventArgs e)
-        {
-            BsCollection.Clear();
-            foreach (var item in bl.GetListOfBaseStationsToList())
-            {
-                BsCollection.Add(item);
-            }
-            ListBaseStation.ItemsSource = BsCollection;
-        }
         private void Parcel_DoubleClick(object sender, MouseButtonEventArgs e)
         {
 
@@ -133,29 +120,40 @@ namespace PL
             ParcelWindow parcelWindow = new ParcelWindow(parcel.Id);
             parcelWindow.Show();
         }
-
         private void Drone_DoubleClick(object sender, MouseButtonEventArgs e)
         {
             BO.DroneToList drone = (BO.DroneToList)ListDrone.SelectedItem;
-            DroneWindow droneWindow = new DroneWindow(drone.Id); //---------------------------------------
-            droneWindow.Show();
+            DroneWindow droneWindow = new DroneWindow(drone.Id);
             droneWindow.UpdateButton.Click += updateDrones;
-        }
-        private void updateDrones(object sender, EventArgs e)
-        {
-            DCollection.Clear();
-            foreach (var item in bl.GetListOfDronesToList())
-            {
-                DCollection.Add(item);
-            }
+            droneWindow.Show();
+           
         }
         private void Customer_DoubleClick(object sender, MouseButtonEventArgs e)
         {
 
             BO.CustomerToList customer = (BO.CustomerToList)ListCustomer.SelectedItem;
             CustomerWindow customerWindow = new CustomerWindow(customer.Id);
+            customerWindow.UpdateButton.Click += updateCustomer;
             customerWindow.Show();
         }
+        private void updateStation(object sender, EventArgs e)
+        {
+            RefreshBaseStationFunc();
+        }
+        private void updateCustomer(object sender, EventArgs e)
+        {
+            RefreshCustomerFunc();
+        }
+
+        private void updateDrones(object sender, EventArgs e)
+        {
+            RefreshDroneFunc();
+        }
+        private void updateParcel(object sender, EventArgs e)
+        {
+            RefreshParcelFunc();
+        }
+
         private void MaxWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) // combo box to select by weight categories
         {
             if (StatusSelector.SelectedIndex == -1)
@@ -171,6 +169,7 @@ namespace PL
 
         private void StatusSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) // combo box to select by status
         {
+
             if (MaxWeightSelector.SelectedIndex == -1)
             {
                 ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
@@ -195,33 +194,142 @@ namespace PL
                 }
 
         }
+        
 
         private void NumOfFreeChargingSlots_SelectionChange(object sender, SelectionChangedEventArgs e)
         {
                 ListBaseStation.ItemsSource = bl.GetListOfFreeChargingStations(NumOfFreeChargingSlots.SelectedIndex + 1);
         }
 
-        private void SenderOrReciver_SelectionChange(object sender, SelectionChangedEventArgs e)
+        private void GroupByStatus_click(object sender, RoutedEventArgs e)
         {
-            if (SenderOrReciver.SelectedIndex == 0)
+            var groups = bl.GroupingStatuses();
+            List<BO.DroneToList> list = new List<BO.DroneToList>();
+            foreach (var item in groups)
             {
-                //ListParcel.ItemsSource = bl.GetListOfParcelToList()
+                foreach (var innerItem in item)
+                {
+                    list.Add(innerItem);
+                }
             }
+            ListDrone.ItemsSource = list.ToList();
         }
 
-        private void Filter2_SelectionChange(object sender, SelectionChangedEventArgs e)
+        private void GroupByWeight_Click(object sender, RoutedEventArgs e)
         {
-
+            var groups = bl.GroupingWeight();
+            List<BO.DroneToList> list = new List<BO.DroneToList>();
+            foreach (var item in groups)
+            {
+                foreach (var innerItem in item)
+                {
+                    list.Add(innerItem);
+                }
+            }
+            ListDrone.ItemsSource = list.ToList();
         }
 
-        private void Filter1_SelectionChange(object sender, SelectionChangedEventArgs e)
+        private void refreshDrone_button(object sender, RoutedEventArgs e)
         {
+            RefreshDroneFunc();
 
         }
 
         private void refreshBaseStation_button(object sender, RoutedEventArgs e)
         {
+            RefreshBaseStationFunc();
+        }
+        private void RefreshDroneFunc()
+        {
+            DCollection.Clear();
+            foreach (var item in bl.GetListOfDronesToList())
+            {
+                DCollection.Add(item);
+            }
+            ListDrone.ItemsSource = DCollection.ToList();
 
         }
+        private void RefreshParcelFunc()
+        {
+            PCollection.Clear();
+            foreach (var item in bl.GetListOfParcelToList())
+            {
+                PCollection.Add(item);
+            }
+            ListParcel.ItemsSource = PCollection.ToList();
+        }
+        private void RefreshBaseStationFunc()
+        {
+            BsCollection.Clear();
+            foreach (var item in bl.GetListOfBaseStationsToList())
+            {
+                BsCollection.Add(item);
+            }
+            ListBaseStation.ItemsSource = BsCollection.ToList();
+
+        }
+        private void RefreshCustomerFunc()
+        {
+            CCollection.Clear();
+            foreach (var item in bl.GetListOfCustomerToList())
+            {
+                CCollection.Add(item);
+            }
+            ListCustomer.ItemsSource = CCollection.ToList();
+
+        }
+
+        private void refreshParcel_button(object sender, RoutedEventArgs e)
+        {
+            RefreshParcelFunc();
+        }
+
+        private void refreshCustomer_button(object sender, RoutedEventArgs e)
+        {
+            RefreshCustomerFunc();
+        }
+
+        private void GroupByFreeChargingSlots_Click(object sender, RoutedEventArgs e)
+        {
+            var groups = bl.GroupingFreeChargingSlots();
+            List<BO.BaseStationToList> list = new List<BO.BaseStationToList>();
+            foreach (var item in groups)
+            {
+                foreach (var innerItem in item)
+                {
+                    list.Add(innerItem);
+                }
+            }
+            ListBaseStation.ItemsSource = list.ToList();
+        }
+
+        private void GroupBySender_click(object sender, RoutedEventArgs e)
+        {
+            var groups = bl.GroupingSender();
+            List<BO.ParcelToList> list = new List<BO.ParcelToList>();
+            foreach (var item in groups)
+            {
+                foreach (var innerItem in item)
+                {
+                    list.Add(innerItem);
+                }
+            }
+            ListParcel.ItemsSource = list.ToList();
+        }
+
+        private void GroupByReciver_click(object sender, RoutedEventArgs e)
+        {
+            var groups = bl.GroupingReciver();
+            List<BO.ParcelToList> list = new List<BO.ParcelToList>();
+            foreach (var item in groups)
+            {
+                foreach (var innerItem in item)
+                {
+                    list.Add(innerItem);
+                }
+            }
+            ListParcel.ItemsSource = list.ToList();
+        }
     }
+
 }

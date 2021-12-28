@@ -25,7 +25,7 @@ namespace PL
         public BO.Parcel parcel;
         ObservableCollection<BO.ParcelToList> parcelCollection = new ObservableCollection<BO.ParcelToList>();
 
-        public ParcelWindow() // constructor for adding new drone
+        public ParcelWindow() // constructor for adding new parcel
         {
             InitializeComponent();
             AddButton.Visibility = Visibility.Visible; // make butten visible
@@ -42,7 +42,7 @@ namespace PL
             // enable erelevent buttons and text boxes
             //UpdateButton.IsEnabled = false;
 
-            Id.IsEnabled = true;
+            
             SenderB.Visibility = Visibility.Hidden;//button
             ReciverB.Visibility = Visibility.Hidden;//button
             senderT.Visibility = Visibility.Visible;

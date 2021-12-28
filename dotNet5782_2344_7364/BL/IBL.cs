@@ -47,6 +47,12 @@ namespace BlApi
         IEnumerable<DroneToList> GetListOfDronesToList();//Get list of drones
         List<DroneToList> GetListOfDroneToListByPredicat(Predicate<DroneToList> predicate, Predicate<DroneToList> predicate1=null); //Get list of drones by predicat
         DroneToList convertDroneBlToList(Drone blDrone);
-       // BaseStationToList GetBaseStationToListById(int? id);//Get Customer to list by id
+        // BaseStationToList GetBaseStationToListById(int? id);//Get Customer to list by id
+        IEnumerable<IGrouping<Enums.WeightCategories, DroneToList>> GroupingWeight();
+        IEnumerable<IGrouping<Enums.DroneStatuses, DroneToList>> GroupingStatuses();
+        IEnumerable<IGrouping<int, BaseStationToList>> GroupingFreeChargingSlots();
+        IEnumerable<IGrouping<string, ParcelToList>> GroupingSender();
+        IEnumerable<IGrouping<string, ParcelToList>> GroupingReciver();
+
     }
 }

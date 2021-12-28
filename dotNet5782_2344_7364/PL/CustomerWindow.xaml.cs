@@ -88,6 +88,8 @@ namespace PL
                 BO.Location newLocation = new BO.Location(Convert.ToDouble(Longtitude.Text), Convert.ToDouble(Latitude.Text));
                 customer = new BO.Customer(nullableID, Name.Text, PhoneNumber.Text, newLocation);
                 bl.AddCustomer(customer);
+                MessageBox.Show("customer added sucsecfully");
+
                 Close();
             }
             catch (Exception exception)
