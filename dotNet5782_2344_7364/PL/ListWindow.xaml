@@ -6,9 +6,6 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="ListWindow" Height="450" Width="800">
-    <!--<Window.Resources>
-        <local:RefreshClass x:Key="RefreshFunc"/>
-    </Window.Resources>-->
     <Grid>
         <TabControl>
             <TabItem Name="Base_station" Header="Base station" HorizontalAlignment="Left" Margin="-2,-2,0,0" Width="95" FontWeight="Bold" FontSize="14">

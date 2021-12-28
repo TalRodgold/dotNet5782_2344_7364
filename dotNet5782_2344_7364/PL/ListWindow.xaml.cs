@@ -131,7 +131,6 @@ namespace PL
 
             BO.ParcelToList parcel = (BO.ParcelToList)ListParcel.SelectedItem;
             ParcelWindow parcelWindow = new ParcelWindow(parcel.Id);
-            //droneWindow.Closed += CloseWindow;
             parcelWindow.Show();
         }
 
