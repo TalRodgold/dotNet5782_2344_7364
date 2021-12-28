@@ -25,10 +25,11 @@ namespace PL
         ObservableCollection<BO.BaseStationToList> baseStationCollection = new ObservableCollection<BO.BaseStationToList>();
         public BO.BaseStation baseStation;
         public int occupied;
-        public BaseStationWindow(ref ObservableCollection<BO.BaseStationToList> baseStationToList)
+        public ListWindow li;
+
+        public BaseStationWindow()
         {
             InitializeComponent();
-            baseStationCollection = baseStationToList;
             UpdateButton.Visibility = Visibility.Hidden;
         }
         public BaseStationWindow(int? id, int oc)

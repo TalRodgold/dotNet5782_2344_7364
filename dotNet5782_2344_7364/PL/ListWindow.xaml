@@ -6,9 +6,9 @@
         xmlns:local="clr-namespace:PL"
         mc:Ignorable="d"
         Title="ListWindow" Height="450" Width="800">
-    <Window.Resources>
-        <local:Refresh x:Key="RefreshFunc"/>
-    </Window.Resources>
+    <!--<Window.Resources>
+        <local:RefreshClass x:Key="RefreshFunc"/>
+    </Window.Resources>-->
     <Grid>
         <TabControl>
             <TabItem Name="Base_station" Header="Base station" HorizontalAlignment="Left" Margin="-2,-2,0,0" Width="95" FontWeight="Bold" FontSize="14">
@@ -22,7 +22,7 @@
                     <Grid.Background>
                         <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
                     </Grid.Background>
-                    <ListView x:Name="ListBaseStation" ItemsSource="{Binding}" Foreground="Snow" MouseDoubleClick="BaseStation_DoubleClick" Margin="0,28,0,0">
+                    <ListView x:Name="ListBaseStation" ItemsSource="{Binding Base_station, Mode=OneWay}" Foreground="Snow" MouseDoubleClick="BaseStation_DoubleClick" Margin="0,28,0,0">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
                         </ListView.Background>

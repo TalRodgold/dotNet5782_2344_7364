@@ -29,14 +29,7 @@ namespace PL
         public ListWindow()
         {
             InitializeComponent();
-            //ListBaseStation.ItemsSource = bl.GetListOfBaseStationsToList().ToList();
-            //ListParcel.ItemsSource = bl.GetListOfParcelToList().ToList();
-            //ListCustomer.ItemsSource = bl.GetListOfCustomerToList().ToList();
-            //ListDrone.ItemsSource = bl.GetListOfDronesToList().ToList();
-            Base_station.DataContext = BsCollection = bl.GetListOfBaseStationsToList();
-            Parcel_Item.DataContext = PCollection = bl.GetListOfParcelToList();
-            Customer_Item.DataContext = CCollection = bl.GetListOfCustomerToList();
-            Drone_Item.DataContext = DCollection = bl.GetListOfDronesToList();
+            observe();
             DisplayChargingSlots.Items.Add("All");
             DisplayChargingSlots.Items.Add("Only free charging slots");
             DisplayChargingSlots.SelectedIndex = 0;
@@ -52,11 +45,48 @@ namespace PL
             }
 
         }
+        private void observe()
+        {
+            foreach (var item in bl.GetListOfDronesToList())
+            {
+                DCollection.Add(item);
+            }
+            foreach (var item in bl.GetListOfParcelToList())
+            {
+                PCollection.Add(item);
+            }
+            foreach (var item in bl.GetListOfCustomerToList())
+            {
+                CCollection.Add(item);
+            }
+            foreach (var item in bl.GetListOfBaseStationsToList())
+            {
+
+                BsCollection.Add(item);
+            }
+            Base_station.DataContext = BsCollection;
+            Parcel_Item.DataContext = PCollection;
+            Customer_Item.DataContext = CCollection;
+            Drone_Item.DataContext = DCollection;
+        }
 
       
         private void AddDrone_Click(object sender, RoutedEventArgs e)
         {
-            new DroneWindow(ref DCollection).Show();
+            DroneWindow droneWindow = new DroneWindow();
+            droneWindow.AddButton.Click += updateDroneList;
+            droneWindow.Show();
+            
+        }
+        private void updateDroneList (object sender, EventArgs e)
+        {
+            //Drone_Item.DataContext = bl.GetListOfDronesToList();
+            DCollection.Clear();
+            foreach (var item in bl.GetListOfDronesToList())
+            {
+                DCollection.Add(item);
+            } 
+            
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -66,17 +96,17 @@ namespace PL
 
         private void AddBaseStation_Click(object sender, RoutedEventArgs e)
         {
-            new BaseStationWindow(ref BsCollection).Show();
+            new BaseStationWindow().Show();
         }
 
         private void AddParcel_Click(object sender, RoutedEventArgs e)
         {
-            new ParcelWindow(ref PCollection).Show();
+            new ParcelWindow().Show();
         }
 
         private void AddCustomer_Click(object sender, RoutedEventArgs e) //aa
         {
-            new CustomerWindow(ref CCollection).Show();
+            new CustomerWindow().Show();
         }
 
         private void BaseStation_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -85,9 +115,19 @@ namespace PL
             BO.BaseStationToList baseStation = (BO.BaseStationToList)ListBaseStation.SelectedItem;
             BaseStationWindow baseStationWindow = new BaseStationWindow(baseStation.Id, baseStation.OccupiedChargingSlots);
             //droneWindow.Closed += CloseWindow;
+            baseStationWindow.UpdateButton.Click  += updateStation;
             baseStationWindow.Show();
-        }
 
+        }
+        private void updateStation(object sender, EventArgs e)
+        {
+            BsCollection.Clear();
+            foreach (var item in bl.GetListOfBaseStationsToList())
+            {
+                BsCollection.Add(item);
+            }
+            ListBaseStation.ItemsSource = BsCollection;
+        }
         private void Parcel_DoubleClick(object sender, MouseButtonEventArgs e)
         {
 
@@ -103,8 +143,16 @@ namespace PL
             DroneWindow droneWindow = new DroneWindow(drone.Id); //---------------------------------------
             //droneWindow.Closed += CloseWindow;
             droneWindow.Show();
+            droneWindow.UpdateButton.Click += updateDrones;
         }
-
+        private void updateDrones(object sender, EventArgs e)
+        {
+            DCollection.Clear();
+            foreach (var item in bl.GetListOfDronesToList())
+            {
+                DCollection.Add(item);
+            }
+        }
         private void Customer_DoubleClick(object sender, MouseButtonEventArgs e)
         {
 

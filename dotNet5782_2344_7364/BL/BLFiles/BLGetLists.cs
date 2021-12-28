@@ -18,7 +18,7 @@ namespace BlApi
         /// //Get list of base stations
         /// </summary>
         /// <returns></returns>
-        public List<BaseStation> GetListOfBaseStations()////Get list of base stations
+        public IEnumerable<BaseStation> GetListOfBaseStations()////Get list of base stations
         {
             List<BaseStation> list = new List<BaseStation>();
             foreach (var item in dal.GetListOfBaseStation())
@@ -33,7 +33,7 @@ namespace BlApi
         /// //Get list of base station to list
         /// </summary>
         /// <returns></returns>
-        public ObservableCollection<BaseStationToList> GetListOfBaseStationsToList()//Get list of base station to list
+        public IEnumerable<BaseStationToList> GetListOfBaseStationsToList()//Get list of base station to list
         {
             ObservableCollection<BaseStationToList> list = new ObservableCollection<BaseStationToList>();
             foreach (var item in dal.GetListOfBaseStation())
@@ -48,7 +48,7 @@ namespace BlApi
         /// Get list of drones
         /// </summary>
         /// <returns></returns>
-        public List<Drone> GetListOfDrones()//Get list of drones
+        public IEnumerable<Drone> GetListOfDrones()//Get list of drones
         {
             List<Drone> list = new List<Drone>();
             foreach (var item in dal.GetListOfDrone())
@@ -63,9 +63,9 @@ namespace BlApi
         /// Get list of drone to list
         /// </summary>
         /// <returns></returns>
-        public ObservableCollection<DroneToList> GetListOfDronesToList()//Get list of drone to list
+        public IEnumerable<DroneToList> GetListOfDronesToList()//Get list of drone to list
         {
-            ObservableCollection<DroneToList> list = new ObservableCollection<DroneToList>();
+            List<DroneToList> list = new List<DroneToList>();
             foreach (var item in dal.GetListOfDrone())
             {
                 list.Add(convertDroneBlToList(GetDroneById(item.Id)));
@@ -101,7 +101,7 @@ namespace BlApi
         /// //Get list of customers
         /// </summary>
         /// <returns></returns>
-        public List<Customer> GetListOfCustomers()//Get list of customers
+        public IEnumerable<Customer> GetListOfCustomers()//Get list of customers
         {
             List<Customer> list = new List<Customer>();
             foreach (var item in dal.GetListOfCustomer())
@@ -116,9 +116,9 @@ namespace BlApi
         /// //Get list of customers
         /// </summary>
         /// <returns></returns>
-        public ObservableCollection<CustomerToList> GetListOfCustomerToList()//Get list of customers
+        public IEnumerable<CustomerToList> GetListOfCustomerToList()//Get list of customers
         {
-            ObservableCollection<CustomerToList> list = new ObservableCollection<CustomerToList>();
+            List<CustomerToList> list = new List<CustomerToList>();
             foreach (var item in dal.GetListOfCustomer())
             {
                 list.Add(convertCustomerToCustomerTolist(GetCustomerById(item.Id)));
@@ -131,9 +131,9 @@ namespace BlApi
         /// Get list of parcel to list
         /// </summary>
         /// <returns></returns>
-        public ObservableCollection<ParcelToList> GetListOfParcelToList()//Get list of parcel to list
+        public IEnumerable<ParcelToList> GetListOfParcelToList()//Get list of parcel to list
         {
-            ObservableCollection<ParcelToList> list = new ObservableCollection<ParcelToList>();
+            List<ParcelToList> list = new List<ParcelToList>();
             foreach (var item in dal.GetListOfParcel())
             {
                 list.Add(convertParcelToParcelTolist(GetParcelById(item.Id)));
@@ -146,7 +146,7 @@ namespace BlApi
         /// Get list of parcels
         /// </summary>
         /// <returns></returns>
-        public List<Parcel> GetListOfParcels()//Get list of parcels
+        public IEnumerable<Parcel> GetListOfParcels()//Get list of parcels
         {
             List<Parcel> list = new List<Parcel>();
             foreach (var item in dal.GetListOfParcel())

@@ -22,11 +22,9 @@ namespace PL
     {
         private IBl bl = BlFactory.GetBl("BL");
         public BO.Drone drone;
-        ObservableCollection<BO.DroneToList> drones = new ObservableCollection<BO.DroneToList>();
-        public DroneWindow(ref ObservableCollection<BO.DroneToList>droneToLists ) // constructor for adding new drone
+        public DroneWindow() // constructor for adding new drone
         {
             InitializeComponent();
-            drones = droneToLists;
             AddButton.Visibility = Visibility.Visible; // make butten visible
             ExitButton.Visibility = Visibility.Hidden;
             // enable erelevent buttons and text boxes

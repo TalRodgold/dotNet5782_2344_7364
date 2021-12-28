@@ -25,10 +25,9 @@ namespace PL
         public BO.Parcel parcel;
         ObservableCollection<BO.ParcelToList> parcelCollection = new ObservableCollection<BO.ParcelToList>();
 
-        public ParcelWindow(ref ObservableCollection<BO.ParcelToList> parcelToList) // constructor for adding new drone
+        public ParcelWindow() // constructor for adding new drone
         {
             InitializeComponent();
-            parcelCollection = parcelToList;
             AddButton.Visibility = Visibility.Visible; // make butten visible
             CancelButton.Visibility = Visibility.Visible;
             DeleteButton.Visibility = Visibility.Hidden;

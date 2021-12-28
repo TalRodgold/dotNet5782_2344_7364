@@ -67,7 +67,7 @@ namespace BlApi
                     }
                     else//if there no have delivered parcel 
                     {
-                        List<BaseStation> baseTationList = GetListOfBaseStations();
+                        List<BaseStation> baseTationList = GetListOfBaseStations().ToList();
                         newDrone.CurrentLocation = baseTationList[rnd.Next(0, baseTationList.Count)].Location;
                         newDrone.Battery = calculateBattery(newDrone);
                         newDrone.NumberOfParcelInTransit = null;
