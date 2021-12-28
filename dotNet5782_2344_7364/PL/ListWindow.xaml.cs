@@ -80,7 +80,6 @@ namespace PL
         }
         private void updateDroneList (object sender, EventArgs e)
         {
-            //Drone_Item.DataContext = bl.GetListOfDronesToList();
             DCollection.Clear();
             foreach (var item in bl.GetListOfDronesToList())
             {
@@ -114,7 +113,6 @@ namespace PL
 
             BO.BaseStationToList baseStation = (BO.BaseStationToList)ListBaseStation.SelectedItem;
             BaseStationWindow baseStationWindow = new BaseStationWindow(baseStation.Id, baseStation.OccupiedChargingSlots);
-            //droneWindow.Closed += CloseWindow;
             baseStationWindow.UpdateButton.Click  += updateStation;
             baseStationWindow.Show();
 
@@ -141,7 +139,6 @@ namespace PL
         {
             BO.DroneToList drone = (BO.DroneToList)ListDrone.SelectedItem;
             DroneWindow droneWindow = new DroneWindow(drone.Id); //---------------------------------------
-            //droneWindow.Closed += CloseWindow;
             droneWindow.Show();
             droneWindow.UpdateButton.Click += updateDrones;
         }
@@ -158,7 +155,6 @@ namespace PL
 
             BO.CustomerToList customer = (BO.CustomerToList)ListCustomer.SelectedItem;
             CustomerWindow customerWindow = new CustomerWindow(customer.Id);
-            //droneWindow.Closed += CloseWindow;
             customerWindow.Show();
         }
         private void MaxWeightSelector_SelectionChanged(object sender, SelectionChangedEventArgs e) // combo box to select by weight categories

@@ -22,7 +22,6 @@ namespace PL
     public partial class BaseStationWindow : Window
     {
         private IBl bl = BlFactory.GetBl("BL");
-        ObservableCollection<BO.BaseStationToList> baseStationCollection = new ObservableCollection<BO.BaseStationToList>();
         public BO.BaseStation baseStation;
         public int occupied;
         public ListWindow li;
