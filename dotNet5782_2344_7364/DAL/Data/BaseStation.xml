@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BaseStations>
+  <BaseStations>
+    <Id>113</Id>
+    <Name>Givat_mordehai</Name>
+    <ChargeSlots>7</ChargeSlots>
+    <Longtitude>32.077855120371716</Longtitude>
+    <Latitude>35.76137254637076</Latitude>
+  </BaseStations>
+  <BaseStations>
+    <Id>6</Id>
+    <Name>Pissgat_zev</Name>
+    <ChargeSlots>8</ChargeSlots>
+    <Longtitude>32.60550622336519</Longtitude>
+    <Latitude>35.613147448384716</Latitude>
+  </BaseStations>
+</BaseStations>

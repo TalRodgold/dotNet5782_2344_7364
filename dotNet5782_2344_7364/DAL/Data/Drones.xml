@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Drones>
+  <Drones>
+    <Id>161</Id>
+    <Model>modle_number1</Model>
+    <MaxWeight>Heavy</MaxWeight>
+  </Drones>
+  <Drones>
+    <Id>155</Id>
+    <Model>modle_number2</Model>
+    <MaxWeight>Medium</MaxWeight>
+  </Drones>
+  <Drones>
+    <Id>151</Id>
+    <Model>modle_number3</Model>
+    <MaxWeight>Light</MaxWeight>
+  </Drones>
+  <Drones>
+    <Id>223</Id>
+    <Model>modle_number4</Model>
+    <MaxWeight>Light</MaxWeight>
+  </Drones>
+  <Drones>
+    <Id>185</Id>
+    <Model>modle_number5</Model>
+    <MaxWeight>Light</MaxWeight>
+  </Drones>
+</Drones>

@@ -170,7 +170,11 @@ namespace DalObjects
             {
                 CreatParcel();
             }
+            XmlTools.SaveBaseStations(BaseStationList);
             XmlTools.SaveCustomer(CustomerList);
+            XmlTools.SaveDrones(DroneList);
+            XmlTools.SaveDroneCharges(DroneChargeList);
+            XmlTools.SaveParcel(ParcelList);
             #endregion
         }
     }
