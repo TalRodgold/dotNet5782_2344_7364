@@ -4,6 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DO;
+using DalXml;
+using DalApi;
+
+
 namespace DalObjects
 {
     /// <summary>
@@ -11,6 +15,7 @@ namespace DalObjects
     /// </summary>
     public class DataSource
     {
+        XmlTools x=new XmlTools();
         /// <summary>
         /// this class holds all the data of the program in lists
         /// this class also creats random data to start program
@@ -165,6 +170,7 @@ namespace DalObjects
             {
                 CreatParcel();
             }
+            XmlTools.SaveCustomer(CustomerList);
             #endregion
         }
     }
