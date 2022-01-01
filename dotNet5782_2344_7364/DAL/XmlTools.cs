@@ -36,7 +36,7 @@ namespace DalObjects
                 throw;
             }
         }
-        public List<BaseStation> GetBaseStations()
+        internal static List<BaseStation> GetBaseStations()
         {
             LoadBaseStations();
             List<BaseStation> baseStations;
@@ -74,7 +74,7 @@ namespace DalObjects
                 throw;
             }
         }
-        public List<Customer> GetCustomers()
+        internal static List<Customer> GetCustomers()
         {
             LoadCustomers();
             List<Customer> Customers;
@@ -111,7 +111,7 @@ namespace DalObjects
                 throw;
             }
         }
-        public List<Drone> GetDrones()
+        internal static List<Drone> GetDrones()
         {
             LoadDrones();
             List<Drone> Drones;
@@ -146,9 +146,9 @@ namespace DalObjects
                 throw;
             }
         }
-        public List<DroneCharge> DroneCharges()
+        internal static List<DroneCharge> GetDroneCharges()
         {
-            LoadBaseStations();
+            LoadDroneCharges();
             List<DroneCharge> droneCharges;
             try
             {
@@ -181,7 +181,7 @@ namespace DalObjects
                 throw;
             }
         }
-        public List<Parcel> Parcels()
+        internal static List<Parcel> GetParcels()
         {
             LoadParcels();
             List<Parcel> parcels;
@@ -510,6 +510,22 @@ namespace DalObjects
             }
         }
         #endregion
+        #region// update drone model
+        internal static void UpdateDroneModel(int? id, string newModel) // update drones model
+        {
+            try
+            {
+                XElement droneElement = (from drone in DronePathRoot.Elements()
+                                           where int.Parse(drone.Element("Id").Value) == id
+                                           select drone).FirstOrDefault();
+                droneElement.Element("Name").Value = newModel;
+            }
+            catch (Exception)
+            {
+                throw new IdNotExsistException("drone", id);
+            }
+        }
+        #endregion
         #region// update base station name
         internal static void UpdateBaseStationName(int? id, string name)
         {
@@ -524,10 +540,123 @@ namespace DalObjects
             {
                 throw new IdNotExsistException("base station", id);
             }
-
         }
         #endregion
-
+        #region// update base stations number of free charging slots
+        internal static void UpdateBaseStationNumOfFreeDroneCharges(int? id, int newnum) // update base stations number of free charging slots
+        {
+            try
+            {
+                XElement stationElement = (from station in BaseStationPathRoot.Elements()
+                                           where int.Parse(station.Element("Id").Value) == id
+                                           select station).FirstOrDefault();
+                stationElement.Element("ChargeSlots").Value = newnum.ToString();
+            }
+            catch (Exception)
+            {
+                throw new IdNotExsistException("base station", id);
+            }
+        }
+        #endregion
+        #region// update number of charging slots
+        internal static void UpdateChargingSlotsNumber(int? id, int numberOfChargingSlots) // update number of charging slots
+        {
+            try
+            {
+                XElement stationElement = (from station in BaseStationPathRoot.Elements()
+                                           where int.Parse(station.Element("Id").Value) == id
+                                           select station).FirstOrDefault();
+                int count = GetListOfDroneCharge(element => element.StationId == id).ToList().Count();
+                if (count > numberOfChargingSlots) // if the new number is smaller than the number of drones charging currently
+                {
+                    throw new SizeProblemException("bigger", count); // throw exception
+                }
+                stationElement.Element("ChargeSlots").Value = (numberOfChargingSlots - count).ToString();
+            }
+            catch (Exception)
+            {
+                throw new IdNotExsistException("base station", id);
+            }
+        }
+        #endregion
+        #region// update customers name
+        internal static void UpdateCustomerName(int? id, string name)
+        {
+            try
+            {
+                XElement customerElement = (from customer in CustomerPathRoot.Elements()
+                                            where int.Parse(customer.Element("Id").Value) == id
+                                            select customer).FirstOrDefault();
+                customerElement.Element("Name").Value = name;
+            }
+            catch (Exception)
+            {
+                throw new IdNotExsistException("customer", id);
+            }
+        }
+        #endregion
+        #region//update customers phone number
+        internal static void UpdateCustomerPhone(int? id, string phone) // update customers phone number
+        {
+            try
+            {
+                XElement customerElement = (from customer in CustomerPathRoot.Elements()
+                                            where int.Parse(customer.Element("Id").Value) == id
+                                            select customer).FirstOrDefault();
+                customerElement.Element("Phone").Value = phone;
+            }
+            catch (Exception)
+            {
+                throw new IdNotExsistException("customer", id);
+            }
+        }
+        #endregion
+        #region//releas drone from charging
+        internal static void ReleaseDroneCharge(int? droneId, int? stationId) // releas drone from charging
+        {
+            try
+            {
+                if (!RemoveDroneCharge(droneId))
+                {
+                    throw new IdNotExsistException("drone", droneId);
+                }
+                XElement stationElement = (from station in BaseStationPathRoot.Elements()
+                                           where int.Parse(station.Element("Id").Value) == stationId
+                                           select station).FirstOrDefault();
+                stationElement.Element("ChargeSlots").Value = (int.Parse(stationElement.Element("ChargeSlots").Value) + 1).ToString();
+                
+            }
+            catch (Exception )
+            {
+                throw new IdNotExsistException("base station", stationId);
+            }
+        }
+        #endregion
+        #region// associate a drone to a parcel
+        internal static void AssociateDroneToParcel(int? droneId, int? parcleId) // associate a drone to a parcel 
+        {
+            try
+            {
+                Getdrone(droneId);
+            }
+            catch (Exception)
+            {
+                throw new IdNotExsistException("drone", droneId);
+            }
+            try
+            {
+                XElement parcelElement = (from parcel in ParcelPathRoot.Elements()
+                                          where int.Parse(parcel.Element("Id").Value) == parcleId
+                                          select parcel).FirstOrDefault();
+                parcelElement.Element("DroneId").Value = droneId.ToString();
+                parcelElement.Element("AssociatedTime").Value = DateTime.Now.ToString();
+            }
+            catch (Exception)
+            {
+                throw new IdNotExsistException("parcel", parcleId);
+            }
+        }
+        #endregion
 
         #region// get base station
         internal static BaseStation GetBaseStation(int? id)
@@ -623,7 +752,7 @@ namespace DalObjects
 
         }
         #endregion
-        #region// get drone parcel
+        #region// get parcel
         internal static Parcel GetParcel(int? id)
         {
             try
@@ -651,6 +780,62 @@ namespace DalObjects
             }
 
         }
+        #endregion
+
+        #region// get list of base stations
+        internal static IEnumerable<BaseStation> GetListOfBaseStation(Predicate<BaseStation> predicate = null)
+        {
+            List<BaseStation> baseStationList = GetBaseStations();
+            if (predicate == null)
+            {
+                return baseStationList.ToList();
+            }
+            return baseStationList.FindAll(predicate).ToList();
+        }
+        #endregion
+        #region// get list of customers
+        internal static IEnumerable<Customer> GetListOfCustomer(Predicate<Customer> predicate = null) 
+        {
+            List<Customer> customersList = GetCustomers();
+            if (predicate == null)
+            {
+                return customersList.ToList();
+            }
+            return customersList.FindAll(predicate).ToList(); 
+        }
+        #endregion
+        #region// get list of drones
+        internal static IEnumerable<Drone> GetListOfDrone(Predicate<Drone> predicate = null)
+        {
+            List<Drone> dronesList = GetDrones();
+            if (predicate == null)
+            {
+                return dronesList.ToList();
+            }
+            return dronesList.FindAll(predicate).ToList(); 
+        }
+        #endregion
+        #region// get list of drone charges
+        internal static IEnumerable<DroneCharge> GetListOfDroneCharge(Predicate<DroneCharge> predicate = null)
+        {
+            List<DroneCharge> droneChargesList = GetDroneCharges();
+            if (predicate == null)
+            {
+                return droneChargesList.ToList();
+            }
+            return droneChargesList.FindAll(predicate).ToList();
+        }
+        #endregion
+        #region// get list of parcels
+        internal static IEnumerable<Parcel> GetListOfParcel(Predicate<Parcel> predicate = null) 
+        {
+            List<Parcel> parcelsList = GetParcels();
+            if (predicate == null)
+            {
+                return parcelsList.ToList();
+            }
+            return parcelsList.FindAll(predicate).ToList(); 
+        } 
         #endregion
     }
 }
