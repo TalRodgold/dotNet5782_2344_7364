@@ -18,7 +18,7 @@ namespace DalXml
                            // is done just before first usage
         DalXml() // constructor.
         {
-            //DataSource.DroneList = new List<Drone>();
+            //DataSource.DroneList = new List<Drone>();/
             //DataSource.BaseStationList = new List<BaseStation>();
             //DataSource.CustomerList = new List<Customer>();
             //DataSource.ParcelList = new List<Parcel>();
