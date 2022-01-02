@@ -24,7 +24,7 @@ namespace BlApi
         /// </summary>
         public BL()//BL constructor 
         { 
-            dal =  DalFactory.GetDal("DalObject");//call to constructor.
+            dal =  DalFactory.GetDal("DalObject");//call to constructor.//dal=DalFactory.GetDal("DalXml");
             double[] arr = dal.Electricity();//retun arrey from config contain electrisity data.
             ElectricityUseAvailiblity = arr[0];
             ElectricityUseLightWeight = arr[1];

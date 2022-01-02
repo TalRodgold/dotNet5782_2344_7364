@@ -6,359 +6,159 @@ using System.Threading.Tasks;
 using DO;
 using DalApi;
 using System.Xml.Linq;
+using System.IO;
+using System.Xml.Serialization;
 
-namespace DalObjects
+namespace DalXml
 {
     public class XmlTools
     {
-        internal static string BaseStationsPath = @"\..\..\..\Data\BaseStation.xml";
-        internal static string CustomersPath = @"\..\..\..\DAL\Data\Customers.xml";
-        internal static string DronesPath = @"\..\..\..\Data\Drones.xml";
-        internal static string DroneChargesPath = @"C:\..\..\..\Data\DroneCharges.xml";
-        internal static string ParcelsPath = @"C:\..\..\..\Data\Parcels.xml";
+        internal static string directory = @"..\..\..\..\Data\";
 
-        internal static XElement BaseStationPathRoot;
-        internal static XElement CustomerPathRoot;
-        internal static XElement DronePathRoot;
-        internal static XElement DroneChargePathRoot;
-        internal static XElement ParcelPathRoot;
+
+        //internal static XElement BaseStationPathRoot;
+        //internal static XElement CustomerPathRoot;
+        //internal static XElement DronePathRoot;//
+        //internal static XElement DroneChargePathRoot;
+        //internal static XElement ParcelPathRoot;
 
         #region// base station loader
-        internal static void LoadBaseStations()
+        //internal static void LoadBaseStations()
+        //{
+        //    try
+        //    {
+        //        BaseStationPathRoot = XElement.Load(BaseStationsPath);
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        throw;
+        //    }
+        //}
+        //internal static List<BaseStation> GetBaseStations()
+        //{
+        //    LoadBaseStations();
+        //    List<BaseStation> baseStations;
+        //    try
+        //    {
+        //        baseStations = (from station in BaseStationPathRoot.Elements()
+        //                        select new BaseStation()
+        //                        {
+        //                            Id = int.Parse(station.Element("Id").Value),
+        //                            Name = station.Element("Name").Value,
+        //                            ChargeSlots = int.Parse(station.Element("ChargeSlots").Value),
+        //                            Longtitude = double.Parse(station.Element("Longtitude").Value),
+        //                            Latitude = double.Parse(station.Element("Latitude").Value)
+
+        //                        }).ToList();
+        //    }
+        //    catch (Exception)
+        //    {
+
+        //        throw;
+        //    }
+        //    return baseStations;
+        //}
+        #endregion
+        static XmlTools()
+        {
+            if (!Directory.Exists(directory))
+                Directory.CreateDirectory(directory);
+        }
+        #region SaveLoadWithXElement
+        public static void SaveListToXmlElement(XElement rootElem, string filePath)
         {
             try
             {
-                BaseStationPathRoot = XElement.Load(BaseStationsPath);
+                rootElem.Save(directory + filePath);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw;//new DO.XMLFileLoadCreateException(filePath, $"fail to create xml file: {filePath}", ex);
             }
         }
-        internal static List<BaseStation> GetBaseStations()
+
+        public  static XElement LoadListFromXmlElement(string filePath)
         {
-            LoadBaseStations();
-            List<BaseStation> baseStations;
             try
             {
-                baseStations = (from station in BaseStationPathRoot.Elements()
-                                select new BaseStation()
-                                {
-                                    Id = int.Parse(station.Element("Id").Value),
-                                    Name = station.Element("Name").Value,
-                                    ChargeSlots = int.Parse(station.Element("ChargeSlots").Value),
-                                    Longtitude = double.Parse(station.Element("Longtitude").Value),
-                                    Latitude = double.Parse(station.Element("Latitude").Value)
-
-                                }).ToList();
+                if (File.Exists(directory + filePath))
+                {
+                    return XElement.Load(directory + filePath);
+                }
+                else
+                {
+                    XElement rootElem = new XElement(directory + filePath);
+                    rootElem.Save(directory + filePath);
+                    return rootElem;
+                }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw;// new DO.XMLFileLoadCreateException(filePath, $"fail to load xml file: {filePath}", ex);
             }
-            return baseStations;
         }
         #endregion
-        #region// customer loader
-        internal static void LoadCustomers()
+        #region SaveLoadWithXMLSerializer
+        public static void SaveListToXmlSerializer<T>(IEnumerable<T> list, string filePath)
         {
             try
             {
-                CustomerPathRoot = XElement.Load(CustomersPath);
+                FileStream file = new FileStream(directory + filePath, FileMode.Create);
+                XmlSerializer x = new XmlSerializer(list.GetType());
+                x.Serialize(file, list);
+                file.Close();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw;//new DO.XMLFileLoadCreateException(filePath, $"fail to create xml file: {filePath}", ex);
             }
         }
-        internal static List<Customer> GetCustomers()
+        public static List<T> LoadListFromXmlSerializer<T>(string filePath)
         {
-            LoadCustomers();
-            List<Customer> Customers;
             try
             {
-                Customers = (from customer in CustomerPathRoot.Elements()
-                             select new Customer()
-                             {
-                                 Id = int.Parse(customer.Element("Id").Value),
-                                 Name = customer.Element("Name").Value,
-                                 Phone = customer.Element("Phone").Value,
-                                 Longtitude = double.Parse(customer.Element("Longtitude").Value),
-                                 Latitude = double.Parse(customer.Element("Latitude").Value),
-                             }).ToList();
+                if (File.Exists(directory + filePath))
+                {
+                    List<T> list;
+                    XmlSerializer x = new XmlSerializer(typeof(List<T>));
+                    FileStream file = new FileStream(directory + filePath, FileMode.Open);
+                    list = (List<T>)x.Deserialize(file);
+                    file.Close();
+                    return list;
+                }
+                else
+                    return new List<T>();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw;//new DO.XMLFileLoadCreateException(filePath, $"fail to load xml file: {filePath}", ex);
             }
-            return Customers;
         }
         #endregion
-        #region// drone loader
-        internal static void LoadDrones()
-        {
-            try
-            {
-                DronePathRoot = XElement.Load(DronesPath);
-            }
-            catch (Exception)
-            {
+    }
 
-                throw;
-            }
-        }
-        internal static List<Drone> GetDrones()
-        {
-            LoadDrones();
-            List<Drone> Drones;
-            try
-            {
-                Drones = (from drone in DronePathRoot.Elements()
-                                select new Drone()
-                                {
-                                    Id = int.Parse(drone.Element("Id").Value),
-                                    Model = drone.Element("Name").Value,
-                                    MaxWeight = (WeightCategories)int.Parse(drone.Element("MaxWeight").Value)
-                                }).ToList();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            return Drones;
-        }
-        #endregion
-        #region// Drone charge loader
-        internal static void LoadDroneCharges()
-        {
-            try
-            {
-                DroneChargePathRoot = XElement.Load(DroneChargesPath);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        internal static List<DroneCharge> GetDroneCharges()
-        {
-            LoadDroneCharges();
-            List<DroneCharge> droneCharges;
-            try
-            {
-                droneCharges = (from droneCharge in DroneChargePathRoot.Elements()
-                                select new DroneCharge()
-                                {
-                                    DroneId = int.Parse(droneCharge.Element("DroneId").Value),
-                                    StationId = int.Parse(droneCharge.Element("StationId").Value),
-                                    TimeOfStartCharging= DateTime.Parse(droneCharge.Element("TimeOfStartCharging").Value)
-                                }).ToList();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            return droneCharges;
-        }
-        #endregion
-        #region// Parcel loader
-        internal static void LoadParcels()
-        {
-            try
-            {
-                ParcelPathRoot = XElement.Load(ParcelsPath);
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-        }
-        internal static List<Parcel> GetParcels()
-        {
-            LoadParcels();
-            List<Parcel> parcels;
-            try
-            {
-                parcels = (from parcel in ParcelPathRoot.Elements()
-                                select new Parcel()
-                                {
-                                    Id = int.Parse(parcel.Element("Id").Value),
-                                    SenderId=int.Parse(parcel.Element("SenderId").Value),
-                                    ReciverId = int.Parse(parcel.Element("ReciverId").Value),
-                                    Weight =(WeightCategories)int.Parse(parcel.Element("Weight").Value),
-                                    Priority=(Priorities)int.Parse(parcel.Element("Priority").Value),
-                                    CreatingTime = DateTime.Parse(parcel.Element("CreatingTime").Value),
-                                    DroneId=int.Parse(parcel.Element("DroneId").Value),
-                                    AssociatedTime = DateTime.Parse(parcel.Element("AssociatedTime").Value),
-                                    PickedUp = DateTime.Parse(parcel.Element("PickedUp").Value),
-                                    Deliverd = DateTime.Parse(parcel.Element("Deliverd").Value)
-
-                                }).ToList();
-            }
-            catch (Exception)
-            {
-
-                throw;
-            }
-            return parcels;
-        }
-        #endregion
-
-        #region// save base station
-        internal static void SaveBaseStations(IEnumerable<BaseStation> baseStations)
-        {
-            BaseStationPathRoot = new XElement("BaseStations",
-              from station in baseStations
-              select new XElement("BaseStations"
-                   , new XElement("Id", station.Id)
-                   , new XElement("Name", station.Name)
-                   , new XElement("ChargeSlots", station.ChargeSlots)
-                   , new XElement("Longtitude", station.Longtitude)
-                   , new XElement("Latitude", station.Latitude)));
-
-            BaseStationPathRoot.Save(BaseStationsPath);
-        }
-        #endregion
-        #region// save customer
-        internal static void SaveCustomer(List<Customer> customers)
-        {
-            CustomerPathRoot = new XElement("Customer",
-            from customer in customers
-            select new XElement("Customers"
-                  , new XElement("Id", customer.Id)
-                  , new XElement("Name", customer.Name)
-                  , new XElement("Phone", customer.Phone)
-                  , new XElement("Longtitude", customer.Longtitude)
-                  , new XElement("Latitude", customer.Latitude)));
-            CustomerPathRoot.Save(CustomersPath);
-        }
-        #endregion   
-        #region// save drone
-        internal static void SaveDrones(List<Drone> drones)
-        {
-            DronePathRoot = new XElement("Drones",
-              from drone in drones 
-              select new XElement("Drones" 
-                  , new XElement("Id", drone.Id)
-                  , new XElement("Model", drone.Model)
-                  ,new XElement("MaxWeight", drone.MaxWeight)));
-            
-            DronePathRoot.Save(DronesPath);
-        }
-        #endregion
-        #region// save drone charge
-        internal static void SaveDroneCharges(List<DroneCharge> droneCharges)
-        {
-             DroneChargePathRoot = new XElement("DroneCharges",
-               from droneCharge in droneCharges
-               select new XElement("DroneCharges"
-                  , new XElement("DroneId", droneCharge.DroneId)
-                  , new XElement("StationId", droneCharge.StationId)
-                  , new XElement("TimeOfStartCharging", droneCharge.TimeOfStartCharging)));
-    
-            DroneChargePathRoot.Save(DroneChargesPath);
-        }
-        #endregion
         #region// save parcel
-        internal static void SaveParcel(List<Parcel> parcels)
-        {
-            ParcelPathRoot = new XElement("Parcels",
-                from parcel in parcels
-                select new XElement("parcels"
-                   , new XElement("Id", parcel.Id)
-                   , new XElement("SenderId", parcel.SenderId)
-                   , new XElement("ReciverId", parcel.ReciverId)
-                   , new XElement("Weight", parcel.Weight)
-                   , new XElement("Priority", parcel.Priority)
-                   , new XElement("CreatingTime", parcel.CreatingTime)
-                   , new XElement("DroneId", parcel.DroneId)
-                   , new XElement("AssociatedTime", parcel.AssociatedTime)
-                   , new XElement("PickedUp", parcel.PickedUp)
-                   , new XElement("Deliverd", parcel.Deliverd)));
+        //internal static void SaveParcel(List<Parcel> parcels)
+        //{
+        //    ParcelPathRoot = new XElement("Parcels",
+        //        from parcel in parcels
+        //        select new XElement("parcels"
+        //           , new XElement("Id", parcel.Id)
+        //           , new XElement("SenderId", parcel.SenderId)
+        //           , new XElement("ReciverId", parcel.ReciverId)
+        //           , new XElement("Weight", parcel.Weight)
+        //           , new XElement("Priority", parcel.Priority)
+        //           , new XElement("CreatingTime", parcel.CreatingTime)
+        //           , new XElement("DroneId", parcel.DroneId)
+        //           , new XElement("AssociatedTime", parcel.AssociatedTime)
+        //           , new XElement("PickedUp", parcel.PickedUp)
+        //           , new XElement("Deliverd", parcel.Deliverd)));
             
-            ParcelPathRoot.Save(ParcelsPath);
-        }
+        //    ParcelPathRoot.Save(ParcelsPath);
+        //}
         #endregion
 
-        #region// add base station
-        internal static void AddBaseStation(BaseStation baseStations)
-        {
-            LoadBaseStations();
-            XElement newBaseStation = new XElement("BaseStation"
-                   , new XElement("Id", baseStations.Id)
-                   , new XElement("Name", baseStations.Name)
-                   , new XElement("ChargeSlots", baseStations.ChargeSlots)
-                   , new XElement("Longtitude", baseStations.Longtitude)
-                   , new XElement("Latitude", baseStations.Latitude));
-            BaseStationPathRoot.Add(newBaseStation);
-            BaseStationPathRoot.Save(BaseStationsPath);
-        }
-        #endregion
-        #region// add customer
-        internal static void Addcustomer(Customer customer)
-        {
-            LoadCustomers();
-            XElement newCustomer = new XElement("Customer"
-                   , new XElement("Id", customer.Id)
-                  , new XElement("Name", customer.Name)
-                  , new XElement("Phone", customer.Phone)
-                  , new XElement("Longtitude", customer.Longtitude)
-                  , new XElement("Latitude", customer.Latitude));
-            CustomerPathRoot.Add(newCustomer);
-            CustomerPathRoot.Save(CustomersPath);
-        }
-        #endregion
-        #region// add drone
-        internal static void AddDrone(Drone drone)
-        {
-            LoadDrones();
-            XElement newDrone = new XElement("Drone"
-                   , new XElement("Id", drone.Id)
-                   , new XElement("Model", drone.Model)
-                   , new XElement("MaxWeight", drone.MaxWeight));
-            DronePathRoot.Add(newDrone);
-            DronePathRoot.Save(DronesPath);
-        }
-        #endregion
-        #region// add drone charge
-        internal static void AddDroneCharge(DroneCharge droneCharge)
-        {
-            LoadDroneCharges();
-            XElement newDroneCharge = new XElement("DroneCharge"
-                   , new XElement("DroneId", droneCharge.DroneId)
-                   , new XElement("StationId", droneCharge.StationId)
-                   , new XElement("TimeOfStartCharging", droneCharge.TimeOfStartCharging));
-            DroneChargePathRoot.Add(newDroneCharge);
-            DroneChargePathRoot.Save(DroneChargesPath);
-        }
-        #endregion
-        #region// add parcel
-        internal static void AddParcel(Parcel parcel)
-        {
-            LoadParcels();
-            XElement newParcel = new XElement("Parcel"
-                   , new XElement("Id", parcel.Id)
-                   , new XElement("SenderId", parcel.SenderId)
-                   , new XElement("ReciverId", parcel.ReciverId)
-                   , new XElement("Weight", parcel.Weight)
-                   , new XElement("Priority", parcel.Priority)
-                   , new XElement("CreatingTime", parcel.CreatingTime)
-                   , new XElement("DroneId", parcel.DroneId)
-                   , new XElement("AssociatedTime", parcel.AssociatedTime)
-                   , new XElement("PickedUp", parcel.PickedUp)
-                   , new XElement("Deliverd", parcel.Deliverd));
-            ParcelPathRoot.Add(newParcel);
-            DronePathRoot.Save(DronesPath);
-        }
-        #endregion
 
         #region// delete base station
         internal static bool RemoveBaseStation(int? id)
@@ -835,9 +635,7 @@ namespace DalObjects
                 return parcelsList.ToList();
             }
             return parcelsList.FindAll(predicate).ToList(); 
-        }
+        } 
         #endregion
-
-   
     }
 }
