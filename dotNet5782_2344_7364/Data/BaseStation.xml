@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BaseStations>
+  <BaseStations>
+    <Id>193</Id>
+    <Name>Gilo</Name>
+    <ChargeSlots>6</ChargeSlots>
+    <Longtitude>32.57534607006647</Longtitude>
+    <Latitude>36.04770352954681</Latitude>
+  </BaseStations>
+  <BaseStations>
+    <Id>42</Id>
+    <Name>Gilo</Name>
+    <ChargeSlots>6</ChargeSlots>
+    <Longtitude>32.616556404833695</Longtitude>
+    <Latitude>35.57485619940833</Latitude>
+  </BaseStations>
+</BaseStations>

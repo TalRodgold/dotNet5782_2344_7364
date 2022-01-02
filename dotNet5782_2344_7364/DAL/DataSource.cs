@@ -15,7 +15,6 @@ namespace DalObjects
     /// </summary>
     public class DataSource
     {
-        XmlTools x=new XmlTools();
         /// <summary>
         /// this class holds all the data of the program in lists
         /// this class also creats random data to start program
@@ -170,11 +169,6 @@ namespace DalObjects
             {
                 CreatParcel();
             }
-            XmlTools.SaveBaseStations(BaseStationList);
-            XmlTools.SaveCustomer(CustomerList);
-            XmlTools.SaveDrones(DroneList);
-            XmlTools.SaveDroneCharges(DroneChargeList);
-            XmlTools.SaveParcel(ParcelList);
             #endregion
         }
     }
