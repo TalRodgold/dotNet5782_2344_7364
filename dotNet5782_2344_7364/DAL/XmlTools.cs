@@ -11,11 +11,11 @@ namespace DalObjects
 {
     public class XmlTools
     {
-        internal static string BaseStationsPath = @"C:\Users\talro\Source\Repos\dotNet5782_2344_7364\dotNet5782_2344_7364\DAL\Data\BaseStation.xml";
-        internal static string CustomersPath = @"C:\Users\talro\Source\Repos\dotNet5782_2344_7364\dotNet5782_2344_7364\DAL\Data\Customers.xml";
-        internal static string DronesPath = @"C:\Users\talro\Source\Repos\dotNet5782_2344_7364\dotNet5782_2344_7364\DAL\Data\Drones.xml";
-        internal static string DroneChargesPath = @"C:\Users\talro\Source\Repos\dotNet5782_2344_7364\dotNet5782_2344_7364\DAL\Data\DroneCharges.xml";
-        internal static string ParcelsPath = @"C:\Users\talro\Source\Repos\dotNet5782_2344_7364\dotNet5782_2344_7364\DAL\Data\Parcels.xml";
+        internal static string BaseStationsPath = @"\..\..\..\Data\BaseStation.xml";
+        internal static string CustomersPath = @"\..\..\..\DAL\Data\Customers.xml";
+        internal static string DronesPath = @"\..\..\..\Data\Drones.xml";
+        internal static string DroneChargesPath = @"C:\..\..\..\Data\DroneCharges.xml";
+        internal static string ParcelsPath = @"C:\..\..\..\Data\Parcels.xml";
 
         internal static XElement BaseStationPathRoot;
         internal static XElement CustomerPathRoot;
