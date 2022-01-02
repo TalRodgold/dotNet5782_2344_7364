@@ -242,7 +242,7 @@ namespace DalXml
         {
             try
             {
-                XElement Root = XmlTools.LoadListFromXmlElement(ParcelsPath);
+                XElement Root = XmlTools.LoadListFromXmlElement(ParcelsPath);//
                 XElement parcelElement = (from parcel in Root.Elements()
                                           where int.Parse(parcel.Element("Id").Value) == id
                                           select parcel).FirstOrDefault();
