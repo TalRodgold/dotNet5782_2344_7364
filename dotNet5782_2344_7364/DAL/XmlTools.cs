@@ -19,7 +19,7 @@ namespace DalObjects
 
         internal static XElement BaseStationPathRoot;
         internal static XElement CustomerPathRoot;
-        internal static XElement DronePathRoot;
+        internal static XElement DronePathRoot;//
         internal static XElement DroneChargePathRoot;
         internal static XElement ParcelPathRoot;
 
