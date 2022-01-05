@@ -37,7 +37,7 @@ namespace ConsoleUI
                         double.TryParse(Console.ReadLine(), out userLongtitude);
                         double userLatitude;
                         double.TryParse(Console.ReadLine(), out userLatitude);
-                        dal.ConstructBaseStation(userId, userName, userChargeSlots, userLongtitude, userLatitude);
+                        dal.AddBaseStation(userId, userName, userChargeSlots, userLongtitude, userLatitude);
                         break;
                         #endregion
                     case ("1.2")://Drone addition
@@ -48,7 +48,7 @@ namespace ConsoleUI
                         string userModel = Console.ReadLine();
                         WeightCategories userWeightCategories;
                         WeightCategories.TryParse(Console.ReadLine(), out userWeightCategories);
-                        dal.ConstructDrone(userDroneId, userModel, userWeightCategories);
+                        dal.AddDrone(userDroneId, userModel, userWeightCategories);
                         break;
                     #endregion
                     case ("1.3")://Customer addition
@@ -62,7 +62,7 @@ namespace ConsoleUI
                         double.TryParse(Console.ReadLine(), out userCustomerLongtitude);
                         double userCustomerLatitude;
                         double.TryParse(Console.ReadLine(), out userCustomerLatitude);
-                        dal.ConstructCustomer(userCustomerId, userCustomerName, userPhoneNumber, userCustomerLatitude, userCustomerLatitude);
+                        dal.AddCustomer(userCustomerId, userCustomerName, userPhoneNumber, userCustomerLatitude, userCustomerLatitude);
                         break;
                         #endregion
                     case ("1.4")://Parcel addition
@@ -79,7 +79,7 @@ namespace ConsoleUI
                         Priorities.TryParse(Console.ReadLine(), out userParcelPriorities);
                         DateTime userRequested;
                         DateTime.TryParse(Console.ReadLine(), out userRequested);
-                        dal.ConstructParcel(userSenderId, userTargetId, userParcelWeightCategories, userParcelPriorities, userRequested, 0, null, null, null);
+                        dal.AddParcel(userSenderId, userTargetId, userParcelWeightCategories, userParcelPriorities, userRequested, 0, null, null, null);
                         break;
                       #endregion
                     case ("2.1"): //Update Percel to Drone

@@ -176,7 +176,7 @@ namespace BlApi
                     throw new UnavailableExeption("base station", stationId);
                 }
                 DateTime? currentTime = DateTime.Now;
-                dal.ConstructDroneCharge(id, stationId, currentTime);
+                dal.AddDroneCharge(id, stationId, currentTime);
                 BaseStation station = GetBaseStationById(stationId);
                 double distance = calculateDistance(newDrone.CurrentLocation, station.Location);
                 if(distance!=0)

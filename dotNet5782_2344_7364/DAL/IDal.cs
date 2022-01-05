@@ -12,11 +12,11 @@ namespace DalApi
     /// </summary>
     public interface IDal
     {
-        void ConstructBaseStation(int? id, string name, int chargeSlots, double longtitude, double latitude); // construct a new base station
-        void ConstructDrone(int? id, string model, WeightCategories maxWeight); // construct a new drone
-        int? ConstructParcel(int? senderId, int? targetId, WeightCategories weight, Priorities priority, DateTime? request, int? droneId, DateTime? schedual, DateTime? pickUp, DateTime? deliverd);// construct a new parcel
-        void ConstructCustomer(int? id, string name, string phone, double longtitude, double latitude); // construct a new customer
-        void ConstructDroneCharge(int? droneId, int? stationId,DateTime? cuerrentTime); // construct a new drone charge
+        void AddBaseStation(int? id, string name, int chargeSlots, double longtitude, double latitude); // construct a new base station
+        void AddDrone(int? id, string model, WeightCategories maxWeight); // construct a new drone
+        int? AddParcel(int? senderId, int? targetId, WeightCategories weight, Priorities priority, DateTime? request, int? droneId, DateTime? schedual, DateTime? pickUp, DateTime? deliverd);// construct a new parcel
+        void AddCustomer(int? id, string name, string phone, double longtitude, double latitude); // construct a new customer
+        void AddDroneCharge(int? droneId, int? stationId,DateTime? cuerrentTime); // construct a new drone charge
         string ReturnDroneDataById(int? id); // find drone in list and return it as string
         string ReturnBaseStationDataById(int? id); // find base station in list and return it as string
         string ReturnCustomerDataById(int? id); // find customer in list and return it as string

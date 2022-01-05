@@ -30,7 +30,7 @@ namespace BlApi
                 {
                     throw new InvalidIdException("negative", b.Id);
                 }
-                dal.ConstructBaseStation(b.Id, b.Name, b.NumberOfFreeChargingSlots, b.Location.Longitude, b.Location.Latitude);//call for constructor
+                dal.AddBaseStation(b.Id, b.Name, b.NumberOfFreeChargingSlots, b.Location.Longitude, b.Location.Latitude);//call for constructor
             }
             catch (DO.IdAlreadyExsistsExceptions exception) // if base station id already exsists and was thrown from dal objects
             {
@@ -58,7 +58,7 @@ namespace BlApi
                     throw new IdNotExsistException("base station", startingBaseStation);
                 }
                 d.CurrentLocation = GetBaseStationById(startingBaseStation).Location;//update the location to be like his starting base station
-                dal.ConstructDrone(d.Id, d.Model, (DO.WeightCategories)d.Weight); // creat drone
+                dal.AddDrone(d.Id, d.Model, (DO.WeightCategories)d.Weight); // creat drone
                 dal.UpdateDroneCharge(d.Id, startingBaseStation,DateTime.Now); // connect drone to charging base station
                 ListOfDronsBL.Add(new DroneToList(d.Id, d.Model, d.Weight, d.Battery, d.DroneStatuses, d.CurrentLocation, null));//add the drone to the local list of drones
             }
@@ -93,7 +93,7 @@ namespace BlApi
                 {
                     throw new IdAlreadyExsistsExceptions("Customer", c.Id);
                 }
-                dal.ConstructCustomer(c.Id, c.Name, c.Phone, c.Location.Longitude, c.Location.Latitude);//call to the constructor
+                dal.AddCustomer(c.Id, c.Name, c.Phone, c.Location.Longitude, c.Location.Latitude);//call to the constructor
             }
             catch (DO.IdAlreadyExsistsExceptions exception) // if customer id already exsists and was thrown from dal objects
             {
@@ -122,7 +122,7 @@ namespace BlApi
                 {
                     throw new InvalidIdException("negative", reciver.Id);
                 }
-                int? id = dal.ConstructParcel(sender.Id, reciver.Id, (DO.WeightCategories)weight, (DO.Priorities)prioritie, DateTime.Now, null, null, null, null) ;//call the constructor
+                int? id = dal.AddParcel(sender.Id, reciver.Id, (DO.WeightCategories)weight, (DO.Priorities)prioritie, DateTime.Now, null, null, null, null) ;//call the constructor
                 Parcel newParcel = new Parcel(id, sender, reciver, weight, prioritie, null, DateTime.Now, null, null, null);
             }
             catch (DO.SameIdException exception)
