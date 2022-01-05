@@ -42,7 +42,7 @@ namespace DalObjects
         /// <param name="chargeSlots"></param>
         /// <param name="longtitude"></param>
         /// <param name="latitude"></param>
-        public void ConstructBaseStation(int? id, string name, int chargeSlots, double longtitude, double latitude) // construct a new base station
+        public void AddBaseStation(int? id, string name, int chargeSlots, double longtitude, double latitude) // construct a new base station
         {
             
             if (IfBaseStationExsists(id)) // if id already exsists
@@ -67,7 +67,7 @@ namespace DalObjects
         /// <param name="id"></param>
         /// <param name="model"></param>
         /// <param name="maxWeight"></param>
-        public void ConstructDrone(int? id, string model, WeightCategories maxWeight) // construct a new drone
+        public void AddDrone(int? id, string model, WeightCategories maxWeight) // construct a new drone
         {  
             if (IfDroneExsists(id)) // if id already exsists
             {
@@ -98,7 +98,7 @@ namespace DalObjects
         /// <param name="schedual"></param>
         /// <param name="pickUp"></param>
         /// <param name="deliverd"></param>
-        public int? ConstructParcel(int? senderId, int? targetId, WeightCategories weight, Priorities priority, DateTime? request, int? droneId, DateTime? schedual, DateTime? pickUp, DateTime? deliverd) // construct a new parcel
+        public int? AddParcel(int? senderId, int? targetId, WeightCategories weight, Priorities priority, DateTime? request, int? droneId, DateTime? schedual, DateTime? pickUp, DateTime? deliverd) // construct a new parcel
         {
             if (senderId == targetId)
             {
@@ -130,7 +130,7 @@ namespace DalObjects
         /// <param name="phone"></param>
         /// <param name="longtitude"></param>
         /// <param name="latitude"></param>
-        public void ConstructCustomer(int? id, string name, string phone, double longtitude, double latitude) // construct a new customer
+        public void AddCustomer(int? id, string name, string phone, double longtitude, double latitude) // construct a new customer
         {
             if (IfCustomerExsists(id)) // if id already exsists
             {
@@ -153,7 +153,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="stationId"></param>
-        public void ConstructDroneCharge(int? droneId, int? stationId,DateTime? time) // construct a new drone charge
+        public void AddDroneCharge(int? droneId, int? stationId,DateTime? time) // construct a new drone charge
         {      
             DroneCharge newDroneCharge = new DroneCharge();
             newDroneCharge.TimeOfStartCharging = time;
@@ -273,7 +273,7 @@ namespace DalObjects
                 throw new NoFreeSpace("charging slots");
             }
             int i = DataSource.BaseStationList.FindIndex(element => element.Id == stationId);
-            ConstructDroneCharge(droneId, stationId, CurrentTime); // call construct
+            AddDroneCharge(droneId, stationId, CurrentTime); // call construct
             newBaseStation.ChargeSlots -= 1; // change number of free charge slots
             DataSource.BaseStationList[i] = newBaseStation;
         }
