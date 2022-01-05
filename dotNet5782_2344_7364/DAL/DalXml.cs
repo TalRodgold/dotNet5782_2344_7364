@@ -19,12 +19,17 @@ namespace DalXml
         DalXml() // constructor.
         {
             DataSource.Initialize();
+            Config config = new Config();
+
+            
         }
         internal static string BaseStationsPath = @"BaseStation.xml";
         internal static string CustomersPath = @"Customers.xml";
         internal static string DronesPath = @"Drones.xml";
         internal static string DroneChargesPath = @"DroneCharges.xml";
         internal static string ParcelsPath = @"Parcels.xml";
+        internal static string ConfigPath = @"Config.xml";
+
         #region// add base station
         public void AddBaseStation(BaseStation baseStations)
         {
@@ -39,7 +44,38 @@ namespace DalXml
             Root.Add(newBaseStation);
             XmlTools.SaveListToXmlElement(Root,BaseStationsPath);
         }
+        internal class Config // hold runing number for id plus electricity usege 
+        {
+            internal static int ParcelId = 12345; // runing number for parcel Id
+            internal static double ElectricityUseAvailiblity { get; set; } = 0.1; //electricity usege for avilable
+            internal static double ElectricityUseLightWeight { get; set; } = 0.2; // electricity usege for light weight
+            internal static double ElectricityUseMediumWeight { get; set; } = 0.3; // electricity usege for  medium weight
+            internal static double ElectricityUseHeavyWeight { get; set; } = 0.4; // electricity usege for heavy weight
+            internal static double DroneChargingPaste { get; set; } = 100; // speed of drone charging per hour in %
+            internal static double[] Electricity()
+            {
+                double[] electricity = new double[5];
+                electricity[0] = DataSource.Config.ElectricityUseAvailiblity;
+                electricity[1] = DataSource.Config.ElectricityUseLightWeight;
+                electricity[2] = DataSource.Config.ElectricityUseMediumWeight;
+                electricity[3] = DataSource.Config.ElectricityUseHeavyWeight;
+                electricity[4] = DataSource.Config.DroneChargingPaste;
+                return electricity;
+            }
+            internal static int GetParcelId()
+            {
+                return DataSource.Config.ParcelId ;
+            }
+        }
         #endregion
+        #region// add parcel
+        internal static void AddConfig(Config config)
+        {
+            List<double> list = Config.Electricity().ToList<double>();
+            XmlTools.SaveListToXmlSerializer(list, ParcelsPath);
+            XElement xElement=new XElement { }
+
+        }
         #region// add customer
         internal static void Addcustomer(Customer customer)
         {
@@ -99,7 +135,7 @@ namespace DalXml
         #endregion
 
         #region// delete base station
-        internal static bool RemoveBaseStation(int? id)
+        internal void DeleteBaseStation(int? id)
         {
             XElement baseStationElement;
             try
@@ -112,11 +148,11 @@ namespace DalXml
                     throw new IdNotExsistException("base station",id);
                 baseStationElement.Remove();
                 XmlTools.SaveListToXmlElement(Root, BaseStationsPath);
-                return true;
+                //return true;
             }
             catch (Exception)
             {
-                return false;
+                //return false;
             }
         }
         #endregion
@@ -380,10 +416,12 @@ namespace DalXml
         {
             try
             {
-                XElement customerElement = (from customer in CustomerPathRoot.Elements()
+                XElement Root = XmlTools.LoadListFromXmlElement(CustomersPath);//
+                XElement customerElement = (from customer in Root.Elements()
                                             where int.Parse(customer.Element("Id").Value) == id
                                             select customer).FirstOrDefault();
                 customerElement.Element("Phone").Value = phone;
+                XmlTools.SaveListToXmlElement(Root, CustomersPath);
             }
             catch (Exception)
             {
