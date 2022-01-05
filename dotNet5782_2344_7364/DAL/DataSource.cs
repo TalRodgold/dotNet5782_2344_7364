@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using DO;
 using DalXml;
 using DalApi;
-
+using System.Xml.Linq;
 
 namespace DalObjects
 {
@@ -19,7 +19,6 @@ namespace DalObjects
         /// this class holds all the data of the program in lists
         /// this class also creats random data to start program
         /// </summary>
-
         #region // 5 lists for storing data
         internal static List<Drone> DroneList; // list of drones
         internal static List<BaseStation> BaseStationList; // list of base stations
@@ -38,7 +37,17 @@ namespace DalObjects
             internal static double ElectricityUseLightWeight { get; set; } = 0.2; // electricity usege for light weight
             internal static double ElectricityUseMediumWeight { get; set; } = 0.3; // electricity usege for  medium weight
             internal static double ElectricityUseHeavyWeight { get; set; } = 0.4; // electricity usege for heavy weight
-            internal static double DroneChargingPaste { get; set; } = 100; // speed of drone charging per hour in %
+            internal static double DroneChargingPaste { get; set; } = 100; // speed of drone charging per hour in % 
+            internal static double[] GetArrElectricity()
+            {
+                double[] electricity = new double[5];
+                electricity[0] = ElectricityUseAvailiblity;
+                electricity[1] = ElectricityUseLightWeight;
+                electricity[2] = ElectricityUseMediumWeight;
+                electricity[3] = ElectricityUseHeavyWeight;
+                electricity[4] = DroneChargingPaste;
+                return electricity;
+            }
         }
         #endregion
         /// <summary>
@@ -169,6 +178,13 @@ namespace DalObjects
             {
                 CreatParcel();
             }
+            DalXml.XmlTools.SaveListToXmlElement(new XElement("Config", new XElement("ParcelId", Config.ParcelId)), DalXml.DalXml.ConfigPath);
+            DalXml.XmlTools.SaveListToXmlSerializer(Config.GetArrElectricity().ToList<double>(), DalXml.DalXml.ConfigPath);
+            DalXml.XmlTools.SaveListToXmlSerializer(BaseStationList, DalXml.DalXml.BaseStationsPath);
+            DalXml.XmlTools.SaveListToXmlSerializer(DroneList, DalXml.DalXml.DronesPath);
+            DalXml.XmlTools.SaveListToXmlSerializer(DroneChargeList, DalXml.DalXml.DroneChargesPath);
+            DalXml.XmlTools.SaveListToXmlSerializer(CustomerList, DalXml.DalXml.CustomersPath);
+            DalXml.XmlTools.SaveListToXmlSerializer(ParcelList, DalXml.DalXml.ParcelsPath);
             #endregion
         }
     }

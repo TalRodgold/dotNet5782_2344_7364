@@ -468,117 +468,12 @@ namespace DalObjects
         #endregion
         #endregion
 
-        #region//All the ToString as list functions
 
-        #region//concatent strings that contain BaseStation data and return long string
-        /// <summary>
-        /// concatent strings that contain BaseStation data and return long string
-        /// </summary>
-        /// <returns></returns>
-        public string BaseStationListToString()//the function return long string of all BaseStation
-        {
-            string s = "";
-            foreach (BaseStation b in DataSource.BaseStationList)
-            {
-                s += b.ToString();
-            }
-            return s;
-        }
-        #endregion
-        #region//concatent strings that contain Drone data and return long string
-        /// <summary>
-        /// the function return long string of all Drones
-        /// </summary>
-        /// <returns></returns>
-        public string DroneListToString()//the function return long string of all Drones
-        {
-            string s = "";
-            foreach (Drone d in DataSource.DroneList)
-            {
-                s += d.ToString();
-            }
-            return s;
-        }
-        #endregion
-        #region//concatent strings that contain Customer data and return long string 
-        /// <summary>
-        /// the function return long string of all Customers
-        /// </summary>
-        /// <returns></returns>
-        public string CustomerListToString()//the function return long string of all Customers
-        {
-            string s = "";
-            foreach (Customer c in DataSource.CustomerList)
-            {
-                s += c.ToString();
-            }
-            return s;
-        }
-        #endregion
-        #region//concatent strings that contain Parcel data and return long string
-        /// <summary>
-        /// the function return long string of all Parcels
-        /// </summary>
-        /// <returns></returns>
-        public string ParcelListToString()//the function return long string of all Parcels
-        {
-            string s = "";
-            foreach (Parcel p in DataSource.ParcelList)
-            {
-                s += p.ToString();
-            }
-            return s;
-        }
-        #endregion
-        #region//return all free BaseStation
-        /// <summary>
-        /// return all free BaseStation
-        /// </summary>
-        /// <returns></returns>
-        public string BaseStationfreeToString()//return all free BaseStation
-        {
-            bool flag = true;
-            string s = "";
-            foreach (BaseStation b in DataSource.BaseStationList)
-            {
-                if (b.ChargeSlots == 0) // if free
-                {
-                    s += b.ToString();
-                    flag = false;
-                }
-            }
-            if (flag) // if all base station charging slots are full
-            {
-                s += " All base station charging slots are full ";
-            }
-            return s;
-        }
-        #endregion
-        #region//return all Drones that not Associated
-        /// <summary>
-        /// return all Drones that not Associated
-        /// </summary>
-        /// <returns></returns>
-        public string ParcelsNotAssociatedToString() //return all Drones that not Associated
-        {
-            string s = "";
-            bool flag = true;
-            foreach (Parcel p in DataSource.ParcelList)// for all parcels in array
-            {
-                if (p.DroneId == 0) //search in spesific index in parcel list if drone id is equal 0
-                {
-                    s += p.ToString();
-                    flag = false;
-                }
-            }
-            if (flag) // if all parcels have been associated to a drone
-            {
-                s += " All parcels have been associated to a drone ";
-            }
-            return s;
-        }
-        #endregion
-        #endregion
+       
+    
+      
+    
+       
 
         #region//All the exist functions
         /// <summary>
@@ -715,36 +610,9 @@ namespace DalObjects
         /// <returns></returns>
         public double[] Electricity() // return an array of electricity data
         {
-            double[] electricity = new double[5];
-            electricity[0] = DataSource.Config.ElectricityUseAvailiblity;
-            electricity[1] = DataSource.Config.ElectricityUseLightWeight;
-            electricity[2] = DataSource.Config.ElectricityUseMediumWeight;
-            electricity[3] = DataSource.Config.ElectricityUseHeavyWeight;
-            electricity[4] = DataSource.Config.DroneChargingPaste;
-            return electricity;
+            return DataSource.Config.GetArrElectricity();
         }
         #endregion
-        /// <summary>
-        /// returns size of drone list
-        /// </summary>
-        /// <returns></returns>
-        public int GetCountOfDroneList() { return DataSource.DroneList.Count(); } // returns size of drone list
-        /// <summary>
-        /// returns size of base station list
-        /// </summary>
-        /// <returns></returns>
-        public int GetCountOfBaseStationList() { return DataSource.BaseStationList.Count(); } // returns size of base station list
-        /// <summary>
-        /// returns size of customer list
-        /// </summary>
-        /// <returns></returns>
-        public int GetCountOfCustomerList() { return DataSource.CustomerList.Count(); } // returns size of customer list
-        /// <summary>
-        /// // returns size of parcel list
-        /// </summary>
-        /// <returns></returns>
-        public int GetCountOfParcelList() { return DataSource.ParcelList.Count(); } // returns size of parcel list
-        
         /// <summary>
         /// Get an IEnumerable of all customers
         /// </summary>

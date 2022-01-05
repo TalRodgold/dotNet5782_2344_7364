@@ -17,11 +17,7 @@ namespace DalApi
         int? AddParcel(int? senderId, int? targetId, WeightCategories weight, Priorities priority, DateTime? request, int? droneId, DateTime? schedual, DateTime? pickUp, DateTime? deliverd);// construct a new parcel
         void AddCustomer(int? id, string name, string phone, double longtitude, double latitude); // construct a new customer
         void AddDroneCharge(int? droneId, int? stationId,DateTime? cuerrentTime); // construct a new drone charge
-        string ReturnDroneDataById(int? id); // find drone in list and return it as string
-        string ReturnBaseStationDataById(int? id); // find base station in list and return it as string
-        string ReturnCustomerDataById(int? id); // find customer in list and return it as string
-        string ReturnParcelDataById(int? id); // find parcel in list and return it as string
-        void AssociateDroneToParcel(int? droneId, int? parcleId); // associate a drone to a parcel 
+         void AssociateDroneToParcel(int? droneId, int? parcleId); // associate a drone to a parcel 
         void UpdateParclePickup(int? id); // update parcel pickup 
         void UpdateParcleDelivery(int? id); // update parcel delivery
         void UpdateDroneCharge(int? droneId, int? stationId,DateTime? currentTime); // update drones charging
@@ -34,16 +30,6 @@ namespace DalApi
         void UpdateCustomerPhone(int? id, string phone); //update customers phone number
         void UpdateBaseStationNumOfFreeDroneCharges(int? id, int newnum); // update base stations number of free charging slots
         void ReleaseDroneCharge(int? droneId, int? stationId); // releas drone from charging 
-        string BaseStationListToString();//the function return long string of all BaseStation
-        string DroneListToString();//the function return long string of all Drones
-        string CustomerListToString();//the function return long string of all Customers
-        string ParcelListToString();//the function return long string of all Parcels
-        string BaseStationfreeToString();//return all free BaseStation
-        string ParcelsNotAssociatedToString(); //return all Drones that not Associated
-        int GetCountOfDroneList(); // returns size of drone list
-        int GetCountOfBaseStationList(); // returns size of base station list
-        int GetCountOfCustomerList(); // returns size of customer list
-        int GetCountOfParcelList(); // returns size of parcel list
         bool IfDroneExsists(int? id);  // return true if id exisists in list of drones
         bool IfBaseStationExsists(int? id);  // return  true if id exisists in list of base stations
         bool IfCustomerExsists(int? id); // return  true if id exisists in list of customers

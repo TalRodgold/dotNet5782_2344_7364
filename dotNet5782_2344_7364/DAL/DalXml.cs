@@ -7,21 +7,17 @@ using DO;
 using DalApi;
 using System.Xml.Linq;
 using DalObjects;
+
 namespace DalXml
 {
-
-
-    internal sealed class DalXml:IDal
+    public sealed class DalXml : IDal
     {
         private static readonly Lazy<DalXml> instance = new Lazy<DalXml>(() => new DalXml());// using lazy to improve performance and avoid wasteful computation, and reduce program memory requirements.  
         static DalXml() { }// Explicit static constructor to ensure instance initialization
                            // is done just before first usage
-        DalXml() // constructor.
+        public DalXml() // constructor.
         {
             DataSource.Initialize();
-            Config config = new Config();
-
-            
         }
         internal static string BaseStationsPath = @"BaseStation.xml";
         internal static string CustomersPath = @"Customers.xml";
@@ -31,121 +27,95 @@ namespace DalXml
         internal static string ConfigPath = @"Config.xml";
 
         #region// add base station
-        public void AddBaseStation(BaseStation baseStations)
+        public void AddBaseStation(int? id, string name, int chargeSlots, double longtitude, double latitude)
         {
 
-            XElement Root= XmlTools.LoadListFromXmlElement(BaseStationsPath);
+            XElement Root = XmlTools.LoadListFromXmlElement(BaseStationsPath);
             XElement newBaseStation = new XElement("BaseStation"
-                   , new XElement("Id", baseStations.Id)
-                   , new XElement("Name", baseStations.Name)
-                   , new XElement("ChargeSlots", baseStations.ChargeSlots)
-                   , new XElement("Longtitude", baseStations.Longtitude)
-                   , new XElement("Latitude", baseStations.Latitude));
+                   , new XElement("Id", id)
+                   , new XElement("Name", name)
+                   , new XElement("ChargeSlots", chargeSlots)
+                   , new XElement("Longtitude", longtitude)
+                   , new XElement("Latitude", latitude));
             Root.Add(newBaseStation);
-            XmlTools.SaveListToXmlElement(Root,BaseStationsPath);
-        }
-        internal class Config // hold runing number for id plus electricity usege 
-        {
-            internal static int ParcelId = 12345; // runing number for parcel Id
-            internal static double ElectricityUseAvailiblity { get; set; } = 0.1; //electricity usege for avilable
-            internal static double ElectricityUseLightWeight { get; set; } = 0.2; // electricity usege for light weight
-            internal static double ElectricityUseMediumWeight { get; set; } = 0.3; // electricity usege for  medium weight
-            internal static double ElectricityUseHeavyWeight { get; set; } = 0.4; // electricity usege for heavy weight
-            internal static double DroneChargingPaste { get; set; } = 100; // speed of drone charging per hour in %
-            internal static double[] Electricity()
-            {
-                double[] electricity = new double[5];
-                electricity[0] = DataSource.Config.ElectricityUseAvailiblity;
-                electricity[1] = DataSource.Config.ElectricityUseLightWeight;
-                electricity[2] = DataSource.Config.ElectricityUseMediumWeight;
-                electricity[3] = DataSource.Config.ElectricityUseHeavyWeight;
-                electricity[4] = DataSource.Config.DroneChargingPaste;
-                return electricity;
-            }
-            internal static int GetParcelId()
-            {
-                return DataSource.Config.ParcelId ;
-            }
+            XmlTools.SaveListToXmlElement(Root, BaseStationsPath);
         }
         #endregion
-        #region// add parcel
-        internal static void AddConfig(Config config)
-        {
-            List<double> list = Config.Electricity().ToList<double>();
-            XmlTools.SaveListToXmlSerializer(list, ParcelsPath);
-            XElement xElement=new XElement { }
-
-        }
         #region// add customer
-        internal static void Addcustomer(Customer customer)
+        public void AddCustomer(int? id, string name, string phone, double longtitude, double latitude)
         {
             XElement Root = XmlTools.LoadListFromXmlElement(CustomersPath);
             XElement newCustomer = new XElement("Customer"
-                   , new XElement("Id", customer.Id)
-                  , new XElement("Name", customer.Name)
-                  , new XElement("Phone", customer.Phone)
-                  , new XElement("Longtitude", customer.Longtitude)
-                  , new XElement("Latitude", customer.Latitude));
+                   , new XElement("Id", id)
+                  , new XElement("Name", name)
+                  , new XElement("Phone", phone)
+                  , new XElement("Longtitude", longtitude)
+                  , new XElement("Latitude", latitude));
             Root.Add(newCustomer);
             XmlTools.SaveListToXmlElement(Root, CustomersPath);
         }
         #endregion
         #region// add drone
-        internal static void AddDrone(Drone drone)
+        public void AddDrone(int? id, string model, WeightCategories maxWeight)
         {
             XElement Root = XmlTools.LoadListFromXmlElement(DronesPath);
             XElement newDrone = new XElement("Drone"
-                   , new XElement("Id", drone.Id)
-                   , new XElement("Model", drone.Model)
-                   , new XElement("MaxWeight", drone.MaxWeight));
+                   , new XElement("Id", id)
+                   , new XElement("Model", model)
+                   , new XElement("MaxWeight", maxWeight));
             Root.Add(newDrone);
             XmlTools.SaveListToXmlElement(Root, DronesPath);
         }
         #endregion
         #region// add drone charge
-        internal static void AddDroneCharge(DroneCharge droneCharge)
+        public void AddDroneCharge(int? droneId, int? stationId, DateTime? cuerrentTime)
         {
             XElement Root = XmlTools.LoadListFromXmlElement(DroneChargesPath);
             XElement newDroneCharge = new XElement("DroneCharge"
-                   , new XElement("DroneId", droneCharge.DroneId)
-                   , new XElement("StationId", droneCharge.StationId)
-                   , new XElement("TimeOfStartCharging", droneCharge.TimeOfStartCharging));
+                   , new XElement("DroneId", droneId)
+                   , new XElement("StationId", stationId)
+                   , new XElement("TimeOfStartCharging", cuerrentTime));
             Root.Add(newDroneCharge);
             XmlTools.SaveListToXmlElement(Root, DroneChargesPath);
         }
         #endregion
         #region// add parcel
-        internal static void AddParcel(Parcel parcel)
+        public int? AddParcel(int? senderId, int? targetId, WeightCategories weight, Priorities priority, DateTime? request, int? droneId, DateTime? schedual, DateTime? pickUp, DateTime? deliverd)
         {
+            XElement configRoot = XmlTools.LoadListFromXmlElement(ConfigPath);
+            int parcelId = int.Parse(configRoot.Element("ParcelId").Value);
             XElement Root = XmlTools.LoadListFromXmlElement(ParcelsPath);
             XElement newParcel = new XElement("Parcel"
-                   , new XElement("Id", parcel.Id)
-                   , new XElement("SenderId", parcel.SenderId)
-                   , new XElement("ReciverId", parcel.ReciverId)
-                   , new XElement("Weight", parcel.Weight)
-                   , new XElement("Priority", parcel.Priority)
-                   , new XElement("CreatingTime", parcel.CreatingTime)
-                   , new XElement("DroneId", parcel.DroneId)
-                   , new XElement("AssociatedTime", parcel.AssociatedTime)
-                   , new XElement("PickedUp", parcel.PickedUp)
-                   , new XElement("Deliverd", parcel.Deliverd));
+                   , new XElement("Id", parcelId)
+                   , new XElement("SenderId", senderId)
+                   , new XElement("ReciverId", targetId)
+                   , new XElement("Weight", weight)
+                   , new XElement("Priority", priority)
+                   , new XElement("CreatingTime", request)
+                   , new XElement("DroneId", droneId)
+                   , new XElement("AssociatedTime", schedual)
+                   , new XElement("PickedUp", pickUp)
+                   , new XElement("Deliverd", deliverd));
             Root.Add(newParcel);
             XmlTools.SaveListToXmlElement(Root, ParcelsPath);
+            configRoot.Element("ParcelId").Value = (++parcelId).ToString();
+            XmlTools.SaveListToXmlElement(configRoot, ConfigPath);
+            return --parcelId;
         }
         #endregion
 
         #region// delete base station
-        internal void DeleteBaseStation(int? id)
+        public void DeleteBaseStation(int? id)
         {
             XElement baseStationElement;
             try
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(BaseStationsPath);
-                baseStationElement =(from basestation in Root.Elements()
-                                           where int.Parse(basestation.Element("Id").Value) == id
-                                           select basestation).FirstOrDefault();
+                baseStationElement = (from basestation in Root.Elements()
+                                      where int.Parse(basestation.Element("Id").Value) == id
+                                      select basestation).FirstOrDefault();
                 if (baseStationElement.Equals(null))
-                    throw new IdNotExsistException("base station",id);
+                    throw new IdNotExsistException("base station", id);
                 baseStationElement.Remove();
                 XmlTools.SaveListToXmlElement(Root, BaseStationsPath);
                 //return true;
@@ -157,7 +127,7 @@ namespace DalXml
         }
         #endregion
         #region// delete customer
-        internal static bool RemoveCustomer(int? id)
+        public bool DeleteCustomer(int? id)
         {
             XElement CustomerElement;
             try
@@ -179,7 +149,7 @@ namespace DalXml
         }
         #endregion
         #region// delete drone
-        internal static bool RemoveDrone(int? id)
+        public bool DeleteDrone(int? id)
         {
             XElement DroneElement;
             try
@@ -188,7 +158,7 @@ namespace DalXml
                 DroneElement = (from drone in Root.Elements()
                                 where int.Parse(drone.Element("Id").Value) == id
                                 select drone).FirstOrDefault();
-                if(DroneElement.Equals(null))
+                if (DroneElement.Equals(null))
                 {
                     throw new IdNotExsistException("drone", id);
                 }
@@ -203,7 +173,7 @@ namespace DalXml
         }
         #endregion
         #region// delete drone charge
-        internal static bool RemoveDroneCharge(int? id)
+        public bool DeleteDroneCharge(int? id)
         {
             XElement DroneChargeElement;
             try
@@ -225,7 +195,7 @@ namespace DalXml
         }
         #endregion
         #region// delete parcel
-        internal static bool RemoveParcel(int? id)
+        public void DeleteParcel(int? id)
         {
             XElement parcelElement;
             try
@@ -234,23 +204,21 @@ namespace DalXml
                 parcelElement = (from parcel in Root.Elements()
                                  where int.Parse(parcel.Element("Id").Value) == id
                                  select parcel).FirstOrDefault();
-                if(parcelElement.Equals(null))
+                if (parcelElement.Equals(null))
                 {
                     throw new IdNotExsistException("parcel", id);
                 }
                 parcelElement.Remove();
                 XmlTools.SaveListToXmlElement(Root, ParcelsPath);
-                return true;
             }
             catch (Exception)
             {
-                return false;
             }
         }
         #endregion
 
         #region// update parcel Pickup
-        internal static void UpdateParcelPickup(int? id)
+        public void UpdateParclePickup(int? id)
         {
             try
             {
@@ -272,7 +240,7 @@ namespace DalXml
         }
         #endregion
         #region// update parcel delivery
-        internal static void UpdateParcleDelivery(int? id)
+        public void UpdateParcleDelivery(int? id)
         {
             try
             {
@@ -293,16 +261,12 @@ namespace DalXml
             }
         }
         #endregion
-        #region//update drones charging          //????????????????????????
-        internal static void UpdateDroneCharge(int? droneId, int? stationId, DateTime? CurrentTime)
+        #region//update drones charging 
+        public void UpdateDroneCharge(int? droneId, int? stationId, DateTime? CurrentTime)
         {
             try
             {
-                DroneCharge newDroneCharge = new DroneCharge();
-                newDroneCharge.DroneId = droneId;
-                newDroneCharge.StationId = stationId;
-                newDroneCharge.TimeOfStartCharging = CurrentTime;
-                AddDroneCharge(newDroneCharge);
+                AddDroneCharge(droneId, stationId, CurrentTime);
             }
             catch (Exception exception)
             {
@@ -316,7 +280,7 @@ namespace DalXml
         }
         #endregion 
         #region// update drone model
-        internal static void UpdateDroneModel(int? id, string newModel) // update drones model
+        public void UpdateDroneModel(int? id, string newModel) // update drones model
         {
             try
             {
@@ -335,7 +299,7 @@ namespace DalXml
         }
         #endregion
         #region// update base station name
-        internal static void UpdateBaseStationName(int? id, string name)
+        public void UpdateBaseStationName(int? id, string name)
         {
             try
             {
@@ -353,7 +317,7 @@ namespace DalXml
         }
         #endregion
         #region// update base stations number of free charging slots
-        internal static void UpdateBaseStationNumOfFreeDroneCharges(int? id, int newnum) // update base stations number of free charging slots
+        public void UpdateBaseStationNumOfFreeDroneCharges(int? id, int newnum) // update base stations number of free charging slots
         {
             try
             {
@@ -371,7 +335,7 @@ namespace DalXml
         }
         #endregion
         #region// update number of charging slots
-        internal static void UpdateChargingSlotsNumber(int? id, int numberOfChargingSlots) // update number of charging slots
+        public void UpdateChargingSlotsNumber(int? id, int numberOfChargingSlots) // update number of charging slots
         {
             try
             {
@@ -394,7 +358,7 @@ namespace DalXml
         }
         #endregion
         #region// update customers name
-        internal static void UpdateCustomerName(int? id, string name)
+        public void UpdateCustomerName(int? id, string name)
         {
             try
             {
@@ -412,7 +376,7 @@ namespace DalXml
         }
         #endregion
         #region//update customers phone number
-        internal static void UpdateCustomerPhone(int? id, string phone) // update customers phone number
+        public void UpdateCustomerPhone(int? id, string phone) // update customers phone number
         {
             try
             {
@@ -430,11 +394,11 @@ namespace DalXml
         }
         #endregion
         #region//releas drone from charging
-        internal static void ReleaseDroneCharge(int? droneId, int? stationId) // releas drone from charging
+        public void ReleaseDroneCharge(int? droneId, int? stationId) // releas drone from charging
         {
             try
             {
-                if (!RemoveDroneCharge(droneId))
+                if (!DeleteDroneCharge(droneId))
                 {
                     throw new IdNotExsistException("drone", droneId);
                 }
@@ -452,11 +416,11 @@ namespace DalXml
         }
         #endregion
         #region// associate a drone to a parcel
-        internal static void AssociateDroneToParcel(int? droneId, int? parcleId) // associate a drone to a parcel 
+        public void AssociateDroneToParcel(int? droneId, int? parcleId) // associate a drone to a parcel 
         {
             try
             {
-                Getdrone(droneId);
+                GetDrone(droneId);
             }
             catch (Exception)
             {
@@ -480,7 +444,7 @@ namespace DalXml
         #endregion
 
         #region// get base station
-        internal static BaseStation GetBaseStation(int? id)
+        public BaseStation GetBaseStation(int? id)
         {
             try
             {
@@ -506,7 +470,7 @@ namespace DalXml
         }
         #endregion
         #region// get customer
-        internal static Customer GetCustomer(int? id)
+        public Customer GetCustomer(int? id)
         {
             try
             {
@@ -531,11 +495,11 @@ namespace DalXml
         }
         #endregion
         #region// get drone
-        internal static Drone Getdrone(int? id)
+        public Drone GetDrone(int? id)
         {
             try
             {
-                XElement Root = XmlTools.LoadListFromXmlElement(DronesPath);//
+                XElement Root = XmlTools.LoadListFromXmlElement(DronesPath);
                 XElement droneElement = (from drone in Root.Elements()
                                          where int.Parse(drone.Element("Id").Value) == id
                                          select drone).FirstOrDefault();
@@ -555,7 +519,7 @@ namespace DalXml
         }
         #endregion
         #region// get drone charge
-        internal static DroneCharge GetdroneCharge(int? id)
+        public DroneCharge GetdroneCharge(int? id)
         {
             try
             {
@@ -578,27 +542,32 @@ namespace DalXml
         }
         #endregion
         #region// get parcel
-        internal static Parcel GetParcel(int? id)
+        public Parcel GetParcel(int? id, Predicate<Parcel> predicate = null)
         {
             try
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(ParcelsPath);//
-                XElement parcelElement = (from parcel in Root.Elements()
-                                          where int.Parse(parcel.Element("Id").Value) == id
-                                          select parcel).FirstOrDefault();
-                return new Parcel()
+                if (predicate == null)
                 {
-                    Id = int.Parse(parcelElement.Element("Id").Value),
-                    SenderId = int.Parse(parcelElement.Element("SenderId").Value),
-                    ReciverId = int.Parse(parcelElement.Element("ReciverId").Value),
-                    Weight = (WeightCategories)int.Parse(parcelElement.Element("Weight").Value),
-                    Priority = (Priorities)int.Parse(parcelElement.Element("Priority").Value),
-                    CreatingTime = DateTime.Parse(parcelElement.Element("CreatingTime").Value),
-                    DroneId = int.Parse(parcelElement.Element("DroneId").Value),
-                    AssociatedTime = DateTime.Parse(parcelElement.Element("AssociatedTime").Value),
-                    PickedUp = DateTime.Parse(parcelElement.Element("PickedUp").Value),
-                    Deliverd = DateTime.Parse(parcelElement.Element("Deliverd").Value)
-                };
+                    XElement parcelElement = (from parcel in Root.Elements()
+                                              where int.Parse(parcel.Element("Id").Value) == id
+                                              select parcel).FirstOrDefault();
+                    return new Parcel()
+                    {
+                        Id = int.Parse(parcelElement.Element("Id").Value),
+                        SenderId = int.Parse(parcelElement.Element("SenderId").Value),
+                        ReciverId = int.Parse(parcelElement.Element("ReciverId").Value),
+                        Weight = (WeightCategories)int.Parse(parcelElement.Element("Weight").Value),
+                        Priority = (Priorities)int.Parse(parcelElement.Element("Priority").Value),
+                        CreatingTime = DateTime.Parse(parcelElement.Element("CreatingTime").Value),
+                        DroneId = int.Parse(parcelElement.Element("DroneId").Value),
+                        AssociatedTime = DateTime.Parse(parcelElement.Element("AssociatedTime").Value),
+                        PickedUp = DateTime.Parse(parcelElement.Element("PickedUp").Value),
+                        Deliverd = DateTime.Parse(parcelElement.Element("Deliverd").Value)
+                    };
+                }
+                Func<Parcel, bool> func = new Func<Parcel, bool>(predicate);
+                return GetListOfParcel().FirstOrDefault(func);
             }
             catch (Exception)
             {
@@ -609,22 +578,22 @@ namespace DalXml
         #endregion
 
         #region// get list of base stations
-        internal static IEnumerable<BaseStation> GetListOfBaseStation(Predicate<BaseStation> predicate = null)
-        {   
+        public IEnumerable<BaseStation> GetListOfBaseStation(Predicate<BaseStation> predicate = null)
+        {
             try
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(BaseStationsPath);//
                 List<BaseStation> baseStationsList;
                 baseStationsList = (from station in Root.Elements()
-                                select new BaseStation()
-                                {
-                                    Id = int.Parse(station.Element("Id").Value),
-                                    Name = station.Element("Name").Value,
-                                    ChargeSlots = int.Parse(station.Element("ChargeSlots").Value),
-                                    Longtitude = double.Parse(station.Element("Longtitude").Value),
-                                    Latitude = double.Parse(station.Element("Latitude").Value)
+                                    select new BaseStation()
+                                    {
+                                        Id = int.Parse(station.Element("Id").Value),
+                                        Name = station.Element("Name").Value,
+                                        ChargeSlots = int.Parse(station.Element("ChargeSlots").Value),
+                                        Longtitude = double.Parse(station.Element("Longtitude").Value),
+                                        Latitude = double.Parse(station.Element("Latitude").Value)
 
-                                }).ToList();
+                                    }).ToList();
                 if (predicate == null)
                 {
                     return baseStationsList.ToList();
@@ -636,26 +605,26 @@ namespace DalXml
 
                 throw;
             }
-           
+
         }
         #endregion
         #region// get list of customers
-        internal static IEnumerable<Customer> GetListOfCustomer(Predicate<Customer> predicate = null)
+        public IEnumerable<Customer> GetListOfCustomer(Predicate<Customer> predicate = null)
         {
             try
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(CustomersPath);//
                 List<Customer> customersList;
                 customersList = (from customer in Root.Elements()
-                                    select new Customer()
-                                    {
-                                        Id = int.Parse(customer.Element("Id").Value),
-                                        Name = customer.Element("Name").Value,
-                                        Phone = (customer.Element("Phone").Value),
-                                        Longtitude = double.Parse(customer.Element("Longtitude").Value),
-                                        Latitude = double.Parse(customer.Element("Latitude").Value)
+                                 select new Customer()
+                                 {
+                                     Id = int.Parse(customer.Element("Id").Value),
+                                     Name = customer.Element("Name").Value,
+                                     Phone = (customer.Element("Phone").Value),
+                                     Longtitude = double.Parse(customer.Element("Longtitude").Value),
+                                     Latitude = double.Parse(customer.Element("Latitude").Value)
 
-                                    }).ToList();
+                                 }).ToList();
                 if (predicate == null)
                 {
                     return customersList.ToList();
@@ -667,23 +636,23 @@ namespace DalXml
 
                 throw;
             }
-      
+
         }
         #endregion
         #region// get list of drones
-        internal static IEnumerable<Drone> GetListOfDrone(Predicate<Drone> predicate = null)
+        public IEnumerable<Drone> GetListOfDrone(Predicate<Drone> predicate = null)
         {
             try
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(DronesPath);//
                 List<Drone> dronesList;
                 dronesList = (from drone in Root.Elements()
-                                 select new Drone()
-                                 {
-                                     Id = int.Parse(drone.Element("Id").Value),
-                                     Model = drone.Element("Model").Value,
-                                     MaxWeight = (WeightCategories)int.Parse(drone.Element("MaxWeight").Value)
-                                 }).ToList();
+                              select new Drone()
+                              {
+                                  Id = int.Parse(drone.Element("Id").Value),
+                                  Model = drone.Element("Model").Value,
+                                  MaxWeight = (WeightCategories)int.Parse(drone.Element("MaxWeight").Value)
+                              }).ToList();
                 if (predicate == null)
                 {
                     return dronesList.ToList();
@@ -699,19 +668,19 @@ namespace DalXml
         }
         #endregion
         #region// get list of drone charges
-        internal static IEnumerable<DroneCharge> GetListOfDroneCharge(Predicate<DroneCharge> predicate = null)
+        public IEnumerable<DroneCharge> GetListOfDroneCharge(Predicate<DroneCharge> predicate = null)
         {
             try
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(DroneChargesPath);//
                 List<DroneCharge> droneChargesList;
                 droneChargesList = (from droneCharge in Root.Elements()
-                              select new DroneCharge()
-                              {
-                                  DroneId = int.Parse(droneCharge.Element("DroneId").Value),
-                                  StationId = int.Parse(droneCharge.Element("StationId").Value),
-                                  TimeOfStartCharging = DateTime.Parse(droneCharge.Element("TimeOfStartCharging").Value)
-                              }).ToList();
+                                    select new DroneCharge()
+                                    {
+                                        DroneId = int.Parse(droneCharge.Element("DroneId").Value),
+                                        StationId = int.Parse(droneCharge.Element("StationId").Value),
+                                        TimeOfStartCharging = DateTime.Parse(droneCharge.Element("TimeOfStartCharging").Value)
+                                    }).ToList();
                 if (predicate == null)
                 {
                     return droneChargesList.ToList();
@@ -723,31 +692,31 @@ namespace DalXml
 
                 throw;
             }
-            
+
         }
         #endregion
         #region// get list of parcels
-        internal static IEnumerable<Parcel> GetListOfParcel(Predicate<Parcel> predicate = null)
+        public IEnumerable<Parcel> GetListOfParcel(Predicate<Parcel> predicate = null)
         {
             try
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(ParcelsPath);//
                 List<Parcel> parcelsList;
                 parcelsList = (from parcel in Root.Elements()
-                                    select new Parcel()
-                                    {
-                                        Id = int.Parse(parcel.Element("Id").Value),
-                                        SenderId = int.Parse(parcel.Element("SenderId").Value),
-                                        ReciverId = int.Parse(parcel.Element("ReciverId").Value),
-                                        Weight = (WeightCategories)int.Parse(parcel.Element("Weight").Value),
-                                        Priority = (Priorities)int.Parse(parcel.Element("Priority").Value),
-                                        CreatingTime = DateTime.Parse(parcel.Element("CreatingTime").Value),
-                                        DroneId = int.Parse(parcel.Element("DroneId").Value),
-                                        AssociatedTime = DateTime.Parse(parcel.Element("AssociatedTime").Value),
-                                        PickedUp = DateTime.Parse(parcel.Element("PickedUp").Value),
-                                        Deliverd = DateTime.Parse(parcel.Element("Deliverd").Value)
+                               select new Parcel()
+                               {
+                                   Id = int.Parse(parcel.Element("Id").Value),
+                                   SenderId = int.Parse(parcel.Element("SenderId").Value),
+                                   ReciverId = int.Parse(parcel.Element("ReciverId").Value),
+                                   Weight = (WeightCategories)int.Parse(parcel.Element("Weight").Value),
+                                   Priority = (Priorities)int.Parse(parcel.Element("Priority").Value),
+                                   CreatingTime = DateTime.Parse(parcel.Element("CreatingTime").Value),
+                                   DroneId = int.Parse(parcel.Element("DroneId").Value),
+                                   AssociatedTime = DateTime.Parse(parcel.Element("AssociatedTime").Value),
+                                   PickedUp = DateTime.Parse(parcel.Element("PickedUp").Value),
+                                   Deliverd = DateTime.Parse(parcel.Element("Deliverd").Value)
 
-                                    }).ToList();
+                               }).ToList();
                 if (predicate == null)
                 {
                     return parcelsList.ToList();
@@ -758,10 +727,110 @@ namespace DalXml
             {
 
                 throw;
-            }           
+            }
         }
         #endregion
-        //public static IDal Instance { get => instance.Value; } // The public Instance property to use
+     
+        #region// if drone exsists 
+        public bool IfDroneExsists(int? id)  // return true if id exisists in list of drones
+        {
+            XElement Root = XmlTools.LoadListFromXmlElement(DronesPath);
+            XElement droneElement = (from drone in Root.Elements()
+                                      where int.Parse(drone.Element("Id").Value) == id
+                                      select drone).FirstOrDefault();
+            if (droneElement.Equals(null))
+            {
+                return false;
+            }
+            return true;
+        }
+        #endregion
+        #region// if base station exsists 
+        public bool IfBaseStationExsists(int? id)  // return  true if id exisists in list of base stations
+        {
+            XElement Root = XmlTools.LoadListFromXmlElement(BaseStationsPath);
+            XElement baseStationElement = (from baseStation in Root.Elements()
+                                     where int.Parse(baseStation.Element("Id").Value) == id
+                                     select baseStation).FirstOrDefault();
+            if (baseStationElement.Equals(null))
+            {
+                return false;
+            }
+            return true;
+        }
+        #endregion
+        #region// if customer exsists
+        public bool IfCustomerExsists(int? id) // return  true if id exisists in list of customers
+        {
+            XElement Root = XmlTools.LoadListFromXmlElement(CustomersPath);
+            XElement customerElement = (from customer in Root.Elements()
+                                      where int.Parse(customer.Element("Id").Value) == id
+                                      select customer).FirstOrDefault();
+            if (customerElement.Equals(null))
+            {
+                return false;
+            }
+            return true;
+        }
+        #endregion
+        #region// if parcel exsists
+        public bool IfParcelExsists(int? id)  // return  true if id exisists inlist of parcels
+        {
+            XElement Root = XmlTools.LoadListFromXmlElement(ParcelsPath);
+            XElement parcelElement = (from parcel in Root.Elements()
+                                      where int.Parse(parcel.Element("Id").Value) == id
+                                      select parcel).FirstOrDefault();
+            if (parcelElement.Equals(null))
+            {
+                return false;
+            }
+            return true;
+        }
+        #endregion
+
+        #region // find a Drone by id and return all his data as Drone class 
+        public BaseStation getBaseStationByDroneId(int? id)  // find a Drone by id and return all his data as Drone class 
+        {
+            if (!IfDroneExsists(id)) // if id doesnt exsist
+            {
+                throw new IdNotExsistException("drone", id); // throw exception
+            }
+            Func<DroneCharge, bool> func = new Func<DroneCharge, bool>(element => element.DroneId == id);
+            return GetBaseStation(GetListOfDroneCharge().FirstOrDefault(func).StationId);
+        }
+        #endregion
+
+        #region// find a DroneCharge by id and return all his data as DroneCharge class
+        public DroneCharge GetDroneCharge(int? id = null, Predicate<DroneCharge> predicate = null)  // find a DroneCharge by id and return all his data as DroneCharge class
+        {
+            if (predicate == null)
+            {
+                if (!IfDroneExsists(id)) // if id doesnt exsist
+                {
+                    throw new IdNotExsistException("drone charge", id); // throw exception
+                }
+                Func<DroneCharge, bool> func = new Func<DroneCharge, bool>(element => element.DroneId == id);
+                return GetListOfDroneCharge().FirstOrDefault(func);
+            }
+            Func<DroneCharge, bool> func1 = new Func<DroneCharge, bool>(predicate);
+            return GetListOfDroneCharge().FirstOrDefault(func1);
+        }
+        #endregion
+
+        #region//return an array of electricity data
+        public double[] Electricity() // return an array of electricity data
+        {
+            XElement configRoot = XmlTools.LoadListFromXmlElement(ConfigPath);
+            double[] array = new double[5];
+            array[0] = double.Parse(configRoot.Element("ElectricityUseAvailiblity").Value);
+            array[1] = double.Parse(configRoot.Element("ElectricityUseLightWeight").Value);
+            array[2] = double.Parse(configRoot.Element("ElectricityUseMediumWeight").Value);
+            array[3] = double.Parse(configRoot.Element("ElectricityUseHeavyWeight").Value);
+            array[4] = double.Parse(configRoot.Element("DroneChargingPaste").Value);
+            return array;
+        }
+        #endregion
     }
 }
+
 
