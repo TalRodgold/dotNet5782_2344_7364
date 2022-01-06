@@ -112,7 +112,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(BaseStationsPath);
                 baseStationElement = (from basestation in Root.Elements()
-                                      where int.Parse(basestation.Element("Id").Value) == id
+                                      where XmlTools.ToNullableInt(basestation.Element("Id").Value) == id
                                       select basestation).FirstOrDefault();
                 if (baseStationElement.Equals(null))
                     throw new IdNotExsistException("base station", id);
@@ -134,7 +134,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(CustomersPath);
                 CustomerElement = (from customer in Root.Elements()
-                                   where int.Parse(customer.Element("Id").Value) == id
+                                   where XmlTools.ToNullableInt(customer.Element("Id").Value) == id
                                    select customer).FirstOrDefault();
                 if (CustomerElement.Equals(null))
                     throw new IdNotExsistException("customer", id);
@@ -156,7 +156,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(DronesPath);
                 DroneElement = (from drone in Root.Elements()
-                                where int.Parse(drone.Element("Id").Value) == id
+                                where XmlTools.ToNullableInt(drone.Element("Id").Value) == id
                                 select drone).FirstOrDefault();
                 if (DroneElement.Equals(null))
                 {
@@ -202,7 +202,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(ParcelsPath);
                 parcelElement = (from parcel in Root.Elements()
-                                 where int.Parse(parcel.Element("Id").Value) == id
+                                 where XmlTools.ToNullableInt(parcel.Element("Id").Value) == id
                                  select parcel).FirstOrDefault();
                 if (parcelElement.Equals(null))
                 {
@@ -224,7 +224,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(ParcelsPath);
                 XElement parcelElement = (from parcel in Root.Elements()
-                                          where int.Parse(parcel.Element("Id").Value) == id
+                                          where XmlTools.ToNullableInt(parcel.Element("Id").Value) == id
                                           select parcel).FirstOrDefault();
                 if (parcelElement.Equals(null))
                 {
@@ -246,7 +246,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(ParcelsPath);//
                 XElement parcelElement = (from parcel in Root.Elements()
-                                          where int.Parse(parcel.Element("Id").Value) == id
+                                          where XmlTools.ToNullableInt(parcel.Element("Id").Value) == id
                                           select parcel).FirstOrDefault();
                 if (parcelElement.Equals(null))
                 {
@@ -286,7 +286,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(DronesPath);//
                 XElement droneElement = (from drone in Root.Elements()
-                                         where int.Parse(drone.Element("Id").Value) == id
+                                         where XmlTools.ToNullableInt(drone.Element("Id").Value) == id
                                          select drone).FirstOrDefault();
                 droneElement.Element("Name").Value = newModel;
                 XmlTools.SaveListToXmlElement(Root, DronesPath);
@@ -305,7 +305,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(BaseStationsPath);//
                 XElement stationElement = (from station in Root.Elements()
-                                           where int.Parse(station.Element("Id").Value) == id
+                                           where XmlTools.ToNullableInt(station.Element("Id").Value) == id
                                            select station).FirstOrDefault();
                 stationElement.Element("Name").Value = name;
                 XmlTools.SaveListToXmlElement(Root, BaseStationsPath);
@@ -323,7 +323,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(BaseStationsPath);//
                 XElement stationElement = (from station in Root.Elements()
-                                           where int.Parse(station.Element("Id").Value) == id
+                                           where XmlTools.ToNullableInt(station.Element("Id").Value) == id
                                            select station).FirstOrDefault();
                 stationElement.Element("ChargeSlots").Value = newnum.ToString();
                 XmlTools.SaveListToXmlElement(Root, BaseStationsPath);
@@ -341,7 +341,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(BaseStationsPath);//
                 XElement stationElement = (from station in Root.Elements()
-                                           where int.Parse(station.Element("Id").Value) == id
+                                           where XmlTools.ToNullableInt(station.Element("Id").Value) == id
                                            select station).FirstOrDefault();
                 int count = GetListOfDroneCharge(element => element.StationId == id).ToList().Count();
                 if (count > numberOfChargingSlots) // if the new number is smaller than the number of drones charging currently
@@ -364,7 +364,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(CustomersPath);//
                 XElement customerElement = (from customer in Root.Elements()
-                                            where int.Parse(customer.Element("Id").Value) == id
+                                            where XmlTools.ToNullableInt(customer.Element("Id").Value) == id
                                             select customer).FirstOrDefault();
                 customerElement.Element("Name").Value = name;
                 XmlTools.SaveListToXmlElement(Root, CustomersPath);
@@ -382,7 +382,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(CustomersPath);//
                 XElement customerElement = (from customer in Root.Elements()
-                                            where int.Parse(customer.Element("Id").Value) == id
+                                            where XmlTools.ToNullableInt(customer.Element("Id").Value) == id
                                             select customer).FirstOrDefault();
                 customerElement.Element("Phone").Value = phone;
                 XmlTools.SaveListToXmlElement(Root, CustomersPath);
@@ -404,7 +404,7 @@ namespace DalXml
                 }
                 XElement Root = XmlTools.LoadListFromXmlElement(BaseStationsPath);//
                 XElement stationElement = (from station in Root.Elements()
-                                           where int.Parse(station.Element("Id").Value) == stationId
+                                           where XmlTools.ToNullableInt(station.Element("Id").Value) == stationId
                                            select station).FirstOrDefault();
                 stationElement.Element("ChargeSlots").Value = (int.Parse(stationElement.Element("ChargeSlots").Value) + 1).ToString();
                 XmlTools.SaveListToXmlElement(Root, BaseStationsPath);
@@ -430,7 +430,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(ParcelsPath);//
                 XElement parcelElement = (from parcel in Root.Elements()
-                                          where int.Parse(parcel.Element("Id").Value) == parcleId
+                                          where XmlTools.ToNullableInt(parcel.Element("Id").Value) == parcleId
                                           select parcel).FirstOrDefault();
                 parcelElement.Element("DroneId").Value = droneId.ToString();
                 parcelElement.Element("AssociatedTime").Value = DateTime.Now.ToString();
@@ -450,11 +450,11 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(BaseStationsPath);//
                 XElement stationElement = (from station in Root.Elements()
-                                           where int.Parse(station.Element("Id").Value) == id
+                                           where XmlTools.ToNullableInt(station.Element("Id").Value) == id
                                            select station).FirstOrDefault();
                 return new BaseStation()
                 {
-                    Id = int.Parse(stationElement.Element("Id").Value),
+                    Id = XmlTools.ToNullableInt(stationElement.Element("Id").Value),
                     Name = stationElement.Element("Name").Value,
                     ChargeSlots = int.Parse(stationElement.Element("ChargeSlots").Value),
                     Longtitude = double.Parse(stationElement.Element("Longtitude").Value),
@@ -476,11 +476,11 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(CustomersPath);//
                 XElement customerElement = (from customer in Root.Elements()
-                                            where int.Parse(customer.Element("Id").Value) == id
+                                            where XmlTools.ToNullableInt(customer.Element("Id").Value) == id
                                             select customer).FirstOrDefault();
                 return new Customer()
                 {
-                    Id = int.Parse(customerElement.Element("Id").Value),
+                    Id = XmlTools.ToNullableInt(customerElement.Element("Id").Value),
                     Name = customerElement.Element("Name").Value,
                     Phone = customerElement.Element("Phone").Value,
                     Longtitude = double.Parse(customerElement.Element("Longtitude").Value),
@@ -501,13 +501,13 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(DronesPath);
                 XElement droneElement = (from drone in Root.Elements()
-                                         where int.Parse(drone.Element("Id").Value) == id
+                                         where XmlTools.ToNullableInt(drone.Element("Id").Value) == id
                                          select drone).FirstOrDefault();
                 return new Drone()
                 {
-                    Id = int.Parse(droneElement.Element("Id").Value),
+                    Id = XmlTools.ToNullableInt(droneElement.Element("Id").Value),
                     Model = droneElement.Element("Name").Value,
-                    MaxWeight = (WeightCategories)int.Parse(droneElement.Element("MaxWeight").Value)
+                    MaxWeight = (WeightCategories)Enum.Parse(typeof(WeightCategories), droneElement.Element("MaxWeight").Value),
 
                 };
             }
@@ -525,13 +525,13 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(DroneChargesPath);//
                 XElement droneChargeElement = (from droneCharge in Root.Elements()
-                                               where int.Parse(droneCharge.Element("Id").Value) == id
+                                               where XmlTools.ToNullableInt(droneCharge.Element("Id").Value) == id
                                                select droneCharge).FirstOrDefault();
                 return new DroneCharge()
                 {
-                    DroneId = int.Parse(droneChargeElement.Element("DroneId").Value),
-                    StationId = int.Parse(droneChargeElement.Element("StationId").Value),
-                    TimeOfStartCharging = DateTime.Parse(droneChargeElement.Element("TimeOfStartCharging").Value)
+                    DroneId = XmlTools.ToNullableInt(droneChargeElement.Element("DroneId").Value),
+                    StationId = XmlTools.ToNullableInt(droneChargeElement.Element("StationId").Value),
+                    TimeOfStartCharging = XmlTools.ToNullableDateTime(droneChargeElement.Element("TimeOfStartCharging").Value)
                 };
             }
             catch (Exception)
@@ -550,13 +550,13 @@ namespace DalXml
                 if (predicate == null)
                 {
                     XElement parcelElement = (from parcel in Root.Elements()
-                                              where int.Parse(parcel.Element("Id").Value) == id
+                                              where XmlTools.ToNullableInt(parcel.Element("Id").Value) == id
                                               select parcel).FirstOrDefault();
                     return new Parcel()
                     {
-                        Id = int.Parse(parcelElement.Element("Id").Value),
-                        SenderId = int.Parse(parcelElement.Element("SenderId").Value),
-                        ReciverId = int.Parse(parcelElement.Element("ReciverId").Value),
+                        Id = XmlTools.ToNullableInt(parcelElement.Element("Id").Value),
+                        SenderId = XmlTools.ToNullableInt(parcelElement.Element("SenderId").Value),
+                        ReciverId = XmlTools.ToNullableInt(parcelElement.Element("ReciverId").Value),
                         Weight = (WeightCategories)Enum.Parse(typeof(WeightCategories), parcelElement.Element("Weight").Value),
                         Priority = (Priorities)Enum.Parse(typeof(Priorities), parcelElement.Element("Priority").Value),
                         CreatingTime = XmlTools.ToNullableDateTime(parcelElement.Element("CreatingTime").Value),
@@ -587,7 +587,7 @@ namespace DalXml
                 baseStationsList = (from station in Root.Elements()
                                     select new BaseStation()
                                     {
-                                        Id = int.Parse(station.Element("Id").Value),
+                                        Id = XmlTools.ToNullableInt(station.Element("Id").Value),
                                         Name = station.Element("Name").Value,
                                         ChargeSlots = int.Parse(station.Element("ChargeSlots").Value),
                                         Longtitude = double.Parse(station.Element("Longtitude").Value),
@@ -618,7 +618,7 @@ namespace DalXml
                 customersList = (from customer in Root.Elements()
                                  select new Customer()
                                  {
-                                     Id = int.Parse(customer.Element("Id").Value),
+                                     Id = XmlTools.ToNullableInt(customer.Element("Id").Value),
                                      Name = customer.Element("Name").Value,
                                      Phone = (customer.Element("Phone").Value),
                                      Longtitude = double.Parse(customer.Element("Longtitude").Value),
@@ -649,7 +649,7 @@ namespace DalXml
                 dronesList = (from drone in Root.Elements()
                               select new Drone()
                               {
-                                  Id = int.Parse(drone.Element("Id").Value),
+                                  Id = XmlTools.ToNullableInt(drone.Element("Id").Value),
                                   Model = drone.Element("Model").Value,
                                   MaxWeight = (WeightCategories)Enum.Parse(typeof(WeightCategories), drone.Element("MaxWeight").Value)
                               }).ToList();
@@ -676,9 +676,9 @@ namespace DalXml
                 droneChargesList = (from droneCharge in Root.Elements()
                                     select new DroneCharge()
                                     {
-                                        DroneId = int.Parse(droneCharge.Element("DroneId").Value),
-                                        StationId = int.Parse(droneCharge.Element("StationId").Value),
-                                        TimeOfStartCharging = DateTime.Parse(droneCharge.Element("TimeOfStartCharging").Value)
+                                        DroneId = XmlTools.ToNullableInt(droneCharge.Element("DroneId").Value),
+                                        StationId = XmlTools.ToNullableInt(droneCharge.Element("StationId").Value),
+                                        TimeOfStartCharging = XmlTools.ToNullableDateTime(droneCharge.Element("TimeOfStartCharging").Value)
                                     }).ToList();
                 if (predicate == null)
                 {
@@ -694,7 +694,6 @@ namespace DalXml
 
         }
         #endregion
-
         #region// get list of parcels
         public IEnumerable<Parcel> GetListOfParcel(Predicate<Parcel> predicate = null)
         {
@@ -706,9 +705,9 @@ namespace DalXml
                 parcelsList = (from parcel in Root.Elements()
                                select new Parcel()
                                {
-                                   Id = int.Parse(parcel.Element("Id").Value),
-                                   SenderId = int.Parse(parcel.Element("SenderId").Value),
-                                   ReciverId = int.Parse(parcel.Element("ReciverId").Value),
+                                   Id = XmlTools.ToNullableInt(parcel.Element("Id").Value),
+                                   SenderId = XmlTools.ToNullableInt(parcel.Element("SenderId").Value),
+                                   ReciverId = XmlTools.ToNullableInt(parcel.Element("ReciverId").Value),
                                    Weight = (WeightCategories)Enum.Parse(typeof(WeightCategories), parcel.Element("Weight").Value),
                                    Priority = (Priorities)Enum.Parse(typeof(Priorities), parcel.Element("Priority").Value),
                                    CreatingTime = DateTime.Parse(parcel.Element("CreatingTime").Value),
@@ -736,7 +735,7 @@ namespace DalXml
         {
             XElement Root = XmlTools.LoadListFromXmlElement(DronesPath);
             XElement droneElement = (from drone in Root.Elements()
-                                      where int.Parse(drone.Element("Id").Value) == id
+                                      where XmlTools.ToNullableInt(drone.Element("Id").Value) == id
                                       select drone).FirstOrDefault();
             if (droneElement.Equals(null))
             {
@@ -750,7 +749,7 @@ namespace DalXml
         {
             XElement Root = XmlTools.LoadListFromXmlElement(BaseStationsPath);
             XElement baseStationElement = (from baseStation in Root.Elements()
-                                     where int.Parse(baseStation.Element("Id").Value) == id
+                                     where XmlTools.ToNullableInt(baseStation.Element("Id").Value) == id
                                      select baseStation).FirstOrDefault();
             if (baseStationElement.Equals(null))
             {
@@ -764,7 +763,7 @@ namespace DalXml
         {
             XElement Root = XmlTools.LoadListFromXmlElement(CustomersPath);
             XElement customerElement = (from customer in Root.Elements()
-                                      where int.Parse(customer.Element("Id").Value) == id
+                                      where XmlTools.ToNullableInt(customer.Element("Id").Value) == id
                                       select customer).FirstOrDefault();
             if (customerElement.Equals(null))
             {
@@ -778,7 +777,7 @@ namespace DalXml
         {
             XElement Root = XmlTools.LoadListFromXmlElement(ParcelsPath);
             XElement parcelElement = (from parcel in Root.Elements()
-                                      where int.Parse(parcel.Element("Id").Value) == id
+                                      where XmlTools.ToNullableInt(parcel.Element("Id").Value) == id
                                       select parcel).FirstOrDefault();
             if (parcelElement.Equals(null))
             {
