@@ -18,11 +18,6 @@ namespace DalObjects
                                // is done just before first usage
         DalObjects() // constructor.
         {
-            DataSource.DroneList = new List<Drone>();
-            DataSource.BaseStationList = new List<BaseStation>();
-            DataSource.CustomerList = new List<Customer>();
-            DataSource.ParcelList = new List<Parcel>();
-            DataSource.DroneChargeList = new List<DroneCharge>();
             DataSource.Initialize();
         }
         public static IDal Instance { get => instance.Value; } // The public Instance property to use

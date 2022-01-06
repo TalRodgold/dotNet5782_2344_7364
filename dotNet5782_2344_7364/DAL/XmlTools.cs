@@ -90,5 +90,17 @@ namespace DalXml
             }
         }
         #endregion
+        public static int? ToNullableInt(string s)
+        {
+            int i;
+            if (int.TryParse(s, out i)) return i;
+            return null;
+        }
+        public static DateTime? ToNullableDateTime(string s)
+        {
+            DateTime i;
+            if (DateTime.TryParse(s, out i)) return i;
+            return null;
+        }
     }
 }

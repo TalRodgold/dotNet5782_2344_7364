@@ -15,7 +15,7 @@ namespace DalApi
                 case "DalObject":
                     return DalObjects.DalObjects.Instance;
                 case "DalXml":
-                    //return DalXml.DalXml.Instance;
+                    return DalXml.DalXml.Instance;
                 default:
                     throw new InvalidOperationException() ;
             }

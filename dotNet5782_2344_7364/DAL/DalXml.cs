@@ -14,7 +14,7 @@ namespace DalXml
     {
         private static readonly Lazy<DalXml> instance = new Lazy<DalXml>(() => new DalXml());// using lazy to improve performance and avoid wasteful computation, and reduce program memory requirements.  
         static DalXml() { }// Explicit static constructor to ensure instance initialization
-                           // is done just before first usage
+        public static IDal Instance { get => instance.Value; } // The public Instance property to use
         public DalXml() // constructor.
         {
             DataSource.Initialize();
@@ -644,14 +644,14 @@ namespace DalXml
         {
             try
             {
-                XElement Root = XmlTools.LoadListFromXmlElement(DronesPath);//
-                List<Drone> dronesList;
+                XElement Root = XmlTools.LoadListFromXmlElement(DronesPath);
+                List<Drone> dronesList = new List<Drone>();
                 dronesList = (from drone in Root.Elements()
                               select new Drone()
                               {
                                   Id = int.Parse(drone.Element("Id").Value),
                                   Model = drone.Element("Model").Value,
-                                  MaxWeight = (WeightCategories)int.Parse(drone.Element("MaxWeight").Value)
+                                  MaxWeight = (WeightCategories)Enum.Parse(typeof(WeightCategories), drone.Element("MaxWeight").Value)
                               }).ToList();
                 if (predicate == null)
                 {
@@ -659,12 +659,11 @@ namespace DalXml
                 }
                 return dronesList.FindAll(predicate).ToList();
             }
-            catch (Exception)
+            catch (Exception e)
             {
 
-                throw;
+                throw e;
             }
-
         }
         #endregion
         #region// get list of drone charges
@@ -695,9 +694,11 @@ namespace DalXml
 
         }
         #endregion
+
         #region// get list of parcels
         public IEnumerable<Parcel> GetListOfParcel(Predicate<Parcel> predicate = null)
         {
+
             try
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(ParcelsPath);//
@@ -708,14 +709,13 @@ namespace DalXml
                                    Id = int.Parse(parcel.Element("Id").Value),
                                    SenderId = int.Parse(parcel.Element("SenderId").Value),
                                    ReciverId = int.Parse(parcel.Element("ReciverId").Value),
-                                   Weight = (WeightCategories)int.Parse(parcel.Element("Weight").Value),
-                                   Priority = (Priorities)int.Parse(parcel.Element("Priority").Value),
+                                   Weight = (WeightCategories)Enum.Parse(typeof(WeightCategories), parcel.Element("Weight").Value),
+                                   Priority = (Priorities)Enum.Parse(typeof(Priorities), parcel.Element("Priority").Value),
                                    CreatingTime = DateTime.Parse(parcel.Element("CreatingTime").Value),
-                                   DroneId = int.Parse(parcel.Element("DroneId").Value),
-                                   AssociatedTime = DateTime.Parse(parcel.Element("AssociatedTime").Value),
-                                   PickedUp = DateTime.Parse(parcel.Element("PickedUp").Value),
-                                   Deliverd = DateTime.Parse(parcel.Element("Deliverd").Value)
-
+                                   DroneId = XmlTools.ToNullableInt(parcel.Element("DroneId").Value),
+                                   AssociatedTime = XmlTools.ToNullableDateTime(parcel.Element("AssociatedTime").Value),
+                                   PickedUp = XmlTools.ToNullableDateTime(parcel.Element("PickedUp").Value),
+                                   Deliverd = XmlTools.ToNullableDateTime(parcel.Element("Deliverd").Value)
                                }).ToList();
                 if (predicate == null)
                 {

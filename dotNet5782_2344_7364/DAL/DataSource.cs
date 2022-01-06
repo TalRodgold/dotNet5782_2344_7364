@@ -48,6 +48,7 @@ namespace DalObjects
                 electricity[4] = DroneChargingPaste;
                 return electricity;
             }
+         
         }
         #endregion
         /// <summary>
@@ -160,6 +161,11 @@ namespace DalObjects
         internal static void Initialize() // this function sets 2 randome base stations,  5 randome drones,  10 custemers and 10 parcels
         {
             #region// call 4 creat functions
+            DroneList = new List<Drone>();
+            BaseStationList = new List<BaseStation>();
+            CustomerList = new List<Customer>();
+            ParcelList = new List<Parcel>();
+            DroneChargeList = new List<DroneCharge>();
             for (int i = 0; i < 2; i++) // set 2 base stations
             {
                 CreatBaseStation();
@@ -178,8 +184,9 @@ namespace DalObjects
             {
                 CreatParcel();
             }
-            DalXml.XmlTools.SaveListToXmlElement(new XElement("Config", new XElement("ParcelId", Config.ParcelId)), DalXml.DalXml.ConfigPath);
-            DalXml.XmlTools.SaveListToXmlSerializer(Config.GetArrElectricity().ToList<double>(), DalXml.DalXml.ConfigPath);
+            
+            XElement xElement = new XElement("Config", new XElement("ElectricityUseAvailiblity", Config.ElectricityUseAvailiblity), new XElement("ElectricityUseLightWeight", Config.ElectricityUseLightWeight), new XElement("ElectricityUseMediumWeight", Config.ElectricityUseMediumWeight), new XElement("ElectricityUseHeavyWeight", Config.ElectricityUseHeavyWeight), new XElement("DroneChargingPaste", Config.DroneChargingPaste), new XElement("ParcelId", Config.ParcelId));
+            DalXml.XmlTools.SaveListToXmlElement(xElement, DalXml.DalXml.ConfigPath);
             DalXml.XmlTools.SaveListToXmlSerializer(BaseStationList, DalXml.DalXml.BaseStationsPath);
             DalXml.XmlTools.SaveListToXmlSerializer(DroneList, DalXml.DalXml.DronesPath);
             DalXml.XmlTools.SaveListToXmlSerializer(DroneChargeList, DalXml.DalXml.DroneChargesPath);
