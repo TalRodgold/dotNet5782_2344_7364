@@ -1,17 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfBaseStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <BaseStation>
-    <Id>96</Id>
+    <Id>136</Id>
     <Name>San_simon</Name>
-    <ChargeSlots>8</ChargeSlots>
-    <Longtitude>31.75037148715176</Longtitude>
-    <Latitude>35.23758573822842</Latitude>
-  </BaseStation>
-  <BaseStation>
-    <Id>180</Id>
-    <Name>Givat_shaul</Name>
     <ChargeSlots>6</ChargeSlots>
-    <Longtitude>31.968181294762367</Longtitude>
-    <Latitude>35.567820983088474</Latitude>
+    <Longtitude>32.49449823672323</Longtitude>
+    <Latitude>35.601099786910716</Latitude>
   </BaseStation>
 </ArrayOfBaseStation>

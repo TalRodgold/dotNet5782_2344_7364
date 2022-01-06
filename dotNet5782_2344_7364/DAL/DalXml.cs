@@ -180,7 +180,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(DroneChargesPath);
                 DroneChargeElement = (from droneCharge in Root.Elements()
-                                      where XmlTools.ToNullableInt(droneCharge.Element("Id").Value) == id
+                                      where XmlTools.ToNullableInt(droneCharge.Element("DroneId").Value) == id 
                                       select droneCharge).FirstOrDefault();
                 if (DroneChargeElement.Equals(null))
                     throw new IdNotExsistException("drone charge", id);
@@ -288,7 +288,7 @@ namespace DalXml
                 XElement droneElement = (from drone in Root.Elements()
                                          where int.Parse(drone.Element("Id").Value) == id
                                          select drone).FirstOrDefault();
-                droneElement.Element("Name").Value = newModel;
+                droneElement.Element("Model").Value = newModel;
                 XmlTools.SaveListToXmlElement(Root, DronesPath);
 
             }
