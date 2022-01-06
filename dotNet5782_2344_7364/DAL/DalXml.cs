@@ -569,7 +569,7 @@ namespace DalXml
                 Func<Parcel, bool> func = new Func<Parcel, bool>(predicate);
                 return GetListOfParcel().FirstOrDefault(func);
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 throw new IdNotExsistException("parcel", id);
             }
