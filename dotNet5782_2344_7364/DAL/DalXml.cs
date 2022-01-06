@@ -489,7 +489,7 @@ namespace DalXml
             }
             catch (Exception)
             {
-                throw new IdNotExsistException("customer", id);
+                throw new IdNotExsistException("customer", id);//
             }
 
         }
