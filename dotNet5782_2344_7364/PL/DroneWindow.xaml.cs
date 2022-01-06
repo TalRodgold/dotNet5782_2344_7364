@@ -203,8 +203,8 @@ namespace PL
         private void Refresh() // refresh
         {
             drone = bl.GetDroneById(drone.Id);
-            //Battery.Value = drone.Battery;
-            //Model.Text = drone.Model.ToString();
+            Battery.Value = drone.Battery;
+            Model.Text = drone.Model.ToString();
             StatusSelector.SelectedItem = drone.DroneStatuses;
             ParcelInTransit.Text = drone.ParcelInTransit.Id.ToString();
             Longitude.Text = drone.CurrentLocation.LongitudeInSexa();
