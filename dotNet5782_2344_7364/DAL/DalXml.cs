@@ -180,7 +180,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(DroneChargesPath);
                 DroneChargeElement = (from droneCharge in Root.Elements()
-                                      where XmlTools.ToNullableInt(droneCharge.Element("Id").Value) == id
+                                      where XmlTools.ToNullableInt(droneCharge.Element("DroneId").Value) == id 
                                       select droneCharge).FirstOrDefault();
                 if (DroneChargeElement.Equals(null))
                     throw new IdNotExsistException("drone charge", id);
@@ -288,7 +288,7 @@ namespace DalXml
                 XElement droneElement = (from drone in Root.Elements()
                                          where XmlTools.ToNullableInt(drone.Element("Id").Value) == id
                                          select drone).FirstOrDefault();
-                droneElement.Element("Name").Value = newModel;
+                droneElement.Element("Model").Value = newModel;
                 XmlTools.SaveListToXmlElement(Root, DronesPath);
 
             }
@@ -489,7 +489,7 @@ namespace DalXml
             }
             catch (Exception)
             {
-                throw new IdNotExsistException("customer", id);
+                throw new IdNotExsistException("customer", id);//
             }
 
         }
@@ -506,7 +506,7 @@ namespace DalXml
                 return new Drone()
                 {
                     Id = XmlTools.ToNullableInt(droneElement.Element("Id").Value),
-                    Model = droneElement.Element("Name").Value,
+                    Model = droneElement.Element("Model").Value,
                     MaxWeight = (WeightCategories)Enum.Parse(typeof(WeightCategories), droneElement.Element("MaxWeight").Value),
 
                 };
@@ -765,7 +765,7 @@ namespace DalXml
             XElement customerElement = (from customer in Root.Elements()
                                       where XmlTools.ToNullableInt(customer.Element("Id").Value) == id
                                       select customer).FirstOrDefault();
-            if (customerElement.Equals(null))
+            if (Object.Equals(customerElement,null))
             {
                 return false;
             }

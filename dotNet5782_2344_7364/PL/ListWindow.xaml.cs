@@ -109,6 +109,9 @@ namespace PL
 
             BO.BaseStationToList baseStation = (BO.BaseStationToList)ListBaseStation.SelectedItem;
             BaseStationWindow baseStationWindow = new BaseStationWindow(baseStation.Id, baseStation.OccupiedChargingSlots);
+
+            baseStationWindow.DeleteButton.Click += updateStation;
+
             baseStationWindow.UpdateButton.Click  += updateStation;
             baseStationWindow.Show();
 
@@ -118,6 +121,7 @@ namespace PL
 
             BO.ParcelToList parcel = (BO.ParcelToList)ListParcel.SelectedItem;
             ParcelWindow parcelWindow = new ParcelWindow(parcel.Id);
+            parcelWindow.DeleteButton.Click += updateParcel;
             parcelWindow.Show();
         }
         private void Drone_DoubleClick(object sender, MouseButtonEventArgs e)
@@ -125,6 +129,11 @@ namespace PL
             BO.DroneToList drone = (BO.DroneToList)ListDrone.SelectedItem;
             DroneWindow droneWindow = new DroneWindow(drone.Id);
             droneWindow.UpdateButton.Click += updateDrones;
+            droneWindow.SendDroneToChargeButton.Click += updateDrones;
+            droneWindow.RealesDroneFromChargingButton.Click += updateDrones;
+            droneWindow.AccociateDroneToParcelButton.Click += updateDrones;
+            droneWindow.PickUpParcelButton.Click += updateDrones;
+            droneWindow.DeliverParcelButton.Click += updateDrones;
             droneWindow.Show();
            
         }

@@ -68,7 +68,7 @@
                         <ImageBrush ImageSource="/Images/Parcel.jpg"/>
                     </Grid.Background>
 
-                    <ListView x:Name="ListParcel" ItemsSource="{Binding}" Foreground="Snow" MouseDoubleClick="Parcel_DoubleClick" Margin="0,38,0,0">
+                    <ListView x:Name="ListParcel" ItemsSource="{Binding }" Foreground="Snow" MouseDoubleClick="Parcel_DoubleClick" Margin="0,38,0,0">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/Parcel.jpg"/>
                         </ListView.Background>
