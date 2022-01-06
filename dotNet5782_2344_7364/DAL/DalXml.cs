@@ -180,7 +180,7 @@ namespace DalXml
             {
                 XElement Root = XmlTools.LoadListFromXmlElement(DroneChargesPath);
                 DroneChargeElement = (from droneCharge in Root.Elements()
-                                      where int.Parse(droneCharge.Element("Id").Value) == id
+                                      where XmlTools.ToNullableInt(droneCharge.Element("Id").Value) == id
                                       select droneCharge).FirstOrDefault();
                 if (DroneChargeElement.Equals(null))
                     throw new IdNotExsistException("drone charge", id);
@@ -557,13 +557,13 @@ namespace DalXml
                         Id = int.Parse(parcelElement.Element("Id").Value),
                         SenderId = int.Parse(parcelElement.Element("SenderId").Value),
                         ReciverId = int.Parse(parcelElement.Element("ReciverId").Value),
-                        Weight = (WeightCategories)int.Parse(parcelElement.Element("Weight").Value),
-                        Priority = (Priorities)int.Parse(parcelElement.Element("Priority").Value),
-                        CreatingTime = DateTime.Parse(parcelElement.Element("CreatingTime").Value),
-                        DroneId = int.Parse(parcelElement.Element("DroneId").Value),
-                        AssociatedTime = DateTime.Parse(parcelElement.Element("AssociatedTime").Value),
-                        PickedUp = DateTime.Parse(parcelElement.Element("PickedUp").Value),
-                        Deliverd = DateTime.Parse(parcelElement.Element("Deliverd").Value)
+                        Weight = (WeightCategories)Enum.Parse(typeof(WeightCategories), parcelElement.Element("Weight").Value),
+                        Priority = (Priorities)Enum.Parse(typeof(Priorities), parcelElement.Element("Priority").Value),
+                        CreatingTime = XmlTools.ToNullableDateTime(parcelElement.Element("CreatingTime").Value),
+                        DroneId = XmlTools.ToNullableInt(parcelElement.Element("DroneId").Value),
+                        AssociatedTime = XmlTools.ToNullableDateTime(parcelElement.Element("AssociatedTime").Value),
+                        PickedUp = XmlTools.ToNullableDateTime(parcelElement.Element("PickedUp").Value),
+                        Deliverd = XmlTools.ToNullableDateTime(parcelElement.Element("Deliverd").Value)
                     };
                 }
                 Func<Parcel, bool> func = new Func<Parcel, bool>(predicate);
