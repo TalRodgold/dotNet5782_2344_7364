@@ -448,6 +448,12 @@ namespace DalXml
         {
             try
             {
+
+                if(!IfBaseStationExsists(id))
+                {
+                    throw new IdNotExsistException("base station", id);
+                }
+
                 XElement Root = XmlTools.LoadListFromXmlElement(BaseStationsPath);//
                 XElement stationElement = (from station in Root.Elements()
                                            where XmlTools.ToNullableInt(station.Element("Id").Value) == id
@@ -474,6 +480,10 @@ namespace DalXml
         {
             try
             {
+                if (!IfCustomerExsists(id))
+                {
+                    throw new IdNotExsistException("customer", id);//
+                }
                 XElement Root = XmlTools.LoadListFromXmlElement(CustomersPath);//
                 XElement customerElement = (from customer in Root.Elements()
                                             where XmlTools.ToNullableInt(customer.Element("Id").Value) == id
@@ -499,6 +509,10 @@ namespace DalXml
         {
             try
             {
+                if (!IfDroneExsists(id))
+                {
+                    throw new IdNotExsistException("drone", id);
+                }
                 XElement Root = XmlTools.LoadListFromXmlElement(DronesPath);
                 XElement droneElement = (from drone in Root.Elements()
                                          where XmlTools.ToNullableInt(drone.Element("Id").Value) == id
@@ -546,6 +560,12 @@ namespace DalXml
         {
             try
             {
+               if(!IfParcelExsists(id))
+               {
+                    throw new IdNotExsistException("parcel", id);
+
+               }
+
                 XElement Root = XmlTools.LoadListFromXmlElement(ParcelsPath);//
                 if (predicate == null)
                 {
@@ -569,7 +589,7 @@ namespace DalXml
                 Func<Parcel, bool> func = new Func<Parcel, bool>(predicate);
                 return GetListOfParcel().FirstOrDefault(func);
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 throw new IdNotExsistException("parcel", id);
             }
