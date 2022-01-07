@@ -1,12 +1,12 @@
-<?xml version="1.0"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfParcel xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Parcel>
     <Id>12345</Id>
-    <SenderId>159</SenderId>
-    <ReciverId>225</ReciverId>
-    <Weight>Heavy</Weight>
+    <SenderId>220</SenderId>
+    <ReciverId>131</ReciverId>
+    <Weight>Medium</Weight>
     <Priority>Urgent</Priority>
-    <CreatingTime>2022-01-07T14:23:41.9066481+02:00</CreatingTime>
+    <CreatingTime>2022-01-06T18:23:57.4280944+02:00</CreatingTime>
     <DroneId xsi:nil="true" />
     <AssociatedTime xsi:nil="true" />
     <PickedUp xsi:nil="true" />
@@ -14,11 +14,11 @@
   </Parcel>
   <Parcel>
     <Id>12346</Id>
-    <SenderId>191</SenderId>
-    <ReciverId>159</ReciverId>
+    <SenderId>14</SenderId>
+    <ReciverId>221</ReciverId>
     <Weight>Light</Weight>
-    <Priority>Express</Priority>
-    <CreatingTime>2022-01-07T14:23:41.9074253+02:00</CreatingTime>
+    <Priority>Urgent</Priority>
+    <CreatingTime>2022-01-06T18:23:57.4288051+02:00</CreatingTime>
     <DroneId xsi:nil="true" />
     <AssociatedTime xsi:nil="true" />
     <PickedUp xsi:nil="true" />
@@ -26,11 +26,11 @@
   </Parcel>
   <Parcel>
     <Id>12347</Id>
-    <SenderId>226</SenderId>
-    <ReciverId>142</ReciverId>
-    <Weight>Light</Weight>
-    <Priority>Regular</Priority>
-    <CreatingTime>2022-01-07T14:23:41.9074366+02:00</CreatingTime>
+    <SenderId>90</SenderId>
+    <ReciverId>60</ReciverId>
+    <Weight>Medium</Weight>
+    <Priority>Urgent</Priority>
+    <CreatingTime>2022-01-06T18:23:57.4288191+02:00</CreatingTime>
     <DroneId xsi:nil="true" />
     <AssociatedTime xsi:nil="true" />
     <PickedUp xsi:nil="true" />
@@ -38,11 +38,11 @@
   </Parcel>
   <Parcel>
     <Id>12348</Id>
-    <SenderId>191</SenderId>
-    <ReciverId>142</ReciverId>
+    <SenderId>14</SenderId>
+    <ReciverId>221</ReciverId>
     <Weight>Light</Weight>
-    <Priority>Express</Priority>
-    <CreatingTime>2022-01-07T14:23:41.9074399+02:00</CreatingTime>
+    <Priority>Regular</Priority>
+    <CreatingTime>2022-01-06T18:23:57.4288219+02:00</CreatingTime>
     <DroneId xsi:nil="true" />
     <AssociatedTime xsi:nil="true" />
     <PickedUp xsi:nil="true" />
@@ -50,11 +50,11 @@
   </Parcel>
   <Parcel>
     <Id>12349</Id>
-    <SenderId>39</SenderId>
-    <ReciverId>117</ReciverId>
-    <Weight>Medium</Weight>
-    <Priority>Express</Priority>
-    <CreatingTime>2022-01-07T14:23:41.9074429+02:00</CreatingTime>
+    <SenderId>211</SenderId>
+    <ReciverId>90</ReciverId>
+    <Weight>Heavy</Weight>
+    <Priority>Regular</Priority>
+    <CreatingTime>2022-01-06T18:23:57.4288248+02:00</CreatingTime>
     <DroneId xsi:nil="true" />
     <AssociatedTime xsi:nil="true" />
     <PickedUp xsi:nil="true" />
@@ -62,11 +62,11 @@
   </Parcel>
   <Parcel>
     <Id>12350</Id>
-    <SenderId>191</SenderId>
-    <ReciverId>6</ReciverId>
-    <Weight>Medium</Weight>
-    <Priority>Regular</Priority>
-    <CreatingTime>2022-01-07T14:23:41.9074472+02:00</CreatingTime>
+    <SenderId>245</SenderId>
+    <ReciverId>60</ReciverId>
+    <Weight>Heavy</Weight>
+    <Priority>Urgent</Priority>
+    <CreatingTime>2022-01-06T18:23:57.4288285+02:00</CreatingTime>
     <DroneId xsi:nil="true" />
     <AssociatedTime xsi:nil="true" />
     <PickedUp xsi:nil="true" />
@@ -74,11 +74,11 @@
   </Parcel>
   <Parcel>
     <Id>12351</Id>
-    <SenderId>82</SenderId>
-    <ReciverId>39</ReciverId>
-    <Weight>Medium</Weight>
+    <SenderId>152</SenderId>
+    <ReciverId>245</ReciverId>
+    <Weight>Heavy</Weight>
     <Priority>Regular</Priority>
-    <CreatingTime>2022-01-07T14:23:41.9074502+02:00</CreatingTime>
+    <CreatingTime>2022-01-06T18:23:57.4288313+02:00</CreatingTime>
     <DroneId xsi:nil="true" />
     <AssociatedTime xsi:nil="true" />
     <PickedUp xsi:nil="true" />
@@ -86,11 +86,11 @@
   </Parcel>
   <Parcel>
     <Id>12352</Id>
-    <SenderId>159</SenderId>
-    <ReciverId>39</ReciverId>
+    <SenderId>211</SenderId>
+    <ReciverId>182</ReciverId>
     <Weight>Heavy</Weight>
-    <Priority>Express</Priority>
-    <CreatingTime>2022-01-07T14:23:41.9074533+02:00</CreatingTime>
+    <Priority>Regular</Priority>
+    <CreatingTime>2022-01-06T18:23:57.4288343+02:00</CreatingTime>
     <DroneId xsi:nil="true" />
     <AssociatedTime xsi:nil="true" />
     <PickedUp xsi:nil="true" />
@@ -98,11 +98,11 @@
   </Parcel>
   <Parcel>
     <Id>12353</Id>
-    <SenderId>6</SenderId>
-    <ReciverId>226</ReciverId>
-    <Weight>Light</Weight>
-    <Priority>Regular</Priority>
-    <CreatingTime>2022-01-07T14:23:41.9074852+02:00</CreatingTime>
+    <SenderId>118</SenderId>
+    <ReciverId>239</ReciverId>
+    <Weight>Medium</Weight>
+    <Priority>Urgent</Priority>
+    <CreatingTime>2022-01-06T18:23:57.428837+02:00</CreatingTime>
     <DroneId xsi:nil="true" />
     <AssociatedTime xsi:nil="true" />
     <PickedUp xsi:nil="true" />
@@ -110,11 +110,11 @@
   </Parcel>
   <Parcel>
     <Id>12354</Id>
-    <SenderId>106</SenderId>
-    <ReciverId>142</ReciverId>
+    <SenderId>14</SenderId>
+    <ReciverId>90</ReciverId>
     <Weight>Light</Weight>
-    <Priority>Urgent</Priority>
-    <CreatingTime>2022-01-07T14:23:41.9074885+02:00</CreatingTime>
+    <Priority>Express</Priority>
+    <CreatingTime>2022-01-06T18:23:57.4288401+02:00</CreatingTime>
     <DroneId xsi:nil="true" />
     <AssociatedTime xsi:nil="true" />
     <PickedUp xsi:nil="true" />
