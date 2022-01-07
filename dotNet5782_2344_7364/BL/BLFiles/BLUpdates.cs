@@ -229,6 +229,8 @@ namespace BlApi
             drone.DroneStatuses = Enums.DroneStatuses.Available;
             DO.DroneCharge droneCharge = dal.GetDroneCharge(id, element => element.DroneId == id);
             DO.BaseStation station = dal.getBaseStationByDroneId(droneCharge.DroneId);
+            int index = ListOfDronsBL.FindIndex(element => element.Id == id);
+            ListOfDronsBL[index] = drone;
             station.ChargeSlots -= 1;
             dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.ChargeSlots);
             dal.ReleaseDroneCharge(id, station.Id);
