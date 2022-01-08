@@ -1,17 +1,17 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0"?>
 <ArrayOfBaseStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <BaseStation>
-    <Id>87</Id>
-    <Name>Givat_mordehai</Name>
+    <Id>77</Id>
+    <Name>Pissgat_zev</Name>
     <ChargeSlots>7</ChargeSlots>
-    <Longtitude>32.43450646906531</Longtitude>
-    <Latitude>36.05727301056647</Latitude>
+    <Longtitude>32.581454914722094</Longtitude>
+    <Latitude>35.72286999613458</Latitude>
   </BaseStation>
   <BaseStation>
-    <Id>164</Id>
-    <Name>Givat_shaul</Name>
-    <ChargeSlots>5</ChargeSlots>
-    <Longtitude>32.09796114402424</Longtitude>
-    <Latitude>35.38331177224837</Latitude>
+    <Id>179</Id>
+    <Name>Katamon</Name>
+    <ChargeSlots>6</ChargeSlots>
+    <Longtitude>32.46401886050472</Longtitude>
+    <Latitude>36.13844975817222</Latitude>
   </BaseStation>
 </ArrayOfBaseStation>

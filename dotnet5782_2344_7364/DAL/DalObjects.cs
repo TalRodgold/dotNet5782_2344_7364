@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using DO;
 using DalApi;
 using DalXml;
+using System.Runtime.CompilerServices;
+
 namespace DalObjects 
 {
     /// <summary>
@@ -15,7 +17,6 @@ namespace DalObjects
     {
         private static readonly Lazy<DalObjects> instance = new Lazy<DalObjects>(() => new DalObjects());// using lazy to improve performance and avoid wasteful computation, and reduce program memory requirements.  
         static DalObjects() { }// Explicit static constructor to ensure instance initialization
-                               // is done just before first usage
         DalObjects() // constructor.
         {
             DataSource.Initialize();
@@ -26,6 +27,7 @@ namespace DalObjects
         /// contains functions that allow to acsses and change the data in DataSource and pass it on to BL
         /// </summary>
 
+        
         #region//All the construct functions
 
         #region//construct a new base station
@@ -37,6 +39,7 @@ namespace DalObjects
         /// <param name="chargeSlots"></param>
         /// <param name="longtitude"></param>
         /// <param name="latitude"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddBaseStation(int? id, string name, int chargeSlots, double longtitude, double latitude) // construct a new base station
         {
             
@@ -62,6 +65,7 @@ namespace DalObjects
         /// <param name="id"></param>
         /// <param name="model"></param>
         /// <param name="maxWeight"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(int? id, string model, WeightCategories maxWeight) // construct a new drone
         {  
             if (IfDroneExsists(id)) // if id already exsists
@@ -93,6 +97,7 @@ namespace DalObjects
         /// <param name="schedual"></param>
         /// <param name="pickUp"></param>
         /// <param name="deliverd"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int? AddParcel(int? senderId, int? targetId, WeightCategories weight, Priorities priority, DateTime? request, int? droneId, DateTime? schedual, DateTime? pickUp, DateTime? deliverd) // construct a new parcel
         {
             if (senderId == targetId)
@@ -125,6 +130,7 @@ namespace DalObjects
         /// <param name="phone"></param>
         /// <param name="longtitude"></param>
         /// <param name="latitude"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(int? id, string name, string phone, double longtitude, double latitude) // construct a new customer
         {
             if (IfCustomerExsists(id)) // if id already exsists
@@ -148,6 +154,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="stationId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDroneCharge(int? droneId, int? stationId,DateTime? time) // construct a new drone charge
         {      
             DroneCharge newDroneCharge = new DroneCharge();
@@ -167,6 +174,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <returns>drone data</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string ReturnDroneDataById(int? id) // find drone in list and return it as string
         {
                   
@@ -179,6 +187,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <returns> base station data</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string ReturnBaseStationDataById(int? id) // find base station in list and return it as string
         {
             return DataSource.BaseStationList.Find(x => x.Id == id).ToString();
@@ -190,6 +199,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <returns> customer data</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string ReturnCustomerDataById(int? id) // find customer in list and return it as string
         {       
             return DataSource.CustomerList.Find(x => x.Id == id).ToString();
@@ -201,6 +211,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <returns>parcel data</returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public string ReturnParcelDataById(int? id)// find parcel in list and return it as string
         {   
             return DataSource.ParcelList.Find(x => x.Id == id).ToString();
@@ -215,6 +226,7 @@ namespace DalObjects
         /// update parcel pickup
         /// </summary>
         /// <param name="id"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParclePickup(int? id) // update parcel pickup 
         {
             if (!IfParcelExsists(id)) // if id dosent exsist
@@ -232,6 +244,7 @@ namespace DalObjects
         /// update parcel delivery
         /// </summary>
         /// <param name="id"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParcleDelivery(int? id) // update parcel delivery
         {
             if (!IfParcelExsists(id)) // if id dosent exsist
@@ -251,6 +264,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="stationId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneCharge(int? droneId, int? stationId,DateTime? CurrentTime) // update drones charging
         {
             if (!IfDroneExsists(droneId)) // if id dosent exsist
@@ -279,6 +293,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <param name="newModel"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneModel(int? id, string newModel) // update drones model
         {
             if(!IfDroneExsists(id)) // if id dosent exsist
@@ -297,6 +312,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateBaseStationName(int? id, string name) // update base stations name
         {
             if (!IfBaseStationExsists(id)) // if id dosent exsist
@@ -314,6 +330,7 @@ namespace DalObjects
         /// Delete base station
         /// </summary>
         /// <param name="id"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteBaseStation(int? id) // delete base station
         {
             if (!IfBaseStationExsists(id))
@@ -328,6 +345,7 @@ namespace DalObjects
         /// delete Parcel
         /// </summary>
         /// <param name="id"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(int? id) //delete Parcel
         {
             if (!IfParcelExsists(id))
@@ -343,6 +361,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <param name="newnum"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateBaseStationNumOfFreeDroneCharges(int? id, int newnum) // update base stations number of free charging slots
         {
             if (!IfBaseStationExsists(id)) // if id dosent exsist
@@ -361,6 +380,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <param name="numberOfChargingSlots"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateChargingSlotsNumber(int? id, int numberOfChargingSlots) // update number of charging slots
         {
             if (!IfBaseStationExsists(id)) // if id dosent exsist
@@ -384,6 +404,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <param name="name"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerName(int? id, string name) // update customers name
         {
             if (!IfCustomerExsists(id)) // if id dosent exsist
@@ -402,6 +423,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <param name="phone"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerPhone(int? id, string phone) // update customers phone number
         {
             if (!IfCustomerExsists(id)) // if id dosent exsist
@@ -420,6 +442,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="stationId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseDroneCharge(int? droneId, int? stationId) // releas drone from charging
         {   
             if (!IfDroneExsists(droneId)) // if id dosent exsist
@@ -443,6 +466,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="droneId"></param>
         /// <param name="parcleId"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AssociateDroneToParcel(int? droneId, int? parcleId) // associate a drone to a parcel 
         {
             if (!IfDroneExsists(droneId)) // if id dosent exsist
@@ -463,37 +487,34 @@ namespace DalObjects
         #endregion
         #endregion
 
-
-       
-    
-      
-    
-       
-
         #region//All the exist functions
         /// <summary>
         /// return true if id exisists in list of drones
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool IfDroneExsists(int? id) { return DataSource.DroneList.Exists(element => element.Id == id); } // return true if id exisists in list of drones
         /// <summary>
         /// return  true if id exisists in list of base stations
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool IfBaseStationExsists(int? id) { return DataSource.BaseStationList.Exists(element => element.Id == id); } // return  true if id exisists in list of base stations
         /// <summary>
         /// return  true if id exisists in list of customers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool IfCustomerExsists(int? id) { return DataSource.CustomerList.Exists(element => element.Id == id); } // return  true if id exisists in list of customers
         /// <summary>
         /// return  true if id exisists inlist of parcels
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool IfParcelExsists(int? id) { return DataSource.ParcelList.Exists(element => element.Id == id); } // return  true if id exisists inlist of parcels
         #endregion
 
@@ -504,6 +525,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int? id) // find a customer by id and return all his data as customer class
         {
             if (!IfCustomerExsists(id)) // if id doesnt exsist
@@ -520,6 +542,7 @@ namespace DalObjects
         /// <param name="id"></param>
         /// <param name="predicate"></param>    
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int? id, Predicate<Parcel> predicate = null) // find a Parcel by id and return all his data as Parcel class
         {
            
@@ -555,6 +578,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation getBaseStationByDroneId(int? id)  // find a Drone by id and return all his data as Drone class 
         {
             if (!IfDroneExsists(id)) // if id doesnt exsist
@@ -585,6 +609,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneCharge GetDroneCharge(int? id = null, Predicate<DroneCharge> predicate = null)  // find a DroneCharge by id and return all his data as DroneCharge class
         {
             if (predicate == null)
@@ -603,6 +628,7 @@ namespace DalObjects
         /// return an array of electricity data
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] Electricity() // return an array of electricity data
         {
             return DataSource.Config.GetArrElectricity();
@@ -613,30 +639,35 @@ namespace DalObjects
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetListOfCustomer(Predicate<Customer> predicate=null) { if(predicate==null) return DataSource.CustomerList.ToList(); return DataSource.CustomerList.FindAll(predicate).ToList(); } // Get an IEnumerable of all customers
         /// <summary>
         ///Get an IEnumerable of all parcels
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetListOfParcel(Predicate<Parcel> predicate=null) { if (predicate == null) return DataSource.ParcelList.ToList(); return DataSource.ParcelList.FindAll(predicate).ToList(); } // Get an IEnumerable of all parcels
         /// <summary>
         /// Get an IEnumerable of all drones
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetListOfDrone(Predicate<Drone> predicate=null) { if (predicate == null) return DataSource.DroneList.ToList(); return DataSource.DroneList.FindAll(predicate).ToList(); } // Get an IEnumerable of all drones
         /// <summary>
         /// Get an IEnumerable of all base stations
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStation> GetListOfBaseStation(Predicate<BaseStation> predicate=null) { if (predicate == null) return DataSource.BaseStationList.ToList(); return DataSource.BaseStationList.FindAll(predicate).ToList(); } // Get an IEnumerable of all base stations
         /// <summary>
         /// Get an IEnumerable of all base drone charge
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> GetListOfDroneCharge(Predicate<DroneCharge> predicate=null) { if (predicate == null) return DataSource.DroneChargeList.ToList(); return DataSource.DroneChargeList.FindAll(predicate).ToList(); } // Get an IEnumerable of all base drone charge
         #endregion
 

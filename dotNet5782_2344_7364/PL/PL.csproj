@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <None Remove="20976291.jpg" />
+    <None Remove="21194141 %281%29.jpg" />
     <None Remove="21717572.jpg" />
     <None Remove="24616702.jpg" />
     <None Remove="34869502.jpg" />
@@ -30,6 +31,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\Drone1.jpg" />
     <Resource Include="Images\Parcel.jpg" />
     <Resource Include="Images\Customer.jpg" />
     <Resource Include="Images\BaseStation.jpg" />

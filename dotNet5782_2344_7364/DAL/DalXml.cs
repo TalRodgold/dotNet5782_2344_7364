@@ -7,6 +7,7 @@ using DO;
 using DalApi;
 using System.Xml.Linq;
 using DalObjects;
+using System.Runtime.CompilerServices;
 
 namespace DalXml
 {
@@ -27,6 +28,7 @@ namespace DalXml
         internal static string ConfigPath = @"Config.xml";
 
         #region// add base station
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddBaseStation(int? id, string name, int chargeSlots, double longtitude, double latitude)
         {
 
@@ -42,6 +44,7 @@ namespace DalXml
         }
         #endregion
         #region// add customer
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(int? id, string name, string phone, double longtitude, double latitude)
         {
             XElement Root = XmlTools.LoadListFromXmlElement(CustomersPath);
@@ -56,6 +59,7 @@ namespace DalXml
         }
         #endregion
         #region// add drone
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(int? id, string model, WeightCategories maxWeight)
         {
             XElement Root = XmlTools.LoadListFromXmlElement(DronesPath);
@@ -68,6 +72,7 @@ namespace DalXml
         }
         #endregion
         #region// add drone charge
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDroneCharge(int? droneId, int? stationId, DateTime? cuerrentTime)
         {
             XElement Root = XmlTools.LoadListFromXmlElement(DroneChargesPath);
@@ -80,6 +85,7 @@ namespace DalXml
         }
         #endregion
         #region// add parcel
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public int? AddParcel(int? senderId, int? targetId, WeightCategories weight, Priorities priority, DateTime? request, int? droneId, DateTime? schedual, DateTime? pickUp, DateTime? deliverd)
         {
             XElement configRoot = XmlTools.LoadListFromXmlElement(ConfigPath);
@@ -105,6 +111,7 @@ namespace DalXml
         #endregion
 
         #region// delete base station
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteBaseStation(int? id)
         {
             XElement baseStationElement;
@@ -127,6 +134,7 @@ namespace DalXml
         }
         #endregion
         #region// delete customer
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool DeleteCustomer(int? id)
         {
             XElement CustomerElement;
@@ -149,6 +157,7 @@ namespace DalXml
         }
         #endregion
         #region// delete drone
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool DeleteDrone(int? id)
         {
             XElement DroneElement;
@@ -173,6 +182,7 @@ namespace DalXml
         }
         #endregion
         #region// delete drone charge
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool DeleteDroneCharge(int? id)
         {
             XElement DroneChargeElement;
@@ -195,6 +205,7 @@ namespace DalXml
         }
         #endregion
         #region// delete parcel
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void DeleteParcel(int? id)
         {
             XElement parcelElement;
@@ -218,6 +229,7 @@ namespace DalXml
         #endregion
 
         #region// update parcel Pickup
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParclePickup(int? id)
         {
             try
@@ -240,6 +252,7 @@ namespace DalXml
         }
         #endregion
         #region// update parcel delivery
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateParcleDelivery(int? id)
         {
             try
@@ -262,6 +275,7 @@ namespace DalXml
         }
         #endregion
         #region//update drones charging 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneCharge(int? droneId, int? stationId, DateTime? CurrentTime)
         {
             try
@@ -280,6 +294,7 @@ namespace DalXml
         }
         #endregion 
         #region// update drone model
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateDroneModel(int? id, string newModel) // update drones model
         {
             try
@@ -299,6 +314,7 @@ namespace DalXml
         }
         #endregion
         #region// update base station name
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateBaseStationName(int? id, string name)
         {
             try
@@ -317,6 +333,7 @@ namespace DalXml
         }
         #endregion
         #region// update base stations number of free charging slots
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateBaseStationNumOfFreeDroneCharges(int? id, int newnum) // update base stations number of free charging slots
         {
             try
@@ -335,6 +352,7 @@ namespace DalXml
         }
         #endregion
         #region// update number of charging slots
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateChargingSlotsNumber(int? id, int numberOfChargingSlots) // update number of charging slots
         {
             try
@@ -358,6 +376,7 @@ namespace DalXml
         }
         #endregion
         #region// update customers name
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerName(int? id, string name)
         {
             try
@@ -376,6 +395,7 @@ namespace DalXml
         }
         #endregion
         #region//update customers phone number
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void UpdateCustomerPhone(int? id, string phone) // update customers phone number
         {
             try
@@ -394,6 +414,7 @@ namespace DalXml
         }
         #endregion
         #region//releas drone from charging
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void ReleaseDroneCharge(int? droneId, int? stationId) // releas drone from charging
         {
             try
@@ -416,6 +437,7 @@ namespace DalXml
         }
         #endregion
         #region// associate a drone to a parcel
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AssociateDroneToParcel(int? droneId, int? parcleId) // associate a drone to a parcel 
         {
             try
@@ -444,6 +466,7 @@ namespace DalXml
         #endregion
 
         #region// get base station
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation GetBaseStation(int? id)
         {
             try
@@ -476,6 +499,7 @@ namespace DalXml
         }
         #endregion
         #region// get customer
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Customer GetCustomer(int? id)
         {
             try
@@ -505,6 +529,7 @@ namespace DalXml
         }
         #endregion
         #region// get drone
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int? id)
         {
             try
@@ -533,6 +558,7 @@ namespace DalXml
         }
         #endregion
         #region// get drone charge
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneCharge GetdroneCharge(int? id)
         {
             try
@@ -556,6 +582,7 @@ namespace DalXml
         }
         #endregion
         #region// get parcel
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Parcel GetParcel(int? id, Predicate<Parcel> predicate = null)
         {
             try
@@ -598,6 +625,7 @@ namespace DalXml
         #endregion
 
         #region// get list of base stations
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStation> GetListOfBaseStation(Predicate<BaseStation> predicate = null)
         {
             try
@@ -629,6 +657,7 @@ namespace DalXml
         }
         #endregion
         #region// get list of customers
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetListOfCustomer(Predicate<Customer> predicate = null)
         {
             try
@@ -660,6 +689,7 @@ namespace DalXml
         }
         #endregion
         #region// get list of drones
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetListOfDrone(Predicate<Drone> predicate = null)
         {
             try
@@ -687,6 +717,7 @@ namespace DalXml
         }
         #endregion
         #region// get list of drone charges
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneCharge> GetListOfDroneCharge(Predicate<DroneCharge> predicate = null)
         {
             try
@@ -715,6 +746,7 @@ namespace DalXml
         }
         #endregion
         #region// get list of parcels
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetListOfParcel(Predicate<Parcel> predicate = null)
         {
 
@@ -749,8 +781,9 @@ namespace DalXml
             }
         }
         #endregion
-     
+
         #region// if drone exsists 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool IfDroneExsists(int? id)  // return true if id exisists in list of drones
         {
             XElement Root = XmlTools.LoadListFromXmlElement(DronesPath);
@@ -765,6 +798,7 @@ namespace DalXml
         }
         #endregion
         #region// if base station exsists 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool IfBaseStationExsists(int? id)  // return  true if id exisists in list of base stations
         {
             XElement Root = XmlTools.LoadListFromXmlElement(BaseStationsPath);
@@ -779,6 +813,7 @@ namespace DalXml
         }
         #endregion
         #region// if customer exsists
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool IfCustomerExsists(int? id) // return  true if id exisists in list of customers
         {
             XElement Root = XmlTools.LoadListFromXmlElement(CustomersPath);
@@ -793,6 +828,7 @@ namespace DalXml
         }
         #endregion
         #region// if parcel exsists
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public bool IfParcelExsists(int? id)  // return  true if id exisists inlist of parcels
         {
             XElement Root = XmlTools.LoadListFromXmlElement(ParcelsPath);
@@ -808,6 +844,7 @@ namespace DalXml
         #endregion
 
         #region // find a Drone by id and return all his data as Drone class 
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation getBaseStationByDroneId(int? id)  // find a Drone by id and return all his data as Drone class 
         {
             if (!IfDroneExsists(id)) // if id doesnt exsist
@@ -820,6 +857,7 @@ namespace DalXml
         #endregion
 
         #region// find a DroneCharge by id and return all his data as DroneCharge class
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public DroneCharge GetDroneCharge(int? id = null, Predicate<DroneCharge> predicate = null)  // find a DroneCharge by id and return all his data as DroneCharge class
         {
             if (predicate == null)
@@ -837,6 +875,7 @@ namespace DalXml
         #endregion
 
         #region//return an array of electricity data
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public double[] Electricity() // return an array of electricity data
         {
             XElement configRoot = XmlTools.LoadListFromXmlElement(ConfigPath);

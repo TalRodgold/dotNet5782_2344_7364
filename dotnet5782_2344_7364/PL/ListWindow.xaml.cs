@@ -247,6 +247,8 @@ namespace PL
         private void refreshBaseStation_button(object sender, RoutedEventArgs e)
         {
             RefreshBaseStationFunc();
+            DisplayChargingSlots.SelectedIndex = 0;
+            NumOfFreeChargingSlots.SelectedIndex = -1;
         }
         private void RefreshDroneFunc()
         {

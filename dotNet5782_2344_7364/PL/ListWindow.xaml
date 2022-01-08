@@ -16,16 +16,28 @@
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="87*"/>
+                        <RowDefinition Height="87*"/>
+                        <RowDefinition Height="87*"/>
+                        <RowDefinition Height="63*"/>
+                        <RowDefinition Height="80*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="298*"/>
+                        <ColumnDefinition Width="99*"/>
+
+                    </Grid.ColumnDefinitions>
                     <Grid.Background>
                         <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
                     </Grid.Background>
-                    <ListView x:Name="ListBaseStation" Foreground="Snow" MouseDoubleClick="BaseStation_DoubleClick" Margin="0,28,0,0">
+                    <ListView x:Name="ListBaseStation" Foreground="Snow" MouseDoubleClick="BaseStation_DoubleClick" Margin="0,28,0,0" Grid.ColumnSpan="2" Grid.RowSpan="5">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
                         </ListView.Background>
                     </ListView>
 
-                    <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" Margin="610,103,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="refreshBaseStation_button">
+                    <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="43" RenderTransformOrigin="-0.166,8.035" Width="98" Click="refreshBaseStation_button" Grid.Row="2" Grid.Column="1" Margin="48,17,0,0">
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
@@ -33,7 +45,7 @@
                             </RadialGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="AddBaseStation" Content="Add a base station" HorizontalAlignment="Left" Margin="593,185,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="49" RenderTransformOrigin="-0.166,8.035" Width="167" Click="AddBaseStation_Click">
+                    <Button x:Name="AddBaseStation" Content="Add a base station" HorizontalAlignment="Left" Margin="14,0,0,0" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="49" RenderTransformOrigin="-0.166,8.035" Width="167" Click="AddBaseStation_Click" Grid.Row="1" Grid.Column="1">
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
@@ -41,7 +53,7 @@
                             </RadialGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="GroupByFreeChargingSlots" Content="Group by free charging slots" Margin="593,48,78,315" Click="GroupByFreeChargingSlots_Click" RenderTransformOrigin="0.476,0.535" >
+                    <Button x:Name="GroupByFreeChargingSlots" Content="Group by free charging slots" Grid.Column="1" Grid.Row="0" Click="GroupByFreeChargingSlots_Click" RenderTransformOrigin="0.476,0.535" Margin="0,43,0,10" >
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFCCF092" Offset="0.486"/>
@@ -50,10 +62,10 @@
                         </Button.Background>
                     </Button>
                     <Label Content="Display Charging slots:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="168" Foreground="White"/>
-                    <Label Content="Number of free charging slots:" HorizontalAlignment="Left" Margin="406,0,0,0" VerticalAlignment="Top" Foreground="White"/>
+                    <Label Content="Number of free charging slots:" HorizontalAlignment="Left" Margin="406,0,0,0" VerticalAlignment="Top" Foreground="White" Grid.ColumnSpan="2" Height="29" Width="211"/>
                     <ComboBox x:Name="DisplayChargingSlots" HorizontalAlignment="Left" Margin="168,2,0,0" VerticalAlignment="Top" Width="157" Height="28" SelectionChanged="DisplayChargingSlots_SelectionChange"/>
 
-                    <ComboBox x:Name="NumOfFreeChargingSlots" HorizontalAlignment="Left" Margin="638,-2,0,0" VerticalAlignment="Top" Width="156" Height="29" SelectionChanged="NumOfFreeChargingSlots_SelectionChange"/>
+                    <ComboBox x:Name="NumOfFreeChargingSlots" HorizontalAlignment="Left" Margin="35,-2,0,0" VerticalAlignment="Top" Width="125" Height="29" SelectionChanged="NumOfFreeChargingSlots_SelectionChange" Grid.Column="1"/>
                 </Grid>
             </TabItem>
             <TabItem Name="Parcel_Item" Header="Parcel" FontWeight="Bold" FontSize="14">
@@ -73,7 +85,7 @@
                             <ImageBrush ImageSource="/Images/Parcel.jpg"/>
                         </ListView.Background>
                     </ListView>
-                    <Button x:Name="GroupBySender" Content="Group by sender" Margin="491,2,163,351" Click="GroupBySender_click" >
+                    <Button x:Name="GroupBySender" Content="Group by sender" Margin="618,126,36,227" Click="GroupBySender_click" >
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFCCF092" Offset="0.486"/>
@@ -81,7 +93,7 @@
                             </RadialGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="GroupByReciver" Content="Group by reciver" Margin="271,2,375,351" Click="GroupByReciver_click" >
+                    <Button x:Name="GroupByReciver" Content="Group by reciver" Margin="613,57,32,295" Click="GroupByReciver_click" >
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFCCF092" Offset="0.486"/>
@@ -89,7 +101,7 @@
                             </RadialGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="RefreshParcelButton" Content="Refresh" HorizontalAlignment="Left" Margin="656,124,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="refreshParcel_button">
+                    <Button x:Name="RefreshParcelButton" Content="Refresh" HorizontalAlignment="Left" Margin="656,266,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="refreshParcel_button">
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
@@ -127,7 +139,7 @@
 
                     <ListView x:Name="ListDrone" ItemsSource="{Binding Mode=OneWay}" Foreground="Snow" MouseDoubleClick="Drone_DoubleClick" Margin="0,28,0,0">
                         <ListView.Background>
-                            <ImageBrush ImageSource="/Images/Drone.jpg"/>
+                            <ImageBrush ImageSource="Images/Drone1.jpg"/>
                         </ListView.Background>
                     </ListView>
                     <Button x:Name="GroupByStatus" Content="Group by status" Margin="625,35,46,327" Click="GroupByStatus_click" >
@@ -201,7 +213,7 @@
                 </Grid>
             </TabItem>
         </TabControl>
-        <Button x:Name="Exit" Content="Exit" HorizontalAlignment="Left" Margin="652,355,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="29" RenderTransformOrigin="-0.166,8.035" Width="81" Click="Exit_Click">
+        <Button x:Name="Exit" Content="Exit" HorizontalAlignment="Left" Margin="698,378,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="29" RenderTransformOrigin="-0.166,8.035" Width="81" Click="Exit_Click">
             <Button.Background>
                 <RadialGradientBrush>
                     <GradientStop Color="#FFD78383" Offset="0.601"/>
