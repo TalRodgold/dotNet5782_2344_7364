@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace BlApi
 {
@@ -18,19 +19,23 @@ namespace BlApi
         /// Base station addition
         /// </summary>
         /// <param name="b"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddBaseStation(BaseStation b)//Base station addition
         { 
             try
             {
-                if (b.Location.Longitude < 31.728959 || b.Location.Longitude > 31.806477 || b.Location.Latitude > 35.221416 || b.Location.Latitude < 35.206714) // if out of range
+                lock (dal)
                 {
-                    throw new LocationOutOfRangeException("base station");
+                    if (b.Location.Longitude < 31.728959 || b.Location.Longitude > 31.806477 || b.Location.Latitude > 35.221416 || b.Location.Latitude < 35.206714) // if out of range
+                    {
+                        throw new LocationOutOfRangeException("base station");
+                    }
+                    if (b.Id < 0) // if id is negative
+                    {
+                        throw new InvalidIdException("negative", b.Id);
+                    }
+                    dal.AddBaseStation(b.Id, b.Name, b.NumberOfFreeChargingSlots, b.Location.Longitude, b.Location.Latitude);//call for constructor
                 }
-                if (b.Id < 0) // if id is negative
-                {
-                    throw new InvalidIdException("negative", b.Id);
-                }
-                dal.AddBaseStation(b.Id, b.Name, b.NumberOfFreeChargingSlots, b.Location.Longitude, b.Location.Latitude);//call for constructor
             }
             catch (DO.IdAlreadyExsistsExceptions exception) // if base station id already exsists and was thrown from dal objects
             {
@@ -45,22 +50,26 @@ namespace BlApi
         /// </summary>
         /// <param name="d"></param>
         /// <param name="startingBaseStation"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddDrone(Drone d, int? startingBaseStation)//Drone addition
         {
             try
             {
-                if (d.Id < 0)// if id is negative
+                lock (dal)
                 {
-                    throw new InvalidIdException("negative", d.Id);
+                    if (d.Id < 0)// if id is negative
+                    {
+                        throw new InvalidIdException("negative", d.Id);
+                    }
+                    if (!dal.IfBaseStationExsists(startingBaseStation))//if base atstion already exist
+                    {
+                        throw new IdNotExsistException("base station", startingBaseStation);
+                    }
+                    d.CurrentLocation = GetBaseStationById(startingBaseStation).Location;//update the location to be like his starting base station
+                    dal.AddDrone(d.Id, d.Model, (DO.WeightCategories)d.Weight); // creat drone
+                    dal.UpdateDroneCharge(d.Id, startingBaseStation, DateTime.Now); // connect drone to charging base station
+                    ListOfDronsBL.Add(new DroneToList(d.Id, d.Model, d.Weight, d.Battery, d.DroneStatuses, d.CurrentLocation, null));//add the drone to the local list of drones 
                 }
-                if (!dal.IfBaseStationExsists(startingBaseStation))//if base atstion already exist
-                {
-                    throw new IdNotExsistException("base station", startingBaseStation);
-                }
-                d.CurrentLocation = GetBaseStationById(startingBaseStation).Location;//update the location to be like his starting base station
-                dal.AddDrone(d.Id, d.Model, (DO.WeightCategories)d.Weight); // creat drone
-                dal.UpdateDroneCharge(d.Id, startingBaseStation,DateTime.Now); // connect drone to charging base station
-                ListOfDronsBL.Add(new DroneToList(d.Id, d.Model, d.Weight, d.Battery, d.DroneStatuses, d.CurrentLocation, null));//add the drone to the local list of drones
             }
             catch (DO.IdAlreadyExsistsExceptions exception) // if drone id already exsists and was thrown from dal objects
             {
@@ -77,23 +86,27 @@ namespace BlApi
         /// Customer addition
         /// </summary>
         /// <param name="c"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddCustomer(Customer c)//Customer addition
         {
             try
             {
-                if (c.Location.Longitude < 31.728959 || c.Location.Longitude > 31.806477 || c.Location.Latitude > 35.221416 || c.Location.Latitude < 35.206714) // if out of range
+                lock (dal)
                 {
-                    throw new LocationOutOfRangeException("customr");
+                    if (c.Location.Longitude < 31.728959 || c.Location.Longitude > 31.806477 || c.Location.Latitude > 35.221416 || c.Location.Latitude < 35.206714) // if out of range
+                    {
+                        throw new LocationOutOfRangeException("customr");
+                    }
+                    if (c.Id < 0)// if id is negative
+                    {
+                        throw new InvalidIdException("negative", c.Id);
+                    }
+                    if (dal.IfCustomerExsists(c.Id))//if customer already exist 
+                    {
+                        throw new IdAlreadyExsistsExceptions("Customer", c.Id);
+                    }
+                    dal.AddCustomer(c.Id, c.Name, c.Phone, c.Location.Longitude, c.Location.Latitude);//call to the constructor 
                 }
-                if (c.Id < 0)// if id is negative
-                {
-                    throw new InvalidIdException("negative", c.Id);
-                }
-                if (dal.IfCustomerExsists(c.Id))//if customer already exist 
-                {
-                    throw new IdAlreadyExsistsExceptions("Customer", c.Id);
-                }
-                dal.AddCustomer(c.Id, c.Name, c.Phone, c.Location.Longitude, c.Location.Latitude);//call to the constructor
             }
             catch (DO.IdAlreadyExsistsExceptions exception) // if customer id already exsists and was thrown from dal objects
             {
@@ -110,20 +123,24 @@ namespace BlApi
         /// <param name="reciver"></param>
         /// <param name="weight"></param>
         /// <param name="prioritie"></param>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public void AddParcel(CustomerInParcel sender, CustomerInParcel reciver, Enums.WeightCategories weight, Enums.Priorities prioritie) // Parcel addition
         {
             try
             {
-                if (sender.Id < 0) // if id is negative
+                lock (dal)
                 {
-                    throw new InvalidIdException("negative", sender.Id);
+                    if (sender.Id < 0) // if id is negative
+                    {
+                        throw new InvalidIdException("negative", sender.Id);
+                    }
+                    if (reciver.Id < 0) // if id is negative
+                    {
+                        throw new InvalidIdException("negative", reciver.Id);
+                    }
+                    int? id = dal.AddParcel(sender.Id, reciver.Id, (DO.WeightCategories)weight, (DO.Priorities)prioritie, DateTime.Now, null, null, null, null);//call the constructor
+                    Parcel newParcel = new Parcel(id, sender, reciver, weight, prioritie, null, DateTime.Now, null, null, null); 
                 }
-                if (reciver.Id < 0) // if id is negative
-                {
-                    throw new InvalidIdException("negative", reciver.Id);
-                }
-                int? id = dal.AddParcel(sender.Id, reciver.Id, (DO.WeightCategories)weight, (DO.Priorities)prioritie, DateTime.Now, null, null, null, null) ;//call the constructor
-                Parcel newParcel = new Parcel(id, sender, reciver, weight, prioritie, null, DateTime.Now, null, null, null);
             }
             catch (DO.SameIdException exception)
             {

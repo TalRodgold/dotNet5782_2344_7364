@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using BO;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
 namespace BlApi
 {
     /// <summary>
@@ -12,6 +13,7 @@ namespace BlApi
     /// </summary>
     public interface IBl
     {
+        //void SimulatorFunc(int? id, Action action, Func<bool> func);
         void AddBaseStation(BaseStation b); //Base station addition
         void AddDrone(Drone d, int? startingBaseStation); //Drone addition
         void AddCustomer(Customer c); //Customer addition

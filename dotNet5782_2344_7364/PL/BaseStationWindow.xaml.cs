@@ -33,55 +33,47 @@ namespace PL
         }
         public BaseStationWindow(int? id, int oc)
         {
-            InitializeComponent();
-            occupied = oc;
-            baseStation = bl.GetBaseStationById(id);
-            MainGrid.DataContext = baseStation;
-            AddButton.Visibility = Visibility.Hidden;
-            Id.IsEnabled = false;
-            Longtitude.IsEnabled = false;
-            Latitude.IsEnabled = false;
-            DronesInCharging.IsEnabled = false;
-            //Id.Text = baseStation.Id.ToString();
-            //Name.Text = baseStation.Name;
-            //FreeChargingSlots.Text = baseStation.NumberOfFreeChargingSlots.ToString();
-            //Longtitude.Text = baseStation.Location.LongitudeInSexa();
-            //Latitude.Text = baseStation.Location.LatitudeInSexa();
-            List<int?> l = new List<int?>();
-            foreach (var item in baseStation.ListOfDroneInCharging)
+            lock (bl)
             {
-                l.Add(item.Id);
+                InitializeComponent();
+                occupied = oc;
+                baseStation = bl.GetBaseStationById(id);
+                MainGrid.DataContext = baseStation;
+                AddButton.Visibility = Visibility.Hidden;
+                Id.IsEnabled = false;
+                Longtitude.IsEnabled = false;
+                Latitude.IsEnabled = false;
+                DronesInCharging.IsEnabled = false;
+                List<int?> l = new List<int?>();
+                foreach (var item in baseStation.ListOfDroneInCharging)
+                {
+                    l.Add(item.Id);
+                }
+                DronesInCharging.ItemsSource = l; 
             }
-            DronesInCharging.ItemsSource = l;
-
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            //string newName = "";
-            //int newChargingSlots = 0;
-            //if (baseStation.Name != Name.Text)
-            //{
-            //    newName = Name.Text;
-            //}
-            //if (baseStation.NumberOfFreeChargingSlots != int.Parse(FreeChargingSlots.Text))
-            //{
-            //    newChargingSlots = int.Parse(FreeChargingSlots.Text);
-            //}
-            bl.UpdateBaseStation(baseStation.Id, Name.Text, int.Parse(FreeChargingSlots.Text));
-            Close();
-
+            lock (bl)
+            {
+                bl.UpdateBaseStation(baseStation.Id, Name.Text, int.Parse(FreeChargingSlots.Text));
+                Close(); 
+            }
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (occupied > 0)
+                lock (bl)
                 {
-                    throw new InvalidOperationException("Base station not empty, there are drones charging at this base station.");
+                    if (occupied > 0)
+                    {
+                        throw new InvalidOperationException("Base station not empty, there are drones charging at this base station.");
+                    }
+                    bl.DeleteBaseStation(baseStation.Id); 
                 }
-                bl.DeleteBaseStation(baseStation.Id);
             }
             catch (Exception exception)
             {
@@ -99,22 +91,22 @@ namespace PL
         {
             int id = (int)DronesInCharging.SelectedItem;
             DroneWindow droneWindow = new DroneWindow(id);
-            //droneWindow.Closed += CloseWindow;
             droneWindow.Show();
-
-
         }
 
         private void AddButton_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                int? nullableID = int.Parse(Id.Text);
-                BO.Location newLocation = new BO.Location(Convert.ToDouble(Longtitude.Text), Convert.ToDouble(Latitude.Text));
-                baseStation = new BO.BaseStation(nullableID, Name.Text, newLocation, int.Parse(FreeChargingSlots.Text));
-                bl.AddBaseStation(baseStation);
-                MessageBox.Show("Base station added sucsecfully");
-                Close();
+                lock (bl)
+                {
+                    int? nullableID = int.Parse(Id.Text);
+                    BO.Location newLocation = new BO.Location(Convert.ToDouble(Longtitude.Text), Convert.ToDouble(Latitude.Text));
+                    baseStation = new BO.BaseStation(nullableID, Name.Text, newLocation, int.Parse(FreeChargingSlots.Text));
+                    bl.AddBaseStation(baseStation);
+                    MessageBox.Show("Base station added sucsecfully");
+                    Close(); 
+                }
             }
             catch (Exception exception)
             {

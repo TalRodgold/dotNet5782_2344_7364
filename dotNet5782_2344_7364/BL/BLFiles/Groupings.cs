@@ -6,30 +6,48 @@ using System.Threading.Tasks;
 using System.Text;
 using System.Linq;
 using System.Runtime.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace BlApi
 {
     internal sealed partial class BL : IBl
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<IGrouping<Enums.DroneStatuses,DroneToList>> GroupingStatuses()
         {
-            return ListOfDronsBL.GroupBy(element => element.DroneStatuses);
-        }
+            lock (dal)
+            {
+                return ListOfDronsBL.GroupBy(element => element.DroneStatuses);
+
+            }        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<IGrouping<Enums.WeightCategories, DroneToList>> GroupingWeight()
         {
             return ListOfDronsBL.GroupBy(element => element.Weight);
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<IGrouping<int, BaseStationToList>> GroupingFreeChargingSlots()
         {
-            return GetListOfBaseStationsToList().GroupBy(element => element.FreeChargingSlots);
-        }
+            lock (dal)
+            {
+                return GetListOfBaseStationsToList().GroupBy(element => element.FreeChargingSlots);
+
+            }        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<IGrouping<string, ParcelToList>> GroupingSender()
         {
-            return GetListOfParcelToList().GroupBy(element => element.SendersName);
-        }
+            lock (dal)
+            {
+                return GetListOfParcelToList().GroupBy(element => element.SendersName);
+
+            }        }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<IGrouping<string, ParcelToList>> GroupingReciver()
         {
-            return GetListOfParcelToList().GroupBy(element => element.ReciversName);
-        }
+            lock (dal)
+            {
+                return GetListOfParcelToList().GroupBy(element => element.ReciversName);
+
+            }        }
     }
 }

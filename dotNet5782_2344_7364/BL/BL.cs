@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Text;
 using System.Linq;
+using System.Runtime.CompilerServices;
+
 namespace BlApi
 {
     internal sealed partial class BL : IBl
@@ -15,7 +17,7 @@ namespace BlApi
         double ElectricityUseMediumWeight;
         double ElectricityUseHeavyWeight;
         double DroneChargingPaste;
-        IDal dal;
+        internal IDal dal;
         private static readonly Lazy<BL> instance = new Lazy<BL>(() => new BL());// using lazy to improve performance and avoid wasteful computation, and reduce program memory requirements.  
         static BL() { }
         #region//BL constructor 

@@ -45,34 +45,35 @@ namespace PL
         }
         public CustomerWindow(int? id)
         {
-            InitializeComponent();
-            AddButton.Visibility = Visibility.Hidden;
-            customer = bl.GetCustomerById(id);
-            MainGrid.DataContext = customer;
+            lock (bl)
+            {
+                InitializeComponent();
+                AddButton.Visibility = Visibility.Hidden;
+                customer = bl.GetCustomerById(id);
+                MainGrid.DataContext = customer;
 
-            //Id.Text = customer.Id.ToString();
-            //Name.Text = customer.Name;
-            //PhoneNumber.Text = customer.Phone.ToString();
-            //Longtitude.Text = customer.Location.LongitudeInSexa();
-            //Latitude.Text = customer.Location.LatitudeInSexa();
-            List<int?> l = new List<int?>();
-            foreach (var item in customer.ParcelFromCustomer)
-            {
-                l.Add(item.Id);
+                List<int?> l = new List<int?>();
+                foreach (var item in customer.ParcelFromCustomer)
+                {
+                    l.Add(item.Id);
+                }
+                ParcelFromCustomer.ItemsSource = l;
+                l.Clear();
+                foreach (var item in customer.ParcelToCustomer)
+                {
+                    l.Add(item.Id);
+                }
+                ParcelToCustomer.ItemsSource = l; 
             }
-            ParcelFromCustomer.ItemsSource = l;
-            l.Clear();
-            foreach (var item in customer.ParcelToCustomer)
-            {
-                l.Add(item.Id);
-            }
-            ParcelToCustomer.ItemsSource = l;
         }
 
         private void UpdateButton_Click(object sender, RoutedEventArgs e)
         {
-            bl.UpdateCustomer(customer.Id,Name.Text, PhoneNumber.Text);
-            Close();
+            lock (bl)
+            {
+                bl.UpdateCustomer(customer.Id, Name.Text, PhoneNumber.Text);
+                Close(); 
+            }
         }
 
         private void Exit_Click(object sender, RoutedEventArgs e)
@@ -84,13 +85,16 @@ namespace PL
         {
             try
             {
-                int? nullableID = int.Parse(Id.Text);
-                BO.Location newLocation = new BO.Location(Convert.ToDouble(Longtitude.Text), Convert.ToDouble(Latitude.Text));
-                customer = new BO.Customer(nullableID, Name.Text, PhoneNumber.Text, newLocation);
-                bl.AddCustomer(customer);
-                MessageBox.Show("customer added sucsecfully");
+                lock (bl)
+                {
+                    int? nullableID = int.Parse(Id.Text);
+                    BO.Location newLocation = new BO.Location(Convert.ToDouble(Longtitude.Text), Convert.ToDouble(Latitude.Text));
+                    customer = new BO.Customer(nullableID, Name.Text, PhoneNumber.Text, newLocation);
+                    bl.AddCustomer(customer);
+                    MessageBox.Show("customer added sucsecfully");
 
-                Close();
+                    Close(); 
+                }
             }
             catch (Exception exception)
             {

@@ -38,10 +38,6 @@ namespace PL
             AssociationTime.IsEnabled = false;
             PickupTime.IsEnabled = false;
             DeliveryTime.IsEnabled = false;
-            //ExitButton.Visibility = Visibility.Hidden;
-            // enable erelevent buttons and text boxes
-            //UpdateButton.IsEnabled = false;
-
             
             SenderB.Visibility = Visibility.Hidden;//button
             ReciverB.Visibility = Visibility.Hidden;//button
@@ -63,36 +59,25 @@ namespace PL
         }
         public ParcelWindow(int? chosenParcel)
         {
-            
-            this.parcel = bl.GetParcelById(chosenParcel);
-            InitializeComponent();
-            MainGrid.DataContext = parcel;
-           // UpdateButton.Visibility = Visibility.Visible; // make butten visible
-            //AddButton.IsEnabled = false; // enable add button
-            // enable text boxes where we dont want user to change
-            Id.IsEnabled = false;//disable the textbox to change
-            WeightSelector.IsEnabled = false;//disable the combobox to change
-            PrioritieSelector.IsEnabled = false;//disable the combobox to change
-            CreatingTime.IsEnabled = false;//disable the textbox to change
-            AssociationTime.IsEnabled = false;//disable the textbox to change
-            PickupTime.IsEnabled = false;//disable the textbox to change
-            DeliveryTime.IsEnabled = false;
+            lock (bl)
+            {
 
-            WeightSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
-            PrioritieSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Priorities));
-            //Id.Text = parcel.Id.ToString();
-            //SenderB.Content = parcel.Sender.Id;
-            //ReciverB.Content = parcel.Reciver.Id;
-            //WeightSelector.SelectedItem = parcel.Weight;
-            //PrioritieSelector.SelectedItem = parcel.Prioritie;
-            //if(parcel.DroneInParcel!=null)
-            //{
-            //    Drone.Content = parcel.DroneInParcel.Id;
-            //}
-            //CreatingTime.Text = parcel.ParcelCreatingTime.ToString();
-            //AssociationTime.Text = parcel.AssociationTime.ToString();
-            //PickupTime.Text = parcel.PickupTime.ToString();
-            //DeliveryTime.Text = parcel.DeliveryTime.ToString();
+                this.parcel = bl.GetParcelById(chosenParcel);
+                InitializeComponent();
+                MainGrid.DataContext = parcel;
+
+                Id.IsEnabled = false;//disable the textbox to change
+                WeightSelector.IsEnabled = false;//disable the combobox to change
+                PrioritieSelector.IsEnabled = false;//disable the combobox to change
+                CreatingTime.IsEnabled = false;//disable the textbox to change
+                AssociationTime.IsEnabled = false;//disable the textbox to change
+                PickupTime.IsEnabled = false;//disable the textbox to change
+                DeliveryTime.IsEnabled = false;
+
+                WeightSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
+                PrioritieSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.Priorities)); 
+            }
+      
         }
 
         private void Sender_Click(object sender, RoutedEventArgs e)
@@ -113,9 +98,12 @@ namespace PL
 
         private void Drone_Click(object sender, RoutedEventArgs e)
         {
-            if ((AssociationTime != null) && (DeliveryTime.Text.Length == 0)&&(parcel.DroneInParcel!=null))
+            lock (bl)
             {
-                new DroneWindow(bl.GetDroneById(parcel.DroneInParcel.Id).Id).Show();
+                if ((AssociationTime != null) && (DeliveryTime.Text.Length == 0) && (parcel.DroneInParcel != null))
+                {
+                    new DroneWindow(bl.GetDroneById(parcel.DroneInParcel.Id).Id).Show();
+                } 
             }
         }
 
@@ -133,13 +121,16 @@ namespace PL
         {
             try
             {
-                if (parcel.AssociationTime != null && parcel.DeliveryTime == null)
+                lock (bl)
                 {
-                    throw new InvalidOperationException("The parcel in delivery proces");
+                    if (parcel.AssociationTime != null && parcel.DeliveryTime == null)
+                    {
+                        throw new InvalidOperationException("The parcel in delivery proces");
+                    }
+                    bl.DeleteParcel(parcel.Id);
+                    MessageBox.Show("Parcel deleted sucsecfully");
+                    Close(); 
                 }
-                bl.DeleteParcel(parcel.Id);
-                MessageBox.Show("Parcel deleted sucsecfully");
-                Close();
             }
             catch (Exception exception)
             {
@@ -163,9 +154,12 @@ namespace PL
         {
             try
             {
-                bl.AddParcel(new BO.CustomerInParcel(int.Parse(senderT.Text), bl.GetCustomerById(int.Parse(senderT.Text)).Name), new BO.CustomerInParcel(int.Parse(reciverT.Text), bl.GetCustomerById(int.Parse(reciverT.Text)).Name), (BO.Enums.WeightCategories)WeightSelector.SelectedItem, (BO.Enums.Priorities)PrioritieSelector.SelectedItem);
-                MessageBox.Show("Parcel added sucsecfully");
-                Close();
+                lock (bl)
+                {
+                    bl.AddParcel(new BO.CustomerInParcel(int.Parse(senderT.Text), bl.GetCustomerById(int.Parse(senderT.Text)).Name), new BO.CustomerInParcel(int.Parse(reciverT.Text), bl.GetCustomerById(int.Parse(reciverT.Text)).Name), (BO.Enums.WeightCategories)WeightSelector.SelectedItem, (BO.Enums.Priorities)PrioritieSelector.SelectedItem);
+                    MessageBox.Show("Parcel added sucsecfully");
+                    Close(); 
+                }
             }
             catch (Exception exception)
             {

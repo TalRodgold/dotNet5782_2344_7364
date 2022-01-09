@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Text;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Runtime.CompilerServices;
+
 namespace BlApi
 {
     /// <summary>
@@ -18,14 +20,18 @@ namespace BlApi
         /// //Get list of base stations
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStation> GetListOfBaseStations()////Get list of base stations
         {
-            List<BaseStation> list = new List<BaseStation>();
-            foreach (var item in dal.GetListOfBaseStation())
+            lock (dal)
             {
-                list.Add(GetBaseStationById(item.Id));
+                List<BaseStation> list = new List<BaseStation>();
+                foreach (var item in dal.GetListOfBaseStation())
+                {
+                    list.Add(GetBaseStationById(item.Id));
+                }
+                return list; 
             }
-            return list;
         }
         #endregion
         #region//Get list of base station to list
@@ -33,14 +39,18 @@ namespace BlApi
         /// //Get list of base station to list
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStationToList> GetListOfBaseStationsToList()//Get list of base station to list
         {
-            ObservableCollection<BaseStationToList> list = new ObservableCollection<BaseStationToList>();
-            foreach (var item in dal.GetListOfBaseStation())
+            lock (dal)
             {
-                list.Add(convertBasestationToBasestationTolist(GetBaseStationById(item.Id)));
+                ObservableCollection<BaseStationToList> list = new ObservableCollection<BaseStationToList>();
+                foreach (var item in dal.GetListOfBaseStation())
+                {
+                    list.Add(convertBasestationToBasestationTolist(GetBaseStationById(item.Id)));
+                }
+                return list; 
             }
-            return list;
         }
         #endregion
         #region//Get list of drones
@@ -48,14 +58,20 @@ namespace BlApi
         /// Get list of drones
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Drone> GetListOfDrones()//Get list of drones
         {
-            List<Drone> list = new List<Drone>();
-            foreach (var item in dal.GetListOfDrone())
-            {
-                list.Add(GetDroneById(item.Id));
+            lock (dal)
+            {lock (dal)
+                {
+                    List<Drone> list = new List<Drone>();
+                    foreach (var item in dal.GetListOfDrone())
+                    {
+                        list.Add(GetDroneById(item.Id));
+                    }
+                    return list;
+                }
             }
-            return list;
         }
         #endregion
         #region//Get list of drone to list
@@ -63,14 +79,18 @@ namespace BlApi
         /// Get list of drone to list
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<DroneToList> GetListOfDronesToList()//Get list of drone to list
         {
-            List<DroneToList> list = new List<DroneToList>();
-            foreach (var item in dal.GetListOfDrone())
+            lock (dal)
             {
-                list.Add(convertDroneBlToList(GetDroneById(item.Id)));
+                List<DroneToList> list = new List<DroneToList>();
+                foreach (var item in dal.GetListOfDrone())
+                {
+                    list.Add(convertDroneBlToList(GetDroneById(item.Id)));
+                }
+                return list; 
             }
-            return list;
         }
         #endregion
         #region//Get list of drones by predicat
@@ -79,20 +99,24 @@ namespace BlApi
         /// </summary>
         /// <param name="predicate"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public List<DroneToList> GetListOfDroneToListByPredicat(Predicate<DroneToList> predicate , Predicate<DroneToList> predicate1=null) //Get list of drones by predicat
-        { 
-            List<DroneToList> list1 = new List<DroneToList>();
-            foreach (var item in ListOfDronsBL)
+        {
+            lock (dal)
             {
-                list1.Add(convertDroneBlToList(GetDroneById(item.Id)));
-            }
-            if (predicate1 == null)
-            {
-                return list1.FindAll(predicate).ToList();
-            }
-            else
-            {
-                return list1.FindAll(predicate).FindAll(predicate1).ToList();
+                List<DroneToList> list1 = new List<DroneToList>();
+                foreach (var item in ListOfDronsBL)
+                {
+                    list1.Add(convertDroneBlToList(GetDroneById(item.Id)));
+                }
+                if (predicate1 == null)
+                {
+                    return list1.FindAll(predicate).ToList();
+                }
+                else
+                {
+                    return list1.FindAll(predicate).FindAll(predicate1).ToList();
+                } 
             }
         }
         #endregion
@@ -101,14 +125,18 @@ namespace BlApi
         /// //Get list of customers
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Customer> GetListOfCustomers()//Get list of customers
         {
-            List<Customer> list = new List<Customer>();
-            foreach (var item in dal.GetListOfCustomer())
+            lock (dal)
             {
-                list.Add(GetCustomerById(item.Id));
+                List<Customer> list = new List<Customer>();
+                foreach (var item in dal.GetListOfCustomer())
+                {
+                    list.Add(GetCustomerById(item.Id));
+                }
+                return list; 
             }
-            return list;
         }
         #endregion
         #region//Get list of customer to list
@@ -116,14 +144,18 @@ namespace BlApi
         /// //Get list of customers
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<CustomerToList> GetListOfCustomerToList()//Get list of customers
         {
-            List<CustomerToList> list = new List<CustomerToList>();
-            foreach (var item in dal.GetListOfCustomer())
+            lock (dal)
             {
-                list.Add(convertCustomerToCustomerTolist(GetCustomerById(item.Id)));
+                List<CustomerToList> list = new List<CustomerToList>();
+                foreach (var item in dal.GetListOfCustomer())
+                {
+                    list.Add(convertCustomerToCustomerTolist(GetCustomerById(item.Id)));
+                }
+                return list; 
             }
-            return list;
         }
         #endregion
         #region//Get list of parcel to list
@@ -131,14 +163,18 @@ namespace BlApi
         /// Get list of parcel to list
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<ParcelToList> GetListOfParcelToList()//Get list of parcel to list
         {
-            List<ParcelToList> list = new List<ParcelToList>();
-            foreach (var item in dal.GetListOfParcel())
+            lock (dal)
             {
-                list.Add(convertParcelToParcelTolist(GetParcelById(item.Id)));
+                List<ParcelToList> list = new List<ParcelToList>();
+                foreach (var item in dal.GetListOfParcel())
+                {
+                    list.Add(convertParcelToParcelTolist(GetParcelById(item.Id)));
+                }
+                return list; 
             }
-            return list;
         }
         #endregion
         #region//Get list of parcels
@@ -146,14 +182,18 @@ namespace BlApi
         /// Get list of parcels
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<Parcel> GetListOfParcels()//Get list of parcels
         {
-            List<Parcel> list = new List<Parcel>();
-            foreach (var item in dal.GetListOfParcel())
+            lock (dal)
             {
-                list.Add(GetParcelById(item.Id));
+                List<Parcel> list = new List<Parcel>();
+                foreach (var item in dal.GetListOfParcel())
+                {
+                    list.Add(GetParcelById(item.Id));
+                }
+                return list; 
             }
-            return list;
         }
         #endregion
         #region//Get list of assosiated drones
@@ -161,16 +201,20 @@ namespace BlApi
         /// Get list of assosiated drones
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public List<ParcelToList> GetListOfNotAssigned()//Get list of assosiated drones
         {
-            List<ParcelToList> list = new List<ParcelToList>();
-            Predicate<DO.Parcel> predicate = element => element.DroneId == null;
-            List<DO.Parcel> listIdal = dal.GetListOfParcel(predicate).ToList();
-            foreach (var item in listIdal)
+            lock (dal)
             {
-                list.Add(convertParcelToParcelTolist(GetParcelById(item.Id)));  
+                List<ParcelToList> list = new List<ParcelToList>();
+                Predicate<DO.Parcel> predicate = element => element.DroneId == null;
+                List<DO.Parcel> listIdal = dal.GetListOfParcel(predicate).ToList();
+                foreach (var item in listIdal)
+                {
+                    list.Add(convertParcelToParcelTolist(GetParcelById(item.Id)));
+                }
+                return list; 
             }
-            return list;
         }
         #endregion
         #region//Get list of free charging stations
@@ -178,26 +222,30 @@ namespace BlApi
         /// Get list of free charging stations
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public List<BaseStationToList> GetListOfFreeChargingStations(int num = 0)//Get list of free charging stations
         {
-            List<BaseStationToList> list = new List<BaseStationToList>();
-            Predicate<DO.BaseStation> predicate;
-            if (num == 0)
+            lock (dal)
             {
-                predicate = element => element.ChargeSlots > num;
+                List<BaseStationToList> list = new List<BaseStationToList>();
+                Predicate<DO.BaseStation> predicate;
+                if (num == 0)
+                {
+                    predicate = element => element.ChargeSlots > num;
 
-            }
-            else
-            {
-                predicate = element => element.ChargeSlots == num;
+                }
+                else
+                {
+                    predicate = element => element.ChargeSlots == num;
 
+                }
+                List<DO.BaseStation> listIdal = dal.GetListOfBaseStation(predicate).ToList();
+                foreach (var item in listIdal)
+                {
+                    list.Add(convertBasestationToBasestationTolist(GetBaseStationById(item.Id)));
+                }
+                return list; 
             }
-            List<DO.BaseStation> listIdal = dal.GetListOfBaseStation(predicate).ToList();
-            foreach (var item in listIdal)
-            {
-                list.Add(convertBasestationToBasestationTolist(GetBaseStationById(item.Id)));
-            }
-            return list;
         }
         #endregion
         #region//Get list of customers that dalivered
@@ -205,15 +253,19 @@ namespace BlApi
         /// Get list of customers that dalivered
         /// </summary>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public List<Customer> GetListOfCustomerDalivered() //Get list of customers that dalivered
         {
-            var customerDalList = dal.GetListOfCustomer().ToList();
-            List<Customer> customerBlList = null;
-            foreach (var item in customerDalList)
+            lock (dal)
             {
-                customerBlList.Add(convertCustomerDalToBl(item));
+                var customerDalList = dal.GetListOfCustomer().ToList();
+                List<Customer> customerBlList = null;
+                foreach (var item in customerDalList)
+                {
+                    customerBlList.Add(convertCustomerDalToBl(item));
+                }
+                return customerBlList.FindAll(element => element.ParcelToCustomer.Find(elementi => elementi.ParcelStatus == Enums.ParcelStatus.Supplied).Equals(null)); 
             }
-            return customerBlList.FindAll(element => element.ParcelToCustomer.Find(elementi => elementi.ParcelStatus == Enums.ParcelStatus.Supplied).Equals(null));
         }
         #endregion
     }
