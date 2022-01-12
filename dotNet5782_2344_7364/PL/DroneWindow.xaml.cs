@@ -539,12 +539,7 @@ namespace PL
             drone.DroneStatuses = newDrone.DroneStatuses;
             drone.CurrentLocation = newDrone.CurrentLocation;
 
-            DeliverParcelButton.Visibility = Visibility.Hidden;
-            SendDroneToChargeButton.Visibility = Visibility.Hidden;
-            AccociateDroneToParcelButton.Visibility = Visibility.Hidden;
-            RealesDroneFromChargingButton.Visibility = Visibility.Hidden;
-            PickUpParcelButton.Visibility = Visibility.Hidden;
-            UpdateButton.Visibility = Visibility.Hidden;
+ 
             if (drone.ParcelInTransit.Id != null)
             {
                 PO.ParcelInTransit parcelInTransit = drone.ParcelInTransit;
@@ -584,12 +579,7 @@ namespace PL
                 ParcelReciver.Visibility = Visibility.Hidden;
                 ParcelDistance.Visibility = Visibility.Hidden;
             }
-            Battery.Value = drone.Battery * 100;
-            Model.Text = drone.Model.ToString();
-            StatusSelector.SelectedItem = drone.DroneStatuses;
-            ParcelInTransit.Text = drone.ParcelInTransit.Id.ToString();
-            Longitude.Text = drone.CurrentLocation.LongitudeInSexa();
-            Latitude.Text = drone.CurrentLocation.LatitudeInSexa();
+   
         }
         private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
