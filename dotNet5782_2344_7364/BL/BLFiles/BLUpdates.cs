@@ -242,7 +242,7 @@ namespace BlApi
                 }
                 DroneToList drone = GetDroneToList(id);
                 if (dal.GetDroneCharge(drone.Id).TimeOfStartCharging == null)
-                    return;
+                    throw new Exception();
                 TimeSpan Diff = (TimeSpan)(DateTime.Now - dal.GetDroneCharge(drone.Id).TimeOfStartCharging);
                 if (drone.DroneStatuses != Enums.DroneStatuses.Maintenance)
                 {

@@ -31,9 +31,9 @@ namespace BlApi
         void DeleteBaseStation(int? id); // delete base station 
         public void DeleteParcel(int? id);//Delete Parcel
         void UpdateCustomer(int? id, string name = "", string phone = "");//Update customer name/phone
-        int UpdateSendDroneToCharge(int? id);//Update-send drone to charge
-        int UpdateReleseDrone(int? id);//Update-relese drone from charging slot
-        int UpdateAssosiateDrone(int? id); //Update-assosiate drone to parcel
+        int? UpdateSendDroneToCharge(int? id);//Update-send drone to charge
+        int? UpdateReleseDrone(int? id);//Update-relese drone from charging slot
+        int? UpdateAssosiateDrone(int? id); //Update-assosiate drone to parcel
         void PickupParcelByDrone(int? droneId); //Update-pick-up parcel by dron
         void DeliveryParcelByDrone(int? droneId); //Update-dilavery parcel by drone
         IEnumerable<BaseStation> GetListOfBaseStations(); //Convert from dal drone to drone to list
