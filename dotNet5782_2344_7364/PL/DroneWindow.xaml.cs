@@ -105,7 +105,7 @@ namespace PL
                 ParcelInTransit.IsEnabled = false;
                 Latitude.IsEnabled = false;
                 Longitude.IsEnabled = false;
-                // set combo boxes
+                // set combo boxes//
                 MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
                 StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
 
