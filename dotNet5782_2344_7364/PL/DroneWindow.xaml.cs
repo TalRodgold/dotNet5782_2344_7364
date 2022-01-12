@@ -20,7 +20,7 @@ namespace PL
     /// <summary>
     /// Interaction logic for DroneWindow.xaml
     /// </summary>
-    public partial class DroneWindow : Window
+    public partial class DroneWindow : Window,INotifyPropertyChanged
     {
         private IBl bl = BlFactory.GetBl("BL");
         private PL.Model model = PlFactory.GetModel("Model");
@@ -30,6 +30,9 @@ namespace PL
         BackgroundWorker worker;
         //public BO.Drone drone;
         public PO.Drone drone = new PO.Drone();
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
         // public PO.DroneToList droneToList=new PO.DroneToList();
         public DroneWindow() // constructor for adding new drone
         {
@@ -523,13 +526,13 @@ namespace PL
             if (!object.Equals(newDrone.ParcelInTransit, null))
             {
                 drone.ParcelInTransit = new PO.ParcelInTransit();
-                if (!object.Equals(drone.ParcelInTransit.CustomerInParcelReciver, null))
+                if (!object.Equals(newDrone.ParcelInTransit.CustomerInParcelReciver, null))
                 {
                     drone.ParcelInTransit.CustomerInParcelReciver = new PO.CustomerInParcel();
                     drone.ParcelInTransit.CustomerInParcelReciver.Id = newDrone.ParcelInTransit.CustomerInParcelReciver.Id;
                     drone.ParcelInTransit.CustomerInParcelReciver.Name = newDrone.ParcelInTransit.CustomerInParcelReciver.Name;
                 }
-                if (!object.Equals(drone.ParcelInTransit.CustomerInParcelReciver, null))
+                if (!object.Equals(newDrone.ParcelInTransit.CustomerInParcelReciver, null))
                 {
                     drone.ParcelInTransit.CustomerInParcelSender = new PO.CustomerInParcel();
                     drone.ParcelInTransit.CustomerInParcelSender.Id = newDrone.ParcelInTransit.CustomerInParcelSender.Id;
