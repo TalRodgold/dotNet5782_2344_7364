@@ -31,11 +31,11 @@ namespace PL
             if (battery < 0.1)
                 return Brushes.DarkRed;
             if (battery < 0.2)
-                return Brushes.DarkRed;
+                return Brushes.Red;
             if (battery < 0.4)
-                return Brushes.DarkRed;
+                return Brushes.Yellow;
             if (battery < 0.6)
-                return Brushes.DarkRed;
+                return Brushes.GreenYellow;
             return Brushes.Green;
         }
         public object ConvertBack(object value, Type targetType, object parrameter, CultureInfo culture)

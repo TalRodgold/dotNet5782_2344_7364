@@ -36,7 +36,7 @@ namespace BlApi
                     newDroneToList.Model = newModel;
                     int index = ListOfDronsBL.FindIndex(element => element.Id == id);
                     ListOfDronsBL[index] = newDroneToList;
-                    dal.UpdateDroneModel(id, newModel); 
+                    dal.UpdateDroneModel(id, newModel);
                 }
             }
             catch (DO.IdNotExsistException exception)
@@ -75,7 +75,7 @@ namespace BlApi
                     if (numberOfChargingSlots != 0)
                     {
                         dal.UpdateChargingSlotsNumber(id, numberOfChargingSlots);
-                    } 
+                    }
                 }
             }
             catch (DO.IdNotExsistException exception)
@@ -105,7 +105,7 @@ namespace BlApi
                     {
                         throw new InvalidIdException("negative", id);
                     }
-                    dal.DeleteBaseStation(id); 
+                    dal.DeleteBaseStation(id);
                 }
             }
             catch (DO.IdNotExsistException exception)
@@ -127,7 +127,7 @@ namespace BlApi
                     {
                         throw new InvalidIdException("negative", id);
                     }
-                    dal.DeleteParcel(id); 
+                    dal.DeleteParcel(id);
                 }
             }
             catch (DO.IdNotExsistException exception)
@@ -163,7 +163,7 @@ namespace BlApi
                     if (phone != "")
                     {
                         dal.UpdateCustomerPhone(id, phone);
-                    } 
+                    }
                 }
             }
             catch (DO.IdNotExsistException exception)
@@ -242,7 +242,7 @@ namespace BlApi
                 }
                 DroneToList drone = GetDroneToList(id);
                 if (dal.GetDroneCharge(drone.Id).TimeOfStartCharging == null)
-                    throw new Exception() ;//
+                    return;
                 TimeSpan Diff = (TimeSpan)(DateTime.Now - dal.GetDroneCharge(drone.Id).TimeOfStartCharging);
                 if (drone.DroneStatuses != Enums.DroneStatuses.Maintenance)
                 {
@@ -371,7 +371,7 @@ namespace BlApi
                     DroneToList newDrone = convertDroneBlToList(drone);
                     int index = ListOfDronsBL.FindIndex(element => element.Id == droneId);
                     ListOfDronsBL[index] = newDrone;
-                    dal.UpdateParclePickup(drone.ParcelInTransit.Id); 
+                    dal.UpdateParclePickup(drone.ParcelInTransit.Id);
                 }
             }
             catch (DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
@@ -432,4 +432,3 @@ namespace BlApi
         #endregion
     }
 }
-

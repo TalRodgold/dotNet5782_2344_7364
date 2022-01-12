@@ -22,7 +22,7 @@ namespace BlApi
         /// <param name="drone1"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private double calculateBattery(DroneToList drone = null,double distance = 0.0)//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
+        public double calculateBattery(DroneToList drone = null,double distance = 0.0)//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
         {
             lock (dal)
             {
@@ -95,7 +95,7 @@ namespace BlApi
         #endregion
         #region //Calculate battery(distance*electricty by state) 
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private double calculateBattery( Drone drone = null, double distance = 0.0)//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
+        public double calculateBattery( Drone drone = null, double distance = 0.0)//Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
         {
             double battery = drone.Battery;
             switch (drone.Weight)
@@ -121,7 +121,7 @@ namespace BlApi
         /// <param name="y"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private double calculateDistance(Location x, Location y)//Calculate distance between 2 location return double
+        public double calculateDistance(Location x, Location y)//Calculate distance between 2 location return double
         {
             double ConvertToRadians(double angle)
             {
@@ -154,7 +154,7 @@ namespace BlApi
         /// <param name="drone"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private double convertBatteryToDistance(DroneToList drone)//Convert battery to distance by state and weight 
+        public double convertBatteryToDistance(DroneToList drone)//Convert battery to distance by state and weight 
         {
             double battery = drone.Battery;
             double distance = 0;
@@ -190,7 +190,7 @@ namespace BlApi
         /// <param name="predicate1"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private int? calculateMinDistance(Location y, Predicate<BaseStation> predicate = null, Predicate<BaseStation> predicate1 = null)//Calculate min distance between loction y and 2 option 1.the closer station 2.the closer station and more 2 terms
+        public int? calculateMinDistance(Location y, Predicate<BaseStation> predicate = null, Predicate<BaseStation> predicate1 = null)//Calculate min distance between loction y and 2 option 1.the closer station 2.the closer station and more 2 terms
         {
             lock (dal)
             {
@@ -233,7 +233,7 @@ namespace BlApi
         /// <param name="drone"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private bool CalculateWhetherTheDroneHaveEnoghBattery(double distance, DroneToList drone)//Calculate whether the drone have enogh battery
+        public bool CalculateWhetherTheDroneHaveEnoghBattery(double distance, DroneToList drone)//Calculate whether the drone have enogh battery
         {
             double battery= calculateBattery(drone, distance);
             if ((drone.Battery - battery) < 0 || (battery<0))
@@ -250,7 +250,7 @@ namespace BlApi
         /// <param name="p"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private Enums.ParcelStatus statusCalculate(DO.Parcel p)
+        public Enums.ParcelStatus statusCalculate(DO.Parcel p)
         {
             if (p.Deliverd != null) // deliverd time
                 return Enums.ParcelStatus.Supplied;

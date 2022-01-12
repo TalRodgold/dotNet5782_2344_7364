@@ -47,7 +47,7 @@ namespace BlApi
         List<Customer> GetListOfCustomerDalivered(); //Get list of customers that dalivered
         IEnumerable<BaseStationToList> GetListOfBaseStationsToList(); //Get list of base stations
         IEnumerable<DroneToList> GetListOfDronesToList();//Get list of drones
-        List<DroneToList> GetListOfDroneToListByPredicat(Predicate<DroneToList> predicate, Predicate<DroneToList> predicate1=null); //Get list of drones by predicat
+        List<DroneToList> GetListOfDroneToListByPredicat(Predicate<DroneToList> predicate, Predicate<DroneToList> predicate1 = null); //Get list of drones by predicat
         DroneToList convertDroneBlToList(Drone blDrone);
         BaseStationToList convertBasestationToBasestationTolist(BaseStation station);
         // BaseStationToList GetBaseStationToListById(int? id);//Get Customer to list by id

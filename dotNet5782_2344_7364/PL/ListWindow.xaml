@@ -9,7 +9,8 @@
     <Window.Resources>
         <local:BatteryToProgressBar x:Key="batteryToProgressBar"/>
         <local:BatteryToConverter x:Key="batteryToConverter"/>
-        <!--<local:ConvertLatitudeToSexa x:Key="ConvertLatitudeToSexa" />        <local:ConvertLongitudeToSexa x:Key="ConvertLongitudeToSexa" />-->
+        <!--<local:ConvertLatitudeToSexa x:Key="ConvertLatitudeToSexa" />
+        <local:ConvertLongitudeToSexa x:Key="ConvertLongitudeToSexa" />-->
     </Window.Resources>
     <Grid>
         <TabControl>
