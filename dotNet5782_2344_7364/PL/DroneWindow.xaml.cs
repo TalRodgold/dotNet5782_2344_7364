@@ -356,83 +356,83 @@ namespace PL
                 } 
             }
         }
-        //private void RefreshAll()
+        private void RefreshAll()
 
-        //{
-        //    ObservableCollection<BO.DroneToList> droneToLists = new(bl.GetListOfDronesToList());
-        //    foreach (var item in droneToLists)
-        //    {
-        //        PO.DroneToList drone = new PO.DroneToList();
-        //        drone.Id = item.Id;
-        //        drone.Model = item.Model;
-        //        drone.Weight = item.Weight;
-        //        drone.Battery = item.Battery;
-        //        drone.NumberOfParcelInTransit = item.NumberOfParcelInTransit;
-        //        drone.DroneStatuses = item.DroneStatuses;
-        //        drone.CurrentLocation = item.CurrentLocation;
-        //        model.drones.Add(drone);
-        //    }
-        //    ObservableCollection<BO.BaseStationToList> baseStationToLists = new(bl.GetListOfBaseStationsToList());
-        //    foreach (var item in baseStationToLists)
-        //    {
-        //        PO.BaseStationToList baseStation = new PO.BaseStationToList();
-        //        baseStation.Id = item.Id;
-        //        baseStation.Name = item.Name;
-        //        baseStation.OccupiedChargingSlots = item.OccupiedChargingSlots;
-        //        baseStation.FreeChargingSlots = item.FreeChargingSlots;
-        //        model.baseStations.Add(baseStation);
-        //    }
-        //    ObservableCollection<BO.CustomerToList> customerToLists = new(bl.GetListOfCustomerToList());
-        //    foreach (var item in customerToLists)
-        //    {
-        //        PO.CustomerToList customer = new PO.CustomerToList();
-        //        customer.Id = item.Id;
-        //        customer.Name = item.Name;
-        //        customer.Phone = item.Phone;
-        //        customer.NumberOfParcelsThatSentAndArrived = item.NumberOfParcelsThatSentAndArrived;
-        //        customer.ParcelsOnWayToClient = item.ParcelsOnWayToClient;
-        //        customer.ParcelsRecived = item.ParcelsRecived;
-        //        customer.ParcelsThatSentYetNotArrived = item.ParcelsThatSentYetNotArrived;
-        //        model.customers.Add(customer);
-        //    }
-        //    ObservableCollection<BO.ParcelToList> parcelToLists = new(bl.GetListOfParcelToList());
-        //    foreach (var item in parcelToLists)
-        //    {
-        //        PO.ParcelToList parcel = new PO.ParcelToList();
-        //        parcel.Id = item.Id;
-        //        parcel.ParcelStatus = item.ParcelStatus;
-        //        parcel.Prioritie = item.Prioritie;
-        //        parcel.ReciversName = item.ReciversName;
-        //        parcel.SendersName = item.SendersName;
-        //        parcel.Weight = item.Weight;
-        //        model.parcels.Add(parcel);
-        //    }
-        //    BO.Drone newDrone = bl.GetDroneById(drone.Id);
-        //    drone.Id = newDrone.Id;
-        //    drone.Model = newDrone.Model;
-        //    drone.Weight = newDrone.Weight;
-        //    drone.Battery = newDrone.Battery;
+        {
+            ObservableCollection<BO.DroneToList> droneToLists = new(bl.GetListOfDronesToList());
+            foreach (var item in droneToLists)
+            {
+                PO.DroneToList drone = new PO.DroneToList();
+                drone.Id = item.Id;
+                drone.Model = item.Model;
+                drone.Weight = item.Weight;
+                drone.Battery = item.Battery;
+                drone.NumberOfParcelInTransit = item.NumberOfParcelInTransit;
+                drone.DroneStatuses = item.DroneStatuses;
+                drone.CurrentLocation = item.CurrentLocation;
+                model.drones.Add(drone);
+            }
+            ObservableCollection<BO.BaseStationToList> baseStationToLists = new(bl.GetListOfBaseStationsToList());
+            foreach (var item in baseStationToLists)
+            {
+                PO.BaseStationToList baseStation = new PO.BaseStationToList();
+                baseStation.Id = item.Id;
+                baseStation.Name = item.Name;
+                baseStation.OccupiedChargingSlots = item.OccupiedChargingSlots;
+                baseStation.FreeChargingSlots = item.FreeChargingSlots;
+                model.baseStations.Add(baseStation);
+            }
+            ObservableCollection<BO.CustomerToList> customerToLists = new(bl.GetListOfCustomerToList());
+            foreach (var item in customerToLists)
+            {
+                PO.CustomerToList customer = new PO.CustomerToList();
+                customer.Id = item.Id;
+                customer.Name = item.Name;
+                customer.Phone = item.Phone;
+                customer.NumberOfParcelsThatSentAndArrived = item.NumberOfParcelsThatSentAndArrived;
+                customer.ParcelsOnWayToClient = item.ParcelsOnWayToClient;
+                customer.ParcelsRecived = item.ParcelsRecived;
+                customer.ParcelsThatSentYetNotArrived = item.ParcelsThatSentYetNotArrived;
+                model.customers.Add(customer);
+            }
+            ObservableCollection<BO.ParcelToList> parcelToLists = new(bl.GetListOfParcelToList());
+            foreach (var item in parcelToLists)
+            {
+                PO.ParcelToList parcel = new PO.ParcelToList();
+                parcel.Id = item.Id;
+                parcel.ParcelStatus = item.ParcelStatus;
+                parcel.Prioritie = item.Prioritie;
+                parcel.ReciversName = item.ReciversName;
+                parcel.SendersName = item.SendersName;
+                parcel.Weight = item.Weight;
+                model.parcels.Add(parcel);
+            }
+            BO.Drone newDrone = bl.GetDroneById(drone.Id);
+            drone.Id = newDrone.Id;
+            drone.Model = newDrone.Model;
+            drone.Weight = newDrone.Weight;
+            drone.Battery = newDrone.Battery;
 
-        //    if (!object.Equals(newDrone.ParcelInTransit, null))
-        //    {
-        //        drone.ParcelInTransit = new PO.ParcelInTransit();
-        //        if (!object.Equals(drone.ParcelInTransit.CustomerInParcelReciver, null))
-        //        {
-        //            drone.ParcelInTransit.CustomerInParcelReciver = new PO.CustomerInParcel();
-        //            drone.ParcelInTransit.CustomerInParcelReciver.Id = newDrone.ParcelInTransit.CustomerInParcelReciver.Id;
-        //            drone.ParcelInTransit.CustomerInParcelReciver.Name = newDrone.ParcelInTransit.CustomerInParcelReciver.Name;
-        //        }
-        //        if (!object.Equals(drone.ParcelInTransit.CustomerInParcelReciver, null))
-        //        {
-        //            drone.ParcelInTransit.CustomerInParcelSender = new PO.CustomerInParcel();
-        //            drone.ParcelInTransit.CustomerInParcelSender.Id = newDrone.ParcelInTransit.CustomerInParcelSender.Id;
-        //            drone.ParcelInTransit.CustomerInParcelSender.Name = newDrone.ParcelInTransit.CustomerInParcelSender.Name;
-        //        }
-        //    }
+            if (!object.Equals(newDrone.ParcelInTransit, null))
+            {
+                drone.ParcelInTransit = new PO.ParcelInTransit();
+                if (!object.Equals(drone.ParcelInTransit.CustomerInParcelReciver, null))
+                {
+                    drone.ParcelInTransit.CustomerInParcelReciver = new PO.CustomerInParcel();
+                    drone.ParcelInTransit.CustomerInParcelReciver.Id = newDrone.ParcelInTransit.CustomerInParcelReciver.Id;
+                    drone.ParcelInTransit.CustomerInParcelReciver.Name = newDrone.ParcelInTransit.CustomerInParcelReciver.Name;
+                }
+                if (!object.Equals(drone.ParcelInTransit.CustomerInParcelReciver, null))
+                {
+                    drone.ParcelInTransit.CustomerInParcelSender = new PO.CustomerInParcel();
+                    drone.ParcelInTransit.CustomerInParcelSender.Id = newDrone.ParcelInTransit.CustomerInParcelSender.Id;
+                    drone.ParcelInTransit.CustomerInParcelSender.Name = newDrone.ParcelInTransit.CustomerInParcelSender.Name;
+                }
+            }
 
-        //    drone.DroneStatuses = newDrone.DroneStatuses;
-        //    drone.CurrentLocation = newDrone.CurrentLocation;
-        //}
+            drone.DroneStatuses = newDrone.DroneStatuses;
+            drone.CurrentLocation = newDrone.CurrentLocation;
+        }
         private void StartSimulator_Click(object sender, RoutedEventArgs e)
         {
            // bl.SimulatorFunc(drone.Id,);
