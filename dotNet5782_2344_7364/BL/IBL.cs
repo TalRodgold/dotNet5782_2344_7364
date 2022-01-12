@@ -56,6 +56,16 @@ namespace BlApi
         IEnumerable<IGrouping<int, BaseStationToList>> GroupingFreeChargingSlots();
         IEnumerable<IGrouping<string, ParcelToList>> GroupingSender();
         IEnumerable<IGrouping<string, ParcelToList>> GroupingReciver();
+        double calculateBattery(DroneToList drone = null, double distance = 0.0); //Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
+        double calculateBattery(Drone drone = null, double distance = 0.0); //Calculate battery(distance*electricty by state) with 2 option 1.drone to list by lottery value 2.drone by calculation
+        double calculateDistance(Location x, Location y); //Calculate distance between 2 location return double
+        double convertBatteryToDistance(DroneToList drone); //Convert battery to distance by state and weight 
+        int? calculateMinDistance(Location y, Predicate<BaseStation> predicate = null, Predicate<BaseStation> predicate1 = null); //Calculate min distance between loction y and 2 option 1.the closer station 2.the closer station and more 2 terms
+        bool CalculateWhetherTheDroneHaveEnoghBattery(double distance, DroneToList drone); //Calculate whether the drone have enogh battery
+        Enums.ParcelStatus statusCalculate(DO.Parcel p);
+        void StartSimulator(int droneId, Action func, Func<bool> checkStop);
+        bool CheckAvailableParcels(Drone drone);
+
 
     }
 }

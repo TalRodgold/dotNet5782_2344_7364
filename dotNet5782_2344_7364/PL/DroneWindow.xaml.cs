@@ -13,6 +13,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Collections.ObjectModel;
 using BlApi;
+using System.ComponentModel;
+
 namespace PL
 {
     /// <summary>
@@ -22,6 +24,10 @@ namespace PL
     {
         private IBl bl = BlFactory.GetBl("BL");
         private PL.Model model = PlFactory.GetModel("Model");
+
+        private void updateDrone() => worker.ReportProgress(0);
+        private bool checkStop() => worker.CancellationPending;
+        BackgroundWorker worker;
         //public BO.Drone drone;
         public PO.Drone drone = new PO.Drone();
         // public PO.DroneToList droneToList=new PO.DroneToList();
@@ -433,14 +439,86 @@ namespace PL
             drone.DroneStatuses = newDrone.DroneStatuses;
             drone.CurrentLocation = newDrone.CurrentLocation;
         }
+
         private void StartSimulator_Click(object sender, RoutedEventArgs e)
         {
-            // bl.SimulatorFunc(drone.Id,);
-        }
+            DeliverParcelButton.Visibility = Visibility.Hidden;
+            SendDroneToChargeButton.Visibility = Visibility.Hidden;
+            AccociateDroneToParcelButton.Visibility = Visibility.Hidden;
+            RealesDroneFromChargingButton.Visibility = Visibility.Hidden;
+            PickUpParcelButton.Visibility = Visibility.Hidden;
+            UpdateButton.Visibility = Visibility.Hidden;
 
+            worker = new()
+            { WorkerReportsProgress = true, WorkerSupportsCancellation = true };
+            worker.DoWork += (sender, args) => bl.StartSimulator((int)args.Argument, updateDrone, checkStop);
+            worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
+            worker.ProgressChanged += (sender, args) => updateDroneView();
+            worker.RunWorkerAsync(drone.Id);
+        }
+        private void updateDroneView()
+        {
+            //drone = bl.GetDroneById(drone.Id);
+            DeliverParcelButton.Visibility = Visibility.Hidden;
+            SendDroneToChargeButton.Visibility = Visibility.Hidden;
+            AccociateDroneToParcelButton.Visibility = Visibility.Hidden;
+            RealesDroneFromChargingButton.Visibility = Visibility.Hidden;
+            PickUpParcelButton.Visibility = Visibility.Hidden;
+            UpdateButton.Visibility = Visibility.Hidden;
+            if (drone.ParcelInTransit.Id != null)
+            {
+                PO.ParcelInTransit parcelInTransit = drone.ParcelInTransit;
+                ParcelHeadLabel.Visibility = Visibility.Visible;
+                ParcelIdLabel.Visibility = Visibility.Visible;
+                ParcelPriorityLabel.Visibility = Visibility.Visible;
+                ParcelWeightLabel.Visibility = Visibility.Visible;
+                ParcelSenderLabel.Visibility = Visibility.Visible;
+                ParcelReciverLabel.Visibility = Visibility.Visible;
+                ParcelDistanceLabel.Visibility = Visibility.Visible;
+                ParcelId.Visibility = Visibility.Visible;
+                ParcelPriority.Visibility = Visibility.Visible;
+                ParcelWeight.Visibility = Visibility.Visible;
+                ParcelSender.Visibility = Visibility.Visible;
+                ParcelReciver.Visibility = Visibility.Visible;
+                ParcelDistance.Visibility = Visibility.Visible;
+                ParcelId.Text = parcelInTransit.Id.ToString();
+                ParcelPriority.Text = parcelInTransit.Priorities.ToString();
+                ParcelWeight.Text = parcelInTransit.Weight.ToString();
+                ParcelSender.Text = parcelInTransit.CustomerInParcelSender.ToString();
+                ParcelReciver.Text = parcelInTransit.CustomerInParcelReciver.ToString();
+                ParcelDistance.Text = parcelInTransit.Distance.ToString();
+            }
+            else
+            {
+                ParcelHeadLabel.Visibility = Visibility.Hidden;
+                ParcelIdLabel.Visibility = Visibility.Hidden;
+                ParcelPriorityLabel.Visibility = Visibility.Hidden;
+                ParcelWeightLabel.Visibility = Visibility.Hidden;
+                ParcelSenderLabel.Visibility = Visibility.Hidden;
+                ParcelReciverLabel.Visibility = Visibility.Hidden;
+                ParcelDistanceLabel.Visibility = Visibility.Hidden;
+                ParcelId.Visibility = Visibility.Hidden;
+                ParcelPriority.Visibility = Visibility.Hidden;
+                ParcelWeight.Visibility = Visibility.Hidden;
+                ParcelSender.Visibility = Visibility.Hidden;
+                ParcelReciver.Visibility = Visibility.Hidden;
+                ParcelDistance.Visibility = Visibility.Hidden;
+            }
+            Battery.Value = drone.Battery * 100;
+            Model.Text = drone.Model.ToString();
+            StatusSelector.SelectedItem = drone.DroneStatuses;
+            ParcelInTransit.Text = drone.ParcelInTransit.Id.ToString();
+            Longitude.Text = drone.CurrentLocation.LongitudeInSexa();
+            Latitude.Text = drone.CurrentLocation.LatitudeInSexa();
+        }
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            MessageBox.Show("Simulation terminated sucssefully");
+
+        }
         private void CancelSimulator_Click(object sender, RoutedEventArgs e)
         {
-
+            worker.CancelAsync();
         }
     }
 }

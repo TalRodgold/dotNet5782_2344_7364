@@ -430,5 +430,35 @@ namespace BlApi
             }
         }
         #endregion
+
+        public bool CheckAvailableParcels(Drone drone)
+        {
+            lock (dal)
+            {
+                Enums.Priorities maxPriorities = Enums.Priorities.Regular;
+                double minDistance = double.MaxValue;
+                Customer senderCustomer = new Customer();
+                Customer reciverCustomer = new Customer();
+                double distanceDroneToPickup, distancePickupToDelivery, distanceDeliveryToClothestBaseStation, distance = 0;
+
+                foreach (var item in dal.GetListOfParcel())
+                {
+                    Customer newSenderCustomer = GetCustomerById(item.SenderId); // sender
+                    Customer newReciverCustomer = GetCustomerById(item.ReciverId); // reciver
+                    distanceDroneToPickup = calculateDistance(drone.CurrentLocation, newSenderCustomer.Location); // distance
+                    distancePickupToDelivery = calculateDistance(newSenderCustomer.Location, newReciverCustomer.Location);
+                    distanceDeliveryToClothestBaseStation = calculateDistance(newReciverCustomer.Location, GetBaseStationById(calculateMinDistance(newReciverCustomer.Location)).Location); // closest
+                    distance = distanceDroneToPickup + distancePickupToDelivery + distanceDeliveryToClothestBaseStation;
+                    if (item.Deliverd == null && (Enums.WeightCategories)item.Weight <= drone.Weight && (Enums.Priorities)item.Priority >= maxPriorities && distanceDroneToPickup <= minDistance && CalculateWhetherTheDroneHaveEnoghBattery(distance, convertDroneBlToList(drone)))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            }
+        }
+
+
+        public void StartSimulator(int droneId, Action func, Func<bool> checkStop) => new Simulator(this, droneId, func, checkStop);
     }
 }
