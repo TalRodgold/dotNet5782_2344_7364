@@ -179,7 +179,7 @@ namespace BlApi
         /// </summary>
         /// <param name="id"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateSendDroneToCharge(int? id)//Update-send drone to charge
+        public int? UpdateSendDroneToCharge(int? id)//Update-send drone to charge
         {
             try
             {
@@ -214,7 +214,8 @@ namespace BlApi
                     ListOfDronsBL[index] = newDrone;
                     station.NumberOfFreeChargingSlots -= 1;
                     dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.NumberOfFreeChargingSlots);
-                    DroneInCharging droneInCharging = new DroneInCharging(newDrone.Id, newDrone.Battery, currentTime); 
+                    DroneInCharging droneInCharging = new DroneInCharging(newDrone.Id, newDrone.Battery, currentTime);
+                    return stationId;
                 }
             }
             catch (DO.IdNotExsistException exception) // if base station id does not exsists and was thrown from dal objects
@@ -231,7 +232,7 @@ namespace BlApi
         /// <param name="id"></param>
         /// <param name="time"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateReleseDrone(int? id)//Update-relese drone from charging slot
+        public int? UpdateReleseDrone(int? id)//Update-relese drone from charging slot
         {
             lock (dal)
             {
@@ -241,7 +242,7 @@ namespace BlApi
                 }
                 DroneToList drone = GetDroneToList(id);
                 if (dal.GetDroneCharge(drone.Id).TimeOfStartCharging == null)
-                    return;
+                    throw new Exception() ;//
                 TimeSpan Diff = (TimeSpan)(DateTime.Now - dal.GetDroneCharge(drone.Id).TimeOfStartCharging);
                 if (drone.DroneStatuses != Enums.DroneStatuses.Maintenance)
                 {
@@ -262,8 +263,10 @@ namespace BlApi
                 ListOfDronsBL[index] = drone;
                 station.ChargeSlots -= 1;
                 dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.ChargeSlots);
-                dal.ReleaseDroneCharge(id, station.Id); 
+                dal.ReleaseDroneCharge(id, station.Id);
+                return droneCharge.StationId;
             }
+             
         }
         #endregion
         #region//update and associate a drone
@@ -272,7 +275,7 @@ namespace BlApi
         /// </summary>
         /// <param name="id"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateAssosiateDrone(int? id)//Update-assosiate drone to parcel
+        public int? UpdateAssosiateDrone(int? id)//Update-assosiate drone to parcel
         {
             {
                 try
@@ -324,7 +327,8 @@ namespace BlApi
 
                         drone.DroneStatuses = Enums.DroneStatuses.Delivery;
                         drone.NumberOfParcelInTransit = properParcelID;
-                        ListOfDronsBL[index] = drone; 
+                        ListOfDronsBL[index] = drone;
+                        return properParcelID;
                     }
                 }
                 catch (DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects

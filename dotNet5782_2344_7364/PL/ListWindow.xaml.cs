@@ -21,10 +21,11 @@ namespace PL
     public partial class ListWindow : Window
     {
         private IBl bl = BlFactory.GetBl("BL");
-        public ObservableCollection<BO.BaseStationToList> BsCollection = new ObservableCollection<BO.BaseStationToList>();
-        public ObservableCollection<BO.ParcelToList> PCollection = new ObservableCollection<BO.ParcelToList>();
-        public ObservableCollection<BO.CustomerToList> CCollection = new ObservableCollection<BO.CustomerToList>();
-        public ObservableCollection<BO.DroneToList> DCollection = new ObservableCollection<BO.DroneToList>();
+        //public ObservableCollection<BO.BaseStationToList> BsCollection = new ObservableCollection<BO.BaseStationToList>();
+        //public ObservableCollection<BO.ParcelToList> PCollection = new ObservableCollection<BO.ParcelToList>();
+        //public ObservableCollection<BO.CustomerToList> CCollection = new ObservableCollection<BO.CustomerToList>();
+        //public ObservableCollection<BO.DroneToList> DCollection = new ObservableCollection<BO.DroneToList>();
+        private PL.Model model=PlFactory.GetModel("Model");
 
         public ListWindow()
         {
@@ -46,27 +47,11 @@ namespace PL
         {
             lock (bl)
             {
-                foreach (var item in bl.GetListOfDronesToList())
-                {
-                    DCollection.Add(item);
-                }
-                foreach (var item in bl.GetListOfParcelToList())
-                {
-                    PCollection.Add(item);
-                }
-                foreach (var item in bl.GetListOfCustomerToList())
-                {
-                    CCollection.Add(item);
-                }
-                foreach (var item in bl.GetListOfBaseStationsToList())
-                {
 
-                    BsCollection.Add(item);
-                }
-                Base_station.DataContext = BsCollection;
-                Parcel_Item.DataContext = PCollection;
-                Customer_Item.DataContext = CCollection;
-                Drone_Item.DataContext = DCollection;
+                ListBaseStation.DataContext = model.BaseStations;
+                ListParcel.DataContext = model.Parcels;
+                ListDrone.DataContext = model.Drones;
+                ListCustomer.DataContext = model.Customers;
             }
         }
 
@@ -76,7 +61,7 @@ namespace PL
             lock (bl)
             {
                 DroneWindow droneWindow = new DroneWindow();
-                droneWindow.AddButton.Click += updateDrones;
+                //droneWindow.AddButton.Click += updateDrones;
                 droneWindow.Show();
             }
 
@@ -85,8 +70,8 @@ namespace PL
         {
             lock (bl)
             {
-                BaseStationWindow baseStationWindow = new BaseStationWindow();
-                baseStationWindow.AddButton.Click += updateStation;
+                BaseStationWindow baseStationWindow = new BaseStationWindow(this);
+                //baseStationWindow.AddButton.Click += updateStation;
                 baseStationWindow.Show();
             }
         }
@@ -96,7 +81,7 @@ namespace PL
             lock (bl)
             {
                 ParcelWindow parcelWindow = new ParcelWindow();
-                parcelWindow.AddButton.Click += updateParcel;
+                //parcelWindow.AddButton.Click += updateParcel;
                 parcelWindow.Show();
             }
         }
@@ -106,7 +91,7 @@ namespace PL
             lock (bl)
             {
                 CustomerWindow customerWindow = new CustomerWindow();
-                customerWindow.AddButton.Click += updateCustomer;
+                //customerWindow.AddButton.Click += updateCustomer;
                 customerWindow.Show();
             }
         }
@@ -123,12 +108,12 @@ namespace PL
         {
             lock (bl)
             {
-                BO.BaseStationToList baseStation = (BO.BaseStationToList)ListBaseStation.SelectedItem;
-                BaseStationWindow baseStationWindow = new BaseStationWindow(baseStation.Id, baseStation.OccupiedChargingSlots);
+                PO.BaseStationToList baseStation = (PO.BaseStationToList)ListBaseStation.SelectedItem;
+                BaseStationWindow baseStationWindow = new BaseStationWindow(baseStation.Id, baseStation.OccupiedChargingSlots);//, baseStation);
 
-                baseStationWindow.DeleteButton.Click += updateStation;
+                //baseStationWindow.DeleteButton.Click += updateStation;
 
-                baseStationWindow.UpdateButton.Click += updateStation;
+                //baseStationWindow.UpdateButton.Click += updateStation;
                 baseStationWindow.Show();
             }
 
@@ -138,9 +123,9 @@ namespace PL
             lock (bl)
             {
 
-                BO.ParcelToList parcel = (BO.ParcelToList)ListParcel.SelectedItem;
-                ParcelWindow parcelWindow = new ParcelWindow(parcel.Id);
-                parcelWindow.DeleteButton.Click += updateParcel;
+                PO.ParcelToList parcel = (PO.ParcelToList)ListParcel.SelectedItem;
+                ParcelWindow parcelWindow = new ParcelWindow(parcel.Id);//, parcel);
+                //parcelWindow.DeleteButton.Click += updateParcel;
                 parcelWindow.Show();
             }
         }
@@ -148,14 +133,15 @@ namespace PL
         {
             lock (bl)
             {
-                BO.DroneToList drone = (BO.DroneToList)ListDrone.SelectedItem;
-                DroneWindow droneWindow = new DroneWindow(drone.Id);
-                droneWindow.UpdateButton.Click += updateDrones;
-                droneWindow.SendDroneToChargeButton.Click += updateDrones;
-                droneWindow.RealesDroneFromChargingButton.Click += updateDrones;
-                droneWindow.AccociateDroneToParcelButton.Click += updateDrones;
-                droneWindow.PickUpParcelButton.Click += updateDrones;
-                droneWindow.DeliverParcelButton.Click += updateDrones;
+                PO.DroneToList drone = (PO.DroneToList)ListDrone.SelectedItem;
+                //   PO.DroneToList drone1 =(from dro in model.Drones where dro.Id == drone.Id select dro).FirstOrDefault();
+                DroneWindow droneWindow = new DroneWindow(drone.Id);//,drone);
+                //droneWindow.UpdateButton.Click += updateDrones;
+                //droneWindow.SendDroneToChargeButton.Click += updateDrones;
+                //droneWindow.RealesDroneFromChargingButton.Click += updateDrones;
+                //droneWindow.AccociateDroneToParcelButton.Click += updateDrones;
+                //droneWindow.PickUpParcelButton.Click += updateDrones;
+                //droneWindow.DeliverParcelButton.Click += updateDrones;
                 droneWindow.Show();
             }
 
@@ -165,9 +151,9 @@ namespace PL
 
             lock (bl)
             {
-                BO.CustomerToList customer = (BO.CustomerToList)ListCustomer.SelectedItem;
-                CustomerWindow customerWindow = new CustomerWindow(customer.Id);
-                customerWindow.UpdateButton.Click += updateCustomer;
+                PO.CustomerToList customer = (PO.CustomerToList)ListCustomer.SelectedItem;
+                CustomerWindow customerWindow = new CustomerWindow(customer.Id);//, customer);
+                //customerWindow.UpdateButton.Click += updateCustomer;
                 customerWindow.Show();
             }
         }
@@ -196,11 +182,41 @@ namespace PL
                 if (StatusSelector.SelectedIndex == -1)
                 {
 
-                    ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem).ToList();
+                    // ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem).ToList();
+                    ObservableCollection < BO.DroneToList > droneToListsBo = new( bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem).ToList());
+                    ObservableCollection<PO.DroneToList> droneToListsPo = new ObservableCollection<PO.DroneToList>();
+                    foreach (var item in droneToListsBo)
+                    {
+                        PO.DroneToList drone = new PO.DroneToList();
+                        drone.Id = item.Id;
+                        drone.Model = item.Model;
+                        drone.Weight = item.Weight;
+                        drone.Battery = item.Battery;
+                        drone.NumberOfParcelInTransit = item.NumberOfParcelInTransit;
+                        drone.DroneStatuses = item.DroneStatuses;
+                        drone.CurrentLocation = item.CurrentLocation;
+                        droneToListsPo.Add(drone);
+                    }
+                    ListDrone.ItemsSource = droneToListsPo;
                 }
                 else
                 {
-                    ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
+                    //ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
+                    ObservableCollection<BO.DroneToList> droneToListsBo = new(bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList());
+                    ObservableCollection<PO.DroneToList> droneToListsPo = new ObservableCollection<PO.DroneToList>();
+                    foreach (var item in droneToListsBo)
+                    {
+                        PO.DroneToList drone = new PO.DroneToList();
+                        drone.Id = item.Id;
+                        drone.Model = item.Model;
+                        drone.Weight = item.Weight;
+                        drone.Battery = item.Battery;
+                        drone.NumberOfParcelInTransit = item.NumberOfParcelInTransit;
+                        drone.DroneStatuses = item.DroneStatuses;
+                        drone.CurrentLocation = item.CurrentLocation;
+                        droneToListsPo.Add(drone);
+                    }
+                    ListDrone.ItemsSource = droneToListsPo;
                 }
             }
         }
@@ -212,11 +228,41 @@ namespace PL
             {
                 if (MaxWeightSelector.SelectedIndex == -1)
                 {
-                    ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
+                    //ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
+                    ObservableCollection<BO.DroneToList> droneToListsBo = new(bl.GetListOfDroneToListByPredicat(predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList());
+                    ObservableCollection<PO.DroneToList> droneToListsPo = new ObservableCollection<PO.DroneToList>();
+                    foreach (var item in droneToListsBo)
+                    {
+                        PO.DroneToList drone = new PO.DroneToList();
+                        drone.Id = item.Id;
+                        drone.Model = item.Model;
+                        drone.Weight = item.Weight;
+                        drone.Battery = item.Battery;
+                        drone.NumberOfParcelInTransit = item.NumberOfParcelInTransit;
+                        drone.DroneStatuses = item.DroneStatuses;
+                        drone.CurrentLocation = item.CurrentLocation;
+                        droneToListsPo.Add(drone);
+                    }
+                    ListDrone.ItemsSource = droneToListsPo;
                 }
                 else
                 {
-                    ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
+                    //ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
+                    ObservableCollection<BO.DroneToList> droneToListsBo = new(bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList());
+                    ObservableCollection<PO.DroneToList> droneToListsPo = new ObservableCollection<PO.DroneToList>();
+                    foreach (var item in droneToListsBo)
+                    {
+                        PO.DroneToList drone = new PO.DroneToList();
+                        drone.Id = item.Id;
+                        drone.Model = item.Model;
+                        drone.Weight = item.Weight;
+                        drone.Battery = item.Battery;
+                        drone.NumberOfParcelInTransit = item.NumberOfParcelInTransit;
+                        drone.DroneStatuses = item.DroneStatuses;
+                        drone.CurrentLocation = item.CurrentLocation;
+                        droneToListsPo.Add(drone);
+                    }
+                    ListDrone.ItemsSource = droneToListsPo;
                 }
             }
         }
@@ -227,13 +273,24 @@ namespace PL
             {
                 if (DisplayChargingSlots.SelectedIndex == 0)
                 {
-                    ListBaseStation.ItemsSource = bl.GetListOfBaseStationsToList();
+                    ListBaseStation.ItemsSource = model.BaseStations;
 
                 }
                 else if (DisplayChargingSlots.SelectedIndex == 1)
                 {
-                    ListBaseStation.ItemsSource = bl.GetListOfFreeChargingStations();
-
+                    //ListBaseStation.ItemsSource = bl.GetListOfFreeChargingStations();
+                    ObservableCollection<PO.BaseStationToList> baseStationToListsPO = new ObservableCollection<PO.BaseStationToList>();
+                    ObservableCollection<BO.BaseStationToList> baseStationToLists = new(bl.GetListOfBaseStationsToList());
+                    foreach (var item in baseStationToLists)
+                    {
+                        PO.BaseStationToList baseStation = new PO.BaseStationToList();
+                        baseStation.Id = item.Id;
+                        baseStation.Name = item.Name;
+                        baseStation.OccupiedChargingSlots = item.OccupiedChargingSlots;
+                        baseStation.FreeChargingSlots = item.FreeChargingSlots;
+                        baseStationToListsPO.Add(baseStation);
+                    }
+                    ListBaseStation.ItemsSource = baseStationToListsPO;
                 }
             }
 
@@ -244,8 +301,19 @@ namespace PL
         {
             lock (bl)
             {
-                ListBaseStation.ItemsSource = bl.GetListOfFreeChargingStations(NumOfFreeChargingSlots.SelectedIndex + 1);
-
+                //ListBaseStation.ItemsSource = bl.GetListOfFreeChargingStations(NumOfFreeChargingSlots.SelectedIndex + 1);
+                ObservableCollection<PO.BaseStationToList> baseStationToListsPO = new ObservableCollection<PO.BaseStationToList>();
+                ObservableCollection<BO.BaseStationToList> baseStationToLists = new(bl.GetListOfFreeChargingStations(NumOfFreeChargingSlots.SelectedIndex + 1));
+                foreach (var item in baseStationToLists)
+                {
+                    PO.BaseStationToList baseStation = new PO.BaseStationToList();
+                    baseStation.Id = item.Id;
+                    baseStation.Name = item.Name;
+                    baseStation.OccupiedChargingSlots = item.OccupiedChargingSlots;
+                    baseStation.FreeChargingSlots = item.FreeChargingSlots;
+                    baseStationToListsPO.Add(baseStation);
+                }
+                ListBaseStation.ItemsSource = baseStationToListsPO;
             }
         }
 
@@ -254,15 +322,26 @@ namespace PL
             lock (bl)
             {
                 var groups = bl.GroupingStatuses();
-                List<BO.DroneToList> list = new List<BO.DroneToList>();
-                foreach (var item in groups)
                 {
-                    foreach (var innerItem in item)
+
+                    ObservableCollection<PO.DroneToList> droneToLists = new();
+                    foreach (var item in groups)
                     {
-                        list.Add(innerItem);
+                        foreach (var innerItem in item)
+                        {
+                            PO.DroneToList drone = new PO.DroneToList();
+                            drone.Id = innerItem.Id;
+                            drone.Model = innerItem.Model;
+                            drone.Weight = innerItem.Weight;
+                            drone.Battery = innerItem.Battery;
+                            drone.NumberOfParcelInTransit = innerItem.NumberOfParcelInTransit;
+                            drone.DroneStatuses = innerItem.DroneStatuses;
+                            drone.CurrentLocation = innerItem.CurrentLocation;
+                            droneToLists.Add(drone);
+                        }
                     }
+                    ListDrone.ItemsSource = droneToLists;
                 }
-                ListDrone.ItemsSource = list.ToList();
             }
         }
 
@@ -271,15 +350,23 @@ namespace PL
             lock (bl)
             {
                 var groups = bl.GroupingWeight();
-                List<BO.DroneToList> list = new List<BO.DroneToList>();
+                ObservableCollection<PO.DroneToList> droneToLists = new();
                 foreach (var item in groups)
                 {
                     foreach (var innerItem in item)
                     {
-                        list.Add(innerItem);
+                        PO.DroneToList drone = new PO.DroneToList();
+                        drone.Id = innerItem.Id;
+                        drone.Model = innerItem.Model;
+                        drone.Weight = innerItem.Weight;
+                        drone.Battery = innerItem.Battery;
+                        drone.NumberOfParcelInTransit = innerItem.NumberOfParcelInTransit;
+                        drone.DroneStatuses = innerItem.DroneStatuses;
+                        drone.CurrentLocation = innerItem.CurrentLocation;
+                        droneToLists.Add(drone);
                     }
                 }
-                ListDrone.ItemsSource = list.ToList();
+                ListDrone.ItemsSource = droneToLists;
             }
         }
 
@@ -299,12 +386,21 @@ namespace PL
         {
             lock (bl)
             {
-                DCollection.Clear();
-                foreach (var item in bl.GetListOfDronesToList())
+                model.Drones.Clear();
+                ObservableCollection<BO.DroneToList> droneToLists = new(bl.GetListOfDronesToList());
+                foreach (var item in droneToLists)
                 {
-                    DCollection.Add(item);
+                    PO.DroneToList drone = new PO.DroneToList();
+                    drone.Id = item.Id;
+                    drone.Model = item.Model;
+                    drone.Weight = item.Weight;
+                    drone.Battery = item.Battery;
+                    drone.NumberOfParcelInTransit = item.NumberOfParcelInTransit;
+                    drone.DroneStatuses = item.DroneStatuses;
+                    drone.CurrentLocation = item.CurrentLocation;
+                    model.Drones.Add(drone);
                 }
-                ListDrone.ItemsSource = DCollection.ToList();
+                ListDrone.ItemsSource = model.Drones;
             }
 
         }
@@ -312,24 +408,39 @@ namespace PL
         {
             lock (bl)
             {
-                PCollection.Clear();
-                foreach (var item in bl.GetListOfParcelToList())
+                model.Parcels.Clear();
+                ObservableCollection<BO.ParcelToList> parcelToLists = new(bl.GetListOfParcelToList());
+                foreach (var item in parcelToLists)
                 {
-                    PCollection.Add(item);
+                    PO.ParcelToList parcel = new PO.ParcelToList();
+                    parcel.Id = item.Id;
+                    parcel.ParcelStatus = item.ParcelStatus;
+                    parcel.Prioritie = item.Prioritie;
+                    parcel.ReciversName = item.ReciversName;
+                    parcel.SendersName = item.SendersName;
+                    parcel.Weight = item.Weight;
+                    model.parcels.Add(parcel);
                 }
-                ListParcel.ItemsSource = PCollection.ToList();
+                ListParcel.ItemsSource = model.Parcels;
             }
         }
         private void RefreshBaseStationFunc()
         {
             lock (bl)
             {
-                BsCollection.Clear();
-                foreach (var item in bl.GetListOfBaseStationsToList())
+                model.BaseStations.Clear();
+                ObservableCollection<BO.BaseStationToList> baseStationToLists = new(bl.GetListOfBaseStationsToList());
+                foreach (var item in baseStationToLists)
                 {
-                    BsCollection.Add(item);
+                    PO.BaseStationToList baseStation = new PO.BaseStationToList();
+                    baseStation.Id = item.Id;
+                    baseStation.Name = item.Name;
+                    baseStation.OccupiedChargingSlots = item.OccupiedChargingSlots;
+                    baseStation.FreeChargingSlots = item.FreeChargingSlots;
+                    model.baseStations.Add(baseStation);
                 }
-                ListBaseStation.ItemsSource = BsCollection.ToList();
+                ListBaseStation.ItemsSource = model.BaseStations;
+
             }
 
         }
@@ -337,12 +448,21 @@ namespace PL
         {
             lock (bl)
             {
-                CCollection.Clear();
-                foreach (var item in bl.GetListOfCustomerToList())
+                model.Customers.Clear();
+                ObservableCollection<BO.CustomerToList> customerToLists = new(bl.GetListOfCustomerToList());
+                foreach (var item in customerToLists)
                 {
-                    CCollection.Add(item);
+                    PO.CustomerToList customer = new PO.CustomerToList();
+                    customer.Id = item.Id;
+                    customer.Name = item.Name;
+                    customer.Phone = item.Phone;
+                    customer.NumberOfParcelsThatSentAndArrived = item.NumberOfParcelsThatSentAndArrived;
+                    customer.ParcelsOnWayToClient = item.ParcelsOnWayToClient;
+                    customer.ParcelsRecived = item.ParcelsRecived;
+                    customer.ParcelsThatSentYetNotArrived = item.ParcelsThatSentYetNotArrived;
+                    model.customers.Add(customer);
                 }
-                ListCustomer.ItemsSource = CCollection.ToList();
+                ListCustomer.ItemsSource = model.Customers;
             }
 
         }
@@ -362,15 +482,20 @@ namespace PL
             lock (bl)
             {
                 var groups = bl.GroupingFreeChargingSlots();
-                List<BO.BaseStationToList> list = new List<BO.BaseStationToList>();
+                ObservableCollection<PO.BaseStationToList> baseStationToLists = new();
                 foreach (var item in groups)
                 {
                     foreach (var innerItem in item)
                     {
-                        list.Add(innerItem);
+                        PO.BaseStationToList baseStation = new PO.BaseStationToList();
+                        baseStation.Id = innerItem.Id;
+                        baseStation.Name = innerItem.Name;
+                        baseStation.OccupiedChargingSlots = innerItem.OccupiedChargingSlots;
+                        baseStation.FreeChargingSlots = innerItem.FreeChargingSlots;
+                        baseStationToLists.Add(baseStation);
                     }
                 }
-                ListBaseStation.ItemsSource = list.ToList();
+                ListBaseStation.ItemsSource = baseStationToLists;
             }
         }
 
@@ -379,15 +504,22 @@ namespace PL
             lock (bl)
             {
                 var groups = bl.GroupingSender();
-                List<BO.ParcelToList> list = new List<BO.ParcelToList>();
+                ObservableCollection<PO.ParcelToList> parcelToLists = new ();
                 foreach (var item in groups)
                 {
                     foreach (var innerItem in item)
                     {
-                        list.Add(innerItem);
+                        PO.ParcelToList parcel = new PO.ParcelToList();
+                        parcel.Id = innerItem.Id;
+                        parcel.ParcelStatus = innerItem.ParcelStatus;
+                        parcel.Prioritie = innerItem.Prioritie;
+                        parcel.ReciversName = innerItem.ReciversName;
+                        parcel.SendersName = innerItem.SendersName;
+                        parcel.Weight = innerItem.Weight;
+                        parcelToLists.Add(parcel);
                     }
                 }
-                ListParcel.ItemsSource = list.ToList();
+                ListParcel.ItemsSource = parcelToLists;
             }
         }
 
@@ -396,16 +528,28 @@ namespace PL
             lock (bl)
             {
                 var groups = bl.GroupingReciver();
-                List<BO.ParcelToList> list = new List<BO.ParcelToList>();
+                ObservableCollection<PO.ParcelToList> parcelToLists = new();
                 foreach (var item in groups)
                 {
                     foreach (var innerItem in item)
                     {
-                        list.Add(innerItem);
+                        PO.ParcelToList parcel = new PO.ParcelToList();
+                        parcel.Id = innerItem.Id;
+                        parcel.ParcelStatus = innerItem.ParcelStatus;
+                        parcel.Prioritie = innerItem.Prioritie;
+                        parcel.ReciversName = innerItem.ReciversName;
+                        parcel.SendersName = innerItem.SendersName;
+                        parcel.Weight = innerItem.Weight;
+                        parcelToLists.Add(parcel);
                     }
                 }
-                ListParcel.ItemsSource = list.ToList(); 
+                ListParcel.ItemsSource = parcelToLists;
             }
+        }
+
+        private void listDrones_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 

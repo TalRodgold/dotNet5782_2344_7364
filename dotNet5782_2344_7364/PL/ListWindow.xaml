@@ -4,18 +4,23 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:PL"
-        mc:Ignorable="d"
+        mc:Ignorable="d"    
         Title="ListWindow" Height="450" Width="800">
+    <Window.Resources>
+        <local:BatteryToProgressBar x:Key="batteryToProgressBar"/>
+        <local:BatteryToConverter x:Key="batteryToConverter"/>
+        <!--<local:ConvertLatitudeToSexa x:Key="ConvertLatitudeToSexa" />        <local:ConvertLongitudeToSexa x:Key="ConvertLongitudeToSexa" />-->
+    </Window.Resources>
     <Grid>
         <TabControl>
-            <TabItem Name="Base_station" Header="Base station" HorizontalAlignment="Left" Margin="-2,-2,0,0" Width="95" FontWeight="Bold" FontSize="14">
+            <TabItem Name="Base_station"   Header="Base station" HorizontalAlignment="Left" Margin="-2,-2,0,0" Width="95" FontWeight="Bold" FontSize="14">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>
                         <GradientStop Color="#FF1F61A8" Offset="1"/>
                     </LinearGradientBrush>
                 </TabItem.Background>
-                <Grid>
+                <Grid Margin="-9,0,9,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="87*"/>
                         <RowDefinition Height="87*"/>
@@ -31,11 +36,21 @@
                     <Grid.Background>
                         <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
                     </Grid.Background>
-                    <ListView x:Name="ListBaseStation" Foreground="Snow" MouseDoubleClick="BaseStation_DoubleClick" Margin="0,28,0,0" Grid.ColumnSpan="2" Grid.RowSpan="5">
+                    <ListView Name="ListBaseStation" ItemsSource="{Binding}" Margin="0,35,0,28" HorizontalAlignment="Left" Width="461" MouseDoubleClick="BaseStation_DoubleClick" Grid.RowSpan="5">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                                <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id_station" Header="Id" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Name}" x:Name="name_station" Header="Name of sender" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding FreeChargingSlots}" x:Name="UsedChargeSlots" Header="num use charge slots" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding OccupiedChargingSlots}" x:Name="AvailableChargeSlots" Header=" num available charge slots" Width="auto"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <!--<ListView x:Name="ListBaseStation" ItemsSource="{Binding Path=Base_station}" Foreground="Snow" MouseDoubleClick="BaseStation_DoubleClick" Margin="0,28,0,0" Grid.ColumnSpan="2" Grid.RowSpan="5">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
                         </ListView.Background>
-                    </ListView>
+                    </ListView>-->
 
                     <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="43" RenderTransformOrigin="-0.166,8.035" Width="98" Click="refreshBaseStation_button" Grid.Row="2" Grid.Column="1" Margin="48,17,0,0">
                         <Button.Background>
@@ -68,7 +83,7 @@
                     <ComboBox x:Name="NumOfFreeChargingSlots" HorizontalAlignment="Left" Margin="35,-2,0,0" VerticalAlignment="Top" Width="125" Height="29" SelectionChanged="NumOfFreeChargingSlots_SelectionChange" Grid.Column="1"/>
                 </Grid>
             </TabItem>
-            <TabItem Name="Parcel_Item" Header="Parcel" FontWeight="Bold" FontSize="14">
+            <TabItem Name="Parcel_Item"  Header="Parcel" FontWeight="Bold" FontSize="14">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>
@@ -79,12 +94,23 @@
                     <Grid.Background>
                         <ImageBrush ImageSource="/Images/Parcel.jpg"/>
                     </Grid.Background>
-
-                    <ListView x:Name="ListParcel" ItemsSource="{Binding }" Foreground="Snow" MouseDoubleClick="Parcel_DoubleClick" Margin="0,38,0,0">
+                    <ListView Name="ListParcel" ItemsSource="{Binding}"  Margin="0,0,0,3" MouseDoubleClick="Parcel_DoubleClick" HorizontalAlignment="Center" Width="502">
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                                <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id_parcel" Header="Id" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding SenderName}" x:Name="SenderOfParcel" Header="Sender" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ReciverName}" x:Name="Target" Header="Target" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Weight}" x:Name="Weight_parcel" Header="Weight" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Prioritie}" x:Name="Priority" Header="Priority" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ParcelStatus}" x:Name="ShipmentStatus" Header="Shipment Status" Width="auto"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                    <!--<ListView x:Name="ListParcel" ItemsSource="{Binding }" Foreground="Snow" MouseDoubleClick="Parcel_DoubleClick" Margin="0,38,0,0">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/Parcel.jpg"/>
                         </ListView.Background>
-                    </ListView>
+                    </ListView>-->
                     <Button x:Name="GroupBySender" Content="Group by sender" Margin="618,126,36,227" Click="GroupBySender_click" >
                         <Button.Background>
                             <RadialGradientBrush>
@@ -119,7 +145,7 @@
                     </Button>
                 </Grid>
             </TabItem>
-            <TabItem Name="Drone_Item"  Header="Drone" FontWeight="Bold" FontSize="14">
+            <TabItem Name="Drone_Item"    Header="Drone" FontWeight="Bold" FontSize="14">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>
@@ -136,12 +162,32 @@
                     <ComboBox x:Name="MaxWeightSelector" SelectionChanged="MaxWeightSelector_SelectionChanged" HorizontalAlignment="Left" Margin="592,1,0,0" VerticalAlignment="Top" Width="156" Height="29"/>
 
 
+                    <ListView Name="ListDrone"  ItemsSource="{Binding}" Width="auto"  Height="auto" MouseDoubleClick="Drone_DoubleClick" Margin="0,0,14,13" SelectionChanged="listDrones_SelectionChanged"  >
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                                <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id" Header="Id" Width="45"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Model}" x:Name="Model" Header="Model" Width="50"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Location}" x:Name="Location" Header="Location" Width="auto"/>
+                                <GridViewColumn  Header="Battery %" Width="auto">
+                                    <GridViewColumn.CellTemplate>
+                                        <DataTemplate>
+                                            <ProgressBar Name="Battrey"   Minimum="0" Maximum="100" Value="{Binding Battery,Converter={StaticResource batteryToProgressBar}}" 
+                                                         Foreground="{Binding Battery,Converter={StaticResource batteryToConverter}}" HorizontalAlignment="Left" Height="20"  VerticalAlignment="Top"  Width="40"/>
+                                        </DataTemplate>
+                                    </GridViewColumn.CellTemplate>
+                                </GridViewColumn>
+                                <GridViewColumn DisplayMemberBinding="{Binding Weight}" x:Name="Weight" Header="Weight" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding DroneStatuses}" x:Name="DronesStatus" Header="DronesStatus" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding NumberOfParcelInTransit}" x:Name="ParcelTransfer"  Header="num parcel" Width="auto"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
 
-                    <ListView x:Name="ListDrone" ItemsSource="{Binding Mode=OneWay}" Foreground="Snow" MouseDoubleClick="Drone_DoubleClick" Margin="0,28,0,0">
+                    <!--<ListView x:Name="ListDrone" ItemsSource="{Binding Mode=OneWay}" Foreground="Snow" MouseDoubleClick="Drone_DoubleClick" Margin="0,28,0,0">
                         <ListView.Background>
                             <ImageBrush ImageSource="Images/Drone1.jpg"/>
                         </ListView.Background>
-                    </ListView>
+                    </ListView>-->
                     <Button x:Name="GroupByStatus" Content="Group by status" Margin="625,35,46,327" Click="GroupByStatus_click" >
                         <Button.Background>
                             <RadialGradientBrush>
@@ -177,7 +223,7 @@
                 </Grid>
 
             </TabItem>
-            <TabItem Name="Customer_Item" Header="Customer" FontWeight="Bold" FontSize="14">
+            <TabItem Name="Customer_Item"   Header="Customer" FontWeight="Bold" FontSize="14">
                 <TabItem.Background>
                     <LinearGradientBrush EndPoint="0,1">
                         <GradientStop Color="#FFF0F0F0"/>
@@ -189,11 +235,26 @@
                         <ColumnDefinition Width="86*"/>
                         <ColumnDefinition Width="311*"/>
                     </Grid.ColumnDefinitions>
-                    <ListView x:Name="ListCustomer" ItemsSource="{Binding Mode=OneWay}" Foreground="Snow" MouseDoubleClick="Customer_DoubleClick" Grid.ColumnSpan="2">
+                    <ListView Name="ListCustomer"  MouseDoubleClick="Customer_DoubleClick" HorizontalAlignment="Left" Width="549"  ItemsSource="{Binding}" Grid.ColumnSpan="2">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/Customer.jpg"/>
                         </ListView.Background>
+                        <ListView.View>
+                            <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
+                                <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id_customer" Header="Id" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Name}" x:Name="name" Header="Name" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding Phone}" x:Name="number_phone" Header="Phone" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding NumberOfParcelsThatSentAndArrived}" x:Name="DeliveredSupplied" Header="DeliveredSupplied" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ParcelsThatSentYetNotArrived}" x:Name="DeliveredNotSupplied" Header="DeliveredNotSupplied" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ParcelsRecived}" x:Name="Received" Header=" Received" Width="auto"/>
+                                <GridViewColumn DisplayMemberBinding="{Binding ParcelsOnWayToClient }" x:Name="OnTheWay"  Header="OnTheWay" Width="auto"/>
+                            </GridView>
+                        </ListView.View>
                     </ListView>
+                    <!--<ListView x:Name="ListCustomer" ItemsSource="{Binding Mode=OneWay}" Foreground="Snow" MouseDoubleClick="Customer_DoubleClick" Grid.ColumnSpan="2">
+                        <ListView.Background>
+                            <ImageBrush ImageSource="/Images/Customer.jpg"/>
+                        </ListView.Background>-->
                     <Button x:Name="RefreshCustomerButton" Content="Refresh" HorizontalAlignment="Left" Margin="484,54,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="refreshCustomer_button" Grid.Column="1">
                         <Button.Background>
                             <RadialGradientBrush>

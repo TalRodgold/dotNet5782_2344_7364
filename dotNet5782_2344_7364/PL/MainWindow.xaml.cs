@@ -49,6 +49,15 @@ namespace PL
                     {
                         throw new ArgumentException("NO ID ENTERED");
                     }
+                    BO.CustomerToList customerBo = bl.GetCustomerToListById(Int32.Parse(CustomerId.Text));
+                    PO.CustomerToList customer = new PO.CustomerToList();
+                    customer.Id = customerBo.Id;
+                    customer.Name = customerBo.Name;
+                    customer.NumberOfParcelsThatSentAndArrived = customerBo.NumberOfParcelsThatSentAndArrived;
+                    customer.ParcelsOnWayToClient = customerBo.ParcelsOnWayToClient;
+                    customer.ParcelsRecived = customerBo.ParcelsRecived;
+                    customer.ParcelsThatSentYetNotArrived = customerBo.ParcelsThatSentYetNotArrived;
+                    customer.Phone = customerBo.Phone;
                     new CustomerWindow(Int32.Parse(CustomerId.Text)).Show();
                 }
                 else if (EnteringComboBox.SelectedIndex == 2)

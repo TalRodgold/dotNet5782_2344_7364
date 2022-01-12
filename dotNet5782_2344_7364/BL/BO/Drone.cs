@@ -9,7 +9,7 @@ namespace BO
     /// <summary>
     /// class for drone
     /// </summary>
-    public class Drone
+    public class Drone 
     {
         public int? Id { set; get; } = null;
         public string Model { set; get; }

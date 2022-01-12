@@ -149,7 +149,7 @@ namespace BlApi
         /// <param name="station"></param>
         /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private BaseStationToList convertBasestationToBasestationTolist(BaseStation station)//Convert basestation to basestation to list
+        public BaseStationToList convertBasestationToBasestationTolist(BaseStation station)//Convert basestation to basestation to list
         {
             lock (dal)
             {

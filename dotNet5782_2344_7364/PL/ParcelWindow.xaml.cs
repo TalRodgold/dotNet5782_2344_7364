@@ -22,8 +22,10 @@ namespace PL
     public partial class ParcelWindow : Window
     {
         private IBl bl = BlFactory.GetBl("BL");
-        public BO.Parcel parcel;
-        ObservableCollection<BO.ParcelToList> parcelCollection = new ObservableCollection<BO.ParcelToList>();
+        private PL.Model model = PlFactory.GetModel("Model");
+        //public BO.Parcel parcel;
+        public PO.Parcel parcel = new PO.Parcel();
+        //ObservableCollection<BO.ParcelToList> parcelCollection = new ObservableCollection<BO.ParcelToList>();
 
         public ParcelWindow() // constructor for adding new parcel
         {
@@ -61,9 +63,29 @@ namespace PL
         {
             lock (bl)
             {
-
-                this.parcel = bl.GetParcelById(chosenParcel);
+                BO.Parcel parcelBo = bl.GetParcelById(chosenParcel);
                 InitializeComponent();
+                parcel.Id = parcelBo.Id;
+                parcel.Prioritie = parcelBo.Prioritie;
+                parcel.Reciver = new PO.CustomerInParcel();
+                parcel.Reciver.Id = parcelBo.Reciver.Id;
+                parcel.Reciver.Name = parcelBo.Reciver.Name;
+                parcel.Sender = new PO.CustomerInParcel();
+                parcel.Sender.Id = parcelBo.Sender.Id;
+                parcel.Sender.Name = parcelBo.Sender.Name;
+                parcel.Weight = parcelBo.Weight;
+                parcel.AssociationTime = parcelBo.AssociationTime;
+                parcel.PickupTime = parcelBo.PickupTime;
+                parcel.DeliveryTime = parcelBo.DeliveryTime;
+                parcel.ParcelCreatingTime = parcelBo.ParcelCreatingTime;
+                if(!Object.Equals(parcel.DroneInParcel, null))
+                {
+                         parcel.DroneInParcel = new PO.DroneInParcel();
+                         parcel.DroneInParcel.Battery = parcelBo.DroneInParcel.Battery;
+                         parcel.DroneInParcel.CurrentLocation = parcelBo.DroneInParcel.CurrentLocation;
+                         parcel.DroneInParcel.Id = parcelBo.DroneInParcel.Id;
+                }
+
                 MainGrid.DataContext = parcel;
 
                 Id.IsEnabled = false;//disable the textbox to change
@@ -102,7 +124,7 @@ namespace PL
             {
                 if ((AssociationTime != null) && (DeliveryTime.Text.Length == 0) && (parcel.DroneInParcel != null))
                 {
-                    new DroneWindow(bl.GetDroneById(parcel.DroneInParcel.Id).Id).Show();
+                   new DroneWindow(bl.GetDroneById(parcel.DroneInParcel.Id).Id).Show();
                 } 
             }
         }
@@ -128,6 +150,7 @@ namespace PL
                         throw new InvalidOperationException("The parcel in delivery proces");
                     }
                     bl.DeleteParcel(parcel.Id);
+                    model.parcels.Remove((from parcel_ in model.parcels where parcel_.Id == parcel.Id select parcel_).FirstOrDefault());
                     MessageBox.Show("Parcel deleted sucsecfully");
                     Close(); 
                 }
@@ -157,6 +180,15 @@ namespace PL
                 lock (bl)
                 {
                     bl.AddParcel(new BO.CustomerInParcel(int.Parse(senderT.Text), bl.GetCustomerById(int.Parse(senderT.Text)).Name), new BO.CustomerInParcel(int.Parse(reciverT.Text), bl.GetCustomerById(int.Parse(reciverT.Text)).Name), (BO.Enums.WeightCategories)WeightSelector.SelectedItem, (BO.Enums.Priorities)PrioritieSelector.SelectedItem);
+                    BO.ParcelToList parcelBo = bl.GetParcelToListById(int.Parse(senderT.Text));
+                    PO.ParcelToList parcelPo = new PO.ParcelToList();
+                    parcelPo.Id = parcelBo.Id;
+                    parcelPo.ParcelStatus = parcelBo.ParcelStatus;
+                    parcelPo.Prioritie = parcelBo.Prioritie;
+                    parcelPo.ReciversName = parcelBo.ReciversName;
+                    parcelPo.SendersName = parcelBo.SendersName;
+                    parcelPo.Weight = parcelBo.Weight;
+                    model.parcels.Add(parcelPo);
                     MessageBox.Show("Parcel added sucsecfully");
                     Close(); 
                 }
