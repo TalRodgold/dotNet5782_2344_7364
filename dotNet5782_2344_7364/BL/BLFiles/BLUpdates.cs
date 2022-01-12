@@ -179,7 +179,7 @@ namespace BlApi
         /// </summary>
         /// <param name="id"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateSendDroneToCharge(int? id)//Update-send drone to charge
+        public int? UpdateSendDroneToCharge(int? id)//Update-send drone to charge
         {
             try
             {
@@ -215,6 +215,7 @@ namespace BlApi
                     station.NumberOfFreeChargingSlots -= 1;
                     dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.NumberOfFreeChargingSlots);
                     DroneInCharging droneInCharging = new DroneInCharging(newDrone.Id, newDrone.Battery, currentTime);
+                    return stationId;
                 }
             }
             catch (DO.IdNotExsistException exception) // if base station id does not exsists and was thrown from dal objects
@@ -231,7 +232,7 @@ namespace BlApi
         /// <param name="id"></param>
         /// <param name="time"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateReleseDrone(int? id)//Update-relese drone from charging slot
+        public int? UpdateReleseDrone(int? id)//Update-relese drone from charging slot
         {
             lock (dal)
             {
@@ -241,13 +242,13 @@ namespace BlApi
                 }
                 DroneToList drone = GetDroneToList(id);
                 if (dal.GetDroneCharge(drone.Id).TimeOfStartCharging == null)
-                    return;
+                    throw new Exception();//
                 TimeSpan Diff = (TimeSpan)(DateTime.Now - dal.GetDroneCharge(drone.Id).TimeOfStartCharging);
                 if (drone.DroneStatuses != Enums.DroneStatuses.Maintenance)
                 {
                     throw new UnavailableExeption("drone", id);
                 }
-                if (drone.Battery + (Diff.Hours + (double)Diff.Minutes / 60 + (double)Diff.Seconds / 3600) * DroneChargingPaste >= 1) // if charged more than 100 %
+                if ((drone.Battery + (Diff.Hours + (double)Diff.Minutes / 60 + (double)Diff.Seconds / 3600) * DroneChargingPaste >= 1)) // if charged more than 100 %
                 {
                     drone.Battery = 1;
                 }
@@ -263,7 +264,9 @@ namespace BlApi
                 station.ChargeSlots -= 1;
                 dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.ChargeSlots);
                 dal.ReleaseDroneCharge(id, station.Id);
+                return droneCharge.StationId;
             }
+
         }
         #endregion
         #region//update and associate a drone
@@ -272,7 +275,7 @@ namespace BlApi
         /// </summary>
         /// <param name="id"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateAssosiateDrone(int? id)//Update-assosiate drone to parcel
+        public int? UpdateAssosiateDrone(int? id)//Update-assosiate drone to parcel
         {
             {
                 try
@@ -325,6 +328,7 @@ namespace BlApi
                         drone.DroneStatuses = Enums.DroneStatuses.Delivery;
                         drone.NumberOfParcelInTransit = properParcelID;
                         ListOfDronsBL[index] = drone;
+                        return properParcelID;
                     }
                 }
                 catch (DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
@@ -426,35 +430,5 @@ namespace BlApi
             }
         }
         #endregion
-        public bool CheckAvailableParcels(Drone drone)
-        {
-            lock (dal)
-            {
-                Enums.Priorities maxPriorities = Enums.Priorities.Regular;
-                double minDistance = double.MaxValue;
-                Customer senderCustomer = new Customer();
-                Customer reciverCustomer = new Customer();
-                double distanceDroneToPickup, distancePickupToDelivery, distanceDeliveryToClothestBaseStation, distance = 0;
-
-                foreach (var item in dal.GetListOfParcel())
-                {
-                    Customer newSenderCustomer = GetCustomerById(item.SenderId); // sender
-                    Customer newReciverCustomer = GetCustomerById(item.ReciverId); // reciver
-                    distanceDroneToPickup = calculateDistance(drone.CurrentLocation, newSenderCustomer.Location); // distance
-                    distancePickupToDelivery = calculateDistance(newSenderCustomer.Location, newReciverCustomer.Location);
-                    distanceDeliveryToClothestBaseStation = calculateDistance(newReciverCustomer.Location, GetBaseStationById(calculateMinDistance(newReciverCustomer.Location)).Location); // closest
-                    distance = distanceDroneToPickup + distancePickupToDelivery + distanceDeliveryToClothestBaseStation;
-                    if (item.Deliverd == null && (Enums.WeightCategories)item.Weight <= drone.Weight && (Enums.Priorities)item.Priority >= maxPriorities && distanceDroneToPickup <= minDistance && CalculateWhetherTheDroneHaveEnoghBattery(distance, convertDroneBlToList(drone)))
-                    {
-                        return true;
-                    }
-                }
-                return false; 
-            }
-        }
-
-  
-        public void StartSimulator(int droneId, Action func, Func<bool> checkStop) => new Simulator(this, droneId, func, checkStop);
     }
 }
-
