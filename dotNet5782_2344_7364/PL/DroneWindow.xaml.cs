@@ -43,7 +43,7 @@ namespace PL
             CancelButton.Visibility = Visibility.Visible;
 
         }
-        public DroneWindow(int? id)//,PO.DroneToList newd) // constructor for Drone update
+        public DroneWindow(int? id)//,PO.DroneToList newd) // constructor for Drone update/
         {
             lock (bl)
             {
