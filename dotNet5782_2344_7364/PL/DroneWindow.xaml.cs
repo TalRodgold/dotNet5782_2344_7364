@@ -63,21 +63,31 @@ namespace PL
                 drone.Weight = newDrone.Weight;
                 drone.Battery = newDrone.Battery;
 
-                if (!object.Equals(newDrone.ParcelInTransit, null))
+                if (newDrone.ParcelInTransit.Id != null)
                 {
-                    drone.ParcelInTransit = new PO.ParcelInTransit();
+                    drone.ParcelInTransit.Id = newDrone.ParcelInTransit.Id;
+                    drone.ParcelInTransit.PickupLocation = newDrone.ParcelInTransit.PickupLocation;
+                    drone.ParcelInTransit.Priorities = newDrone.ParcelInTransit.Priorities;
+                    drone.ParcelInTransit.DeliveryLocation = newDrone.ParcelInTransit.DeliveryLocation;
+                    drone.ParcelInTransit.Distance = newDrone.ParcelInTransit.Distance;
+                    drone.ParcelInTransit.Status = newDrone.ParcelInTransit.Status;
+                    drone.ParcelInTransit.Weight = newDrone.ParcelInTransit.Weight;
                     if (!object.Equals(drone.ParcelInTransit.CustomerInParcelReciver, null))
                     {
                         drone.ParcelInTransit.CustomerInParcelReciver = new PO.CustomerInParcel();
                         drone.ParcelInTransit.CustomerInParcelReciver.Id = newDrone.ParcelInTransit.CustomerInParcelReciver.Id;
                         drone.ParcelInTransit.CustomerInParcelReciver.Name = newDrone.ParcelInTransit.CustomerInParcelReciver.Name;
                     }
-                    if (!object.Equals(drone.ParcelInTransit.CustomerInParcelReciver, null))
+                    if (!object.Equals(drone.ParcelInTransit.CustomerInParcelSender, null))
                     {
                         drone.ParcelInTransit.CustomerInParcelSender = new PO.CustomerInParcel();
                         drone.ParcelInTransit.CustomerInParcelSender.Id = newDrone.ParcelInTransit.CustomerInParcelSender.Id;
                         drone.ParcelInTransit.CustomerInParcelSender.Name = newDrone.ParcelInTransit.CustomerInParcelSender.Name;
                     }
+                }
+                else
+                {
+                    drone.ParcelInTransit = new PO.ParcelInTransit();
                 }
 
                 drone.DroneStatuses = newDrone.DroneStatuses;
@@ -426,21 +436,31 @@ namespace PL
             drone.Weight = newDrone.Weight;
             drone.Battery = newDrone.Battery;
 
-            if (!object.Equals(newDrone.ParcelInTransit, null))
+            if (newDrone.ParcelInTransit.Id != null)
             {
-                drone.ParcelInTransit = new PO.ParcelInTransit();
+                drone.ParcelInTransit.Id = newDrone.ParcelInTransit.Id;
+                drone.ParcelInTransit.PickupLocation = newDrone.ParcelInTransit.PickupLocation;
+                drone.ParcelInTransit.Priorities = newDrone.ParcelInTransit.Priorities;
+                drone.ParcelInTransit.DeliveryLocation = newDrone.ParcelInTransit.DeliveryLocation;
+                drone.ParcelInTransit.Distance = newDrone.ParcelInTransit.Distance;
+                drone.ParcelInTransit.Status = newDrone.ParcelInTransit.Status;
+                drone.ParcelInTransit.Weight = newDrone.ParcelInTransit.Weight;
                 if (!object.Equals(drone.ParcelInTransit.CustomerInParcelReciver, null))
                 {
                     drone.ParcelInTransit.CustomerInParcelReciver = new PO.CustomerInParcel();
                     drone.ParcelInTransit.CustomerInParcelReciver.Id = newDrone.ParcelInTransit.CustomerInParcelReciver.Id;
                     drone.ParcelInTransit.CustomerInParcelReciver.Name = newDrone.ParcelInTransit.CustomerInParcelReciver.Name;
                 }
-                if (!object.Equals(drone.ParcelInTransit.CustomerInParcelReciver, null))
+                if (!object.Equals(drone.ParcelInTransit.CustomerInParcelSender, null))
                 {
                     drone.ParcelInTransit.CustomerInParcelSender = new PO.CustomerInParcel();
                     drone.ParcelInTransit.CustomerInParcelSender.Id = newDrone.ParcelInTransit.CustomerInParcelSender.Id;
                     drone.ParcelInTransit.CustomerInParcelSender.Name = newDrone.ParcelInTransit.CustomerInParcelSender.Name;
                 }
+            }
+            else
+            {
+                drone.ParcelInTransit = new PO.ParcelInTransit();
             }
             drone.DroneStatuses = newDrone.DroneStatuses;
             drone.CurrentLocation = newDrone.CurrentLocation;
@@ -523,21 +543,31 @@ namespace PL
             drone.Weight = newDrone.Weight;
             drone.Battery = newDrone.Battery;
 
-            if (!object.Equals(newDrone.ParcelInTransit, null))
+            if (newDrone.ParcelInTransit.Id != null)
             {
-                drone.ParcelInTransit = new PO.ParcelInTransit();
+                drone.ParcelInTransit.Id = newDrone.ParcelInTransit.Id;
+                drone.ParcelInTransit.PickupLocation = newDrone.ParcelInTransit.PickupLocation;
+                drone.ParcelInTransit.Priorities = newDrone.ParcelInTransit.Priorities;
+                drone.ParcelInTransit.DeliveryLocation = newDrone.ParcelInTransit.DeliveryLocation;
+                drone.ParcelInTransit.Distance = newDrone.ParcelInTransit.Distance;
+                drone.ParcelInTransit.Status = newDrone.ParcelInTransit.Status;
+                drone.ParcelInTransit.Weight = newDrone.ParcelInTransit.Weight;
                 if (!object.Equals(newDrone.ParcelInTransit.CustomerInParcelReciver, null))
                 {
                     drone.ParcelInTransit.CustomerInParcelReciver = new PO.CustomerInParcel();
                     drone.ParcelInTransit.CustomerInParcelReciver.Id = newDrone.ParcelInTransit.CustomerInParcelReciver.Id;
                     drone.ParcelInTransit.CustomerInParcelReciver.Name = newDrone.ParcelInTransit.CustomerInParcelReciver.Name;
                 }
-                if (!object.Equals(newDrone.ParcelInTransit.CustomerInParcelReciver, null))
+                if (!object.Equals(newDrone.ParcelInTransit.CustomerInParcelSender, null))
                 {
                     drone.ParcelInTransit.CustomerInParcelSender = new PO.CustomerInParcel();
                     drone.ParcelInTransit.CustomerInParcelSender.Id = newDrone.ParcelInTransit.CustomerInParcelSender.Id;
                     drone.ParcelInTransit.CustomerInParcelSender.Name = newDrone.ParcelInTransit.CustomerInParcelSender.Name;
                 }
+            }
+            else
+            {
+                drone.ParcelInTransit = new PO.ParcelInTransit();
             }
             drone.DroneStatuses = newDrone.DroneStatuses;
             drone.CurrentLocation = newDrone.CurrentLocation;
