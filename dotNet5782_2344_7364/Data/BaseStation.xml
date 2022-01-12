@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ArrayOfBaseStation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <BaseStation>
-    <Id>166</Id>
-    <Name>Baaka</Name>
-    <ChargeSlots>4</ChargeSlots>
-    <Longtitude>32.09903105810867</Longtitude>
-    <Latitude>35.668399443046354</Latitude>
+    <Id>147</Id>
+    <Name>Arnona</Name>
+    <ChargeSlots>0</ChargeSlots>
+    <Longtitude>32.37736178618429</Longtitude>
+    <Latitude>35.32410719521812</Latitude>
   </BaseStation>
   <BaseStation>
-    <Id>73</Id>
-    <Name>Gilo</Name>
+    <Id>212</Id>
+    <Name>Arnona</Name>
     <ChargeSlots>7</ChargeSlots>
-    <Longtitude>32.410008274132146</Longtitude>
-    <Latitude>35.782326476829255</Latitude>
+    <Longtitude>31.85213150628172</Longtitude>
+    <Latitude>35.59218429736706</Latitude>
   </BaseStation>
 </ArrayOfBaseStation>

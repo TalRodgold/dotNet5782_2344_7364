@@ -36,7 +36,7 @@ namespace BlApi
                     newDroneToList.Model = newModel;
                     int index = ListOfDronsBL.FindIndex(element => element.Id == id);
                     ListOfDronsBL[index] = newDroneToList;
-                    dal.UpdateDroneModel(id, newModel); 
+                    dal.UpdateDroneModel(id, newModel);
                 }
             }
             catch (DO.IdNotExsistException exception)
@@ -75,7 +75,7 @@ namespace BlApi
                     if (numberOfChargingSlots != 0)
                     {
                         dal.UpdateChargingSlotsNumber(id, numberOfChargingSlots);
-                    } 
+                    }
                 }
             }
             catch (DO.IdNotExsistException exception)
@@ -105,7 +105,7 @@ namespace BlApi
                     {
                         throw new InvalidIdException("negative", id);
                     }
-                    dal.DeleteBaseStation(id); 
+                    dal.DeleteBaseStation(id);
                 }
             }
             catch (DO.IdNotExsistException exception)
@@ -127,7 +127,7 @@ namespace BlApi
                     {
                         throw new InvalidIdException("negative", id);
                     }
-                    dal.DeleteParcel(id); 
+                    dal.DeleteParcel(id);
                 }
             }
             catch (DO.IdNotExsistException exception)
@@ -163,7 +163,7 @@ namespace BlApi
                     if (phone != "")
                     {
                         dal.UpdateCustomerPhone(id, phone);
-                    } 
+                    }
                 }
             }
             catch (DO.IdNotExsistException exception)
@@ -214,7 +214,7 @@ namespace BlApi
                     ListOfDronsBL[index] = newDrone;
                     station.NumberOfFreeChargingSlots -= 1;
                     dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.NumberOfFreeChargingSlots);
-                    DroneInCharging droneInCharging = new DroneInCharging(newDrone.Id, newDrone.Battery, currentTime); 
+                    DroneInCharging droneInCharging = new DroneInCharging(newDrone.Id, newDrone.Battery, currentTime);
                 }
             }
             catch (DO.IdNotExsistException exception) // if base station id does not exsists and was thrown from dal objects
@@ -247,7 +247,7 @@ namespace BlApi
                 {
                     throw new UnavailableExeption("drone", id);
                 }
-                if ((drone.Battery + (Diff.Hours + (double)Diff.Minutes / 60 + (double)Diff.Seconds / 3600) * DroneChargingPaste >= 1)) // if charged more than 100 %
+                if (drone.Battery + (Diff.Hours + (double)Diff.Minutes / 60 + (double)Diff.Seconds / 3600) * DroneChargingPaste >= 1) // if charged more than 100 %
                 {
                     drone.Battery = 1;
                 }
@@ -262,7 +262,7 @@ namespace BlApi
                 ListOfDronsBL[index] = drone;
                 station.ChargeSlots -= 1;
                 dal.UpdateBaseStationNumOfFreeDroneCharges(station.Id, station.ChargeSlots);
-                dal.ReleaseDroneCharge(id, station.Id); 
+                dal.ReleaseDroneCharge(id, station.Id);
             }
         }
         #endregion
@@ -324,7 +324,7 @@ namespace BlApi
 
                         drone.DroneStatuses = Enums.DroneStatuses.Delivery;
                         drone.NumberOfParcelInTransit = properParcelID;
-                        ListOfDronsBL[index] = drone; 
+                        ListOfDronsBL[index] = drone;
                     }
                 }
                 catch (DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
@@ -367,7 +367,7 @@ namespace BlApi
                     DroneToList newDrone = convertDroneBlToList(drone);
                     int index = ListOfDronsBL.FindIndex(element => element.Id == droneId);
                     ListOfDronsBL[index] = newDrone;
-                    dal.UpdateParclePickup(drone.ParcelInTransit.Id); 
+                    dal.UpdateParclePickup(drone.ParcelInTransit.Id);
                 }
             }
             catch (DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects
@@ -426,6 +426,35 @@ namespace BlApi
             }
         }
         #endregion
+        public bool CheckAvailableParcels(Drone drone)
+        {
+            lock (dal)
+            {
+                Enums.Priorities maxPriorities = Enums.Priorities.Regular;
+                double minDistance = double.MaxValue;
+                Customer senderCustomer = new Customer();
+                Customer reciverCustomer = new Customer();
+                double distanceDroneToPickup, distancePickupToDelivery, distanceDeliveryToClothestBaseStation, distance = 0;
+
+                foreach (var item in dal.GetListOfParcel())
+                {
+                    Customer newSenderCustomer = GetCustomerById(item.SenderId); // sender
+                    Customer newReciverCustomer = GetCustomerById(item.ReciverId); // reciver
+                    distanceDroneToPickup = calculateDistance(drone.CurrentLocation, newSenderCustomer.Location); // distance
+                    distancePickupToDelivery = calculateDistance(newSenderCustomer.Location, newReciverCustomer.Location);
+                    distanceDeliveryToClothestBaseStation = calculateDistance(newReciverCustomer.Location, GetBaseStationById(calculateMinDistance(newReciverCustomer.Location)).Location); // closest
+                    distance = distanceDroneToPickup + distancePickupToDelivery + distanceDeliveryToClothestBaseStation;
+                    if (item.Deliverd == null && (Enums.WeightCategories)item.Weight <= drone.Weight && (Enums.Priorities)item.Priority >= maxPriorities && distanceDroneToPickup <= minDistance && CalculateWhetherTheDroneHaveEnoghBattery(distance, convertDroneBlToList(drone)))
+                    {
+                        return true;
+                    }
+                }
+                return false; 
+            }
+        }
+
+  
+        public void StartSimulator(int droneId, Action func, Func<bool> checkStop) => new Simulator(this, droneId, func, checkStop);
     }
 }
 
