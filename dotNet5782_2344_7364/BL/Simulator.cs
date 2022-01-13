@@ -19,7 +19,7 @@ namespace BlApi
     /// </summary>
     class Simulator
     {
-        private const int delay = 500;
+        private const int delay = 1000;
         enum Maintenance { Starting, Going, Charging };
         Drone drone;
         BlApi.IBl bl;

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Config>
-  <ElectricityUseAvailiblity>0.1</ElectricityUseAvailiblity>
-  <ElectricityUseLightWeight>0.2</ElectricityUseLightWeight>
-  <ElectricityUseMediumWeight>0.3</ElectricityUseMediumWeight>
-  <ElectricityUseHeavyWeight>0.4</ElectricityUseHeavyWeight>
+  <ElectricityUseAvailiblity>0.01</ElectricityUseAvailiblity>
+  <ElectricityUseLightWeight>0.02</ElectricityUseLightWeight>
+  <ElectricityUseMediumWeight>0.03</ElectricityUseMediumWeight>
+  <ElectricityUseHeavyWeight>0.04</ElectricityUseHeavyWeight>
   <DroneChargingPaste>100</DroneChargingPaste>
   <ParcelId>12365</ParcelId>
 </Config>
