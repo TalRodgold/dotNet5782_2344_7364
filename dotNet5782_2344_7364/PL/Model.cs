@@ -37,7 +37,9 @@ namespace PL
                     drone.Battery = item.Battery;
                     drone.NumberOfParcelInTransit = item.NumberOfParcelInTransit;
                     drone.DroneStatuses = item.DroneStatuses;
-                    drone.CurrentLocation = item.CurrentLocation;
+                    drone.CurrentLocation = new PO.Location();
+                    drone.CurrentLocation.Latitude = item.CurrentLocation.Latitude;
+                    drone.CurrentLocation.Longitude = item.CurrentLocation.Longitude;
                     drones.Add(drone);
                 }
                 ObservableCollection<BO.BaseStationToList> baseStationToLists = new(bl.GetListOfBaseStationsToList());

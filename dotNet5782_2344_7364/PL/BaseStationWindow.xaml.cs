@@ -45,7 +45,8 @@ namespace PL
                 BO.BaseStation newBaseStation = bl.GetBaseStationById(id);
                 baseStation.Id = newBaseStation.Id;
                 baseStation.Name = newBaseStation.Name;
-                baseStation.Location = newBaseStation.Location;
+                baseStation.Location.Longitude = newBaseStation.Location.Longitude ;
+                baseStation.Location.Latitude = newBaseStation.Location.Latitude;
                 baseStation.NumberOfFreeChargingSlots = newBaseStation.NumberOfFreeChargingSlots;
                 baseStation.ListOfDroneInCharging = newBaseStation.ListOfDroneInCharging;
                 MainGrid.DataContext = baseStation;

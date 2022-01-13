@@ -32,82 +32,90 @@ namespace BlApi
             Maintenance maintenance = Maintenance.Starting;
             do
             {
-                if (!bl.CheckAvailableParcels(drone) && drone.Battery == 1)
+                try
                 {
-                    break;
-                }
-                    switch (drone.DroneStatuses)
+                    if (!bl.CheckAvailableParcels(drone) && drone.Battery == 1)
                     {
-                    case Enums.DroneStatuses.Available:
-                        if (!sleepDelayTime()) break;
-                        lock (bl)
-                        {
-                            bl.UpdateAssosiateDrone(drone.Id);
-                        }
-                        break;
-                    case Enums.DroneStatuses.Delivery:
-                        {
-                            switch (maintenance)
-                            {
-                                case Maintenance.Starting:
-                                    if (!sleepDelayTime()) break;
-                                    lock (bl)
-                                    {
-                                        bl.PickupParcelByDrone(drone.Id);
-                                        maintenance = Maintenance.Going;
-                                    }
-                                    break;
-                                case Maintenance.Going:
-                                    if (!sleepDelayTime()) break;
-                                    lock (bl)
-                                    {
-                                        bl.DeliveryParcelByDrone(drone.Id);
-                                        if(drone.Battery<0.2)
-                                        {
-                                            bl.UpdateSendDroneToCharge(drone.Id);
-                                            maintenance = Maintenance.Charging;
-                                            break;
-                                        }
-                                        maintenance = Maintenance.Starting;
-                                    }
-                                    break;
-                                case Maintenance.Charging:
-                                    if (!sleepDelayTime()) break;
-                                    lock (bl)
-                                    {
-                                        if (drone.Battery == 1)
-                                        {
-                                            bl.UpdateReleseDrone(drone.Id);
-                                            maintenance = Maintenance.Starting;
-                                        }
-                                        else
-                                        {
-
-                                        }
-                                    }
-                                    break;
-                            }
-                            break;                           
-                        }
-                    case Enums.DroneStatuses.Maintenance:
-                        if (!sleepDelayTime()) break;
-                        lock (bl)
-                        {
-
-                            while (drone.Battery < 1)
-                            {
-                                drone.Battery += 0.02;
-                                action();
-
-                            }
-                            bl.UpdateReleseDrone(drone.Id);
-                            maintenance = Maintenance.Starting;
-    
-                        }
                         break;
                     }
-                drone = bl.GetDroneById(droneId);
-                action();
+                    switch (drone.DroneStatuses)
+                    {
+                        case Enums.DroneStatuses.Available:
+                            if (!sleepDelayTime()) break;
+                            lock (bl)
+                            {
+                                bl.UpdateAssosiateDrone(drone.Id);
+                            }
+                            break;
+                        case Enums.DroneStatuses.Delivery:
+                            {
+                                switch (maintenance)
+                                {
+                                    case Maintenance.Starting:
+                                        if (!sleepDelayTime()) break;
+                                        lock (bl)
+                                        {
+                                            bl.PickupParcelByDrone(drone.Id);
+                                            maintenance = Maintenance.Going;
+                                        }
+                                        break;
+                                    case Maintenance.Going:
+                                        if (!sleepDelayTime()) break;
+                                        lock (bl)
+                                        {
+                                            bl.DeliveryParcelByDrone(drone.Id);
+                                            if (drone.Battery < 0.2)
+                                            {
+                                                bl.UpdateSendDroneToCharge(drone.Id);
+                                                maintenance = Maintenance.Charging;
+                                                break;
+                                            }
+                                            maintenance = Maintenance.Starting;
+                                        }
+                                        break;
+                                    case Maintenance.Charging:
+                                        if (!sleepDelayTime()) break;
+                                        lock (bl)
+                                        {
+                                            if (drone.Battery == 1)
+                                            {
+                                                bl.UpdateReleseDrone(drone.Id);
+                                                maintenance = Maintenance.Starting;
+                                            }
+                                            else
+                                            {
+
+                                            }
+                                        }
+                                        break;
+                                }
+                                break;
+                            }
+                        case Enums.DroneStatuses.Maintenance:
+                            if (!sleepDelayTime()) break;
+                            lock (bl)
+                            {
+
+                                while (drone.Battery < 1)
+                                {
+                                    drone.Battery += 0.02;
+                                    action();
+
+                                }
+                                bl.UpdateReleseDrone(drone.Id);
+                                maintenance = Maintenance.Starting;
+
+                            }
+                            break;
+                    }
+                    drone = bl.GetDroneById(droneId);
+                    action();
+                }
+                catch (Exception)
+                {
+
+                    break;
+                }
             } while (!checkStop());
         }
 

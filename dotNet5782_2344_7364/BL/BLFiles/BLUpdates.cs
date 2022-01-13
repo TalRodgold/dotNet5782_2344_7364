@@ -460,7 +460,6 @@ namespace BlApi
         }
         #endregion
         #region// start simulator
-        [MethodImpl(MethodImplOptions.Synchronized)]
         public void StartSimulator(int droneId, Action func, Func<bool> checkStop) => new Simulator(this, droneId, func, checkStop);
         #endregion
     }

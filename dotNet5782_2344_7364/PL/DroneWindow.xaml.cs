@@ -66,9 +66,13 @@ namespace PL
                 if (newDrone.ParcelInTransit.Id != null)
                 {
                     drone.ParcelInTransit.Id = newDrone.ParcelInTransit.Id;
-                    drone.ParcelInTransit.PickupLocation = newDrone.ParcelInTransit.PickupLocation;
+                    drone.ParcelInTransit.PickupLocation = new PO.Location();
+                    drone.ParcelInTransit.PickupLocation.Latitude = newDrone.ParcelInTransit.PickupLocation.Latitude;//
+                    drone.ParcelInTransit.PickupLocation.Longitude = newDrone.ParcelInTransit.PickupLocation.Longitude;//
                     drone.ParcelInTransit.Priorities = newDrone.ParcelInTransit.Priorities;
-                    drone.ParcelInTransit.DeliveryLocation = newDrone.ParcelInTransit.DeliveryLocation;
+                    drone.ParcelInTransit.DeliveryLocation = new PO.Location();
+                    drone.ParcelInTransit.DeliveryLocation.Latitude = newDrone.ParcelInTransit.DeliveryLocation.Latitude;
+                    drone.ParcelInTransit.DeliveryLocation.Longitude = newDrone.ParcelInTransit.DeliveryLocation.Longitude;
                     drone.ParcelInTransit.Distance = newDrone.ParcelInTransit.Distance;
                     drone.ParcelInTransit.Status = newDrone.ParcelInTransit.Status;
                     drone.ParcelInTransit.Weight = newDrone.ParcelInTransit.Weight;
@@ -91,8 +95,9 @@ namespace PL
                 }
 
                 drone.DroneStatuses = newDrone.DroneStatuses;
-                drone.CurrentLocation = newDrone.CurrentLocation;
-
+                drone.CurrentLocation = new PO.Location();
+                drone.CurrentLocation.Latitude = newDrone.CurrentLocation.Latitude;
+                drone.CurrentLocation.Longitude = newDrone.CurrentLocation.Longitude;
                 InitializeComponent();
 
                 MainGrid.DataContext = drone;
@@ -155,7 +160,10 @@ namespace PL
                     dronePo.Battery = droneBo.Battery;
                     dronePo.NumberOfParcelInTransit = droneBo.NumberOfParcelInTransit;
                     dronePo.DroneStatuses = droneBo.DroneStatuses;
-                    dronePo.CurrentLocation = droneBo.CurrentLocation;
+                    drone.CurrentLocation = new PO.Location();
+                    dronePo.CurrentLocation.Longitude = droneBo.CurrentLocation.Longitude;
+                    dronePo.CurrentLocation.Latitude = droneBo.CurrentLocation.Latitude;
+
                     model.drones.Add(dronePo);
                     MessageBox.Show("Drone added sucsecfully");
                     this.Close();
@@ -394,7 +402,9 @@ namespace PL
                     drone.Battery = item.Battery;
                     drone.NumberOfParcelInTransit = item.NumberOfParcelInTransit;
                     drone.DroneStatuses = item.DroneStatuses;
-                    drone.CurrentLocation = item.CurrentLocation;
+                    drone.CurrentLocation = new PO.Location();
+                    drone.CurrentLocation.Latitude = item.CurrentLocation.Latitude;
+                    drone.CurrentLocation.Longitude = item.CurrentLocation.Longitude;
                     model.drones.Add(drone);
                 }
                 ObservableCollection<BO.BaseStationToList> baseStationToLists = new(bl.GetListOfBaseStationsToList());
@@ -441,9 +451,13 @@ namespace PL
                 if (newDrone.ParcelInTransit.Id != null)
                 {
                     drone.ParcelInTransit.Id = newDrone.ParcelInTransit.Id;
-                    drone.ParcelInTransit.PickupLocation = newDrone.ParcelInTransit.PickupLocation;
+                    drone.ParcelInTransit.PickupLocation = new PO.Location();
+                    drone.ParcelInTransit.PickupLocation.Longitude = newDrone.ParcelInTransit.PickupLocation.Longitude;
+                    drone.ParcelInTransit.PickupLocation.Latitude = newDrone.ParcelInTransit.PickupLocation.Latitude;
                     drone.ParcelInTransit.Priorities = newDrone.ParcelInTransit.Priorities;
-                    drone.ParcelInTransit.DeliveryLocation = newDrone.ParcelInTransit.DeliveryLocation;
+                    drone.ParcelInTransit.DeliveryLocation = new PO.Location();
+                    drone.ParcelInTransit.DeliveryLocation.Latitude = newDrone.ParcelInTransit.DeliveryLocation.Latitude;
+                    drone.ParcelInTransit.DeliveryLocation.Longitude = newDrone.ParcelInTransit.DeliveryLocation.Longitude;
                     drone.ParcelInTransit.Distance = newDrone.ParcelInTransit.Distance;
                     drone.ParcelInTransit.Status = newDrone.ParcelInTransit.Status;
                     drone.ParcelInTransit.Weight = newDrone.ParcelInTransit.Weight;
@@ -465,7 +479,9 @@ namespace PL
                     drone.ParcelInTransit = new PO.ParcelInTransit();
                 }
                 drone.DroneStatuses = newDrone.DroneStatuses;
-                drone.CurrentLocation = newDrone.CurrentLocation;
+                drone.CurrentLocation = new PO.Location();
+                drone.CurrentLocation.Latitude = newDrone.CurrentLocation.Latitude;
+                drone.CurrentLocation.Longitude = newDrone.CurrentLocation.Longitude;
                 //BO.Drone newDrone = bl.GetDroneById(drone.Id);
                 //Battery.Value = drone.Battery * 100;
                 Model.Text = drone.Model;
@@ -518,8 +534,11 @@ namespace PL
 
 
                 drone.DroneStatuses = newDrone.DroneStatuses;
-                drone.CurrentLocation = newDrone.CurrentLocation;
-            } 
+                drone.CurrentLocation = new PO.Location();
+                drone.CurrentLocation.Latitude = newDrone.CurrentLocation.Latitude;
+                drone.CurrentLocation.Longitude = newDrone.CurrentLocation.Longitude;
+
+            }
         }
 
         private void StartSimulator_Click(object sender, RoutedEventArgs e)
@@ -555,9 +574,13 @@ namespace PL
                 if (newDrone.ParcelInTransit.Id != null)
                 {
                     drone.ParcelInTransit.Id = newDrone.ParcelInTransit.Id;
-                    drone.ParcelInTransit.PickupLocation = newDrone.ParcelInTransit.PickupLocation;
+                    drone.ParcelInTransit.PickupLocation = new PO.Location();
+                    drone.ParcelInTransit.PickupLocation.Longitude = newDrone.ParcelInTransit.PickupLocation.Longitude;
+                    drone.ParcelInTransit.PickupLocation.Latitude = newDrone.ParcelInTransit.PickupLocation.Latitude;
                     drone.ParcelInTransit.Priorities = newDrone.ParcelInTransit.Priorities;
-                    drone.ParcelInTransit.DeliveryLocation = newDrone.ParcelInTransit.DeliveryLocation;
+                    drone.ParcelInTransit.DeliveryLocation = new PO.Location();
+                    drone.ParcelInTransit.DeliveryLocation.Latitude = newDrone.ParcelInTransit.DeliveryLocation.Latitude;
+                    drone.ParcelInTransit.DeliveryLocation.Longitude = newDrone.ParcelInTransit.DeliveryLocation.Longitude;
                     drone.ParcelInTransit.Distance = newDrone.ParcelInTransit.Distance;
                     drone.ParcelInTransit.Status = newDrone.ParcelInTransit.Status;
                     drone.ParcelInTransit.Weight = newDrone.ParcelInTransit.Weight;
@@ -579,48 +602,48 @@ namespace PL
                     drone.ParcelInTransit = new PO.ParcelInTransit();
                 }
                 drone.DroneStatuses = newDrone.DroneStatuses;
-                drone.CurrentLocation = newDrone.CurrentLocation;
+                drone.CurrentLocation.Longitude = newDrone.CurrentLocation.Longitude;
+                drone.CurrentLocation.Latitude = newDrone.CurrentLocation.Latitude;
 
-
-            }
-            if (drone.ParcelInTransit.Id != null)
-            {
-                PO.ParcelInTransit parcelInTransit = drone.ParcelInTransit;
-                ParcelHeadLabel.Visibility = Visibility.Visible;
-                ParcelIdLabel.Visibility = Visibility.Visible;
-                ParcelPriorityLabel.Visibility = Visibility.Visible;
-                ParcelWeightLabel.Visibility = Visibility.Visible;
-                ParcelSenderLabel.Visibility = Visibility.Visible;
-                ParcelReciverLabel.Visibility = Visibility.Visible;
-                ParcelDistanceLabel.Visibility = Visibility.Visible;
-                ParcelId.Visibility = Visibility.Visible;
-                ParcelPriority.Visibility = Visibility.Visible;
-                ParcelWeight.Visibility = Visibility.Visible;
-                ParcelSender.Visibility = Visibility.Visible;
-                ParcelReciver.Visibility = Visibility.Visible;
-                ParcelDistance.Visibility = Visibility.Visible;
-                ParcelId.Text = parcelInTransit.Id.ToString();
-                ParcelPriority.Text = parcelInTransit.Priorities.ToString();
-                ParcelWeight.Text = parcelInTransit.Weight.ToString();
-                ParcelSender.Text = parcelInTransit.CustomerInParcelSender.ToString();
-                ParcelReciver.Text = parcelInTransit.CustomerInParcelReciver.ToString();
-                ParcelDistance.Text = parcelInTransit.Distance.ToString();
-            }
-            else
-            {
-                ParcelHeadLabel.Visibility = Visibility.Hidden;
-                ParcelIdLabel.Visibility = Visibility.Hidden;
-                ParcelPriorityLabel.Visibility = Visibility.Hidden;
-                ParcelWeightLabel.Visibility = Visibility.Hidden;
-                ParcelSenderLabel.Visibility = Visibility.Hidden;
-                ParcelReciverLabel.Visibility = Visibility.Hidden;
-                ParcelDistanceLabel.Visibility = Visibility.Hidden;
-                ParcelId.Visibility = Visibility.Hidden;
-                ParcelPriority.Visibility = Visibility.Hidden;
-                ParcelWeight.Visibility = Visibility.Hidden;
-                ParcelSender.Visibility = Visibility.Hidden;
-                ParcelReciver.Visibility = Visibility.Hidden;
-                ParcelDistance.Visibility = Visibility.Hidden;
+                if (drone.ParcelInTransit.Id != null)
+                {
+                    PO.ParcelInTransit parcelInTransit = drone.ParcelInTransit;
+                    ParcelHeadLabel.Visibility = Visibility.Visible;
+                    ParcelIdLabel.Visibility = Visibility.Visible;
+                    ParcelPriorityLabel.Visibility = Visibility.Visible;
+                    ParcelWeightLabel.Visibility = Visibility.Visible;
+                    ParcelSenderLabel.Visibility = Visibility.Visible;
+                    ParcelReciverLabel.Visibility = Visibility.Visible;
+                    ParcelDistanceLabel.Visibility = Visibility.Visible;
+                    ParcelId.Visibility = Visibility.Visible;
+                    ParcelPriority.Visibility = Visibility.Visible;
+                    ParcelWeight.Visibility = Visibility.Visible;
+                    ParcelSender.Visibility = Visibility.Visible;
+                    ParcelReciver.Visibility = Visibility.Visible;
+                    ParcelDistance.Visibility = Visibility.Visible;
+                    ParcelId.Text = parcelInTransit.Id.ToString();
+                    ParcelPriority.Text = parcelInTransit.Priorities.ToString();
+                    ParcelWeight.Text = parcelInTransit.Weight.ToString();
+                    ParcelSender.Text = parcelInTransit.CustomerInParcelSender.ToString();
+                    ParcelReciver.Text = parcelInTransit.CustomerInParcelReciver.ToString();
+                    ParcelDistance.Text = parcelInTransit.Distance.ToString();
+                }
+                else
+                {
+                    ParcelHeadLabel.Visibility = Visibility.Hidden;
+                    ParcelIdLabel.Visibility = Visibility.Hidden;
+                    ParcelPriorityLabel.Visibility = Visibility.Hidden;
+                    ParcelWeightLabel.Visibility = Visibility.Hidden;
+                    ParcelSenderLabel.Visibility = Visibility.Hidden;
+                    ParcelReciverLabel.Visibility = Visibility.Hidden;
+                    ParcelDistanceLabel.Visibility = Visibility.Hidden;
+                    ParcelId.Visibility = Visibility.Hidden;
+                    ParcelPriority.Visibility = Visibility.Hidden;
+                    ParcelWeight.Visibility = Visibility.Hidden;
+                    ParcelSender.Visibility = Visibility.Hidden;
+                    ParcelReciver.Visibility = Visibility.Hidden;
+                    ParcelDistance.Visibility = Visibility.Hidden;
+                }
             }
    
         }

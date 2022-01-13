@@ -82,8 +82,9 @@ namespace PL
                 {
                          parcel.DroneInParcel = new PO.DroneInParcel();
                          parcel.DroneInParcel.Battery = parcelBo.DroneInParcel.Battery;
-                         parcel.DroneInParcel.CurrentLocation = parcelBo.DroneInParcel.CurrentLocation;
-                         parcel.DroneInParcel.Id = parcelBo.DroneInParcel.Id;
+                         parcel.DroneInParcel.CurrentLocation.Latitude = parcelBo.DroneInParcel.CurrentLocation.Latitude;
+                         parcel.DroneInParcel.CurrentLocation.Longitude = parcelBo.DroneInParcel.CurrentLocation.Longitude;
+                        parcel.DroneInParcel.Id = parcelBo.DroneInParcel.Id;
                 }
 
                 MainGrid.DataContext = parcel;

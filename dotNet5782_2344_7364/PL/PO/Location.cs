@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PL
+namespace PO
 {
-    class Location :INotifyPropertyChanged
+    public class Location :INotifyPropertyChanged
     {
         private double longitude;
         public double Longitude { get { return longitude; } set { longitude = value; OnPropertyChanged("longitude"); } }
