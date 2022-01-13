@@ -9,6 +9,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
 using BlApi;
+using System.Runtime.CompilerServices;
+
 namespace PL
 {
     internal class BatteryToProgressBar:IValueConverter
@@ -25,6 +27,7 @@ namespace PL
     }
     internal class BatteryToConverter : IValueConverter
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public object Convert(object value, Type targetType, object parrameter, CultureInfo culture)
         {
             double battery = (double)value;
@@ -47,6 +50,7 @@ namespace PL
 
     internal class ConvertComboBoxToVisability : IValueConverter
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public object Convert(object value, Type targetType, object parrameter, CultureInfo culture)
         {
             if (value.Equals(1))
@@ -55,6 +59,7 @@ namespace PL
             }
             return Visibility.Hidden;
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public object ConvertBack(object value, Type targetType, object parrameter, CultureInfo culture)
         {
             throw new Exception();
@@ -62,10 +67,12 @@ namespace PL
     }
     internal class ConvertLatitudeToSexa : IValueConverter
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public object Convert(object value, Type targetType, object parrameter, CultureInfo culture)
         {
             return ((PO.Location)value).LatitudeInSexa();//BO
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public object ConvertBack(object value, Type targetType, object parrameter, CultureInfo culture)
         {
             throw new Exception();
@@ -73,10 +80,12 @@ namespace PL
     }
     internal class ConvertLongitudeToSexa : IValueConverter
     {
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public object Convert(object value, Type targetType, object parrameter, CultureInfo culture)
         {
             return ((PO.Location)value).LongitudeInSexa();//BO  
         }
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public object ConvertBack(object value, Type targetType, object parrameter, CultureInfo culture)
         {
             throw new Exception();

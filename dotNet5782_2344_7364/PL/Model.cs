@@ -79,7 +79,6 @@ namespace PL
                 } 
             }
         }
-
         public ObservableCollection<PO.DroneToList> Drones
         {
             get => drones;
