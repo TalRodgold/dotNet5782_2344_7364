@@ -27,7 +27,7 @@ namespace PO
         public Location CurrentLocation { get { return location; } set { location = value; OnPropertyChanged("location"); } }
         public override string ToString()
         {
-            return $" Drone #{Id}: \n Model = {Model} \n Weight = {Weight} \n Battery = {Battery * 100}% \n Statuses = {DroneStatuses} \n Parcel in transit {ParcelInTransit} \n Current location: {CurrentLocation.ToString()} \n";
+            return $" Drone #{Id}: \n Model = {Model} \n Weight = {Weight} \n Battery = {Battery * 100}% \n Statuses = {DroneStatuses} \n Parcel in transit {ParcelInTransit} \n Current location: {CurrentLocation} \n";
         }
         public event PropertyChangedEventHandler PropertyChanged; 
         private void OnPropertyChanged(string prpertyName)

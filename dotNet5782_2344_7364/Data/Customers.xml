@@ -1,73 +1,73 @@
 <?xml version="1.0"?>
 <ArrayOfCustomer xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Customer>
-    <Id>52</Id>
-    <Name>Yossef</Name>
-    <Phone>0583503946</Phone>
-    <Longtitude>32.370181983267344</Longtitude>
-    <Latitude>35.701689429724425</Latitude>
-  </Customer>
-  <Customer>
-    <Id>206</Id>
+    <Id>175</Id>
     <Name>Haim</Name>
-    <Phone>0586211795</Phone>
-    <Longtitude>32.68484658336523</Longtitude>
-    <Latitude>35.61019553161047</Latitude>
+    <Phone>0598562661</Phone>
+    <Longtitude>31.90816160961465</Longtitude>
+    <Latitude>35.27280169440375</Latitude>
   </Customer>
   <Customer>
-    <Id>241</Id>
-    <Name>Kobi</Name>
-    <Phone>0581870231</Phone>
-    <Longtitude>32.701003030492764</Longtitude>
-    <Latitude>35.426886355519684</Latitude>
-  </Customer>
-  <Customer>
-    <Id>41</Id>
-    <Name>Avraham</Name>
-    <Phone>0547683834</Phone>
-    <Longtitude>32.63707232015101</Longtitude>
-    <Latitude>36.12666594783432</Latitude>
-  </Customer>
-  <Customer>
-    <Id>91</Id>
-    <Name>Gali</Name>
-    <Phone>0584077722</Phone>
-    <Longtitude>32.46338765786218</Longtitude>
-    <Latitude>35.86125839290545</Latitude>
-  </Customer>
-  <Customer>
-    <Id>159</Id>
-    <Name>Yossi</Name>
-    <Phone>0590944515</Phone>
-    <Longtitude>32.036034971716205</Longtitude>
-    <Latitude>35.54257372913348</Latitude>
-  </Customer>
-  <Customer>
-    <Id>207</Id>
+    <Id>155</Id>
     <Name>Erez</Name>
-    <Phone>0562360025</Phone>
-    <Longtitude>32.10983428759057</Longtitude>
-    <Latitude>35.27669615060214</Latitude>
+    <Phone>0522383575</Phone>
+    <Longtitude>31.863220721177697</Longtitude>
+    <Latitude>35.55319770526101</Latitude>
   </Customer>
   <Customer>
-    <Id>141</Id>
-    <Name>Gali</Name>
-    <Phone>0542086776</Phone>
-    <Longtitude>32.64574800577313</Longtitude>
-    <Latitude>35.57286441334468</Latitude>
-  </Customer>
-  <Customer>
-    <Id>191</Id>
+    <Id>2</Id>
     <Name>Yoni</Name>
-    <Phone>0511319314</Phone>
-    <Longtitude>32.72036815118092</Longtitude>
-    <Latitude>35.7508406924814</Latitude>
+    <Phone>0537884384</Phone>
+    <Longtitude>31.956871815695205</Longtitude>
+    <Latitude>35.59331236835535</Latitude>
   </Customer>
   <Customer>
-    <Id>256</Id>
+    <Id>75</Id>
     <Name>Haim</Name>
-    <Phone>0575847397</Phone>
-    <Longtitude>32.714420696345655</Longtitude>
-    <Latitude>35.36635246126554</Latitude>
+    <Phone>0559396358</Phone>
+    <Longtitude>31.803353774959223</Longtitude>
+    <Latitude>35.67602090597245</Latitude>
+  </Customer>
+  <Customer>
+    <Id>143</Id>
+    <Name>Haim</Name>
+    <Phone>0562393140</Phone>
+    <Longtitude>31.734961386870413</Longtitude>
+    <Latitude>36.07067031025729</Latitude>
+  </Customer>
+  <Customer>
+    <Id>232</Id>
+    <Name>Yoni</Name>
+    <Phone>0531492844</Phone>
+    <Longtitude>32.45987851216483</Longtitude>
+    <Latitude>35.88261657510352</Latitude>
+  </Customer>
+  <Customer>
+    <Id>45</Id>
+    <Name>Shoshi</Name>
+    <Phone>0562135917</Phone>
+    <Longtitude>31.95294653923884</Longtitude>
+    <Latitude>35.49842039873096</Latitude>
+  </Customer>
+  <Customer>
+    <Id>140</Id>
+    <Name>Kobi</Name>
+    <Phone>0539666200</Phone>
+    <Longtitude>31.864950585805627</Longtitude>
+    <Latitude>35.55058876059788</Latitude>
+  </Customer>
+  <Customer>
+    <Id>205</Id>
+    <Name>Hagit</Name>
+    <Phone>0591484763</Phone>
+    <Longtitude>32.50934100429993</Longtitude>
+    <Latitude>35.321491238627324</Latitude>
+  </Customer>
+  <Customer>
+    <Id>32</Id>
+    <Name>Haim</Name>
+    <Phone>0597510872</Phone>
+    <Longtitude>32.380737782391435</Longtitude>
+    <Latitude>35.30502139400271</Latitude>
   </Customer>
 </ArrayOfCustomer>

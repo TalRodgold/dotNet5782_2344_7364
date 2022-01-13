@@ -18,10 +18,10 @@ namespace PL
         public event PropertyChangedEventHandler PropertyChanged;
         static readonly IBl bl = BlFactory.GetBl("BL");
         public static Model Instance { get; } = new Model();
-        public ObservableCollection<PO.DroneToList> drones=new ObservableCollection<PO.DroneToList>();// = new(bl.GetListOfDronesToList());
-        public ObservableCollection<PO.BaseStationToList> baseStations= new ObservableCollection<PO.BaseStationToList>();//= new(bl.GetListOfBaseStationsToList());
-        public ObservableCollection<PO.CustomerToList> customers= new ObservableCollection<PO.CustomerToList>();//= new(bl.GetListOfCustomerToList());
-        public ObservableCollection<PO.ParcelToList> parcels=new ObservableCollection<PO.ParcelToList>();// = new(bl.GetListOfParcelToList());
+        public ObservableCollection<PO.DroneToList> drones=new ObservableCollection<PO.DroneToList>();
+        public ObservableCollection<PO.BaseStationToList> baseStations= new ObservableCollection<PO.BaseStationToList>();
+        public ObservableCollection<PO.CustomerToList> customers= new ObservableCollection<PO.CustomerToList>();
+        public ObservableCollection<PO.ParcelToList> parcels=new ObservableCollection<PO.ParcelToList>();
         static Model() { }
         Model()
         {

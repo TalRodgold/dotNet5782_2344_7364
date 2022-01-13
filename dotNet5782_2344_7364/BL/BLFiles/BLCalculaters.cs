@@ -71,10 +71,6 @@ namespace BlApi
                 }
                 else
                 {
-                    //if(distance==0)
-                    //{
-                    //    return battery;
-                    //}
                     switch (drone.Weight)
                     {
                         case Enums.WeightCategories.Light: // if light

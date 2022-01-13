@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 namespace DalApi
 {
     /// <summary>
-    /// 
+    /// factory to work on same dal
     /// </summary>
     static public class DalFactory
     {

@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 namespace BlApi
 {
     /// <summary>
-    /// 
+    /// factory to work on same bl
     /// </summary>
     public class BlFactory
     {

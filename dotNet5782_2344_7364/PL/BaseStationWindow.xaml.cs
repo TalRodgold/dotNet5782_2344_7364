@@ -22,10 +22,8 @@ namespace PL
     /// </summary>
     public partial class BaseStationWindow : Window ,INotifyPropertyChanged
     {
-        //public event PropertyChangedEventHandler PropertyCanged;
         private IBl bl = BlFactory.GetBl("BL");
         private PL.Model model = PlFactory.GetModel("Model");
-        //public static Model model { get; } = Model.Instance;
         public PO.BaseStation baseStation=new PO.BaseStation();
         public int occupied;
 
@@ -36,7 +34,7 @@ namespace PL
             InitializeComponent();
             UpdateButton.Visibility = Visibility.Hidden;
         }
-        public BaseStationWindow(int? id, int oc)//, PO.BaseStationToList baseStationT
+        public BaseStationWindow(int? id, int oc)
         {
             lock (bl)
             {

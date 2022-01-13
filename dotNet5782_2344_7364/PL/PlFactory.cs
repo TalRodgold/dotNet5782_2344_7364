@@ -16,8 +16,6 @@ namespace PL
             {
                 case "Model":
                     return PL.Model.Instance;
-                case "DalXml":
-                    //return DalXml.DalXml.Instance;
                 default:
                     throw new InvalidOperationException();
             }

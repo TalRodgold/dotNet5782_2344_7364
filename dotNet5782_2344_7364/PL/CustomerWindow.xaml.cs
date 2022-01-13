@@ -25,7 +25,6 @@ namespace PL
     {
         private IBl bl = BlFactory.GetBl("BL");
         private PL.Model model = PlFactory.GetModel("Model");
-        //public BO.Customer customer;
         public PO.Customer customer = new PO.Customer();
 
 
@@ -36,14 +35,6 @@ namespace PL
             ParcelFromCustomer.IsEnabled = false;
             ParcelToCustomer.IsEnabled = false;
         }
-        //public CustomerWindow(ref ObservableCollection<BO.CustomerToList> customerToList)
-        //{
-        //    InitializeComponent();
-        //    UpdateButton.Visibility = Visibility.Hidden;
-        //    ParcelFromCustomer.IsEnabled = false;
-        //    ParcelToCustomer.IsEnabled = false;
-        //    customerCollection = customerToList;
-        //}
         public CustomerWindow(int? id)
         {
             lock (bl)

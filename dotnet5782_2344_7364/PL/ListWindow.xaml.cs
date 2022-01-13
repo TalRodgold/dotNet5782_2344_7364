@@ -21,12 +21,7 @@ namespace PL
     public partial class ListWindow : Window
     {
         private IBl bl = BlFactory.GetBl("BL");
-        //public ObservableCollection<BO.BaseStationToList> BsCollection = new ObservableCollection<BO.BaseStationToList>();
-        //public ObservableCollection<BO.ParcelToList> PCollection = new ObservableCollection<BO.ParcelToList>();
-        //public ObservableCollection<BO.CustomerToList> CCollection = new ObservableCollection<BO.CustomerToList>();
-        //public ObservableCollection<BO.DroneToList> DCollection = new ObservableCollection<BO.DroneToList>();
         private PL.Model model=PlFactory.GetModel("Model");
-
         public ListWindow()
         {
             InitializeComponent();
@@ -61,7 +56,6 @@ namespace PL
             lock (bl)
             {
                 DroneWindow droneWindow = new DroneWindow();
-                //droneWindow.AddButton.Click += updateDrones;
                 droneWindow.Show();
             }
 
@@ -71,7 +65,6 @@ namespace PL
             lock (bl)
             {
                 BaseStationWindow baseStationWindow = new BaseStationWindow(this);
-                //baseStationWindow.AddButton.Click += updateStation;
                 baseStationWindow.Show();
             }
         }
@@ -81,17 +74,15 @@ namespace PL
             lock (bl)
             {
                 ParcelWindow parcelWindow = new ParcelWindow();
-                //parcelWindow.AddButton.Click += updateParcel;
                 parcelWindow.Show();
             }
         }
 
-        private void AddCustomer_Click(object sender, RoutedEventArgs e) //aa
+        private void AddCustomer_Click(object sender, RoutedEventArgs e) 
         {
             lock (bl)
             {
                 CustomerWindow customerWindow = new CustomerWindow();
-                //customerWindow.AddButton.Click += updateCustomer;
                 customerWindow.Show();
             }
         }
@@ -110,10 +101,6 @@ namespace PL
             {
                 PO.BaseStationToList baseStation = (PO.BaseStationToList)ListBaseStation.SelectedItem;
                 BaseStationWindow baseStationWindow = new BaseStationWindow(baseStation.Id, baseStation.OccupiedChargingSlots);//, baseStation);
-
-                //baseStationWindow.DeleteButton.Click += updateStation;
-
-                //baseStationWindow.UpdateButton.Click += updateStation;
                 baseStationWindow.Show();
             }
 
@@ -125,7 +112,6 @@ namespace PL
 
                 PO.ParcelToList parcel = (PO.ParcelToList)ListParcel.SelectedItem;
                 ParcelWindow parcelWindow = new ParcelWindow(parcel.Id);//, parcel);
-                //parcelWindow.DeleteButton.Click += updateParcel;
                 parcelWindow.Show();
             }
         }
@@ -134,14 +120,7 @@ namespace PL
             lock (bl)
             {
                 PO.DroneToList drone = (PO.DroneToList)ListDrone.SelectedItem;
-                //   PO.DroneToList drone1 =(from dro in model.Drones where dro.Id == drone.Id select dro).FirstOrDefault();
                 DroneWindow droneWindow = new DroneWindow(drone.Id);//,drone);
-                //droneWindow.UpdateButton.Click += updateDrones;
-                //droneWindow.SendDroneToChargeButton.Click += updateDrones;
-                //droneWindow.RealesDroneFromChargingButton.Click += updateDrones;
-                //droneWindow.AccociateDroneToParcelButton.Click += updateDrones;
-                //droneWindow.PickUpParcelButton.Click += updateDrones;
-                //droneWindow.DeliverParcelButton.Click += updateDrones;
                 droneWindow.Show();
             }
 
@@ -153,7 +132,6 @@ namespace PL
             {
                 PO.CustomerToList customer = (PO.CustomerToList)ListCustomer.SelectedItem;
                 CustomerWindow customerWindow = new CustomerWindow(customer.Id);//, customer);
-                //customerWindow.UpdateButton.Click += updateCustomer;
                 customerWindow.Show();
             }
         }
@@ -181,8 +159,6 @@ namespace PL
             {
                 if (StatusSelector.SelectedIndex == -1)
                 {
-
-                    // ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem).ToList();
                     ObservableCollection < BO.DroneToList > droneToListsBo = new( bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem).ToList());
                     ObservableCollection<PO.DroneToList> droneToListsPo = new ObservableCollection<PO.DroneToList>();
                     foreach (var item in droneToListsBo)
@@ -203,7 +179,6 @@ namespace PL
                 }
                 else
                 {
-                    //ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
                     ObservableCollection<BO.DroneToList> droneToListsBo = new(bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList());
                     ObservableCollection<PO.DroneToList> droneToListsPo = new ObservableCollection<PO.DroneToList>();
                     foreach (var item in droneToListsBo)
@@ -232,7 +207,6 @@ namespace PL
             {
                 if (MaxWeightSelector.SelectedIndex == -1)
                 {
-                    //ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
                     ObservableCollection<BO.DroneToList> droneToListsBo = new(bl.GetListOfDroneToListByPredicat(predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList());
                     ObservableCollection<PO.DroneToList> droneToListsPo = new ObservableCollection<PO.DroneToList>();
                     foreach (var item in droneToListsBo)
@@ -253,7 +227,6 @@ namespace PL
                 }
                 else
                 {
-                    //ListDrone.ItemsSource = bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList();
                     ObservableCollection<BO.DroneToList> droneToListsBo = new(bl.GetListOfDroneToListByPredicat(predicate => predicate.Weight == (BO.Enums.WeightCategories)MaxWeightSelector.SelectedItem, predicate => predicate.DroneStatuses == (BO.Enums.DroneStatuses)StatusSelector.SelectedItem).ToList());
                     ObservableCollection<PO.DroneToList> droneToListsPo = new ObservableCollection<PO.DroneToList>();
                     foreach (var item in droneToListsBo)
@@ -286,7 +259,6 @@ namespace PL
                 }
                 else if (DisplayChargingSlots.SelectedIndex == 1)
                 {
-                    //ListBaseStation.ItemsSource = bl.GetListOfFreeChargingStations();
                     ObservableCollection<PO.BaseStationToList> baseStationToListsPO = new ObservableCollection<PO.BaseStationToList>();
                     ObservableCollection<BO.BaseStationToList> baseStationToLists = new(bl.GetListOfBaseStationsToList());
                     foreach (var item in baseStationToLists)
@@ -309,7 +281,6 @@ namespace PL
         {
             lock (bl)
             {
-                //ListBaseStation.ItemsSource = bl.GetListOfFreeChargingStations(NumOfFreeChargingSlots.SelectedIndex + 1);
                 ObservableCollection<PO.BaseStationToList> baseStationToListsPO = new ObservableCollection<PO.BaseStationToList>();
                 ObservableCollection<BO.BaseStationToList> baseStationToLists = new(bl.GetListOfFreeChargingStations(NumOfFreeChargingSlots.SelectedIndex + 1));
                 foreach (var item in baseStationToLists)

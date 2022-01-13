@@ -28,17 +28,15 @@ namespace PL
         private void updateDrone() => worker.ReportProgress(0);
         private bool checkStop() => worker.CancellationPending;
         BackgroundWorker worker;
-        //public BO.Drone drone;
         public PO.Drone drone = new PO.Drone();
-
         public event PropertyChangedEventHandler PropertyChanged;
-
-        // public PO.DroneToList droneToList=new PO.DroneToList();
         public DroneWindow() // constructor for adding new drone
         {
             InitializeComponent();
             AddButton.Visibility = Visibility.Visible; // make butten visible
             ExitButton.Visibility = Visibility.Hidden;
+            StartSimulatorButton.Visibility = Visibility.Hidden;
+            CancelSimulatorButton.Visibility = Visibility.Hidden;
             UpdateButton.IsEnabled = false;
             Battery.IsEnabled = false;
             StatusSelector.IsEnabled = false;
@@ -52,11 +50,10 @@ namespace PL
             CancelButton.Visibility = Visibility.Visible;
 
         }
-        public DroneWindow(int? id)//,PO.DroneToList newd) // constructor for Drone update
+        public DroneWindow(int? id) // constructor for Drone update
         {
             lock (bl)
             {
-                //droneToList = newd;
                 BO.Drone newDrone = bl.GetDroneById(id);
                 drone.Id = newDrone.Id;
                 drone.Model = newDrone.Model;
@@ -129,7 +126,7 @@ namespace PL
                 ParcelInTransit.IsEnabled = false;
                 Latitude.IsEnabled = false;
                 Longitude.IsEnabled = false;
-                // set combo boxes//
+                // set combo boxes
                 MaxWeightSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.WeightCategories));
                 StatusSelector.ItemsSource = Enum.GetValues(typeof(BO.Enums.DroneStatuses));
 
@@ -188,7 +185,6 @@ namespace PL
                         droneToList.Model = Model.Text;
                         drone.Model = Model.Text;
                     }
-                    // Refresh();  
                 }
             }
             catch (Exception exception)
@@ -213,18 +209,6 @@ namespace PL
                 lock (bl)
                 {
                     int stationId = (int)bl.UpdateSendDroneToCharge(drone.Id);
-                    //BO.DroneToList droneToListBo = bl.GetDroneToList(drone.Id);
-                    //BO.BaseStation baseStationPo = bl.GetBaseStationById(stationId);
-                    //PO.DroneToList droneToList = new PO.DroneToList();
-                    //PO.BaseStationToList baseStationToList = new PO.BaseStationToList();
-                    //droneToList = (from drone_ in model.drones where drone_.Id == drone.Id select drone_).FirstOrDefault();
-                    //baseStationToList = (from station in model.baseStations where station.Id == stationId select station).FirstOrDefault();
-                    //drone.DroneStatuses = BO.Enums.DroneStatuses.Maintenance;
-                    //baseStationToList.FreeChargingSlots -= 1;
-                    //baseStationToList.OccupiedChargingSlots += 1;
-                    //droneToList.DroneStatuses = drone.DroneStatuses;
-                    //droneToList.CurrentLocation = baseStationPo.Location;
-                    //droneToList.Battery = droneToListBo.Battery;
                     RefreshAll(); 
                 }
             }
@@ -242,17 +226,6 @@ namespace PL
                 lock (bl)
                 {
                     int stationId = (int)bl.UpdateReleseDrone(drone.Id);
-                    ////BO.DroneToList droneToListBo = bl.GetDroneToList(drone.Id);
-                    ////PO.DroneToList droneToList = new PO.DroneToList();
-                    ////BO.BaseStation baseStationPo = bl.GetBaseStationById(stationId);
-                    ////PO.BaseStationToList baseStationToList = new PO.BaseStationToList();
-                    ////baseStationToList = (from station in model.baseStations where station.Id == stationId select station).FirstOrDefault();
-                    ////droneToList = (from drone_ in model.drones where drone_.Id == drone.Id select drone_).FirstOrDefault();
-                    ////drone.DroneStatuses = BO.Enums.DroneStatuses.Available;
-                    ////droneToList.DroneStatuses = BO.Enums.DroneStatuses.Available;
-                    ////droneToList.Battery = droneToListBo.Battery;
-                    ////baseStationToList.FreeChargingSlots -= 1;
-                    ////baseStationToList.OccupiedChargingSlots += 1;
                    RefreshAll(); 
                 }
             }
@@ -270,15 +243,6 @@ namespace PL
                 lock (bl)
                 {
                     int parcelId = (int)bl.UpdateAssosiateDrone(drone.Id);
-                    //BO.ParcelToList parcelToListBo = bl.GetParcelToListById(parcelId);
-                    //PO.DroneToList droneToListPo = new PO.DroneToList();
-                    //PO.ParcelToList parcelToListPo = new PO.ParcelToList();
-                    //PO.CustomerToList customerToListSenderPo = new PO.CustomerToList();
-                    //PO.CustomerToList customerToListReciverPo = new PO.CustomerToList();
-                    //droneToListPo = (from drone_ in model.drones where drone_.Id == drone.Id select drone_).FirstOrDefault();
-                    //parcelToListPo = (from parcel_ in model.parcels where parcel_.Id == parcelId select parcel_).FirstOrDefault();
-                    //drone.DroneStatuses = BO.Enums.DroneStatuses.Delivery;
-                    //droneToList.DroneStatuses = drone.DroneStatuses;
                       RefreshAll(); 
                 }
             }
@@ -295,11 +259,6 @@ namespace PL
                 lock (bl)
                 {
                     bl.PickupParcelByDrone(drone.Id);
-
-                    //PO.DroneToList droneToList = new PO.DroneToList();
-                    //droneToList = (from drone_ in model.drones where drone_.Id == drone.Id select drone_).FirstOrDefault();
-                    //drone.DroneStatuses = BO.Enums.DroneStatuses.Delivery;
-                    //droneToList.DroneStatuses = drone.DroneStatuses;
                     RefreshAll(); 
                 }
             }
@@ -316,10 +275,6 @@ namespace PL
                 lock (bl)
                 {
                     bl.DeliveryParcelByDrone(drone.Id);
-                    //PO.DroneToList droneToList = new PO.DroneToList();
-                    //droneToList = (from drone_ in model.drones where drone_.Id == drone.Id select drone_).FirstOrDefault();
-                    //drone.DroneStatuses = BO.Enums.DroneStatuses.Available;
-                    //droneToList.DroneStatuses = drone.DroneStatuses;
                     RefreshAll(); 
                 }
             }
@@ -333,13 +288,9 @@ namespace PL
             lock (bl)
             {
                 BO.Drone newDrone = bl.GetDroneById(drone.Id);
-                //Battery.Value = drone.Battery * 100;
                 Model.Text = drone.Model;
                 StatusSelector.SelectedItem = drone.DroneStatuses;
                 ParcelInTransit.Text = newDrone.ParcelInTransit.Id.ToString();
-                // Longitude.Text = drone.CurrentLocation.LongitudeInSexa();
-                //Latitude.Text = drone.CurrentLocation.LatitudeInSexa();
-
                 if (newDrone.DroneStatuses == BO.Enums.DroneStatuses.Available)
                 {
                     SendDroneToChargeButton.Visibility = Visibility.Visible;
@@ -482,8 +433,6 @@ namespace PL
                 drone.CurrentLocation = new PO.Location();
                 drone.CurrentLocation.Latitude = newDrone.CurrentLocation.Latitude;
                 drone.CurrentLocation.Longitude = newDrone.CurrentLocation.Longitude;
-                //BO.Drone newDrone = bl.GetDroneById(drone.Id);
-                //Battery.Value = drone.Battery * 100;
                 Model.Text = drone.Model;
                 StatusSelector.SelectedItem = drone.DroneStatuses;
                 ParcelInTransit.Text = newDrone.ParcelInTransit.Id.ToString();

@@ -417,10 +417,6 @@ namespace BlApi
                     int index = ListOfDronsBL.FindIndex(element => element.Id == droneId);
                     ListOfDronsBL[index] = newDrone;
                     dal.UpdateParcleDelivery(drone.ParcelInTransit.Id);
-                    //if(drone.Battery<0.2)
-                    //{
-                    //    UpdateSendDroneToCharge(drone.Id);
-                    //} 
                 }
             }
             catch (DO.IdNotExsistException exception) // if droneid does not exsists and was thrown from dal objects.
