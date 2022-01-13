@@ -39,7 +39,7 @@ namespace DalApi
         [MethodImpl(MethodImplOptions.Synchronized)]
         void DeleteParcel(int? id);//Delete Parcel
         [MethodImpl(MethodImplOptions.Synchronized)]
-        void UpdateChargingSlotsNumber(int? id, int numberOfChargingSlots);
+        void UpdateChargingSlotsNumber(int? id, int numberOfChargingSlots); // update number of charging slots
         [MethodImpl(MethodImplOptions.Synchronized)]
         void UpdateCustomerName(int? id, string name); // update customers name
         [MethodImpl(MethodImplOptions.Synchronized)]

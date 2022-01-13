@@ -430,8 +430,9 @@ namespace BlApi
             }
         }
         #endregion
-
-        public bool CheckAvailableParcels(Drone drone)
+        #region// check for any available parcels
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public bool CheckAvailableParcels(Drone drone) // check for any available parcels
         {
             lock (dal)
             {
@@ -457,8 +458,9 @@ namespace BlApi
                 return false;
             }
         }
-
-
+        #endregion
+        #region// start simulator
         public void StartSimulator(int droneId, Action func, Func<bool> checkStop) => new Simulator(this, droneId, func, checkStop);
+        #endregion
     }
 }

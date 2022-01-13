@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PO
 {
-     class Location :INotifyPropertyChanged
+    public class Location :INotifyPropertyChanged
     {
         private double longitude;
         public double Longitude { get { return longitude; } set { longitude = value; OnPropertyChanged("longitude"); } }

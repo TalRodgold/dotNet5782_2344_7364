@@ -52,7 +52,8 @@ namespace PL
                 AddButton.Visibility = Visibility.Hidden;
                 BO.Customer customerBo = bl.GetCustomerById(id);
                 customer.Id = customerBo.Id;
-                customer.Location = customerBo.Location;
+                customer.Location.Longitude = customerBo.Location.Longitude;
+                customer.Location.Latitude = customerBo.Location.Latitude;
                 customer.Name = customerBo.Name;
                 customer.ParcelFromCustomer = new List<PO.ParcelAtCustomer>();
                 foreach (var item in customerBo.ParcelFromCustomer)

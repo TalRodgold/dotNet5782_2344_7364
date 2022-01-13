@@ -21,6 +21,7 @@
     <None Remove="24616702.jpg" />
     <None Remove="34869502.jpg" />
     <None Remove="89bea3490ace4746a3c51cee4eaf8657.jpg" />
+    <None Remove="dlpng_com_Vector_Positioning_Icon__Geolocation__Location__A_Mark_On_The_____6440768.png" />
     <None Remove="electronic.jpg" />
     <None Remove="flyingDrone.jpg" />
     <None Remove="getty_637413968_200013492000928043_356086.jpg" />
@@ -31,6 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="Images\pin.jpg" />
     <Resource Include="Images\Drone1.jpg" />
     <Resource Include="Images\Parcel.jpg" />
     <Resource Include="Images\Customer.jpg" />

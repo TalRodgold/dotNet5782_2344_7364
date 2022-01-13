@@ -131,8 +131,22 @@
                 </RadialGradientBrush>
             </Button.Background>
         </Button>
-        <Button Content="Start simulation" Name="StartSimulatorButton" Grid.Column="3" HorizontalAlignment="Left" Margin="10,9,0,0" Grid.Row="9" VerticalAlignment="Top" Height="28" Width="124" Click="StartSimulator_Click"/>
-        <Button Content="Cancel simulation" Name="CancelSimulatorButton" Grid.Column="2" HorizontalAlignment="Left" Margin="36,23,0,0" Grid.Row="9" VerticalAlignment="Top" Width="122" Click="CancelSimulator_Click"/>
+        <Button Content="Start simulation" Name="StartSimulatorButton" Grid.Column="2" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Height="28" Width="124" Click="StartSimulator_Click" FontWeight="Bold" FontSize="14">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFAF9FDB" Offset="0.347"/>
+                    <GradientStop Color="#FF8F38D7" Offset="0.859"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button Content="Cancel simulation" Name="CancelSimulatorButton" Grid.Column="3" HorizontalAlignment="Center" Grid.Row="9" VerticalAlignment="Center" Width="124" Click="CancelSimulator_Click" FontWeight="Bold" FontSize="14" Height="28">
+            <Button.Background>
+                <RadialGradientBrush>
+                    <GradientStop Color="#FFAF9FDB" Offset="0.347"/>
+                    <GradientStop Color="#FF8F38D7" Offset="0.859"/>
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
         <Label Name="ParcelHeadLabel" Content="Parcel data:" Visibility="Hidden" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="2" Grid.Row="1" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White" Margin="159,11,0,0" Grid.ColumnSpan="2" Width="113"/>
         <Label Name="ParcelIdLabel" Content="Id:" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="2" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>
         <Label Name="ParcelPriorityLabel" Content="Priority:" Visibility="Hidden" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="2" Grid.Row="3" FontSize="18" FontWeight="Bold" FontFamily="Sitka Display" Foreground="White"/>

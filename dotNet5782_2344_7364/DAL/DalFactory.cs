@@ -7,6 +7,9 @@ using System.Runtime.CompilerServices;
 
 namespace DalApi
 {
+    /// <summary>
+    /// 
+    /// </summary>
     static public class DalFactory
     {
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -14,9 +17,9 @@ namespace DalApi
         {
             switch (str)
             {
-                case "DalObject":
+                case "DalObject": // for dal object
                     return DalObjects.DalObjects.Instance;
-                case "DalXml":
+                case "DalXml": // for dal Xml
                     return DalXml.DalXml.Instance;
                 default:
                     throw new InvalidOperationException() ;

@@ -9,6 +9,9 @@ using System.Runtime.CompilerServices;
 
 namespace BlApi
 {
+    /// <summary>
+    /// main partial class, holds list of drones and other critical data
+    /// </summary>
     internal sealed partial class BL : IBl
     {
         public List<DroneToList> ListOfDronsBL = new List<DroneToList>();
@@ -19,6 +22,7 @@ namespace BlApi
         double DroneChargingPaste;
         internal IDal dal;
         private static readonly Lazy<BL> instance = new Lazy<BL>(() => new BL());// using lazy to improve performance and avoid wasteful computation, and reduce program memory requirements.  
+        public static IBl Instance { get => instance.Value; } // The public Instance property to use
         static BL() { }
         #region//BL constructor 
         /// <summary>
@@ -36,8 +40,7 @@ namespace BlApi
             UpdateListOfDronsBL();
         }
         #endregion
-        #region
-        public static IBl Instance { get => instance.Value; } // The public Instance property to use
+        #region// update list of drones in BL
         public void UpdateListOfDronsBL()
         {
             var listOfDrones = dal.GetListOfDrone();//get the list of drone from datasource

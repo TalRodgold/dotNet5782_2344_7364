@@ -194,7 +194,9 @@ namespace PL
                         drone.Battery = item.Battery;
                         drone.NumberOfParcelInTransit = item.NumberOfParcelInTransit;
                         drone.DroneStatuses = item.DroneStatuses;
-                        drone.CurrentLocation = item.CurrentLocation;
+                        drone.CurrentLocation = new PO.Location();
+                        drone.CurrentLocation.Longitude = item.CurrentLocation.Longitude;
+                        drone.CurrentLocation.Latitude = item.CurrentLocation.Latitude;
                         droneToListsPo.Add(drone);
                     }
                     ListDrone.ItemsSource = droneToListsPo;
@@ -213,7 +215,9 @@ namespace PL
                         drone.Battery = item.Battery;
                         drone.NumberOfParcelInTransit = item.NumberOfParcelInTransit;
                         drone.DroneStatuses = item.DroneStatuses;
-                        drone.CurrentLocation = item.CurrentLocation;
+                        drone.CurrentLocation = new PO.Location();
+                        drone.CurrentLocation.Latitude = item.CurrentLocation.Latitude;
+                        drone.CurrentLocation.Longitude = item.CurrentLocation.Longitude;
                         droneToListsPo.Add(drone);
                     }
                     ListDrone.ItemsSource = droneToListsPo;
@@ -240,7 +244,9 @@ namespace PL
                         drone.Battery = item.Battery;
                         drone.NumberOfParcelInTransit = item.NumberOfParcelInTransit;
                         drone.DroneStatuses = item.DroneStatuses;
-                        drone.CurrentLocation = item.CurrentLocation;
+                        drone.CurrentLocation = new PO.Location();
+                        drone.CurrentLocation.Longitude = item.CurrentLocation.Longitude;
+                        drone.CurrentLocation.Latitude = item.CurrentLocation.Latitude;
                         droneToListsPo.Add(drone);
                     }
                     ListDrone.ItemsSource = droneToListsPo;
@@ -259,7 +265,9 @@ namespace PL
                         drone.Battery = item.Battery;
                         drone.NumberOfParcelInTransit = item.NumberOfParcelInTransit;
                         drone.DroneStatuses = item.DroneStatuses;
-                        drone.CurrentLocation = item.CurrentLocation;
+                        drone.CurrentLocation = new PO.Location();
+                        drone.CurrentLocation.Latitude = item.CurrentLocation.Latitude;
+                        drone.CurrentLocation.Longitude = item.CurrentLocation.Longitude;
                         droneToListsPo.Add(drone);
                     }
                     ListDrone.ItemsSource = droneToListsPo;
@@ -336,7 +344,9 @@ namespace PL
                             drone.Battery = innerItem.Battery;
                             drone.NumberOfParcelInTransit = innerItem.NumberOfParcelInTransit;
                             drone.DroneStatuses = innerItem.DroneStatuses;
-                            drone.CurrentLocation = innerItem.CurrentLocation;
+                            drone.CurrentLocation = new PO.Location();
+                            drone.CurrentLocation.Longitude = innerItem.CurrentLocation.Longitude;
+                            drone.CurrentLocation.Latitude = innerItem.CurrentLocation.Latitude;
                             droneToLists.Add(drone);
                         }
                     }
@@ -362,7 +372,9 @@ namespace PL
                         drone.Battery = innerItem.Battery;
                         drone.NumberOfParcelInTransit = innerItem.NumberOfParcelInTransit;
                         drone.DroneStatuses = innerItem.DroneStatuses;
-                        drone.CurrentLocation = innerItem.CurrentLocation;
+                        drone.CurrentLocation = new PO.Location();
+                        drone.CurrentLocation.Longitude = innerItem.CurrentLocation.Longitude;
+                        drone.CurrentLocation.Latitude = innerItem.CurrentLocation.Latitude;
                         droneToLists.Add(drone);
                     }
                 }
@@ -397,7 +409,9 @@ namespace PL
                     drone.Battery = item.Battery;
                     drone.NumberOfParcelInTransit = item.NumberOfParcelInTransit;
                     drone.DroneStatuses = item.DroneStatuses;
-                    drone.CurrentLocation = item.CurrentLocation;
+                    drone.CurrentLocation = new PO.Location();
+                    drone.CurrentLocation.Longitude = item.CurrentLocation.Longitude;
+                    drone.CurrentLocation.Latitude = item.CurrentLocation.Latitude;
                     model.Drones.Add(drone);
                 }
                 ListDrone.ItemsSource = model.Drones;

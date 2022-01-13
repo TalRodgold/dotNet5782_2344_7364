@@ -33,10 +33,10 @@ namespace DalObjects
         internal class Config // hold runing number for id plus electricity usege 
         {
             internal static int ParcelId = 12345; // runing number for parcel Id
-            internal static double ElectricityUseAvailiblity { get; set; } = 0.01; //electricity usege for avilable
-            internal static double ElectricityUseLightWeight { get; set; } = 0.02; // electricity usege for light weight
-            internal static double ElectricityUseMediumWeight { get; set; } = 0.03; // electricity usege for  medium weight
-            internal static double ElectricityUseHeavyWeight { get; set; } = 0.04; // electricity usege for heavy weight
+            internal static double ElectricityUseAvailiblity { get; set; } = 0.1; //electricity usege for avilable
+            internal static double ElectricityUseLightWeight { get; set; } = 0.2; // electricity usege for light weight
+            internal static double ElectricityUseMediumWeight { get; set; } = 0.3; // electricity usege for  medium weight
+            internal static double ElectricityUseHeavyWeight { get; set; } = 0.4; // electricity usege for heavy weight
             internal static double DroneChargingPaste { get; set; } = 100; // speed of drone charging per hour in % 
             internal static double[] GetArrElectricity()
             {

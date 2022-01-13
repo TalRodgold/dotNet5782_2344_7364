@@ -26,8 +26,7 @@ namespace DalObjects
         /// <summary>
         /// contains functions that allow to acsses and change the data in DataSource and pass it on to BL
         /// </summary>
-
-        
+      
         #region//All the construct functions
 
         #region//construct a new base station
@@ -563,6 +562,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public Drone GetDrone(int? id) // find a Drone by id and return all his data as Drone class
         {
             if (!IfDroneExsists(id)) // if id doesnt exsist
@@ -594,6 +594,7 @@ namespace DalObjects
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation GetBaseStation(int? id) // find a BaseStation by id and return all his data as BaseStation class
         {
             if (!IfBaseStationExsists(id)) // if id doesnt exsist

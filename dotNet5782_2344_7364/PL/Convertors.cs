@@ -64,7 +64,7 @@ namespace PL
     {
         public object Convert(object value, Type targetType, object parrameter, CultureInfo culture)
         {
-            return ((BO.Location)value).LatitudeInSexa();
+            return ((PO.Location)value).LatitudeInSexa();//BO
         }
         public object ConvertBack(object value, Type targetType, object parrameter, CultureInfo culture)
         {
@@ -75,7 +75,7 @@ namespace PL
     {
         public object Convert(object value, Type targetType, object parrameter, CultureInfo culture)
         {
-            return ((BO.Location)value).LongitudeInSexa();
+            return ((PO.Location)value).LongitudeInSexa();//BO  
         }
         public object ConvertBack(object value, Type targetType, object parrameter, CultureInfo culture)
         {

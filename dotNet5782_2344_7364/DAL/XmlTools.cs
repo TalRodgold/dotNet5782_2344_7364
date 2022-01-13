@@ -8,18 +8,24 @@ using DalApi;
 using System.Xml.Linq;
 using System.IO;
 using System.Xml.Serialization;
+using System.Runtime.CompilerServices;
 
 namespace DalXml
 {
+    /// <summary>
+    /// class to help deal with xml files
+    /// </summary>
     public class XmlTools
     {
-        internal static string directory = @"..\..\..\..\Data\";
+        internal static string directory = @"..\..\..\..\Data\"; // directory to data folder
+        #region// constructor
         public XmlTools()
         {
             if (!Directory.Exists(directory))
                 Directory.CreateDirectory(directory);
         }
-        #region SaveLoadWithXElement
+        #endregion
+        #region// SaveLoadWithXElement
         public static void SaveListToXmlElement(XElement rootElem, string filePath)
         {
             try
@@ -53,7 +59,7 @@ namespace DalXml
             }
         }
         #endregion
-        #region SaveLoadWithXMLSerializer
+        #region// SaveLoadWithXMLSerializer
         public static void SaveListToXmlSerializer<T>(IEnumerable<T> list, string filePath)
         {
             try
@@ -90,17 +96,21 @@ namespace DalXml
             }
         }
         #endregion
+        #region// convert nullable to int
         public static int? ToNullableInt(string s)
         {
             int i;
             if (int.TryParse(s, out i)) return i;
             return null;
         }
+        #endregion
+        #region// convert nullable to date time
         public static DateTime? ToNullableDateTime(string s)
         {
             DateTime i;
             if (DateTime.TryParse(s, out i)) return i;
             return null;
         }
+        #endregion
     }
 }

@@ -22,5 +22,4 @@ namespace DO
             return $" Base station #{Id}: \n Name = {Name} \n Charge slots = {ChargeSlots} \n Longtitude = {DalObjects.DataSource.sexagesimal(Longtitude, 'N')} \n Latitude = {DalObjects.DataSource.sexagesimal(Longtitude, 'E')} \n ";
         }
     }
-
 }
