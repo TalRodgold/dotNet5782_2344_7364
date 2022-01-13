@@ -37,7 +37,10 @@
                     <Grid.Background>
                         <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
                     </Grid.Background>
-                    <ListView Name="ListBaseStation" ItemsSource="{Binding}" Margin="0,35,0,28" HorizontalAlignment="Left" Width="461" MouseDoubleClick="BaseStation_DoubleClick" Grid.RowSpan="5">
+                    <ListView Name="ListBaseStation" ItemsSource="{Binding}" Margin="10,29,0,0" HorizontalAlignment="Left" Width="784" MouseDoubleClick="BaseStation_DoubleClick" Grid.RowSpan="5" Grid.ColumnSpan="2" Foreground="White" BorderBrush="Black">
+                        <ListView.Background>
+                            <ImageBrush ImageSource="/Images/BaseStation.jpg"/>
+                        </ListView.Background>
                         <ListView.View>
                             <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
                                 <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id_station" Header="Id" Width="auto"/>
@@ -53,7 +56,7 @@
                         </ListView.Background>
                     </ListView>-->
 
-                    <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="43" RenderTransformOrigin="-0.166,8.035" Width="98" Click="refreshBaseStation_button" Grid.Row="2" Grid.Column="1" Margin="48,17,0,0">
+                    <Button x:Name="RefreshButton" Content="Refresh" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="43" RenderTransformOrigin="-0.166,8.035" Width="98" Click="refreshBaseStation_button" Grid.Row="2" Grid.Column="1">
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
@@ -61,7 +64,7 @@
                             </RadialGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="AddBaseStation" Content="Add a base station" HorizontalAlignment="Left" Margin="14,0,0,0" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="49" RenderTransformOrigin="-0.166,8.035" Width="167" Click="AddBaseStation_Click" Grid.Row="1" Grid.Column="1">
+                    <Button x:Name="AddBaseStation" Content="Add a base station" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="38" RenderTransformOrigin="-0.166,8.035" Width="181" Click="AddBaseStation_Click" Grid.Row="1" Grid.Column="1">
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
@@ -69,7 +72,7 @@
                             </RadialGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="GroupByFreeChargingSlots" Content="Group by free charging slots" Grid.Column="1" Grid.Row="0" Click="GroupByFreeChargingSlots_Click" RenderTransformOrigin="0.476,0.535" Margin="0,43,0,10" >
+                    <Button x:Name="GroupByFreeChargingSlots" Content="Group by free charging slots" Grid.Row="0" Click="GroupByFreeChargingSlots_Click" RenderTransformOrigin="0.476,0.535" Margin="0,53,0,87" Grid.RowSpan="2" Grid.Column="1" >
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFCCF092" Offset="0.486"/>
@@ -92,10 +95,25 @@
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="26*"/>
+                        <RowDefinition Height="41*"/>
+                        <RowDefinition Height="46*"/>
+                        <RowDefinition Height="45*"/>
+                        <RowDefinition Height="57*"/>
+                        <RowDefinition Height="188*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="306*"/>
+                        <ColumnDefinition Width="91*"/>
+                    </Grid.ColumnDefinitions>
                     <Grid.Background>
                         <ImageBrush ImageSource="/Images/Parcel.jpg"/>
                     </Grid.Background>
-                    <ListView Name="ListParcel" ItemsSource="{Binding}"  Margin="0,0,0,3" MouseDoubleClick="Parcel_DoubleClick" HorizontalAlignment="Center" Width="502">
+                    <ListView Name="ListParcel" ItemsSource="{Binding}" MouseDoubleClick="Parcel_DoubleClick" HorizontalAlignment="Left" Width="794" Foreground="White" BorderBrush="Black" Grid.ColumnSpan="2" Grid.RowSpan="6">
+                        <ListView.Background>
+                            <ImageBrush ImageSource="/Images/Parcel.jpg"/>
+                        </ListView.Background>
                         <ListView.View>
                             <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
                                 <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id_parcel" Header="Id" Width="auto"/>
@@ -112,7 +130,7 @@
                             <ImageBrush ImageSource="/Images/Parcel.jpg"/>
                         </ListView.Background>
                     </ListView>-->
-                    <Button x:Name="GroupBySender" Content="Group by sender" Margin="618,126,36,227" Click="GroupBySender_click" >
+                    <Button x:Name="GroupBySender" Content="Group by sender" Margin="9,2,32,0" Click="GroupBySender_click" Grid.Column="1" Grid.Row="1" >
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFCCF092" Offset="0.486"/>
@@ -120,7 +138,7 @@
                             </RadialGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="GroupByReciver" Content="Group by reciver" Margin="613,57,32,295" Click="GroupByReciver_click" >
+                    <Button x:Name="GroupByReciver" Content="Group by reciver" Margin="10,8,31,1" Click="GroupByReciver_click" Grid.Column="1" Grid.Row="2" >
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFCCF092" Offset="0.486"/>
@@ -128,7 +146,7 @@
                             </RadialGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="RefreshParcelButton" Content="Refresh" HorizontalAlignment="Left" Margin="656,266,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="refreshParcel_button">
+                    <Button x:Name="RefreshParcelButton" Content="Refresh" HorizontalAlignment="Left" Margin="20,4,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="32" RenderTransformOrigin="-0.166,8.035" Width="121" Click="refreshParcel_button" Grid.Column="1" Grid.Row="3">
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
@@ -136,7 +154,7 @@
                             </RadialGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="AddParcel" Content="Add a Parcel" HorizontalAlignment="Left" Margin="656,195,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="AddParcel_Click">
+                    <Button x:Name="AddParcel" Content="Add a Parcel" HorizontalAlignment="Left" Margin="20,10,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="31" RenderTransformOrigin="-0.166,8.035" Width="121" Click="AddParcel_Click" Grid.Column="1" Grid.Row="4">
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
@@ -154,16 +172,31 @@
                     </LinearGradientBrush>
                 </TabItem.Background>
                 <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="308*"/>
+                        <ColumnDefinition Width="89*"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="27*"/>
+                        <RowDefinition Height="48*"/>
+                        <RowDefinition Height="53*"/>
+                        <RowDefinition Height="38*"/>
+                        <RowDefinition Height="47*"/>
+                        <RowDefinition Height="190*"/>
+                    </Grid.RowDefinitions>
                     <Grid.Background>
                         <ImageBrush ImageSource="/Images/Parcel.jpg"/>
                     </Grid.Background>
-                    <Label Content="Drone max weight:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="28" Width="168" Foreground="White"/>
-                    <Label Content="Drone status:" HorizontalAlignment="Left" Margin="330,0,0,0" VerticalAlignment="Top" Foreground="White"/>
-                    <ComboBox x:Name="StatusSelector" SelectionChanged="StatusSelector_SelectionChanged" HorizontalAlignment="Left" Margin="168,2,0,0" VerticalAlignment="Top" Width="157" Height="28"/>
-                    <ComboBox x:Name="MaxWeightSelector" SelectionChanged="MaxWeightSelector_SelectionChanged" HorizontalAlignment="Left" Margin="592,1,0,0" VerticalAlignment="Top" Width="156" Height="29"/>
+                    <Label Content="Drone max weight:" HorizontalAlignment="Left" VerticalAlignment="Center" Height="28" Width="168" Foreground="White"/>
+                    <Label Content="Drone status:" HorizontalAlignment="Left" Margin="330,0,0,0" VerticalAlignment="Center" Foreground="White" Height="29" Width="97"/>
+                    <ComboBox x:Name="StatusSelector" SelectionChanged="StatusSelector_SelectionChanged" HorizontalAlignment="Left" Margin="168,2,0,0" VerticalAlignment="Top" Width="157" Height="28" Grid.RowSpan="2"/>
+                    <ComboBox x:Name="MaxWeightSelector" SelectionChanged="MaxWeightSelector_SelectionChanged" HorizontalAlignment="Left" Margin="592,1,0,0" VerticalAlignment="Top" Width="156" Height="29" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
 
 
-                    <ListView Name="ListDrone"  ItemsSource="{Binding}" Width="auto"  Height="auto" MouseDoubleClick="Drone_DoubleClick" Margin="0,0,14,13" SelectionChanged="listDrones_SelectionChanged"  >
+                    <ListView Name="ListDrone"  ItemsSource="{Binding}" Width="auto"  Height="auto" MouseDoubleClick="Drone_DoubleClick" SelectionChanged="listDrones_SelectionChanged" Foreground="White" BorderBrush="Black" Grid.RowSpan="6" Grid.ColumnSpan="2"  >
+                        <ListView.Background>
+                            <ImageBrush ImageSource="/Images/Drone1.jpg"/>
+                        </ListView.Background>
                         <ListView.View>
                             <GridView AllowsColumnReorder="True" ColumnHeaderToolTip="information">
                                 <GridViewColumn DisplayMemberBinding="{Binding Id}" x:Name="Id" Header="Id" Width="45"/>
@@ -189,7 +222,7 @@
                             <ImageBrush ImageSource="Images/Drone1.jpg"/>
                         </ListView.Background>
                     </ListView>-->
-                    <Button x:Name="GroupByStatus" Content="Group by status" Margin="625,35,46,327" Click="GroupByStatus_click" >
+                    <Button x:Name="GroupByStatus" Content="Group by status" Margin="9,8,46,1" Click="GroupByStatus_click" Grid.Row="1" Grid.Column="1" >
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFCCF092" Offset="0.486"/>
@@ -197,7 +230,7 @@
                             </RadialGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="GroupByWeight" Content="Group by weight" Margin="625,91,46,272" Click="GroupByWeight_Click" >
+                    <Button x:Name="GroupByWeight" Content="Group by weight" Margin="9,14,45,0" Click="GroupByWeight_Click" Grid.Row="2" Grid.Column="1" >
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFCCF092" Offset="0.486"/>
@@ -205,7 +238,7 @@
                             </RadialGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="AddDrone" Content="Add a drone" HorizontalAlignment="Left" Margin="625,169,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="33" RenderTransformOrigin="-0.166,8.035" Width="123" Click="AddDrone_Click">
+                    <Button x:Name="AddDrone" Content="Add a drone" HorizontalAlignment="Left" Margin="9,10,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="33" RenderTransformOrigin="-0.166,8.035" Width="123" Click="AddDrone_Click" Grid.Row="4" Grid.Column="1">
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
@@ -213,7 +246,7 @@
                             </RadialGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="RefreshDroneButton" Content="Refresh" HorizontalAlignment="Left" Margin="625,136,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="28" RenderTransformOrigin="-0.166,8.035" Width="123" Click="refreshDrone_button">
+                    <Button x:Name="RefreshDroneButton" Content="Refresh" HorizontalAlignment="Left" Margin="9,10,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="28" RenderTransformOrigin="-0.166,8.035" Width="123" Click="refreshDrone_button" Grid.Row="3" Grid.Column="1">
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
@@ -236,7 +269,7 @@
                         <ColumnDefinition Width="86*"/>
                         <ColumnDefinition Width="311*"/>
                     </Grid.ColumnDefinitions>
-                    <ListView Name="ListCustomer"  MouseDoubleClick="Customer_DoubleClick" HorizontalAlignment="Left" Width="549"  ItemsSource="{Binding}" Grid.ColumnSpan="2">
+                    <ListView Name="ListCustomer"  MouseDoubleClick="Customer_DoubleClick" HorizontalAlignment="Left" Width="812"  ItemsSource="{Binding}" Grid.ColumnSpan="2" Margin="0,0,0,-11" Foreground="White" BorderBrush="Black">
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/Customer.jpg"/>
                         </ListView.Background>
@@ -256,7 +289,7 @@
                         <ListView.Background>
                             <ImageBrush ImageSource="/Images/Customer.jpg"/>
                         </ListView.Background>-->
-                    <Button x:Name="RefreshCustomerButton" Content="Refresh" HorizontalAlignment="Left" Margin="484,54,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="refreshCustomer_button" Grid.Column="1">
+                    <Button x:Name="RefreshCustomerButton" Content="Refresh" HorizontalAlignment="Left" Margin="496,89,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="40" RenderTransformOrigin="-0.166,8.035" Width="106" Click="refreshCustomer_button" Grid.Column="1">
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFB3ECC2" Offset="0.499"/>
@@ -264,7 +297,7 @@
                             </RadialGradientBrush>
                         </Button.Background>
                     </Button>
-                    <Button x:Name="AddCustomer" Content="Add customer" HorizontalAlignment="Left" Margin="484,145,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="52" RenderTransformOrigin="-0.166,8.035" Width="106" Click="AddCustomer_Click" Grid.Column="1">
+                    <Button x:Name="AddCustomer" Content="Add customer" HorizontalAlignment="Left" Margin="467,35,0,0" VerticalAlignment="Top" FontSize="20" FontWeight="Bold" FontFamily="Sitka Display" Height="39" RenderTransformOrigin="-0.166,8.035" Width="135" Click="AddCustomer_Click" Grid.Column="1">
                         <Button.Background>
                             <RadialGradientBrush>
                                 <GradientStop Color="#FFB3ECC2" Offset="0.499"/>

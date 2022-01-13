@@ -8,10 +8,15 @@ using System.Threading;
 using System.Diagnostics;
 using BlApi;
 using static System.Math;
+using System.Runtime.CompilerServices;
+
 using DalApi;
 
 namespace BlApi
 {
+    /// <summary>
+    /// run a simulation on drones
+    /// </summary>
     class Simulator
     {
         private const int delay = 500;
@@ -106,7 +111,6 @@ namespace BlApi
             } while (!checkStop());
         }
 
-       
         private static bool sleepDelayTime()
         {
             try

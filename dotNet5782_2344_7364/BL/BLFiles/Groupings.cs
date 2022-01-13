@@ -12,6 +12,7 @@ namespace BlApi
 {
     internal sealed partial class BL : IBl
     {
+        #region// group by status
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<IGrouping<Enums.DroneStatuses,DroneToList>> GroupingStatuses()
         {
@@ -19,12 +20,17 @@ namespace BlApi
             {
                 return ListOfDronsBL.GroupBy(element => element.DroneStatuses);
 
-            }        }
+            }        
+        }
+        #endregion
+        #region// group by weight
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<IGrouping<Enums.WeightCategories, DroneToList>> GroupingWeight()
         {
             return ListOfDronsBL.GroupBy(element => element.Weight);
         }
+        #endregion
+        #region// group by number of free charging slots
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<IGrouping<int, BaseStationToList>> GroupingFreeChargingSlots()
         {
@@ -32,7 +38,10 @@ namespace BlApi
             {
                 return GetListOfBaseStationsToList().GroupBy(element => element.FreeChargingSlots);
 
-            }        }
+            }        
+        }
+        #endregion
+        #region// group by sender
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<IGrouping<string, ParcelToList>> GroupingSender()
         {
@@ -40,7 +49,10 @@ namespace BlApi
             {
                 return GetListOfParcelToList().GroupBy(element => element.SendersName);
 
-            }        }
+            }        
+        }
+        #endregion
+        #region// group by reciver
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<IGrouping<string, ParcelToList>> GroupingReciver()
         {
@@ -48,6 +60,8 @@ namespace BlApi
             {
                 return GetListOfParcelToList().GroupBy(element => element.ReciversName);
 
-            }        }
+            }        
+        }
+        #endregion
     }
 }

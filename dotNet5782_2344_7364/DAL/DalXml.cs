@@ -20,16 +20,28 @@ namespace DalXml
         {
             DataSource.Initialize();
         }
-        internal static string BaseStationsPath = @"BaseStation.xml";
-        internal static string CustomersPath = @"Customers.xml";
-        internal static string DronesPath = @"Drones.xml";
-        internal static string DroneChargesPath = @"DroneCharges.xml";
-        internal static string ParcelsPath = @"Parcels.xml";
-        internal static string ConfigPath = @"Config.xml";
+        internal static string BaseStationsPath = @"BaseStation.xml"; // path for base station
+        internal static string CustomersPath = @"Customers.xml"; // path for customer
+        internal static string DronesPath = @"Drones.xml"; // path for drone
+        internal static string DroneChargesPath = @"DroneCharges.xml"; // path for drone charge
+        internal static string ParcelsPath = @"Parcels.xml"; // path for parcel
+        internal static string ConfigPath = @"Config.xml"; // path for config
 
+        /// <summary>
+        /// contains functions that allow to acsses and change the data in DataSource and pass it on to BL using XML files
+        /// </summary>
+        #region// all the add functions
         #region// add base station
+        /// <summary>
+        /// add base station
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="chargeSlots"></param>
+        /// <param name="longtitude"></param>
+        /// <param name="latitude"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void AddBaseStation(int? id, string name, int chargeSlots, double longtitude, double latitude)
+        public void AddBaseStation(int? id, string name, int chargeSlots, double longtitude, double latitude) // add base station
         {
 
             XElement Root = XmlTools.LoadListFromXmlElement(BaseStationsPath);
@@ -44,8 +56,16 @@ namespace DalXml
         }
         #endregion
         #region// add customer
+        /// <summary>
+        /// add customer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        /// <param name="phone"></param>
+        /// <param name="longtitude"></param>
+        /// <param name="latitude"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void AddCustomer(int? id, string name, string phone, double longtitude, double latitude)
+        public void AddCustomer(int? id, string name, string phone, double longtitude, double latitude)// add customer
         {
             XElement Root = XmlTools.LoadListFromXmlElement(CustomersPath);
             XElement newCustomer = new XElement("Customer"
@@ -59,8 +79,14 @@ namespace DalXml
         }
         #endregion
         #region// add drone
+        /// <summary>
+        /// add drone
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="model"></param>
+        /// <param name="maxWeight"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void AddDrone(int? id, string model, WeightCategories maxWeight)
+        public void AddDrone(int? id, string model, WeightCategories maxWeight) // add drone
         {
             XElement Root = XmlTools.LoadListFromXmlElement(DronesPath);
             XElement newDrone = new XElement("Drone"
@@ -72,8 +98,14 @@ namespace DalXml
         }
         #endregion
         #region// add drone charge
+        /// <summary>
+        ///  add drone charge
+        /// </summary>
+        /// <param name="droneId"></param>
+        /// <param name="stationId"></param>
+        /// <param name="cuerrentTime"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void AddDroneCharge(int? droneId, int? stationId, DateTime? cuerrentTime)
+        public void AddDroneCharge(int? droneId, int? stationId, DateTime? cuerrentTime) // add drone charge
         {
             XElement Root = XmlTools.LoadListFromXmlElement(DroneChargesPath);
             XElement newDroneCharge = new XElement("DroneCharge"
@@ -85,8 +117,21 @@ namespace DalXml
         }
         #endregion
         #region// add parcel
+        /// <summary>
+        ///  add parcel
+        /// </summary>
+        /// <param name="senderId"></param>
+        /// <param name="targetId"></param>
+        /// <param name="weight"></param>
+        /// <param name="priority"></param>
+        /// <param name="request"></param>
+        /// <param name="droneId"></param>
+        /// <param name="schedual"></param>
+        /// <param name="pickUp"></param>
+        /// <param name="deliverd"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public int? AddParcel(int? senderId, int? targetId, WeightCategories weight, Priorities priority, DateTime? request, int? droneId, DateTime? schedual, DateTime? pickUp, DateTime? deliverd)
+        public int? AddParcel(int? senderId, int? targetId, WeightCategories weight, Priorities priority, DateTime? request, int? droneId, DateTime? schedual, DateTime? pickUp, DateTime? deliverd) // add parcel
         {
             XElement configRoot = XmlTools.LoadListFromXmlElement(ConfigPath);
             int parcelId = int.Parse(configRoot.Element("ParcelId").Value);
@@ -109,10 +154,16 @@ namespace DalXml
             return --parcelId;
         }
         #endregion
+        #endregion
 
+        #region// all the delete functions
         #region// delete base station
+        /// <summary>
+        /// delete base station
+        /// </summary>
+        /// <param name="id"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DeleteBaseStation(int? id)
+        public void DeleteBaseStation(int? id) // delete base station
         {
             XElement baseStationElement;
             try
@@ -125,17 +176,21 @@ namespace DalXml
                     throw new IdNotExsistException("base station", id);
                 baseStationElement.Remove();
                 XmlTools.SaveListToXmlElement(Root, BaseStationsPath);
-                //return true;
             }
-            catch (Exception)
+            catch (Exception exception)
             {
-                //return false;
+                throw new IdNotExsistException(exception.Message, id);
             }
         }
         #endregion
         #region// delete customer
+        /// <summary>
+        ///  delete customer
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public bool DeleteCustomer(int? id)
+        public bool DeleteCustomer(int? id)// delete customer
         {
             XElement CustomerElement;
             try
@@ -157,8 +212,13 @@ namespace DalXml
         }
         #endregion
         #region// delete drone
+        /// <summary>
+        /// delete drone
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public bool DeleteDrone(int? id)
+        public bool DeleteDrone(int? id) // delete drone
         {
             XElement DroneElement;
             try
@@ -182,8 +242,13 @@ namespace DalXml
         }
         #endregion
         #region// delete drone charge
+        /// <summary>
+        /// delete drone charge
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public bool DeleteDroneCharge(int? id)
+        public bool DeleteDroneCharge(int? id) // delete drone charge
         {
             XElement DroneChargeElement;
             try
@@ -205,8 +270,12 @@ namespace DalXml
         }
         #endregion
         #region// delete parcel
+        /// <summary>
+        /// delete parcel
+        /// </summary>
+        /// <param name="id"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void DeleteParcel(int? id)
+        public void DeleteParcel(int? id)// delete parcel
         {
             XElement parcelElement;
             try
@@ -222,15 +291,22 @@ namespace DalXml
                 parcelElement.Remove();
                 XmlTools.SaveListToXmlElement(Root, ParcelsPath);
             }
-            catch (Exception)
+            catch (Exception exception)
             {
+                throw new IdNotExsistException(exception.Message, id);
             }
         }
         #endregion
+        #endregion
 
+        #region// all update functions
         #region// update parcel Pickup
+        /// <summary>
+        /// update parcel Pickup
+        /// </summary>
+        /// <param name="id"></param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public void UpdateParclePickup(int? id)
+        public void UpdateParclePickup(int? id)//update parcel Pickup
         {
             try
             {
@@ -464,7 +540,52 @@ namespace DalXml
             }
         }
         #endregion
+        #region // find a Drone by id and return all his data as Drone class 
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public BaseStation getBaseStationByDroneId(int? id)  // find a Drone by id and return all his data as Drone class 
+        {
+            if (!IfDroneExsists(id)) // if id doesnt exsist
+            {
+                throw new IdNotExsistException("drone", id); // throw exception
+            }
+            Func<DroneCharge, bool> func = new Func<DroneCharge, bool>(element => element.DroneId == id);
+            return GetBaseStation(GetListOfDroneCharge().FirstOrDefault(func).StationId);
+        }
+        #endregion
+        #region// find a DroneCharge by id and return all his data as DroneCharge class
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public DroneCharge GetDroneCharge(int? id = null, Predicate<DroneCharge> predicate = null)  // find a DroneCharge by id and return all his data as DroneCharge class
+        {
+            if (predicate == null)
+            {
+                if (!IfDroneExsists(id)) // if id doesnt exsist
+                {
+                    throw new IdNotExsistException("drone charge", id); // throw exception
+                }
+                Func<DroneCharge, bool> func = new Func<DroneCharge, bool>(element => element.DroneId == id);
+                return GetListOfDroneCharge().FirstOrDefault(func);
+            }
+            Func<DroneCharge, bool> func1 = new Func<DroneCharge, bool>(predicate);
+            return GetListOfDroneCharge().FirstOrDefault(func1);
+        }
+        #endregion
+        #region//return an array of electricity data
+        [MethodImpl(MethodImplOptions.Synchronized)]
+        public double[] Electricity() // return an array of electricity data
+        {
+            XElement configRoot = XmlTools.LoadListFromXmlElement(ConfigPath);
+            double[] array = new double[5];
+            array[0] = double.Parse(configRoot.Element("ElectricityUseAvailiblity").Value);
+            array[1] = double.Parse(configRoot.Element("ElectricityUseLightWeight").Value);
+            array[2] = double.Parse(configRoot.Element("ElectricityUseMediumWeight").Value);
+            array[3] = double.Parse(configRoot.Element("ElectricityUseHeavyWeight").Value);
+            array[4] = double.Parse(configRoot.Element("DroneChargingPaste").Value);
+            return array;
+        }
+        #endregion
+        #endregion
 
+        #region// all get functions
         #region// get base station
         [MethodImpl(MethodImplOptions.Synchronized)]
         public BaseStation GetBaseStation(int? id)
@@ -623,7 +744,9 @@ namespace DalXml
 
         }
         #endregion
+        #endregion
 
+        #region// all get list functions
         #region// get list of base stations
         [MethodImpl(MethodImplOptions.Synchronized)]
         public IEnumerable<BaseStation> GetListOfBaseStation(Predicate<BaseStation> predicate = null)
@@ -781,7 +904,9 @@ namespace DalXml
             }
         }
         #endregion
+        #endregion
 
+        #region// all if exsist functions
         #region// if drone exsists 
         [MethodImpl(MethodImplOptions.Synchronized)]
         public bool IfDroneExsists(int? id)  // return true if id exisists in list of drones
@@ -842,52 +967,8 @@ namespace DalXml
             return true;
         }
         #endregion
-
-        #region // find a Drone by id and return all his data as Drone class 
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public BaseStation getBaseStationByDroneId(int? id)  // find a Drone by id and return all his data as Drone class 
-        {
-            if (!IfDroneExsists(id)) // if id doesnt exsist
-            {
-                throw new IdNotExsistException("drone", id); // throw exception
-            }
-            Func<DroneCharge, bool> func = new Func<DroneCharge, bool>(element => element.DroneId == id);
-            return GetBaseStation(GetListOfDroneCharge().FirstOrDefault(func).StationId);
-        }
-        #endregion
-
-        #region// find a DroneCharge by id and return all his data as DroneCharge class
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public DroneCharge GetDroneCharge(int? id = null, Predicate<DroneCharge> predicate = null)  // find a DroneCharge by id and return all his data as DroneCharge class
-        {
-            if (predicate == null)
-            {
-                if (!IfDroneExsists(id)) // if id doesnt exsist
-                {
-                    throw new IdNotExsistException("drone charge", id); // throw exception
-                }
-                Func<DroneCharge, bool> func = new Func<DroneCharge, bool>(element => element.DroneId == id);
-                return GetListOfDroneCharge().FirstOrDefault(func);
-            }
-            Func<DroneCharge, bool> func1 = new Func<DroneCharge, bool>(predicate);
-            return GetListOfDroneCharge().FirstOrDefault(func1);
-        }
-        #endregion
-
-        #region//return an array of electricity data
-        [MethodImpl(MethodImplOptions.Synchronized)]
-        public double[] Electricity() // return an array of electricity data
-        {
-            XElement configRoot = XmlTools.LoadListFromXmlElement(ConfigPath);
-            double[] array = new double[5];
-            array[0] = double.Parse(configRoot.Element("ElectricityUseAvailiblity").Value);
-            array[1] = double.Parse(configRoot.Element("ElectricityUseLightWeight").Value);
-            array[2] = double.Parse(configRoot.Element("ElectricityUseMediumWeight").Value);
-            array[3] = double.Parse(configRoot.Element("ElectricityUseHeavyWeight").Value);
-            array[4] = double.Parse(configRoot.Element("DroneChargingPaste").Value);
-            return array;
-        }
-        #endregion
+    #endregion
+       
     }
 }
 

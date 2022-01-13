@@ -7,8 +7,13 @@ using System.Runtime.CompilerServices;
 
 namespace BlApi
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class BlFactory
     {
+
+        [MethodImpl(MethodImplOptions.Synchronized)]
         public static IBl GetBl(string str)
         {
             switch (str)
