@@ -570,9 +570,12 @@ namespace PL
                 drone.ParcelInTransit = new PO.ParcelInTransit();
             }
             drone.DroneStatuses = newDrone.DroneStatuses;
-            drone.CurrentLocation = newDrone.CurrentLocation;
+            drone.CurrentLocation = new PO.Location();
+            drone.CurrentLocation.Longitude = newDrone.CurrentLocation.Longitude;
+            drone.CurrentLocation.Latitude = newDrone.CurrentLocation.Latitude;
 
- 
+
+
             if (drone.ParcelInTransit.Id != null)
             {
                 PO.ParcelInTransit parcelInTransit = drone.ParcelInTransit;
