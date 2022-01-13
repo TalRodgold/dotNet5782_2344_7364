@@ -69,20 +69,28 @@ namespace PL
             
             lock (bl)
             {
-                bl.UpdateBaseStation(baseStation.Id, Name.Text, int.Parse(FreeChargingSlots.Text));
-                PO.BaseStationToList baseStationToList = new PO.BaseStationToList();
-                baseStationToList= (from station in model.baseStations where station.Id == baseStation.Id select station).FirstOrDefault();
-                if (Name.Text != "")
+                try
                 {
-                    baseStationToList.Name = Name.Text;
-                    baseStation.Name = Name.Text;
+                    bl.UpdateBaseStation(baseStation.Id, Name.Text, int.Parse(FreeChargingSlots.Text));
+                    PO.BaseStationToList baseStationToList = new PO.BaseStationToList();
+                    baseStationToList = (from station in model.baseStations where station.Id == baseStation.Id select station).FirstOrDefault();
+                    if (Name.Text != "")
+                    {
+                        baseStationToList.Name = Name.Text;
+                        baseStation.Name = Name.Text;
+                    }
+                    if (int.Parse(FreeChargingSlots.Text) != 0)
+                    {
+                        baseStationToList.FreeChargingSlots = int.Parse(FreeChargingSlots.Text);
+                        baseStation.NumberOfFreeChargingSlots = int.Parse(FreeChargingSlots.Text);
+                    }
+                    Close();
                 }
-                if (int.Parse(FreeChargingSlots.Text) != 0)
+                catch (Exception exception)
                 {
-                    baseStationToList.FreeChargingSlots = int.Parse(FreeChargingSlots.Text);
-                    baseStation.NumberOfFreeChargingSlots = int.Parse(FreeChargingSlots.Text);
+
+                    MessageBox.Show(exception.ToString());
                 }
-                Close();
             }
             
         }
